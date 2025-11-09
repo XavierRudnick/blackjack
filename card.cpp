@@ -126,6 +126,18 @@ class Hand{
             
         }
 
+        Hand(Card card){
+            hand.emplace_back(card);
+        }
+
+        Card get_second_card(){
+            return hand.back();
+        }
+
+        void pop_second_card(){
+            hand.pop_back();
+            return;
+        }
 
         void show_cards(){
             for (Card val : hand){
@@ -133,9 +145,27 @@ class Hand{
             }
             cout << "value: " << getScoreHard() << endl;
         }
+
+        void peek_dealer(){
+            cout << hand.front().getRank() << " " << hand.front().getSuit() << endl;
+        }
+
+        bool check_can_split(){
+            if (hand.size() == 2 && hand.front().getRank() == hand.back().getRank()){
+                return true;
+            }
+            return false;
+        } 
         
         void addCard(Card card){
             hand.emplace_back(card);
+        }
+
+        bool check_over(){
+            if (getScoreHard() > 21){
+                return true;
+            }
+            return false;
         }
 
         int getScoreHard(){
@@ -220,18 +250,24 @@ class Deck{
             return {first,second};
         }
 
+        Card dealOne(){
+            Card first = deck.back();
+            deck.pop_back();
+            return first;
+        }
+
         Card hit(){
             Card val = deck.back();
             deck.pop_back();
             return val;
         }
 
-        void show_cards(){
-            for (Card card : deck){
-                cout << card.getRank() << " " << card.getSuit() << endl;
-            }
-        }
-        
+        // void show_cards(){
+        //     for (Card card : deck){
+        //         cout << card.getRank() << " " << card.getSuit() << endl;
+        //     }
+        // }
+
         int getSize(){
             return deck.size();
         }
@@ -250,49 +286,103 @@ struct Engine{
         //cout << deck.getSize();
         cout << "starting a " << deck_count << " deck game!" << endl;
         while (deck->getSize() > deck_count * 13){//deck_size is number of 52 card decks, so like 4 decks, reshuffle when 25% of deck cards left.
-            int choice;
+            cout << "========================================" << endl;
             Hand dealer = draw_cards();
             Hand user = draw_cards();
+            print_dealer_hand(dealer);
+            vector<Hand> hands = user_play(user);
 
-            print_state(dealer,user);
-
-            while(true){
-                cin >> choice;
-                switch(choice)
-                {
-                    case 0:
-                        //dealer till bust or over 17
-                        break;
-                    case 1:
-                        user_hand.addCard(deck->hit());
-                        print_state(dealer, user)
-                        //add bust feature
-                        break;
-                    case 2:
-                        //add bet feature
-                        user_hand.addCard(deck->hit());
-                        user_hand.show_cards();
-                        break;
-                    case 3:
-                        //add bet feature
-                        break;
-                }
-                return;
-            }
         }    
     }
 
+    vector<Hand> user_play(Hand& user){
+        vector<Hand> hands;
+        hands.reserve(4);
+        user_play_hand(user, hands);
+        return hands;
+    }
+
+    void user_play_hand(Hand& user, vector<Hand>& hands){
+        int choice;
+        bool game_over = false;
+        print_hand(user);
+
+        while(!game_over){
+            cin >> choice;
+            switch(choice)
+            {
+                case 0:
+                    print_hand(user);
+                    game_over = true;
+                    hands.emplace_back(user);
+                    break;
+                case 1:
+                    user.addCard(deck->hit());
+                    if (user.check_over()) {game_over = true;}
+                    print_hand(user);
+                    break;
+                case 2:
+                    user.addCard(deck->hit());
+                    print_hand(user);
+                    game_over = true;
+                    break;
+                case 3:
+                    if (user.check_can_split()){
+                        Hand user2 = Hand(user.get_second_card());
+                        user.pop_second_card();
+                        user.addCard(deck->hit());
+                        user2.addCard(deck->hit());
+
+                        user_play_hand(user2,hands);
+                        print_hand(user);
+                    }
+                    break;
+            }
+        }
+    }
+
+
+    void print_initial(Hand dealer, Hand user){
+        peek_dealer(dealer);
+        print_hand(user);
+    }
+
     void print_state(Hand dealer, Hand user){
-        cout << "Dealer card"<< endl;
-        dealer.show_cards();
+        print_dealer_hand(dealer);
+        print_hand(user);
+    }
+
+    void print_hand(Hand user){
         cout << "Your card" << endl;
         user.show_cards();
         cout << "0: Stand, 1: Hit, 2: Double, 3: Stand" << endl;
+        cout << endl;
+    }
+
+    void print_dealer_hand(Hand dealer){
+        cout << "Dealer card" << endl;
+        dealer.show_cards();
+        cout << endl;
+    }
+
+    void peek_dealer(Hand dealer){
+        cout << "Dealer card" << endl;
+        dealer.peek_dealer();
+        cout << endl;
     }
 
     Hand draw_cards(){
         Hand hand = Hand(deck->deal());
         return hand;
+    }
+
+    void dealer_draw(Hand& dealer){
+        while (dealer.getScoreHard() <= 17){
+            dealer.addCard(deck->hit());
+            cout << "Dealer card"<< endl;
+            dealer.show_cards();
+            cout << endl;
+        }
     }
 
 };

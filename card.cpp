@@ -148,6 +148,7 @@ class Hand{
 
         void peek_dealer(){
             cout << hand.front().getRank() << " " << hand.front().getSuit() << endl;
+            //cout << "value: " << getScoreHard() << endl;
         }
 
         bool check_can_split(){
@@ -289,8 +290,9 @@ struct Engine{
             cout << "========================================" << endl;
             Hand dealer = draw_cards();
             Hand user = draw_cards();
-            print_dealer_hand(dealer);
+            peek_dealer(dealer);
             vector<Hand> hands = user_play(user);
+            dealer_draw(dealer);
 
         }    
     }
@@ -309,6 +311,7 @@ struct Engine{
 
         while(!game_over){
             cin >> choice;
+            cout << endl;
             switch(choice)
             {
                 case 0:
@@ -325,6 +328,7 @@ struct Engine{
                     user.addCard(deck->hit());
                     print_hand(user);
                     game_over = true;
+                    hands.emplace_back(user);
                     break;
                 case 3:
                     if (user.check_can_split()){
@@ -377,12 +381,19 @@ struct Engine{
     }
 
     void dealer_draw(Hand& dealer){
-        while (dealer.getScoreHard() <= 17){
+        cout << "Dealer card"<< endl;
+        dealer.show_cards();
+        cout << endl;
+        if (dealer.getScoreHard() >= 17){
+            return;
+        }
+        while (dealer.getScoreHard() < 17){
             dealer.addCard(deck->hit());
             cout << "Dealer card"<< endl;
             dealer.show_cards();
             cout << endl;
         }
+        return;
     }
 
 };

@@ -141,7 +141,19 @@ class Hand{
 
         void show_cards(){
             for (Card val : hand){
-                cout << val.getRank() << " " << val.getSuit() << endl;
+                cout <<
+                val.getRank() << " " << val.getSuit() << endl;
+            }
+            cout << "value: " << getScoreHard() << endl;
+            if (isSoftHand()){
+                cout << "soft value: " << getScoreSoft() << endl;
+            }
+        }
+
+        void dealer_show_cards(){
+            for (Card val : hand){
+                cout <<
+                val.getRank() << " " << val.getSuit() << endl;
             }
             cout << "value: " << getScoreHard() << endl;
         }
@@ -163,7 +175,7 @@ class Hand{
         }
 
         bool check_over(){
-            if (getScoreHard() > 21){
+            if (getScoreHard() > 21 && getScoreSoft() > 21){
                 return true;
             }
             return false;
@@ -171,7 +183,27 @@ class Hand{
 
         int getScoreHard(){
             int score = 0;
+            bool ace_appeared = false;
+            for (Card val : hand){
 
+                Rank rank = val.getRank();
+                if (rank == Rank::Ace){
+                    if (!ace_appeared) {ace_appeared = true; score += 11;}
+                    else {score += 1;}
+                }
+                else if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King){
+                    score += 10;
+                }
+                else{
+                    score += static_cast<int>(rank) + 2;
+                }
+
+            }
+            return score;
+        }
+
+        int getDealerScore(){
+            int score = 0;
             for (Card val : hand){
 
                 Rank rank = val.getRank();
@@ -189,6 +221,13 @@ class Hand{
             return score;
         }
 
+        bool isDealerOver(){
+            if (getDealerScore() >= 17){
+                return true;
+            }
+            return false;
+        }
+
         int getScoreSoft(){
             int score = 0;
 
@@ -202,7 +241,7 @@ class Hand{
                     score += 10;
                 }
                 else{
-                    score = static_cast<int>(rank) + 2;
+                    score += static_cast<int>(rank) + 2;
                 }
 
             }
@@ -216,20 +255,23 @@ class Hand{
                     return true;
                 }
             }
+            return false;
         }
+
 };
  
 class Deck{
     private:
         const uint8_t NUM_RANK = 13;
         const uint8_t NUM_SUIT = 4;
+        const uint8_t NUM_CARDS_IN_DECK = 52;
         vector<Card> deck;
         mt19937 rand;
 
     public:
         int deck_size;
         Deck(uint8_t deck_size){
-            deck.reserve(deck_size * 52); // Pre-allocate memory to avoid reallocations
+            deck.reserve(deck_size * NUM_CARDS_IN_DECK); // Pre-allocate memory to avoid reallocations
 
             for(int i = 0; i < deck_size; i++){
                 for(int rank = static_cast<int>(Rank::Two); rank < NUM_RANK; rank++){
@@ -263,43 +305,45 @@ class Deck{
             return val;
         }
 
-        // void show_cards(){
-        //     for (Card card : deck){
-        //         cout << card.getRank() << " " << card.getSuit() << endl;
-        //     }
-        // }
-
         int getSize(){
             return deck.size();
         }
 };
 
+template <typename Strategy>
 struct Engine{
     optional<Deck> deck;
-    const uint8_t deck_count;
+    Strategy strategy;
+    const uint8_t number_of_decks;
 
-    Engine(uint8_t deck_size) : deck_count(deck_size){
+    Engine(uint8_t deck_size, Strategy strategy) : number_of_decks(deck_size){
         deck.emplace(deck_size); // creates deck in optinal deck variable, avoid creating unnecissary constructor
+        strategy.emplace(move(strategy(static_cast<float>(deck_size))));
         runner();
     }
 
     void runner(){
-        //cout << deck.getSize();
-        cout << "starting a " << deck_count << " deck game!" << endl;
-        while (deck->getSize() > deck_count * 13){//deck_size is number of 52 card decks, so like 4 decks, reshuffle when 25% of deck cards left.
+        cout << "starting a " << number_of_decks << " deck game!" << endl;
+        int total = 100;
+        while (deck->getSize() > number_of_decks * 13){//deck_size is number of 52 card decks, so like 4 decks, reshuffle when 25% of deck cards left.
             cout << "========================================" << endl;
+            strategy.updateDeckSize(deck->getSize());
+            total -= strategy.getBetSize()
             Hand dealer = draw_cards();
             Hand user = draw_cards();
+            strategy.updateCount(dealer);
+            strategy.updateCount(user);
+
             peek_dealer(dealer);
             vector<Hand> hands = user_play(user);
             dealer_draw(dealer);
-
+            //add hand evaluator to distribute wins
         }    
     }
 
     vector<Hand> user_play(Hand& user){
         vector<Hand> hands;
-        hands.reserve(4);
+        hands.reserve(4); //unnessesary but fuck it I do what I want
         user_play_hand(user, hands);
         return hands;
     }
@@ -308,6 +352,7 @@ struct Engine{
         int choice;
         bool game_over = false;
         print_hand(user);
+        strategy.updateDeckSize(deck->getSize());
 
         while(!game_over){
             cin >> choice;
@@ -320,12 +365,16 @@ struct Engine{
                     hands.emplace_back(user);
                     break;
                 case 1:
-                    user.addCard(deck->hit());
+                    Card new_card = deck->hit();
+                    strategy.updateCount(new_card);
+                    user.addCard(new_card);
                     if (user.check_over()) {game_over = true;}
                     print_hand(user);
                     break;
                 case 2:
-                    user.addCard(deck->hit());
+                    Card new_card = deck->hit();
+                    strategy.updateCount(new_card);
+                    user.addCard(new_card);
                     print_hand(user);
                     game_over = true;
                     hands.emplace_back(user);
@@ -365,7 +414,7 @@ struct Engine{
 
     void print_dealer_hand(Hand dealer){
         cout << "Dealer card" << endl;
-        dealer.show_cards();
+        dealer.dealer_show_cards();
         cout << endl;
     }
 
@@ -384,10 +433,10 @@ struct Engine{
         cout << "Dealer card"<< endl;
         dealer.show_cards();
         cout << endl;
-        if (dealer.getScoreHard() >= 17){
+        if (dealer.isDealerOver()){
             return;
         }
-        while (dealer.getScoreHard() < 17){
+        while (!dealer.isDealerOver()){
             dealer.addCard(deck->hit());
             cout << "Dealer card"<< endl;
             dealer.show_cards();
@@ -395,6 +444,10 @@ struct Engine{
         }
         return;
     }
+
+    // int get_bet(){
+        
+    // }
 
 };
 

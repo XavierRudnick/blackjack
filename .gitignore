@@ -1,0 +1,13 @@
+*.o
+*.out
+blackjack
+.vscode/
+# Temporary and backup files
+*~
+# MacOS
+.DS_Store
+# CMake
+CMakeFiles/
+CMakeCache.txt
+# Build folders
+build/

@@ -1,33 +1,28 @@
-# Define the C++ compiler to use
 CXX = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra
 
-# Define the C++ standard to use (This is the crucial part!)
-CXXFLAGS = -std=c++20
+OBJECTS = main.o rank.o suit.o Card.o Hand.o HiLoStrategy.o
 
-# Define the name of the final executable program
-TARGET = blackjack
+blackjack: $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -o blackjack $(OBJECTS)
 
-# Define your source files (e.g., main.cpp, game.cpp)
-# Adjust this list to match your actual .cpp files
-SOURCES = card.cpp
+main.o: main.cpp Engine.h Deck.h Hand.h HiLoStrategy.h Card.h rank.h suit.h
+	$(CXX) $(CXXFLAGS) -c main.cpp
 
-# Automatically generate a list of object files (.o) from the sources
-OBJECTS = $(SOURCES:.cpp=.o)
+rank.o: rank.cpp rank.h
+	$(CXX) $(CXXFLAGS) -c rank.cpp
 
-# --- Targets ---
+suit.o: suit.cpp suit.h
+	$(CXX) $(CXXFLAGS) -c suit.cpp
 
-# The default target (what happens when you just type 'make')
-# This links all the object files into the final executable.
-$(TARGET): $(OBJECTS)
-	$(CXX) $(OBJECTS) -o $(TARGET)
+Card.o: Card.cpp Card.h rank.h suit.h
+	$(CXX) $(CXXFLAGS) -c Card.cpp
 
-# Rule for compiling individual C++ source files into object files
-# $< is the first prerequisite (the .cpp file)
-# $@ is the target (the .o file)
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+Hand.o: Hand.cpp Hand.h Card.h rank.h suit.h
+	$(CXX) $(CXXFLAGS) -c Hand.cpp
 
-# Target for cleaning up (removes the executable and all object files)
-.PHONY: clean
+HiLoStrategy.o: HiLoStrategy.cpp HiLoStrategy.h Card.h rank.h suit.h
+	$(CXX) $(CXXFLAGS) -c HiLoStrategy.cpp
+
 clean:
-	rm -f $(TARGET) $(OBJECTS)
+	rm -f *.o blackjack

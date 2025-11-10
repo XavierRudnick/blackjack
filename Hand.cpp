@@ -1,0 +1,165 @@
+#include "Hand.h"
+#include <iostream>
+
+Hand::Hand(std::pair<Card,Card> cards, int bet_size){
+    hand.emplace_back(cards.first);
+    hand.emplace_back(cards.second);
+    bet_size_ = bet_size;
+}
+
+Hand::Hand(Card card, int bet_size){
+    hand.emplace_back(card);
+    bet_size_ = bet_size;
+}
+
+int Hand::getBetSize(){
+    return bet_size_;
+}
+
+void Hand::doubleBet(){
+    bet_size_ *= 2;
+}
+
+Card Hand::get_second_card(){
+    return hand.back();
+}
+
+void Hand::pop_second_card(){
+    hand.pop_back();
+    return;
+}
+
+void Hand::show_cards(){
+    for (Card val : hand){
+        std::cout << val.getRank() << " " << val.getSuit() << std::endl;
+    }
+    std::cout << "value: " << getScoreHard() << std::endl;
+    if (isSoftHand()){
+        std::cout << "soft value: " << getScoreSoft() << std::endl;
+    }
+}
+
+void Hand::dealer_show_cards(){
+    std::cout << "Dealer card" << std::endl;
+    for (Card val : hand){
+        std::cout << val.getRank() << " " << val.getSuit() << std::endl;
+    }
+    std::cout << "value: " << getScoreHard() << std::endl;
+    std::cout << std::endl;
+}
+
+void Hand::peek_dealer(){
+    std::cout << hand.front().getRank() << " " << hand.front().getSuit() << std::endl;
+}
+
+bool Hand::check_can_split(){
+    if (hand.size() == 2 && hand.front().getRank() == hand.back().getRank()){
+        return true;
+    }
+    return false;
+} 
+
+void Hand::addCard(Card card){
+    hand.emplace_back(card);
+}
+
+bool Hand::check_over(){
+    if (getScoreHard() > 21 && getScoreSoft() > 21){
+        return true;
+    }
+    return false;
+}
+
+int Hand::getScoreHard(){
+    int score = 0;
+    bool ace_appeared = false;
+    for (Card val : hand){
+
+        Rank rank = val.getRank();
+        if (rank == Rank::Ace){
+            if (!ace_appeared) {ace_appeared = true; score += 11;}
+            else {score += 1;}
+        }
+        else if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King){
+            score += 10;
+        }
+        else{
+            score += static_cast<int>(rank) + 2;
+        }
+
+    }
+    return score;
+}
+
+int Hand::getFinalScore(){
+    int hard = getScoreHard();
+    int soft = getScoreSoft();
+
+
+    if (hard > 21 && soft <= 21){
+        return soft;
+    }
+    else if (soft > 21){
+        return 0;
+    }
+    else{
+        return hard;
+    }
+    
+}
+
+int Hand::getDealerScore(){
+    int score = 0;
+    for (Card val : hand){
+
+        Rank rank = val.getRank();
+        if (rank == Rank::Ace){
+            score += 11;
+        }
+        else if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King){
+            score += 10;
+        }
+        else{
+            score += static_cast<int>(rank) + 2;
+        }
+
+    }
+    return score;
+}
+
+bool Hand::isDealerOver(){
+    if (getDealerScore() >= 17){
+        return true;
+    }
+    return false;
+}
+
+int Hand::getScoreSoft(){
+    int score = 0;
+
+    for (Card val : hand){
+
+        Rank rank = val.getRank();
+        if (rank == Rank::Ace){
+            score += 1;
+        }
+        else if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King){
+            score += 10;
+        }
+        else{
+            score += static_cast<int>(rank) + 2;
+        }
+
+    }
+    return score;
+}
+
+bool Hand::isSoftHand(){
+    for (Card val : hand){
+        Rank rank = val.getRank();
+        if (rank == Rank::Ace){
+            return true;
+        }
+    }
+    return false;
+}

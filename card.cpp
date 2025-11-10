@@ -118,16 +118,25 @@ class Card{
 class Hand{
     private:
         vector<Card> hand;
-
+        int bet_size_;
     public:
-        Hand(pair <Card,Card> cards){
+        Hand(pair <Card,Card> cards, int bet_size){
             hand.emplace_back(cards.first);
             hand.emplace_back(cards.second);
-            
+            bet_size_ = bet_size;
         }
 
-        Hand(Card card){
+        Hand(Card card,int bet_size){
             hand.emplace_back(card);
+            bet_size_ = bet_size;
+        }
+
+        int getBetSize(){
+            return bet_size_;
+        }
+
+        void doubleBet(){
+            bet_size_ *= 2;
         }
 
         Card get_second_card(){
@@ -151,11 +160,13 @@ class Hand{
         }
 
         void dealer_show_cards(){
+            cout << "Dealer card" << endl;
             for (Card val : hand){
                 cout <<
                 val.getRank() << " " << val.getSuit() << endl;
             }
             cout << "value: " << getScoreHard() << endl;
+            cout << endl;
         }
 
         void peek_dealer(){
@@ -200,6 +211,24 @@ class Hand{
 
             }
             return score;
+        }
+
+        int getFinalScore(){
+            int hard = getScoreHard();
+            int soft = getScoreSoft();
+
+        
+            if (hard > 21 && soft <= 21){
+                return soft;
+            }
+            else if (soft > 21){
+                return 0;
+            }
+            else{
+                return hard;
+            }
+            
+
         }
 
         int getDealerScore(){
@@ -259,7 +288,64 @@ class Hand{
         }
 
 };
- 
+
+class HiLoStrategy { //in docs note deck size is counted 100% accuratly in half size increments
+    private:
+        int true_count = 0;
+        float num_decks_left;
+    public:
+        HiLoStrategy(float deck_size){
+            num_decks_left = deck_size;
+        }
+
+        int getBetSize() const {
+            if (true_count <= 1.5) {
+                return 1;
+            } 
+            else if (true_count < 3.0) { 
+                return 2;
+            } 
+            else if (true_count < 4.0) {
+                return 3;
+            } 
+            else if (true_count < 5.0) {
+                return 5;
+            } 
+            else {
+                return static_cast<int>((true_count * 2.0) - 2.0);
+            }
+        }
+
+        void updateCount(Card card) {
+            Rank rank = card.getRank();
+            int score = static_cast<int>(rank) + 2;
+            int running_count = 0;
+
+            if (score <= 6){
+                running_count += 1;
+            }
+            else if (score >= 10){
+                running_count -= 1;
+            }
+            true_count += running_count / num_decks_left; 
+            return;
+        }
+
+        void updateDeckSize(int num_cards_left){
+            float decks_left_unrounded = num_cards_left / 52; 
+            decks_left_unrounded *= 2.0;
+            float decks_left_rounded = round(decks_left_unrounded);
+            decks_left_rounded = decks_left_rounded / 2;
+            num_decks_left = decks_left_rounded;
+            return; //this allows us to round to nearest .5
+        }
+
+        int getCount(){
+            return true_count;
+        }
+};
+
+template <typename Strategy>
 class Deck{
     private:
         const uint8_t NUM_RANK = 13;
@@ -267,10 +353,10 @@ class Deck{
         const uint8_t NUM_CARDS_IN_DECK = 52;
         vector<Card> deck;
         mt19937 rand;
+        Strategy strategy;
 
     public:
-        int deck_size;
-        Deck(uint8_t deck_size){
+        Deck(uint8_t deck_size,Strategy strategy_input) : strategy(move(strategy_input)){
             deck.reserve(deck_size * NUM_CARDS_IN_DECK); // Pre-allocate memory to avoid reallocations
 
             for(int i = 0; i < deck_size; i++){
@@ -290,35 +376,45 @@ class Deck{
             deck.pop_back();
             Card second = deck.back();
             deck.pop_back();
+            strategy.updateCount(first);
+            strategy.updateCount(second);
             return {first,second};
         }
 
         Card dealOne(){
             Card first = deck.back();
             deck.pop_back();
+            strategy.updateCount(first);
             return first;
         }
 
         Card hit(){
             Card val = deck.back();
             deck.pop_back();
+            strategy.updateCount(val);
             return val;
         }
 
         int getSize(){
             return deck.size();
         }
+
+        Strategy getStrategy(){
+            return strategy;
+        }
+
+        int getBetSize(){
+            return strategy.getBetSize();
+        }
 };
 
 template <typename Strategy>
 struct Engine{
-    optional<Deck> deck;
-    Strategy strategy;
+    optional<Deck<Strategy>> deck;
     const uint8_t number_of_decks;
 
-    Engine(uint8_t deck_size, Strategy strategy) : number_of_decks(deck_size){
-        deck.emplace(deck_size); // creates deck in optinal deck variable, avoid creating unnecissary constructor
-        strategy.emplace(move(strategy(static_cast<float>(deck_size))));
+    Engine(uint8_t deck_size,Strategy strategy) : number_of_decks(deck_size){
+        deck.emplace(deck_size,move(strategy)); // creates deck in optinal deck variable, avoid creating unnecissary constructor
         runner();
     }
 
@@ -327,16 +423,29 @@ struct Engine{
         int total = 100;
         while (deck->getSize() > number_of_decks * 13){//deck_size is number of 52 card decks, so like 4 decks, reshuffle when 25% of deck cards left.
             cout << "========================================" << endl;
-            strategy.updateDeckSize(deck->getSize());
-            total -= strategy.getBetSize()
+            deck->getStrategy().updateDeckSize(deck->getSize()); 
+            int betSize = deck->getBetSize();
             Hand dealer = draw_cards();
-            Hand user = draw_cards();
-            strategy.updateCount(dealer);
-            strategy.updateCount(user);
-
+            Hand user = draw_cards(betSize);
+            //implement insurance here
             peek_dealer(dealer);
             vector<Hand> hands = user_play(user);
             dealer_draw(dealer);
+            
+            int dealer_score = dealer.getDealerScore();
+
+            for (Hand hand : hands){
+                int score = hand.getFinalScore();
+                if (dealer_score > score){
+                    total -= hand.getBetSize();
+                }
+                else if (dealer_score < score){
+                    total += hand.getBetSize();
+                }
+            }
+
+            cout << "total : " << total << endl;
+            cout << "true count : " << deck->getStrategy().getCount() << endl;
             //add hand evaluator to distribute wins
         }    
     }
@@ -348,11 +457,10 @@ struct Engine{
         return hands;
     }
 
-    void user_play_hand(Hand& user, vector<Hand>& hands){
+    void user_play_hand(Hand& user, vector<Hand>& hands){//need to implement strategy for here
         int choice;
         bool game_over = false;
         print_hand(user);
-        strategy.updateDeckSize(deck->getSize());
 
         while(!game_over){
             cin >> choice;
@@ -365,23 +473,20 @@ struct Engine{
                     hands.emplace_back(user);
                     break;
                 case 1:
-                    Card new_card = deck->hit();
-                    strategy.updateCount(new_card);
-                    user.addCard(new_card);
-                    if (user.check_over()) {game_over = true;}
+                    user.addCard(deck->hit());
+                    if (user.check_over()) {game_over = true; hands.emplace_back(user);}
                     print_hand(user);
                     break;
                 case 2:
-                    Card new_card = deck->hit();
-                    strategy.updateCount(new_card);
-                    user.addCard(new_card);
+                    user.doubleBet();
+                    user.addCard(deck->hit());
                     print_hand(user);
                     game_over = true;
                     hands.emplace_back(user);
                     break;
                 case 3:
                     if (user.check_can_split()){
-                        Hand user2 = Hand(user.get_second_card());
+                        Hand user2 = Hand(user.get_second_card(),user.getBetSize());
                         user.pop_second_card();
                         user.addCard(deck->hit());
                         user2.addCard(deck->hit());
@@ -401,7 +506,7 @@ struct Engine{
     }
 
     void print_state(Hand dealer, Hand user){
-        print_dealer_hand(dealer);
+        dealer.dealer_show_cards();
         print_hand(user);
     }
 
@@ -412,47 +517,35 @@ struct Engine{
         cout << endl;
     }
 
-    void print_dealer_hand(Hand dealer){
-        cout << "Dealer card" << endl;
-        dealer.dealer_show_cards();
-        cout << endl;
-    }
-
     void peek_dealer(Hand dealer){
         cout << "Dealer card" << endl;
         dealer.peek_dealer();
         cout << endl;
     }
 
-    Hand draw_cards(){
-        Hand hand = Hand(deck->deal());
+    Hand draw_cards(int betSize = 0){
+        Hand hand = Hand(deck->deal(),betSize);
         return hand;
     }
 
     void dealer_draw(Hand& dealer){
-        cout << "Dealer card"<< endl;
-        dealer.show_cards();
-        cout << endl;
+        dealer.dealer_show_cards();
         if (dealer.isDealerOver()){
             return;
         }
         while (!dealer.isDealerOver()){
             dealer.addCard(deck->hit());
-            cout << "Dealer card"<< endl;
-            dealer.show_cards();
-            cout << endl;
+            dealer.dealer_show_cards();
         }
         return;
     }
-
-    // int get_bet(){
-        
-    // }
 
 };
 
 
 int main(){
-    Engine(1);
+    int num_decks_used = 1;
+    HiLoStrategy hilo = HiLoStrategy(num_decks_used);
+    Engine(num_decks_used, hilo);
     return 0;
 }

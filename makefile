@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra
 
-OBJECTS = main.o rank.o suit.o Card.o Hand.o HiLoStrategy.o
+OBJECTS = main.o rank.o suit.o Card.o Hand.o HiLoStrategy.o BasicStrategy.o
 
 blackjack: $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o blackjack $(OBJECTS)
@@ -23,6 +23,9 @@ Hand.o: Hand.cpp Hand.h Card.h rank.h suit.h
 
 HiLoStrategy.o: HiLoStrategy.cpp HiLoStrategy.h Card.h rank.h suit.h
 	$(CXX) $(CXXFLAGS) -c HiLoStrategy.cpp
+
+BasicStrategy.o: BasicStrategy.cpp BasicStrategy.h rank.h
+	$(CXX) $(CXXFLAGS) -c BasicStrategy.cpp
 
 clean:
 	rm -f *.o blackjack

@@ -13,6 +13,7 @@ class HiLoStrategy { //in docs note deck size is counted 100% accuratly in half 
         void updateCount(Card card);
         void updateDeckSize(int num_cards_left);
         int getCount();
+        bool shouldAcceptInsurance();
 };
 
 #endif

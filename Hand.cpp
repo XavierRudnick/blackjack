@@ -2,7 +2,7 @@
 #include <iostream>
 
 Hand::Hand(std::pair<Card,Card> cards, int bet_size){
-    hand.emplace_back(cards.first);
+    hand.emplace_back(cards.first);//adds variable to end of vec
     hand.emplace_back(cards.second);
     bet_size_ = bet_size;
 }
@@ -50,6 +50,15 @@ void Hand::dealer_show_cards(){
 
 void Hand::peek_dealer(){
     std::cout << hand.front().getRank() << " " << hand.front().getSuit() << std::endl;
+}
+
+bool Hand::OfferInsurance(){
+    return (hand.front().getRank() == Rank::Ace);
+}
+
+bool Hand::dealerHiddenTen(){
+    Rank rank = hand.back().getRank();
+    return (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King || rank == Rank::Ten);
 }
 
 bool Hand::check_can_split(){
@@ -107,8 +116,8 @@ int Hand::getFinalScore(){
     } 
 }
 
-int Hand::getFinalDealerScore(){
-    int hard = getScoreHard();
+int Hand::getFinalDealerScore(){//do I use this anywher?
+    int hard = getDealerScore();
 
     if (hard > 21){
         return 0;

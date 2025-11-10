@@ -23,33 +23,46 @@ struct Engine{
             std::cout << "========================================" << std::endl;
             deck->getStrategy().updateDeckSize(deck->getSize()); 
             int betSize = deck->getBetSize();
+            std::vector<Hand> hands;
             Hand dealer = draw_cards();
             Hand user = draw_cards(betSize);
-
-            //implement insurance here
-
             peek_dealer(dealer);
-            std::vector<Hand> hands = user_play(user);
-            dealer_draw(dealer);
-            
-            int dealer_score = dealer.getDealerScore();
 
-            for (Hand hand : hands){
-                int score = hand.getFinalScore();
-                if (dealer_score > score){
-                    total -= hand.getBetSize();
-                }
-                else if (dealer_score < score){
-                    total += hand.getBetSize();
-                }
-                if (dealer_score == 0 && score ==0){
-                    total -= hand.getBetSize();
-                }
+            if (insuranceHandler(dealer, total,betSize)){
+                print_state(dealer, user);
+                hands = {user};
             }
+            else{
+                hands = user_play(user);
+                dealer_draw(dealer);
+            }
+
+            evaluateHands(dealer,hands,total);
 
             std::cout << "total : " << total << std::endl;
             std::cout << "true count : " << deck->getStrategy().getCount() << std::endl;
         }    
+    }
+
+    void evaluateHands(Hand dealer, std::vector<Hand> hands, int& total){
+        int dealer_score = dealer.getFinalDealerScore();
+
+        for (Hand hand : hands){
+            int score = hand.getFinalScore();
+
+            if (dealer_score > score){
+                total -= hand.getBetSize();
+            }
+            else if (dealer_score < score){
+                total += hand.getBetSize();
+            }
+            if (dealer_score == 0 && score ==0){
+                total -= hand.getBetSize();
+            }
+        }
+
+        return;
+
     }
 
     std::vector<Hand> user_play(Hand& user){
@@ -140,6 +153,29 @@ struct Engine{
         }
         return;
     }
+
+    bool insuranceHandler(Hand dealer, int& total, int betSize){
+
+        if (dealer.OfferInsurance()){
+            if (deck->getStrategy().shouldAcceptInsurance()){
+                if (dealer.dealerHiddenTen()){
+                    total += betSize;
+                    return true;
+                }
+                else{
+                    total -= betSize;
+                }
+            }
+            else{
+                if(dealer.dealerHiddenTen()){
+                    //total -= betSize;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 };
 
 #endif

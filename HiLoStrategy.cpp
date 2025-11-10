@@ -50,3 +50,10 @@ void HiLoStrategy::updateDeckSize(int num_cards_left){
 int HiLoStrategy::getCount(){
     return true_count;
 }
+
+bool HiLoStrategy::shouldAcceptInsurance(){
+    if (true_count >= 3){//mathmatical point where insurance is profitable accoding to gemini
+        return true;
+    }
+    return false;
+}

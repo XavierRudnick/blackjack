@@ -26,6 +26,8 @@ class Hand{
         int getFinalScore();
         int getDealerScore();
         int getFinalDealerScore();
+        bool OfferInsurance();
+        bool dealerHiddenTen();
         bool isDealerOver();
         int getScoreSoft();
         bool isSoftHand();

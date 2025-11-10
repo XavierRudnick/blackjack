@@ -104,30 +104,46 @@ int Hand::getFinalScore(){
     }
     else{
         return hard;
+    } 
+}
+
+int Hand::getFinalDealerScore(){
+    int hard = getScoreHard();
+
+    if (hard > 21){
+        return 0;
     }
-    
+    else{
+        return hard;
+    } 
 }
 
 int Hand::getDealerScore(){
     int score = 0;
     for (Card val : hand){
-
-        Rank rank = val.getRank();
-        if (rank == Rank::Ace){
-            score += 11;
-        }
-        else if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King){
-            score += 10;
-        }
-        else{
-            score += static_cast<int>(rank) + 2;
+        if (score < 17){
+            Rank rank = val.getRank();
+            if (rank == Rank::Ace){
+                if (score + 11 > 21){
+                    score += 1;
+                }
+                else{
+                    score += 11;
+                }
+            }
+            else if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King){
+                score += 10;
+            }
+            else{
+                score += static_cast<int>(rank) + 2;
+            }
         }
 
     }
     return score;
 }
 
-bool Hand::isDealerOver(){
+bool Hand::isDealerOver(){//dealer can have soft
     if (getDealerScore() >= 17){
         return true;
     }

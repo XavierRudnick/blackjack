@@ -42,6 +42,9 @@ struct Engine{
                 else if (dealer_score < score){
                     total += hand.getBetSize();
                 }
+                if (dealer_score == 0 && score ==0){
+                    total -= hand.getBetSize();
+                }
             }
 
             std::cout << "total : " << total << std::endl;

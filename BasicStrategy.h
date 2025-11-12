@@ -2,14 +2,8 @@
 #define BASICSTRATEGY_H
 
 #include "rank.h"
+#include "action.h"
 #include <cstdint>
-
-enum class Action : uint8_t {
-    Stand,
-    Hit,
-    Double,
-    Split
-};
 
 class BasicStrategy {
 public:
@@ -19,7 +13,7 @@ public:
     
 private:
     // Convert dealer's upcard rank to index (0-9: 2-10/Face, Ace)
-    static int getDealerIndex(Rank dealerUpcard);
+    static int getIndex(Rank dealerUpcard);
     
     // Lookup tables based on basic strategy
     static const Action hardTotalTable[16][10];

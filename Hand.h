@@ -31,6 +31,8 @@ class Hand{
         bool isDealerOver();
         int getScoreSoft();
         bool isSoftHand();
+        Rank peek_front_card();
+        bool doesHandHaveAce();
 };
 
 #endif

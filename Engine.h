@@ -5,6 +5,7 @@
 #include <vector>
 #include "Deck.h"
 #include "Hand.h"
+#include "BasicStrategy.h"
 
 template <typename Strategy>
 struct Engine{
@@ -33,7 +34,7 @@ struct Engine{
                 hands = {user};
             }
             else{
-                hands = user_play(user);
+                hands = user_play(dealer,user);
                 dealer_draw(dealer);
             }
 
@@ -46,7 +47,8 @@ struct Engine{
 
     void evaluateHands(Hand dealer, std::vector<Hand> hands, int& total){
         int dealer_score = dealer.getFinalDealerScore();
-
+        //implement blackjack which checks if size is 2 and total is 21 to pay, unless dealer got natural blackjack too, if not natural u win
+        //also implemt dealer gets 10 card and hidden ace and insta flips so u lose
         for (Hand hand : hands){
             int score = hand.getFinalScore();
 
@@ -65,14 +67,76 @@ struct Engine{
 
     }
 
-    std::vector<Hand> user_play(Hand& user){
+    std::vector<Hand> user_play(Hand dealer, Hand& user){
         std::vector<Hand> hands;
         hands.reserve(4); //unnessesary but fuck it I do what I want
-        user_play_hand(user, hands);
+        user_play_hand(dealer, user, hands);
         return hands;
     }
 
-    void user_play_hand(Hand& user, std::vector<Hand>& hands){ //need to implement strategy for here
+    Action getAction(Hand dealer, Hand user){
+        BasicStrategy strat;
+        Rank dealer_card = dealer.peek_front_card();
+        if(user.check_can_split()){
+            return strat.getSplitAction(user.peek_front_card(),dealer_card);
+        }
+        if (user.doesHandHaveAce()) {
+            if(user.getScoreHard() > 21){
+                return strat.getHardHandAction(user.getScoreSoft(),dealer_card);
+            }
+            else{
+                return strat.getSoftHandAction(user.getScoreHard(),dealer_card);
+            }
+        }
+        else {
+            return strat.getHardHandAction(user.getScoreHard(),dealer_card);
+        }
+
+    }
+
+
+    void user_play_hand(Hand dealer, Hand& user, std::vector<Hand>& hands){ 
+    
+        bool game_over = false;
+        print_hand(user); 
+
+        while(!game_over){
+            std::cout << std::endl;
+            Action action = getAction(dealer, user);
+            switch(action)
+            {
+                case Action::Stand:
+                    print_hand(user);
+                    game_over = true;
+                    hands.emplace_back(user);
+                    break;
+                case Action::Hit:
+                    user.addCard(deck->hit());
+                    if (user.check_over()) {game_over = true; hands.emplace_back(user);}
+                    print_hand(user);
+                    break;
+                case Action::Double:
+                    user.doubleBet();
+                    user.addCard(deck->hit());
+                    print_hand(user);
+                    game_over = true;
+                    hands.emplace_back(user);
+                    break;
+                case Action::Split:
+                    Hand user2 = Hand(user.get_second_card(),user.getBetSize());
+                    user.pop_second_card();
+                    user.addCard(deck->hit());
+                    user2.addCard(deck->hit());
+
+                    user_play_hand(dealer,user2,hands);
+                    print_hand(user);
+                    break;
+
+            }
+        }
+
+    }
+    void user_play_hand_manual(Hand& user, std::vector<Hand>& hands){ //need to implement strategy for here
         int choice;
         bool game_over = false;
         print_hand(user);
@@ -106,7 +170,7 @@ struct Engine{
                         user.addCard(deck->hit());
                         user2.addCard(deck->hit());
 
-                        user_play_hand(user2,hands);
+                        user_play_hand_manual(user2,hands);
                         print_hand(user);
                     }
                     break;

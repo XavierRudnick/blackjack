@@ -52,6 +52,10 @@ void Hand::peek_dealer(){
     std::cout << hand.front().getRank() << " " << hand.front().getSuit() << std::endl;
 }
 
+Rank Hand::peek_front_card(){
+    return hand.front().getRank();
+}
+
 bool Hand::OfferInsurance(){
     return (hand.front().getRank() == Rank::Ace);
 }
@@ -61,12 +65,6 @@ bool Hand::dealerHiddenTen(){
     return (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King || rank == Rank::Ten);
 }
 
-bool Hand::check_can_split(){
-    if (hand.size() == 2 && hand.front().getRank() == hand.back().getRank()){
-        return true;
-    }
-    return false;
-} 
 
 void Hand::addCard(Card card){
     hand.emplace_back(card);
@@ -188,3 +186,20 @@ bool Hand::isSoftHand(){
     }
     return false;
 }
+
+bool Hand::doesHandHaveAce(){
+    for (Card val : hand){
+        Rank rank = val.getRank();
+        if (rank == Rank::Ace){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Hand::check_can_split(){
+    if (hand.at(hand.size()-2).getRank() == hand.back().getRank()){
+        return true;
+    }
+    return false;
+} 

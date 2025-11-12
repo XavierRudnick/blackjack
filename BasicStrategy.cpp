@@ -69,15 +69,16 @@ int BasicStrategy::getIndex(Rank upcard) {
         case Rank::Seven: return 5;
         case Rank::Eight: return 6;
         case Rank::Nine:  return 7;
-        case Rank::Ten:   return 8
+        case Rank::Ten:   return 8;
         case Rank::Jack:  return 8;
         case Rank::Queen: return 8;
         case Rank::King:  return 8;
         case Rank::Ace:   return 9;
+        default:      return -1;
     }
 }
 
-Action BasicStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, bool canDouble) {
+Action BasicStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard) {
     int dealerIdx = getIndex(dealerUpcard);
     int playerIdx = playerTotal - 5;  // Player total 5 maps to index 0
     
@@ -99,7 +100,7 @@ Action BasicStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard) {
     int dealerIdx = getIndex(dealerUpcard);
     int pairIdx = getIndex(playerSplitRank);
     
-    Action action = pairTable[pairIdx][dealerIdx];
+    Action action = splitTable[pairIdx][dealerIdx];
     
     return action;
 }

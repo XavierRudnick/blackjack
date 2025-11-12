@@ -7,11 +7,11 @@
 // Columns: dealer upcard 2, 3, 4, 5, 6, 7, 8, 9, 10/J/Q/K, A
 const Action BasicStrategy::hardTotalTable[16][10] = {
     // Dealer:  2               3           4              5            6           7            8            9           10           A
-    /* 5  */ {Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
-    /* 6  */ {Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
-    /* 7  */ {Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
-    /* 8  */ {Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
-    /* 9  */ {Action::Hit, Action::Double, Action::Double, Action::Double, Action::Double, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
+    /* 5  */ {Action::Hit,   Action::Hit,  Action::Hit,    Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
+    /* 6  */ {Action::Hit,   Action::Hit,  Action::Hit,    Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
+    /* 7  */ {Action::Hit,   Action::Hit,  Action::Hit,    Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
+    /* 8  */ {Action::Hit,   Action::Hit,  Action::Hit,    Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
+    /* 9  */ {Action::Hit,   Action::Double, Action::Double, Action::Double, Action::Double, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
     /* 10 */ {Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Hit, Action::Hit},
     /* 11 */ {Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Hit},
     /* 12 */ {Action::Hit,   Action::Hit,   Action::Stand, Action::Stand, Action::Stand, Action::Hit,   Action::Hit,   Action::Hit,   Action::Hit,   Action::Hit},
@@ -78,13 +78,116 @@ int BasicStrategy::getIndex(Rank upcard) {
     }
 }
 
-Action BasicStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard) {
+Action BasicStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, int true_count){
+    int dealerValue = getIndex(dealerUpcard) +2;
+    switch (playerTotal) {
+        case 16:
+            if (dealerValue == 10 && true_count >= 0) {
+                return Action::Stand;
+            }
+            if (dealerValue == 9 && true_count >= 5) {
+                return Action::Stand;
+            }
+            break;
+            
+        case 15: 
+            if (dealerValue == 10 && true_count >= 4) {
+                return Action::Stand;
+            }
+            break;
+            
+        case 13:
+            if (dealerValue == 2 && true_count <= -1) { 
+                return Action::Stand;
+            }
+            if (dealerValue == 3 && true_count <= -2) { 
+                return Action::Stand;
+            }
+            break;
+
+        case 12:
+            if (dealerValue == 3 && true_count >= 2) {
+                return Action::Stand;
+            }
+            if (dealerValue == 2 && true_count >= 3) {
+                return Action::Stand;
+            }
+            if (dealerValue == 4 && true_count <= 0){
+                return Action::Hit;
+            }
+            if (dealerValue == 5 && true_count <= -2){
+                return Action::Hit;
+            }
+            if (dealerValue == 6 && true_count <= -1){
+                return Action::Hit;
+            }
+            break;
+        case 11:
+            if (dealerValue == 11 && true_count >= 1){
+                return Action::Double;
+            }
+            break;
+        case 10:
+            if (dealerValue == 10 && true_count >=4){
+                return Action::Double;
+            }
+            if (dealerValue == 11 && true_count >= 4){
+                return Action::Double;
+            }
+            break;
+        case 9:
+            if (dealerValue == 2  && true_count >= 1){
+                return Action::Double;
+            }
+            if (dealerValue == 7  && true_count >= 3){
+                return Action::Double;
+            }
+            break;
+        default: return Action::Skip; break;
+    }
+    return Action::Skip;
+}
+
+Action BasicStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, int true_count){
+    int dealerValue = getIndex(dealerUpcard) +2;
+    int playerValue = getIndex(playerRank) +2;
+    switch (playerValue) {
+        case 9:
+            if (dealerValue == 7 && true_count >= 4) {
+                return Action::Split;
+            }
+            if (dealerValue == 11 && true_count >= 5) {
+                return Action::Split;
+            }
+            break;
+        
+        // Commented out, very obvious counting cards when you split on tens    
+        // case 10: 
+        //     if (dealerValue == 5 && true_count >= 5) {
+        //         return Action::Split;
+        //     }
+        //     if (dealerValue == 4 && true_count >= 6) {
+        //         return Action::Split;
+        //     }
+        //     if (dealerValue == 6 && true_count >= 4) {
+        //         return Action::Split;
+        //     }
+        //     break;
+        default: return Action::Skip; break;
+    }
+    return Action::Skip;
+}
+
+Action BasicStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, int true_count) {
     int dealerIdx = getIndex(dealerUpcard);
     int playerIdx = playerTotal - 5;  // Player total 5 maps to index 0
+    if (Action deviation = shouldDeviatefromHard(playerTotal, dealerUpcard, true_count); deviation != Action::Skip) {
+        return deviation;
+    }
+    else{
+        return hardTotalTable[playerIdx][dealerIdx];
+    }
     
-    Action action = hardTotalTable[playerIdx][dealerIdx];
-    
-    return action;
 }
 
 Action BasicStrategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
@@ -96,11 +199,15 @@ Action BasicStrategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
     return action;
 }
 
-Action BasicStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard) {
+Action BasicStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, int true_count) {
     int dealerIdx = getIndex(dealerUpcard);
     int pairIdx = getIndex(playerSplitRank);
     
-    Action action = splitTable[pairIdx][dealerIdx];
-    
-    return action;
+    if (Action deviation = shouldDeviatefromSplit(playerSplitRank, dealerUpcard, true_count); deviation != Action::Skip) {
+        return deviation;
+    }
+    else{
+        return splitTable[pairIdx][dealerIdx];
+    }
+
 }

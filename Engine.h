@@ -78,18 +78,18 @@ struct Engine{
         BasicStrategy strat;
         Rank dealer_card = dealer.peek_front_card();
         if(user.check_can_split()){
-            return strat.getSplitAction(user.peek_front_card(),dealer_card);
+            return strat.getSplitAction(user.peek_front_card(),dealer_card,deck->getStrategy().getCount());
         }
         if (user.doesHandHaveAce()) {
             if(user.getScoreHard() > 21){
-                return strat.getHardHandAction(user.getScoreSoft(),dealer_card);
+                return strat.getHardHandAction(user.getScoreSoft(),dealer_card,deck->getStrategy().getCount());
             }
             else{
                 return strat.getSoftHandAction(user.getScoreHard(),dealer_card);
             }
         }
         else {
-            return strat.getHardHandAction(user.getScoreHard(),dealer_card);
+            return strat.getHardHandAction(user.getScoreHard(),dealer_card,deck->getStrategy().getCount());
         }
 
     }
@@ -106,23 +106,30 @@ struct Engine{
             switch(action)
             {
                 case Action::Stand:
+                {
                     print_hand(user);
                     game_over = true;
                     hands.emplace_back(user);
                     break;
+                }
                 case Action::Hit:
+                {
                     user.addCard(deck->hit());
                     if (user.check_over()) {game_over = true; hands.emplace_back(user);}
                     print_hand(user);
                     break;
+                }
                 case Action::Double:
+                {
                     user.doubleBet();
                     user.addCard(deck->hit());
                     print_hand(user);
                     game_over = true;
                     hands.emplace_back(user);
                     break;
+                }
                 case Action::Split:
+                {
                     Hand user2 = Hand(user.get_second_card(),user.getBetSize());
                     user.pop_second_card();
                     user.addCard(deck->hit());
@@ -130,6 +137,10 @@ struct Engine{
 
                     user_play_hand(dealer,user2,hands);
                     print_hand(user);
+                    break;
+                }
+                case Action::Skip: 
+                    std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
                     break;
 
             }

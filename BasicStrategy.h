@@ -6,19 +6,20 @@
 #include <cstdint>
 
 class BasicStrategy {
-public:
-    static Action getHardHandAction(int playerTotal, Rank dealerUpcard);
-    static Action getSoftHandAction(int playerTotal, Rank dealerUpcard);
-    static Action getSplitAction(Rank playerSplitRank, Rank dealerUpcard);
-    
-private:
-    // Convert dealer's upcard rank to index (0-9: 2-10/Face, Ace)
-    static int getIndex(Rank dealerUpcard);
-    
-    // Lookup tables based on basic strategy
-    static const Action hardTotalTable[16][10];
-    static const Action softTotalTable[9][10];
-    static const Action splitTable[10][10];
+    private:
+        static const Action hardTotalTable[16][10];
+        static const Action softTotalTable[9][10];
+        static const Action splitTable[10][10];
+        
+        static int getIndex(Rank dealerUpcard);
+        static Action shouldDeviatefromHard(int playerTotal, Rank dealerUpcard,int true_count);
+        static Action shouldDeviatefromSplit(Rank playerSplitRank, Rank dealerUpcard,int true_count);
+
+    public:
+        static Action getHardHandAction(int playerTotal, Rank dealerUpcard,int true_count);
+        static Action getSoftHandAction(int playerTotal, Rank dealerUpcard);
+        static Action getSplitAction(Rank playerSplitRank, Rank dealerUpcard,int true_count);
+
 };
 
 #endif

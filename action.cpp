@@ -16,6 +16,9 @@ std::ostream& operator<<(std::ostream& os, const Action action){
             case Action::Split:
                 os << "Split";
                 break;
+            case Action::Skip:
+                os << "Skip";
+                break;
 
         }
     return os;

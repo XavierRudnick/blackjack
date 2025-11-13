@@ -78,7 +78,7 @@ int BasicStrategy::getIndex(Rank upcard) {
     }
 }
 
-Action BasicStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, int true_count){
+Action BasicStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float true_count){
     int dealerValue = getIndex(dealerUpcard) +2;
     switch (playerTotal) {
         case 16:
@@ -148,7 +148,7 @@ Action BasicStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, 
     return Action::Skip;
 }
 
-Action BasicStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, int true_count){
+Action BasicStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float true_count){
     int dealerValue = getIndex(dealerUpcard) +2;
     int playerValue = getIndex(playerRank) +2;
     switch (playerValue) {
@@ -178,8 +178,18 @@ Action BasicStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard,
     return Action::Skip;
 }
 
-Action BasicStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, int true_count) {
+Action BasicStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float true_count) {
     int dealerIdx = getIndex(dealerUpcard);
+    
+    // Bounds check: if playerTotal < 5, default to hit
+    if (playerTotal < 5) {
+        return Action::Hit;
+    }
+    // Bounds check: if playerTotal > 20, default to stand
+    if (playerTotal > 20) {
+        return Action::Stand;
+    }
+    
     int playerIdx = playerTotal - 5;  // Player total 5 maps to index 0
     if (Action deviation = shouldDeviatefromHard(playerTotal, dealerUpcard, true_count); deviation != Action::Skip) {
         return deviation;
@@ -199,7 +209,7 @@ Action BasicStrategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
     return action;
 }
 
-Action BasicStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, int true_count) {
+Action BasicStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, float true_count) {
     int dealerIdx = getIndex(dealerUpcard);
     int pairIdx = getIndex(playerSplitRank);
     

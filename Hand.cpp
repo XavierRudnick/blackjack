@@ -31,25 +31,25 @@ void Hand::pop_second_card(){
 
 void Hand::show_cards(){
     for (Card val : hand){
-        std::cout << val.getRank() << " " << val.getSuit() << std::endl;
+        //std::cout << val.getRank() << " " << val.getSuit() << std::endl;
     }
-    std::cout << "value: " << getScoreHard() << std::endl;
+    //std::cout << "value: " << getScoreHard() << std::endl;
     if (isSoftHand()){
-        std::cout << "soft value: " << getScoreSoft() << std::endl;
+       // std::cout << "soft value: " << getScoreSoft() << std::endl;
     }
 }
 
 void Hand::dealer_show_cards(){
-    std::cout << "Dealer card" << std::endl;
+   // std::cout << "Dealer card" << std::endl;
     for (Card val : hand){
-        std::cout << val.getRank() << " " << val.getSuit() << std::endl;
+      //  std::cout << val.getRank() << " " << val.getSuit() << std::endl;
     }
-    std::cout << "value: " << getScoreHard() << std::endl;
-    std::cout << std::endl;
+   // std::cout << "value: " << getScoreHard() << std::endl;
+    //std::cout << std::endl;
 }
 
 void Hand::peek_dealer(){
-    std::cout << hand.front().getRank() << " " << hand.front().getSuit() << std::endl;
+   // std::cout << hand.front().getRank() << " " << hand.front().getSuit() << std::endl;
 }
 
 Rank Hand::peek_front_card(){

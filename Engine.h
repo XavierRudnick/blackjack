@@ -6,21 +6,23 @@
 #include "Deck.h"
 #include "Hand.h"
 #include "BasicStrategy.h"
+#include "HiLoStrategy.h"
+#include "NoStrategy.h"
 
 template <typename Strategy>
 struct Engine{
     std::optional<Deck<Strategy>> deck;
     const uint8_t number_of_decks;
     int wallet;
-    Engine(uint8_t deck_size,int& money, Strategy strategy) : number_of_decks(deck_size), wallet(money){
-        deck.emplace(deck_size, std::move(strategy));
-        
+
+    Engine(uint8_t deck_size,int money, Strategy strategy) : number_of_decks(deck_size), wallet(money){
+        deck.emplace(number_of_decks, std::move(strategy));
     }
 
     int runner(){
-        std::cout << "starting a " << static_cast<int>(number_of_decks) << " deck game!" << std::endl;
+        //std::cout << "starting a " << static_cast<int>(number_of_decks) << " deck game!" << std::endl;
         while (deck->getSize() > number_of_decks * 13){
-            std::cout << "========================================" << std::endl;
+            //std::cout << "========================================" << std::endl;
 
             deck->getStrategy().updateDeckSize(deck->getSize()); 
             int betSize = deck->getBetSize();
@@ -44,8 +46,8 @@ struct Engine{
                 evaluateHands(dealer,hands);
             }
 
-            std::cout << "wallet total : " << wallet << std::endl;
-            std::cout << "true count : " << deck->getStrategy().getCount() << std::endl;
+            //std::cout << "wallet total : " << wallet << std::endl;
+            //std::cout << "true count : " << deck->getStrategy().getCount() << std::endl;
         }    
         return wallet;
     }
@@ -91,11 +93,16 @@ struct Engine{
         }
 
         if (user.doesHandHaveAce()) {
-            if(user.getScoreHard() > 21){
-                return strat.getHardHandAction(user.getScoreSoft(),dealer_card,deck->getStrategy().getCount());
+            int hardScore = user.getScoreHard();
+            int softScore = user.getScoreSoft();
+            
+            // If hard score busts, use soft score as hard total
+            if(hardScore > 21){
+                return strat.getHardHandAction(softScore,dealer_card,deck->getStrategy().getCount());
             }
+            // If hard score is valid, treat as soft hand
             else{
-                return strat.getSoftHandAction(user.getScoreHard(),dealer_card);
+                return strat.getSoftHandAction(hardScore,dealer_card);
             }
         }
 
@@ -112,7 +119,7 @@ struct Engine{
         print_hand(user); 
 
         while(!game_over){
-            std::cout << std::endl;
+            //std::cout << std::endl;
             Action action = getAction(dealer, user);
             switch(action)
             {
@@ -125,6 +132,12 @@ struct Engine{
                 }
                 case Action::Hit:
                 {
+                    if (deck->getSize() < 1) {
+                        std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+                        game_over = true;
+                        hands.emplace_back(user);
+                        break;
+                    }
                     user.addCard(deck->hit());
                     if (user.check_over()) {game_over = true; hands.emplace_back(user);}
                     print_hand(user);
@@ -132,6 +145,13 @@ struct Engine{
                 }
                 case Action::Double:
                 {
+                    if (deck->getSize() < 1) {
+                        // Can't double, just stand instead
+                        std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+                        game_over = true;
+                        hands.emplace_back(user);
+                        break;
+                    }
                     user.doubleBet();
                     user.addCard(deck->hit());
                     print_hand(user);
@@ -141,6 +161,13 @@ struct Engine{
                 }
                 case Action::Split:
                 {
+                    if (deck->getSize() < 2) {
+                        // Can't split, just stand instead
+                        std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+                        game_over = true;
+                        hands.emplace_back(user);
+                        break;
+                    }
                     Hand user2 = Hand(user.get_second_card(),user.getBetSize());
                     user.pop_second_card();
                     user.addCard(deck->hit());
@@ -151,7 +178,7 @@ struct Engine{
                     break;
                 }
                 case Action::Skip: 
-                    std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+                    //std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
                     break;
 
             }
@@ -164,8 +191,8 @@ struct Engine{
         print_hand(user);
 
         while(!game_over){
-            std::cin >> choice;
-            std::cout << std::endl;
+            //std::cin >> choice;
+            //std::cout << std::endl;
             switch(choice)
             {
                 case 0:
@@ -211,19 +238,22 @@ struct Engine{
     }
 
     void print_hand(Hand user){
-        std::cout << "Your card" << std::endl;
+        //std::cout << "Your card" << std::endl;
         user.show_cards();
-        std::cout << "0: Stand, 1: Hit, 2: Double, 3: Stand" << std::endl;
-        std::cout << std::endl;
+       // std::cout << "0: Stand, 1: Hit, 2: Double, 3: Stand" << std::endl;
+        //std::cout << std::endl;
     }
 
     void peek_dealer(Hand dealer){
-        std::cout << "Dealer card" << std::endl;
+        //std::cout << "Dealer card" << std::endl;
         dealer.peek_dealer();
-        std::cout << std::endl;
+        //std::cout << std::endl;
     }
 
     Hand draw_cards(int betSize = 0){
+        if (deck->getSize() < 2) {
+            throw std::runtime_error("Not enough cards to draw initial hand 258");
+        }
         Hand hand = Hand(deck->deal(), betSize);
         return hand;
     }
@@ -234,6 +264,9 @@ struct Engine{
             return;
         }
         while (!dealer.isDealerOver()){
+            if (deck->getSize() < 1) {
+                throw std::runtime_error("Not enough cards to draw initial hand 271");
+            }
             dealer.addCard(deck->hit());
             dealer.dealer_show_cards();
         }

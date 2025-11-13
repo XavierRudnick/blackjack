@@ -150,27 +150,27 @@ class Hand{
 
         void show_cards(){
             for (Card val : hand){
-                cout <<
-                val.getRank() << " " << val.getSuit() << endl;
+        //        cout <<
+              //  val.getRank() << " " << val.getSuit() << endl;
             }
-            cout << "value: " << getScoreHard() << endl;
+        //    cout << "value: " << getScoreHard() << endl;
             if (isSoftHand()){
-                cout << "soft value: " << getScoreSoft() << endl;
+         //       cout << "soft value: " << getScoreSoft() << endl;
             }
         }
 
         void dealer_show_cards(){
-            cout << "Dealer card" << endl;
+         //   cout << "Dealer card" << endl;
             for (Card val : hand){
                 cout <<
                 val.getRank() << " " << val.getSuit() << endl;
             }
-            cout << "value: " << getScoreHard() << endl;
-            cout << endl;
+        //    cout << "value: " << getScoreHard() << endl;
+       //     cout << endl;
         }
 
         void peek_dealer(){
-            cout << hand.front().getRank() << " " << hand.front().getSuit() << endl;
+         //   cout << hand.front().getRank() << " " << hand.front().getSuit() << endl;
             //cout << "value: " << getScoreHard() << endl;
         }
 
@@ -419,10 +419,10 @@ struct Engine{
     }
 
     void runner(){
-        cout << "starting a " << number_of_decks << " deck game!" << endl;
+       // cout << "starting a " << number_of_decks << " deck game!" << endl;
         int total = 100;
         while (deck->getSize() > number_of_decks * 13){//deck_size is number of 52 card decks, so like 4 decks, reshuffle when 25% of deck cards left.
-            cout << "========================================" << endl;
+        //    cout << "========================================" << endl;
             deck->getStrategy().updateDeckSize(deck->getSize()); 
             int betSize = deck->getBetSize();
             Hand dealer = draw_cards();
@@ -444,8 +444,8 @@ struct Engine{
                 }
             }
 
-            cout << "total : " << total << endl;
-            cout << "true count : " << deck->getStrategy().getCount() << endl;
+           // cout << "total : " << total << endl;
+           // cout << "true count : " << deck->getStrategy().getCount() << endl;
             //add hand evaluator to distribute wins
         }    
     }
@@ -463,8 +463,8 @@ struct Engine{
         print_hand(user);
 
         while(!game_over){
-            cin >> choice;
-            cout << endl;
+        //    cin >> choice;
+        //    cout << endl;
             switch(choice)
             {
                 case 0:
@@ -511,16 +511,16 @@ struct Engine{
     }
 
     void print_hand(Hand user){
-        cout << "Your card" << endl;
+        //cout << "Your card" << endl;
         user.show_cards();
-        cout << "0: Stand, 1: Hit, 2: Double, 3: Stand" << endl;
-        cout << endl;
+        //cout << "0: Stand, 1: Hit, 2: Double, 3: Stand" << endl;
+        //cout << endl;
     }
 
     void peek_dealer(Hand dealer){
-        cout << "Dealer card" << endl;
+       // cout << "Dealer card" << endl;
         dealer.peek_dealer();
-        cout << endl;
+      //  cout << endl;
     }
 
     Hand draw_cards(int betSize = 0){

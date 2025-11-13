@@ -7,35 +7,35 @@ HiLoStrategy::HiLoStrategy(float deck_size){
 
 int HiLoStrategy::getBetSize() const {
     if (true_count < 1){
-        return 1;
+        return 10;
     }
     else if (true_count <= 1.5) {
-        return 10;
+        return 100;
     } 
     else if (true_count < 3.0) { 
-        return 20;
+        return 200;
     } 
     else if (true_count < 4.0) {
-        return 40;
+        return 400;
     } 
     else if (true_count < 5.0) {
         return 60;
     } 
     else if (true_count < 6.0) {
-        return 120;
+        return 1200;
     } 
     else if (true_count < 7.0) {
-        return 150;
+        return 1500;
     } 
     else {
-        return 200;
+        return 2000;
     }
 }
 
 void HiLoStrategy::updateCount(Card card) {
     Rank rank = card.getRank();
     int score = static_cast<int>(rank) + 2;//add 2 to account for enum starting at 0
-    int running_count = 0;
+    //int running_count = 0;
 
     if (score <= 6){
         running_count += 1;
@@ -43,7 +43,9 @@ void HiLoStrategy::updateCount(Card card) {
     else if (score >= 10){
         running_count -= 1;
     }
-    true_count += running_count / num_decks_left; 
+    //std::cout << "running count: " << running_count << std::endl;
+    //std::cout << "decks left: " << num_decks_left << std::endl;
+    true_count = running_count / num_decks_left; 
     return;
 }
 
@@ -53,10 +55,11 @@ void HiLoStrategy::updateDeckSize(int num_cards_left){
     float decks_left_rounded = round(decks_left_unrounded);
     decks_left_rounded = decks_left_rounded / 2;
     num_decks_left = decks_left_rounded;
+    //std::cout << "decks left: " << num_decks_left << std::endl;
     return;
 }
 
-int HiLoStrategy::getCount(){
+float HiLoStrategy::getCount(){
     return true_count;
 }
 

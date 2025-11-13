@@ -2,17 +2,18 @@
 #include "HiLoStrategy.h"
 
 int main(){
-    int num_decks_used = 6;
-
-    int swag[1000];
-    for (int i = 0; i < 1000; i++){
+    int num_decks_used = 1;
+    int wallet = 10000;
+    int swag[5000];
+    for (int i = 0; i < 5000; i++){
         HiLoStrategy hilo = HiLoStrategy(num_decks_used);
-        swag[i] = Engine(num_decks_used, hilo).runner();
+        wallet = Engine(num_decks_used,wallet, hilo).runner();
+        swag[i] = wallet;
     }
     int total = 0;
-    for (int i = 0; i < 100; i++){
+    for (int i = 0; i < 5000; i++){
         total += swag[i];
     }
-    std::cout << "Average after 100 rounds: " << total / 100 << std::endl;
+    //std::cout << "Average after 1000 rounds: " << total / 100 << std::endl;
     return 0;
 }

@@ -11,14 +11,14 @@ template <typename Strategy>
 struct Engine{
     std::optional<Deck<Strategy>> deck;
     const uint8_t number_of_decks;
-
-    Engine(uint8_t deck_size, Strategy strategy) : number_of_decks(deck_size){
+    int wallet;
+    Engine(uint8_t deck_size,int& money, Strategy strategy) : number_of_decks(deck_size), wallet(money){
         deck.emplace(deck_size, std::move(strategy));
+        
     }
 
     int runner(){
         std::cout << "starting a " << static_cast<int>(number_of_decks) << " deck game!" << std::endl;
-        int total = 10000;
         while (deck->getSize() > number_of_decks * 13){
             std::cout << "========================================" << std::endl;
 
@@ -30,27 +30,27 @@ struct Engine{
             Hand user = draw_cards(betSize);
             peek_dealer(dealer);
 
-            if (insuranceHandler(dealer,user, total,betSize)){
+            if (insuranceHandler(dealer,user,betSize)){
                 print_state(dealer, user);
                 hands = {user};
             }
-            else if (dealerRobberyHandler(dealer,user, total,betSize)){
+            else if (dealerRobberyHandler(dealer,user,betSize)){
                 print_state(dealer, user);
                 hands = {user};
             }
             else{
                 hands = user_play(dealer,user);
                 dealer_draw(dealer);
-                evaluateHands(dealer,hands,total);
+                evaluateHands(dealer,hands);
             }
 
-            std::cout << "total : " << total << std::endl;
+            std::cout << "wallet total : " << wallet << std::endl;
             std::cout << "true count : " << deck->getStrategy().getCount() << std::endl;
         }    
-        return total;
+        return wallet;
     }
 
-    void evaluateHands(Hand dealer, std::vector<Hand> hands, int& total){
+    void evaluateHands(Hand dealer, std::vector<Hand> hands){
         int dealer_score = dealer.getFinalDealerScore();
         //implement blackjack which checks if size is 2 and total is 21 to pay, unless dealer got natural blackjack too, if not natural u win
         //also implemt dealer gets 10 card and hidden ace and insta flips so u lose
@@ -58,17 +58,17 @@ struct Engine{
             int score = hand.getFinalScore();
 
             if (hand.isBlackjack()){
-                total += hand.getBetSize() * 1.5;
+                wallet += hand.getBetSize() * 1.5;
             } 
 
             if (dealer_score > score){
-                total -= hand.getBetSize();
+                wallet -= hand.getBetSize();
             }
             else if (dealer_score < score){
-                total += hand.getBetSize();
+                wallet += hand.getBetSize();
             }
             if (dealer_score == 0 && score ==0){
-                total -= hand.getBetSize();
+                wallet -= hand.getBetSize();
             }
         }
 
@@ -240,12 +240,12 @@ struct Engine{
         return;
     }
 
-    bool insuranceHandler(Hand dealer,Hand user, int& total, int betSize){
+    bool insuranceHandler(Hand dealer,Hand user, int betSize){
 
         if (dealer.OfferInsurance()){
             if (deck->getStrategy().shouldAcceptInsurance()){
                 if (dealer.dealerHiddenTen() && user.isBlackjack()){
-                    total += betSize;
+                    wallet += betSize;
                     return true;
                 }
                 else if (dealer.dealerHiddenTen() && !user.isBlackjack()){
@@ -260,7 +260,7 @@ struct Engine{
                     return true;
                 }
                 else if (dealer.dealerHiddenTen() && !user.isBlackjack()) {
-                    total -= betSize;
+                    wallet -= betSize;
                     return true;
                 }
                 else{
@@ -271,10 +271,10 @@ struct Engine{
         return false;
     }
 
-    bool dealerRobberyHandler(Hand dealer,Hand user, int& total, int betSize){
+    bool dealerRobberyHandler(Hand dealer,Hand user, int betSize){
         if (dealer.dealerShowsTen() && dealer.dealerHiddenAce()){
             if (!user.isBlackjack()){
-                total -= betSize;
+                wallet -= betSize;
             }
             return true;
         }

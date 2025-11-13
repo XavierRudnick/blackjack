@@ -66,6 +66,16 @@ bool Hand::dealerHiddenTen(){
 }
 
 
+bool Hand::dealerShowsTen(){
+    Rank rank = hand.front().getRank();
+    return (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King || rank == Rank::Ten);
+}
+
+bool Hand::dealerHiddenAce(){
+    return (hand.back().getRank() == Rank::Ace);
+}
+
+
 void Hand::addCard(Card card){
     hand.emplace_back(card);
 }
@@ -128,24 +138,25 @@ int Hand::getFinalDealerScore(){//do I use this anywher?
 int Hand::getDealerScore(){
     int score = 0;
     for (Card val : hand){
-        if (score < 17){
-            Rank rank = val.getRank();
-            if (rank == Rank::Ace){
-                if (score + 11 > 21){
-                    score += 1;
-                }
-                else{
-                    score += 11;
-                }
-            }
-            else if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King){
-                score += 10;
+        Rank rank = val.getRank();
+        if (rank == Rank::Ace){
+            if (score + 11 > 21){
+                score += 1;
             }
             else{
-                score += static_cast<int>(rank) + 2;
+                score += 11;
             }
         }
+        else if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King){
+            score += 10;
+        }
+        else{
+            score += static_cast<int>(rank) + 2;
+        }
 
+        if (score > 21 && doesHandHaveAce()){
+            score -= 10;
+        }
     }
     return score;
 }
@@ -203,3 +214,19 @@ bool Hand::check_can_split(){
     }
     return false;
 } 
+
+
+bool Hand::isBlackjack(){
+    if (hand.size() == 2){
+        int front = hand.front().getRankInt();
+        int back = hand.back().getRankInt();
+        if (front == 8 && back == 9){
+            return true;
+        }
+        else if (front == 9 && back == 8){
+            return true;
+        }
+        return false;
+    }
+    return false;
+}

@@ -14,35 +14,40 @@ struct Engine{
 
     Engine(uint8_t deck_size, Strategy strategy) : number_of_decks(deck_size){
         deck.emplace(deck_size, std::move(strategy));
-        runner();
     }
 
-    void runner(){
+    int runner(){
         std::cout << "starting a " << static_cast<int>(number_of_decks) << " deck game!" << std::endl;
-        int total = 100;
+        int total = 10000;
         while (deck->getSize() > number_of_decks * 13){
             std::cout << "========================================" << std::endl;
+
             deck->getStrategy().updateDeckSize(deck->getSize()); 
             int betSize = deck->getBetSize();
             std::vector<Hand> hands;
+
             Hand dealer = draw_cards();
             Hand user = draw_cards(betSize);
             peek_dealer(dealer);
 
-            if (insuranceHandler(dealer, total,betSize)){
+            if (insuranceHandler(dealer,user, total,betSize)){
+                print_state(dealer, user);
+                hands = {user};
+            }
+            else if (dealerRobberyHandler(dealer,user, total,betSize)){
                 print_state(dealer, user);
                 hands = {user};
             }
             else{
                 hands = user_play(dealer,user);
                 dealer_draw(dealer);
+                evaluateHands(dealer,hands,total);
             }
-
-            evaluateHands(dealer,hands,total);
 
             std::cout << "total : " << total << std::endl;
             std::cout << "true count : " << deck->getStrategy().getCount() << std::endl;
         }    
+        return total;
     }
 
     void evaluateHands(Hand dealer, std::vector<Hand> hands, int& total){
@@ -51,6 +56,10 @@ struct Engine{
         //also implemt dealer gets 10 card and hidden ace and insta flips so u lose
         for (Hand hand : hands){
             int score = hand.getFinalScore();
+
+            if (hand.isBlackjack()){
+                total += hand.getBetSize() * 1.5;
+            } 
 
             if (dealer_score > score){
                 total -= hand.getBetSize();
@@ -80,6 +89,7 @@ struct Engine{
         if(user.check_can_split()){
             return strat.getSplitAction(user.peek_front_card(),dealer_card,deck->getStrategy().getCount());
         }
+
         if (user.doesHandHaveAce()) {
             if(user.getScoreHard() > 21){
                 return strat.getHardHandAction(user.getScoreSoft(),dealer_card,deck->getStrategy().getCount());
@@ -88,6 +98,7 @@ struct Engine{
                 return strat.getSoftHandAction(user.getScoreHard(),dealer_card);
             }
         }
+
         else {
             return strat.getHardHandAction(user.getScoreHard(),dealer_card,deck->getStrategy().getCount());
         }
@@ -229,26 +240,46 @@ struct Engine{
         return;
     }
 
-    bool insuranceHandler(Hand dealer, int& total, int betSize){
+    bool insuranceHandler(Hand dealer,Hand user, int& total, int betSize){
 
         if (dealer.OfferInsurance()){
             if (deck->getStrategy().shouldAcceptInsurance()){
-                if (dealer.dealerHiddenTen()){
+                if (dealer.dealerHiddenTen() && user.isBlackjack()){
                     total += betSize;
                     return true;
                 }
+                else if (dealer.dealerHiddenTen() && !user.isBlackjack()){
+                    return true;
+                }
                 else{
-                    total -= betSize;
+                    return false;
                 }
             }
             else{
-                if(dealer.dealerHiddenTen()){
-                    //total -= betSize;
+                if(dealer.dealerHiddenTen() && user.isBlackjack()){
                     return true;
+                }
+                else if (dealer.dealerHiddenTen() && !user.isBlackjack()) {
+                    total -= betSize;
+                    return true;
+                }
+                else{
+                    return false;
                 }
             }
         }
         return false;
+    }
+
+    bool dealerRobberyHandler(Hand dealer,Hand user, int& total, int betSize){
+        if (dealer.dealerShowsTen() && dealer.dealerHiddenAce()){
+            if (!user.isBlackjack()){
+                total -= betSize;
+            }
+            return true;
+        }
+        return false;
+        
     }
 
 };

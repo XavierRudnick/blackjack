@@ -6,20 +6,29 @@ HiLoStrategy::HiLoStrategy(float deck_size){
 }
 
 int HiLoStrategy::getBetSize() const {
-    if (true_count <= 1.5) {
+    if (true_count < 1){
         return 1;
+    }
+    else if (true_count <= 1.5) {
+        return 10;
     } 
     else if (true_count < 3.0) { 
-        return 2;
+        return 20;
     } 
     else if (true_count < 4.0) {
-        return 3;
+        return 40;
     } 
     else if (true_count < 5.0) {
-        return 5;
+        return 60;
+    } 
+    else if (true_count < 6.0) {
+        return 120;
+    } 
+    else if (true_count < 7.0) {
+        return 150;
     } 
     else {
-        return static_cast<int>((true_count * 2.0) - 2.0);
+        return 200;
     }
 }
 

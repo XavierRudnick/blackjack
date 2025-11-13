@@ -12,6 +12,7 @@ class Card{
         Card(Rank rank, Suit suit);
         Rank getRank();
         Suit getSuit();
+        int getRankInt();
 };
 
 #endif

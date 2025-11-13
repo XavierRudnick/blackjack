@@ -33,6 +33,10 @@ class Hand{
         bool isSoftHand();
         Rank peek_front_card();
         bool doesHandHaveAce();
+        bool dealerShowsTen();
+        bool dealerHiddenAce();
+        bool isBlackjack();
+        int getRankInt();
 };
 
 #endif

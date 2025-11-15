@@ -21,7 +21,7 @@ struct Engine{
 
     int runner(){
         //std::cout << "starting a " << static_cast<int>(number_of_decks) << " deck game!" << std::endl;
-        while (deck->getSize() > number_of_decks * 13){
+        while (deck->getSize() > number_of_decks * 19){ // reset when 3/8 left so 62.5% penetration
             //std::cout << "========================================" << std::endl;
 
             deck->getStrategy().updateDeckSize(deck->getSize()); 
@@ -159,7 +159,7 @@ struct Engine{
                     hands.emplace_back(user);
                     break;
                 }
-                case Action::Split:
+                case Action::Split://only called when hand has 2 cards
                 {
                     if (deck->getSize() < 2) {
                         // Can't split, just stand instead
@@ -168,8 +168,8 @@ struct Engine{
                         hands.emplace_back(user);
                         break;
                     }
-                    Hand user2 = Hand(user.get_second_card(),user.getBetSize());
-                    user.pop_second_card();
+                    Hand user2 = Hand(user.getLastCard(),user.getBetSize());
+                    user.popLastCard();
                     user.addCard(deck->hit());
                     user2.addCard(deck->hit());
 
@@ -178,7 +178,7 @@ struct Engine{
                     break;
                 }
                 case Action::Skip: 
-                    //std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+                    std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
                     break;
 
             }
@@ -214,8 +214,8 @@ struct Engine{
                     break;
                 case 3:
                     if (user.check_can_split()){
-                        Hand user2 = Hand(user.get_second_card(),user.getBetSize());
-                        user.pop_second_card();
+                        Hand user2 = Hand(user.getLastCard(),user.getBetSize());
+                        user.popLastCard();
                         user.addCard(deck->hit());
                         user2.addCard(deck->hit());
 
@@ -267,6 +267,7 @@ struct Engine{
             if (deck->getSize() < 1) {
                 throw std::runtime_error("Not enough cards to draw initial hand 271");
             }
+            
             dealer.addCard(deck->hit());
             dealer.dealer_show_cards();
         }

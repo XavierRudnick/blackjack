@@ -6,7 +6,7 @@ int main(){
     int total[10000];
 
     for (int j = 0; j < 10000; j++){
-        int wallet = 10000;
+        int wallet = 1000;
         for (int i = 0; i < 12; i++){
             NoStrategy no  = NoStrategy(num_decks_used);
             HiLoStrategy hilo = HiLoStrategy(num_decks_used);
@@ -19,6 +19,6 @@ int main(){
         swag += total[i];
     }
 
-    std::cout << "Average after 1000 rounds: " << swag/10000 << std::endl;
+    std::cout << "Average after 10000 rounds: " << swag/10000 << std::endl;
     return 0;
 }

@@ -20,11 +20,11 @@ void Hand::doubleBet(){
     bet_size_ *= 2;
 }
 
-Card Hand::get_second_card(){
+Card Hand::getLastCard(){
     return hand.back();
 }
 
-void Hand::pop_second_card(){
+void Hand::popLastCard(){
     hand.pop_back();
     return;
 }
@@ -57,22 +57,19 @@ Rank Hand::peek_front_card(){
 }
 
 bool Hand::OfferInsurance(){
-    return (hand.front().getRank() == Rank::Ace);
+    return hand.front().isAce();
 }
 
 bool Hand::dealerHiddenTen(){
-    Rank rank = hand.back().getRank();
-    return (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King || rank == Rank::Ten);
+    return hand.back().isWorthTen();
 }
 
-
 bool Hand::dealerShowsTen(){
-    Rank rank = hand.front().getRank();
-    return (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King || rank == Rank::Ten);
+    return hand.front().isWorthTen();
 }
 
 bool Hand::dealerHiddenAce(){
-    return (hand.back().getRank() == Rank::Ace);
+    return hand.back().isAce();
 }
 
 
@@ -209,7 +206,7 @@ bool Hand::doesHandHaveAce(){
 }
 
 bool Hand::check_can_split(){
-    if (hand.at(hand.size()-2).getRank() == hand.back().getRank()){
+    if (hand.size() == 2 && hand.front().getRank() == hand.back().getRank()){
         return true;
     }
     return false;
@@ -218,15 +215,17 @@ bool Hand::check_can_split(){
 
 bool Hand::isBlackjack(){
     if (hand.size() == 2){
-        int front = hand.front().getRankInt();
-        int back = hand.back().getRankInt();
-        if (front == 8 && back == 9){
+        bool frontTen = hand.front().isWorthTen();
+        bool backTen = hand.back().isWorthTen();
+        bool frontAce = hand.front().isAce();
+        bool backAce = hand.back().isAce();
+
+        if (frontTen && backAce){
             return true;
         }
-        else if (front == 9 && back == 8){
+        else if (frontAce && backTen){
             return true;
         }
-        return false;
     }
     return false;
 }

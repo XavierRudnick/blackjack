@@ -12,22 +12,10 @@ Rank Card::getRank(){
 Suit Card::getSuit(){
     return suit_;
 }
+bool Card::isWorthTen(){
+    return (rank_ == Rank::Jack || rank_ == Rank::Queen || rank_ == Rank::King || rank_ == Rank::Ten);
+}
 
-int Card::getRankInt(){
-    switch (rank_) {
-        case Rank::Two:   return 0;
-        case Rank::Three: return 1;
-        case Rank::Four:  return 2;
-        case Rank::Five:  return 3;
-        case Rank::Six:   return 4;
-        case Rank::Seven: return 5;
-        case Rank::Eight: return 6;
-        case Rank::Nine:  return 7;
-        case Rank::Ten:   return 8;
-        case Rank::Jack:  return 8;
-        case Rank::Queen: return 8;
-        case Rank::King:  return 8;
-        case Rank::Ace:   return 9;
-        default:      return -1;
-    }
+bool Card::isAce(){
+    return (rank_ == Rank::Ace);
 }

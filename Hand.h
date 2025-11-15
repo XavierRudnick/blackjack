@@ -14,8 +14,8 @@ class Hand{
         
         int getBetSize();
         void doubleBet();
-        Card get_second_card();
-        void pop_second_card();
+        Card getLastCard();
+        void popLastCard();
         void show_cards();
         void dealer_show_cards();
         void peek_dealer();
@@ -36,7 +36,6 @@ class Hand{
         bool dealerShowsTen();
         bool dealerHiddenAce();
         bool isBlackjack();
-        int getRankInt();
 };
 
 #endif

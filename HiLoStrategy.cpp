@@ -13,23 +13,76 @@ int HiLoStrategy::getBetSize() const {
         return 100;
     } 
     else if (true_count < 3.0) { 
-        return 200;
+        return 300;
     } 
     else if (true_count < 4.0) {
-        return 400;
+        return 500;
     } 
     else if (true_count < 5.0) {
-        return 60;
+        return 1000;
     } 
     else if (true_count < 6.0) {
-        return 1200;
+        return 1600;
     } 
     else if (true_count < 7.0) {
-        return 1500;
+        return 2000;
     } 
     else {
         return 2000;
     }
+
+    //xav bet spread
+    /*
+    if (true_count < 1){
+        return 5;
+    }
+    else if (true_count <= 1.5) {
+        return 10;
+    } 
+    else if (true_count < 3.0) { 
+        return 30;
+    } 
+    else if (true_count < 4.0) {
+        return 50;
+    } 
+    else if (true_count < 5.0) {
+        return 100;
+    } 
+    else if (true_count < 6.0) {
+        return 160;
+    } 
+    else if (true_count < 7.0) {
+        return 200;
+    } 
+    else {
+        return 200;
+    }
+
+    if (true_count < 1){
+        return 10;
+    }
+    else if (true_count <= 1.5) {
+        return 20;
+    } 
+    else if (true_count < 3.0) { 
+        return 40;
+    } 
+    else if (true_count < 4.0) {
+        return 60;
+    } 
+    else if (true_count < 5.0) {
+        return 120;
+    } 
+    else if (true_count < 6.0) {
+        return 180;
+    } 
+    else if (true_count < 7.0) {
+        return 240;
+    } 
+    else {
+        return 240;
+    }
+    */
 }
 
 void HiLoStrategy::updateCount(Card card) {

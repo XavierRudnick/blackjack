@@ -6,13 +6,14 @@
 
 class Card{
     private:
-        Rank rank_ = Rank::Ace;
-        Suit suit_ = Suit::Spades;
+        Rank rank_;
+        Suit suit_;
     public:
         Card(Rank rank, Suit suit);
         Rank getRank();
         Suit getSuit();
-        int getRankInt();
+        bool isWorthTen();
+        bool isAce();
 };
 
 #endif

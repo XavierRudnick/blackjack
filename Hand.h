@@ -24,14 +24,10 @@ class Hand{
         bool check_over();
         int getScore();
         int getFinalScore();
-        int getFinalDealerScore();
         bool OfferInsurance();
         bool dealerHiddenTen();
         bool isDealerOver();
-        int getScoreSoft();
-        bool isSoftHand();
         Rank peek_front_card();
-        bool doesHandHaveAce();
         bool dealerShowsTen();
         bool dealerHiddenAce();
         bool isBlackjack();

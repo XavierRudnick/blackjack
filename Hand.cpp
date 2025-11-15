@@ -34,9 +34,9 @@ void Hand::show_cards(){
         //std::cout << val.getRank() << " " << val.getSuit() << std::endl;
     }
     //std::cout << "value: " << getScoreHard() << std::endl;
-    if (isSoftHand()){
+    //if (isSoftHand()){
        // std::cout << "soft value: " << getScoreSoft() << std::endl;
-    }
+    //}
 }
 
 void Hand::dealer_show_cards(){
@@ -85,19 +85,7 @@ bool Hand::check_over(){
 }
 
 
-int Hand::getFinalDealerScore(){
-    int hard = getScore();
-
-    if (hard > 21){
-        return 0;
-    }
-    else{
-        return hard;
-    } 
-}
-
-
-bool Hand::isDealerOver(){//dealer can have soft
+bool Hand::isDealerOver(){
     return getScore() >= 17;
 }
 
@@ -130,13 +118,13 @@ int Hand::getScore(){
 }
 
 int Hand::getFinalScore(){
-    int hard = getScore();
-    
-    if (hard > 21){
-        return -1;
+    int score = getScore();
+
+    if (score > 21){
+        return 0;
     }
     else{
-        return hard;
+        return score;
     } 
 }
 
@@ -166,46 +154,6 @@ bool Hand::isHandSoft() {
     }
 
     return (score <= 21) && (soft_aces > 0);
-}
-
-int Hand::getScoreSoft(){
-    int score = 0;
-
-    for (Card val : hand){
-
-        Rank rank = val.getRank();
-        if (rank == Rank::Ace){
-            score += 1;
-        }
-        else if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King){
-            score += 10;
-        }
-        else{
-            score += static_cast<int>(rank) + 2;
-        }
-
-    }
-    return score;
-}
-
-bool Hand::isSoftHand(){
-    for (Card val : hand){
-        Rank rank = val.getRank();
-        if (rank == Rank::Ace){
-            return true;
-        }
-    }
-    return false;
-}
-
-bool Hand::doesHandHaveAce(){
-    for (Card val : hand){
-        Rank rank = val.getRank();
-        if (rank == Rank::Ace){
-            return true;
-        }
-    }
-    return false;
 }
 
 bool Hand::check_can_split(){

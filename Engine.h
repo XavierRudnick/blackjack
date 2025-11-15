@@ -53,13 +53,13 @@ struct Engine{
     }
 
     void evaluateHands(Hand dealer, std::vector<Hand> hands){
-        int dealer_score = dealer.getFinalDealerScore();
+        int dealer_score = dealer.getFinalScore();
         //implement blackjack which checks if size is 2 and total is 21 to pay, unless dealer got natural blackjack too, if not natural u win
         //also implemt dealer gets 10 card and hidden ace and insta flips so u lose
         for (Hand hand : hands){
             int score = hand.getFinalScore();
 
-            if (hand.isBlackjack()){
+            if (hands.size() == 1 && hand.isBlackjack()){
                 wallet += hand.getBetSize() * 1.5;
             } 
 

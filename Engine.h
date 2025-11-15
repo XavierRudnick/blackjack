@@ -92,22 +92,16 @@ struct Engine{
             return strat.getSplitAction(user.peek_front_card(),dealer_card,deck->getStrategy().getCount());
         }
 
-        if (user.doesHandHaveAce()) {
-            int hardScore = user.getScoreHard();
-            int softScore = user.getScoreSoft();
-            
-            // If hard score busts, use soft score as hard total
-            if(hardScore > 21){
-                return strat.getHardHandAction(softScore,dealer_card,deck->getStrategy().getCount());
-            }
-            // If hard score is valid, treat as soft hand
-            else{
-                return strat.getSoftHandAction(hardScore,dealer_card);
-            }
-        }
+        int playerTotal = user.getScore();
 
-        else {
-            return strat.getHardHandAction(user.getScoreHard(),dealer_card,deck->getStrategy().getCount());
+        if(user.isHandSoft()){
+            if (playerTotal < 13 || playerTotal > 21) {
+                throw std::runtime_error("why arent you splitting aces, are too many returning?? 99");
+            }
+            return strat.getSoftHandAction(playerTotal,dealer_card);
+        }
+        else{
+             return strat.getHardHandAction(playerTotal,dealer_card,deck->getStrategy().getCount());
         }
 
     }

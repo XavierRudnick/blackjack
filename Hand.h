@@ -22,9 +22,8 @@ class Hand{
         bool check_can_split();
         void addCard(Card card);
         bool check_over();
-        int getScoreHard();
+        int getScore();
         int getFinalScore();
-        int getDealerScore();
         int getFinalDealerScore();
         bool OfferInsurance();
         bool dealerHiddenTen();
@@ -36,6 +35,7 @@ class Hand{
         bool dealerShowsTen();
         bool dealerHiddenAce();
         bool isBlackjack();
+        bool isHandSoft();
 };
 
 #endif

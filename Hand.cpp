@@ -78,51 +78,15 @@ void Hand::addCard(Card card){
 }
 
 bool Hand::check_over(){
-    if (getScoreHard() > 21 && getScoreSoft() > 21){
+    if (getScore() > 21){
         return true;
     }
     return false;
 }
 
-int Hand::getScoreHard(){
-    int score = 0;
-    bool ace_appeared = false;
-    for (Card val : hand){
 
-        Rank rank = val.getRank();
-        if (rank == Rank::Ace){
-            if (!ace_appeared) {ace_appeared = true; score += 11;}
-            else {score += 1;}
-        }
-        else if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King){
-            score += 10;
-        }
-        else{
-            score += static_cast<int>(rank) + 2;
-        }
-
-    }
-    return score;
-}
-
-int Hand::getFinalScore(){
-    int hard = getScoreHard();
-    int soft = getScoreSoft();
-
-
-    if (hard > 21 && soft <= 21){
-        return soft;
-    }
-    else if (soft > 21){
-        return 0;
-    }
-    else{
-        return hard;
-    } 
-}
-
-int Hand::getFinalDealerScore(){//do I use this anywher?
-    int hard = getDealerScore();
+int Hand::getFinalDealerScore(){
+    int hard = getScore();
 
     if (hard > 21){
         return 0;
@@ -132,17 +96,22 @@ int Hand::getFinalDealerScore(){//do I use this anywher?
     } 
 }
 
-int Hand::getDealerScore(){
+
+bool Hand::isDealerOver(){//dealer can have soft
+    return getScore() >= 17;
+}
+
+int Hand::getScore(){
     int score = 0;
+    int soft_aces = 0;
+
     for (Card val : hand){
         Rank rank = val.getRank();
+
         if (rank == Rank::Ace){
-            if (score + 11 > 21){
-                score += 1;
-            }
-            else{
-                score += 11;
-            }
+            score += 11;
+            soft_aces += 1;
+            
         }
         else if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King){
             score += 10;
@@ -150,19 +119,53 @@ int Hand::getDealerScore(){
         else{
             score += static_cast<int>(rank) + 2;
         }
-
-        if (score > 21 && doesHandHaveAce()){
-            score -= 10;
-        }
     }
+
+    while(score > 21 && soft_aces > 0){
+        score -= 10;
+        soft_aces -= 1;
+    }
+
     return score;
 }
 
-bool Hand::isDealerOver(){//dealer can have soft
-    if (getDealerScore() >= 17){
-        return true;
+int Hand::getFinalScore(){
+    int hard = getScore();
+    
+    if (hard > 21){
+        return -1;
     }
-    return false;
+    else{
+        return hard;
+    } 
+}
+
+bool Hand::isHandSoft() {
+    int score = 0;
+    int soft_aces = 0;
+
+   for (Card val : hand){
+        Rank rank = val.getRank();
+
+        if (rank == Rank::Ace){
+            score += 11;
+            soft_aces += 1;
+            
+        }
+        else if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King){
+            score += 10;
+        }
+        else{
+            score += static_cast<int>(rank) + 2;
+        }
+    }
+
+    while (score > 21 && soft_aces > 0) {
+        score -= 10;
+        soft_aces -= 1;
+    }
+
+    return (score <= 21) && (soft_aces > 0);
 }
 
 int Hand::getScoreSoft(){

@@ -18,7 +18,7 @@ void NoStrategy::updateDeckSize(int num_cards_left){
 }
 
 float NoStrategy::getCount(){
-    return -1;
+    return 0;
 }
 
 bool NoStrategy::shouldAcceptInsurance(){

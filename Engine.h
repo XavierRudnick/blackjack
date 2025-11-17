@@ -13,7 +13,7 @@ template <typename Strategy>
 struct Engine{
     std::optional<Deck<Strategy>> deck;
     const uint8_t number_of_decks;
-    int wallet;
+    double wallet;
     int money_bet = 0;
 
     Engine(uint8_t deck_size,int money, Strategy strategy) : number_of_decks(deck_size), wallet(money){
@@ -34,11 +34,11 @@ struct Engine{
             Hand user = draw_cards(betSize);
             peek_dealer(dealer);
             num_hands_played += 1;
-            if (insuranceHandler(dealer,user,betSize)){
+            if (insuranceHandler(dealer,user)){
                 print_state(dealer, user);
                 hands = {user};
             }
-            else if (dealerRobberyHandler(dealer,user,betSize)){
+            else if (dealerRobberyHandler(dealer,user)){
                 print_state(dealer, user);
                 hands = {user};
             }
@@ -62,16 +62,16 @@ struct Engine{
             int score = hand.getFinalScore();
 
             if (hands.size() == 1 && hand.isBlackjack()){
-                wallet += hand.getBetSize() * 1.5;
+                wallet += static_cast<double>(hand.getBetSize()) * 1.5;
             } 
             else if (dealer_score > score){
-                wallet -= hand.getBetSize();
+                wallet -= static_cast<double>(hand.getBetSize());
             }
             else if (dealer_score < score){
-                wallet += hand.getBetSize();
+                wallet += static_cast<double>(hand.getBetSize());
             }
             else if (dealer_score == 0 && score ==0){
-                wallet -= hand.getBetSize();
+                wallet -= static_cast<double>(hand.getBetSize());
             }
             money_bet += hand.getBetSize();
         }
@@ -309,15 +309,17 @@ struct Engine{
         return;
     }
 
-    bool insuranceHandler(Hand dealer,Hand user, int betSize){
+    bool insuranceHandler(Hand dealer,Hand user){
 
         if (dealer.OfferInsurance()){
             if (deck->getStrategy().shouldAcceptInsurance()){
                 if (dealer.dealerHiddenTen() && user.isBlackjack()){
-                    wallet += betSize;
+                    wallet += static_cast<double>(user.getBetSize()) * 0.5;
+                    money_bet += user.getBetSize() * 1.5;
                     return true;
                 }
                 else if (dealer.dealerHiddenTen() && !user.isBlackjack()){
+                    money_bet += user.getBetSize() * 1.5;
                     return true;
                 }
                 else{
@@ -326,10 +328,12 @@ struct Engine{
             }
             else{
                 if(dealer.dealerHiddenTen() && user.isBlackjack()){
+                    money_bet += user.getBetSize() * 1;
                     return true;
                 }
                 else if (dealer.dealerHiddenTen() && !user.isBlackjack()) {
-                    wallet -= betSize;
+                    wallet -= user.getBetSize();
+                    money_bet += user.getBetSize()  * 1;
                     return true;
                 }
                 else{
@@ -340,10 +344,11 @@ struct Engine{
         return false;
     }
 
-    bool dealerRobberyHandler(Hand dealer,Hand user, int betSize){
+    bool dealerRobberyHandler(Hand dealer,Hand user){
         if (dealer.dealerShowsTen() && dealer.dealerHiddenAce()){
             if (!user.isBlackjack()){
-                wallet -= betSize;
+                wallet -= user.getBetSize();
+                money_bet += user.getBetSize()  * 1;
             }
             return true;
         }

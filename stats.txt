@@ -14,3 +14,6 @@ running 50000 sims, ave wallet total post 4 games of 6 deck with no strat is 995
 
 on 500000 sims of 12 game 2 deck no strat avg profit is 993.712 and money bet per session is 925.411, so for every 1000 bet u would lose 6.795$ so rtp 99.32
 on 100000 sims of 4 game 6 deck no strat avg profit is 992.242 and money bet per session is 908.839, so for every 1000 bet u would lose 8.5338$ so rtp 99.15
+
+
+on 100000 sims of 4 game 6 deck no strat avg profit is 995.13 and money bet per session is 915.657, rtp is 99.46

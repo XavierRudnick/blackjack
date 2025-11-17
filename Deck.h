@@ -71,7 +71,7 @@ class Deck{
             return deck.size();
         }
 
-        Strategy getStrategy(){
+        Strategy& getStrategy(){
             return strategy;
         }
 

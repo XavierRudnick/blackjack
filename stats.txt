@@ -1,2 +1,16 @@
 With 100000 sims, avg wallet total post session of 12 games of 2 was 10530 with quattro bet spread
 With 100000 sims, avg wallet total post session of 8 games of 6 was 10108 with quattro bet spread
+
+
+2 deck game with 62.5% ur playing 12 rounds per game
+6 deck game with 62.5% ur playing 35 rounds per game so ur losing 5.25$ 
+
+running 50000 sims, ave wallet total post 12 games of 2 deck with no strat is 996, avg money bet per session is 799, expected to lose 4$, success
+running 50000 sims, ave wallet total post 12 games of 2 deck with hilo is 1530, avg money bet per session is 15553 success?
+
+running 50000 sims, ave wallet total post 4 games of 6 deck with hilo is 1080, avg money bet per session is 6508 success?
+running 50000 sims, ave wallet total post 4 games of 6 deck with no strat is 995, avg money bet per session is 782, expected to lose 4$, success
+
+
+on 500000 sims of 12 game 2 deck no strat avg profit is 993.712 and money bet per session is 925.411, so for every 1000 bet u would lose 6.795$ so rtp 99.32
+on 100000 sims of 4 game 6 deck no strat avg profit is 992.242 and money bet per session is 908.839, so for every 1000 bet u would lose 8.5338$ so rtp 99.15

@@ -20,6 +20,7 @@ class Hand{
         void dealer_show_cards();
         void peek_dealer();
         bool check_can_split();
+        bool check_can_double();
         void addCard(Card card);
         bool check_over();
         int getScore();

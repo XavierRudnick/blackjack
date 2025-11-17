@@ -163,6 +163,13 @@ bool Hand::check_can_split(){
     return false;
 } 
 
+bool Hand::check_can_double(){
+    if (hand.size() == 2){
+        return true;
+    }
+    return false;
+} 
+
 
 bool Hand::isBlackjack(){
     if (hand.size() == 2){

@@ -14,14 +14,16 @@ struct Engine{
     std::optional<Deck<Strategy>> deck;
     const uint8_t number_of_decks;
     int wallet;
+    int money_bet = 0;
 
     Engine(uint8_t deck_size,int money, Strategy strategy) : number_of_decks(deck_size), wallet(money){
         deck.emplace(number_of_decks, std::move(strategy));
     }
 
-    int runner(){
+    std::pair<int, int> runner(){
+        int num_hands_played = 0;
         //std::cout << "starting a " << static_cast<int>(number_of_decks) << " deck game!" << std::endl;
-        while (deck->getSize() > number_of_decks * 19){ // reset when 3/8 left so 62.5% penetration
+        while (deck->getSize() > number_of_decks * 13){ // reset when 3/8 left so 62.5% penetration
             //std::cout << "========================================" << std::endl;
 
             deck->getStrategy().updateDeckSize(deck->getSize()); 
@@ -31,7 +33,7 @@ struct Engine{
             Hand dealer = draw_cards();
             Hand user = draw_cards(betSize);
             peek_dealer(dealer);
-
+            num_hands_played += 1;
             if (insuranceHandler(dealer,user,betSize)){
                 print_state(dealer, user);
                 hands = {user};
@@ -49,7 +51,7 @@ struct Engine{
             //std::cout << "wallet total : " << wallet << std::endl;
             //std::cout << "true count : " << deck->getStrategy().getCount() << std::endl;
         }    
-        return wallet;
+        return {wallet, money_bet};
     }
 
     void evaluateHands(Hand dealer, std::vector<Hand> hands){
@@ -62,16 +64,16 @@ struct Engine{
             if (hands.size() == 1 && hand.isBlackjack()){
                 wallet += hand.getBetSize() * 1.5;
             } 
-
-            if (dealer_score > score){
+            else if (dealer_score > score){
                 wallet -= hand.getBetSize();
             }
             else if (dealer_score < score){
                 wallet += hand.getBetSize();
             }
-            if (dealer_score == 0 && score ==0){
+            else if (dealer_score == 0 && score ==0){
                 wallet -= hand.getBetSize();
             }
+            money_bet += hand.getBetSize();
         }
 
         return;
@@ -81,7 +83,7 @@ struct Engine{
     std::vector<Hand> user_play(Hand dealer, Hand& user){
         std::vector<Hand> hands;
         hands.reserve(4); //unnessesary but fuck it I do what I want
-        user_play_hand(dealer, user, hands);
+        user_play_hand(dealer, user, hands, false);
         return hands;
     }
 
@@ -98,19 +100,46 @@ struct Engine{
             if (playerTotal < 13 || playerTotal > 21) {
                 throw std::runtime_error("why arent you splitting aces, are too many returning?? 99");
             }
-            return strat.getSoftHandAction(playerTotal,dealer_card);
+            Action action = strat.getSoftHandAction(playerTotal,dealer_card);
+
+            if (action == Action::Double){
+                if (user.check_can_double()){
+                    return action;
+                }
+                else{
+                    return Action::Hit;
+                }
+            }
+
+            return action;
         }
         else{
-             return strat.getHardHandAction(playerTotal,dealer_card,deck->getStrategy().getCount());
+             Action action = strat.getHardHandAction(playerTotal,dealer_card,deck->getStrategy().getCount());
+             if (action == Action::Double){
+                if (user.check_can_double()){
+                    return action;
+                }
+                else{
+                    return Action::Hit;
+                }
+            }
+            return action;
         }
 
     }
 
 
-    void user_play_hand(Hand dealer, Hand& user, std::vector<Hand>& hands){ 
+    void user_play_hand(Hand dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces = false){ 
     
         bool game_over = false;
         print_hand(user); 
+
+        // If this is a split Ace hand, only deal one card and stand
+        if (is_split_aces) {
+            game_over = true;
+            hands.emplace_back(user);
+            return;
+        }
 
         while(!game_over){
             //std::cout << std::endl;
@@ -151,6 +180,7 @@ struct Engine{
                     print_hand(user);
                     game_over = true;
                     hands.emplace_back(user);
+                   
                     break;
                 }
                 case Action::Split://only called when hand has 2 cards
@@ -162,12 +192,23 @@ struct Engine{
                         hands.emplace_back(user);
                         break;
                     }
+                    
+                    // Check if we're splitting Aces
+                    bool splitting_aces = (user.peek_front_card() == Rank::Ace);
+                    
                     Hand user2 = Hand(user.getLastCard(),user.getBetSize());
                     user.popLastCard();
                     user.addCard(deck->hit());
                     user2.addCard(deck->hit());
 
-                    user_play_hand(dealer,user2,hands);
+                    user_play_hand(dealer,user2,hands,splitting_aces);
+                    
+                    // If splitting aces, this hand also gets only one card
+                    if (splitting_aces) {
+                        game_over = true;
+                        hands.emplace_back(user);
+                    }
+                    
                     print_hand(user);
                     break;
                 }

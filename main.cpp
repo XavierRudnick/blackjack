@@ -2,23 +2,26 @@
 #include "HiLoStrategy.h"
 #include "NoStrategy.h"
 int main(){
-    uint8_t num_decks_used = 2;
-    int total[10000];
-
-    for (int j = 0; j < 10000; j++){
-        int wallet = 1000;
-        for (int i = 0; i < 12; i++){
+    uint8_t num_decks_used = 6;
+    //int total[50000];
+    std::pair<int, int> swag = {0, 0};
+    for (int j = 0; j < 100000; j++){
+        std::pair<int, int> profit = {1000, 0};
+        for (int i = 0; i < 4; i++){
             NoStrategy no  = NoStrategy(num_decks_used);
             HiLoStrategy hilo = HiLoStrategy(num_decks_used);
-            wallet = Engine(num_decks_used,wallet, hilo).runner(); 
+            profit = Engine(num_decks_used,profit.first, no).runner(); 
+            swag.second += profit.second;
         }
-        total[j] = wallet;
-    }
-    int swag = 0;
-    for (int i = 0; i < 10000; i++){
-        swag += total[i];
+        swag.first += profit.first;
+        
+        //total[j] = profit.first;
     }
 
-    std::cout << "Average after 10000 rounds: " << swag/10000 << std::endl;
+    double average = static_cast<double>(swag.first) / 100000;
+    double avg_money_bet = static_cast<double>(swag.second) / 100000;
+
+    std::cout << "Average after 100000 rounds: " << average << std::endl;
+    std::cout << "Average after 100000 rounds: " << avg_money_bet << std::endl;
     return 0;
 }

@@ -10,7 +10,7 @@
 int main(){
     uint8_t num_decks_used = 6;
     const bool visualize = false;
-    const int iterations = visualize ? 1 : 100000;
+    const int iterations = visualize ? 1 : 300000;
 
     ConsoleObserver consoleObserver;
     if (visualize) {
@@ -36,10 +36,15 @@ int main(){
     double average = swag.first / iterations;
     double avg_money_bet = static_cast<double>(swag.second) / iterations;
     double diff = average-1000;
-    double rtp = (1000 - ((avg_money_bet / 1000) * diff)) / 1000;
+    double normal =   1000.0 / avg_money_bet;
+    double money_lost_per = diff * normal;
+    double rtp = (1000 - money_lost_per) /1000;
 
     std::cout << "Average after " << iterations << " rounds: " << average << std::endl;
     std::cout << "Average money bet: " << avg_money_bet << std::endl;
+    std::cout << "Difference: " << diff << std::endl;
+    std::cout << "Money lost per 1000$ " << money_lost_per << "$" << std::endl;
+    std::cout << "RTP " << rtp << std::endl;
     //std::cout << "RTP: " << rtp << std::endl;
     return 0;
 }

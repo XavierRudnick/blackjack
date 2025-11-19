@@ -8,8 +8,8 @@
 #include "observers/EventBus.h"
 
 int main(){
-    uint8_t num_decks_used = 2;
-    const bool visualize = true;
+    uint8_t num_decks_used = 6;
+    const bool visualize = false;
     const int iterations = visualize ? 1 : 100000;
 
     ConsoleObserver consoleObserver;
@@ -23,7 +23,8 @@ int main(){
     for (int i = 0; i < iterations; i++){
         std::pair<double, int> profit = {1000, 0};
         HiLoStrategy hilo = HiLoStrategy(num_decks_used);
-        profit = Engine(num_decks_used,profit.first, hilo, visualize).runner(); 
+        NoStrategy noStrat = NoStrategy(num_decks_used);
+        profit = Engine(num_decks_used,profit.first, noStrat, visualize).runner(); 
         swag.first += profit.first;
         swag.second += profit.second;
     }

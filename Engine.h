@@ -385,7 +385,7 @@ struct Engine{
             if (acceptInsurance){
                 if (dealer.dealerHiddenTen() && user.isBlackjack()){
                     wallet += static_cast<double>(user.getBetSize()) * 0.5;
-                    money_bet += user.getBetSize() * 1.5;
+                    money_bet += user.getBetSize();
                     if (eventsEnabled()){
                         publish(EventType::RoundEnded, "Insurance wins: dealer blackjack vs player blackjack");
                     }
@@ -393,7 +393,7 @@ struct Engine{
                     return true;
                 }
                 else if (dealer.dealerHiddenTen() && !user.isBlackjack()){
-                    money_bet += user.getBetSize() * 1.5;
+                    money_bet += user.getBetSize();
                     if (eventsEnabled()){
                         publish(EventType::RoundEnded, "Insurance wins: dealer blackjack");
                     }
@@ -409,7 +409,7 @@ struct Engine{
             }
             else{
                 if(dealer.dealerHiddenTen() && user.isBlackjack()){
-                    money_bet += user.getBetSize() * 1;
+                    money_bet += user.getBetSize();
                     if (eventsEnabled()){
                         publish(EventType::RoundEnded, "Dealer blackjack pushes player blackjack (no insurance)");
                         publishWalletSnapshot();
@@ -418,7 +418,7 @@ struct Engine{
                 }
                 else if (dealer.dealerHiddenTen() && !user.isBlackjack()) {
                     wallet -= user.getBetSize();
-                    money_bet += user.getBetSize()  * 1;
+                    money_bet += user.getBetSize();
                     if (eventsEnabled()){
                         publish(EventType::RoundEnded, "Dealer blackjack; player loses without insurance");
                         publishWalletSnapshot();

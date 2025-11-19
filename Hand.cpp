@@ -170,6 +170,17 @@ bool Hand::check_can_double(){
     return false;
 } 
 
+bool Hand::check_should_stand(){
+    if (getScore() == 18 || getScore() == 19){
+        return true;
+    }
+    return false;
+}
+
+std::vector<Card> Hand::getCards() const{
+    return hand;
+}
+
 
 bool Hand::isBlackjack(){
     if (hand.size() == 2){

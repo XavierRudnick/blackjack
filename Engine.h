@@ -2,12 +2,15 @@
 #define ENGINE_H
 
 #include <optional>
+#include <sstream>
+#include <string>
 #include <vector>
 #include "Deck.h"
 #include "Hand.h"
 #include "BasicStrategy.h"
 #include "HiLoStrategy.h"
 #include "NoStrategy.h"
+#include "observers/EventBus.h"
 
 template <typename Strategy>
 struct Engine{
@@ -15,9 +18,13 @@ struct Engine{
     const uint8_t number_of_decks;
     double wallet;
     int money_bet = 0;
+    bool emitEvents = false;
+    EventBus* eventBus = nullptr;
 
-    Engine(uint8_t deck_size,int money, Strategy strategy) : number_of_decks(deck_size), wallet(money){
+    Engine(uint8_t deck_size,int money, Strategy strategy, bool enableEvents = false)
+        : number_of_decks(deck_size), wallet(money), emitEvents(enableEvents) {
         deck.emplace(number_of_decks, std::move(strategy));
+        eventBus = EventBus::getInstance();
     }
 
     std::pair<int, int> runner(){
@@ -54,33 +61,43 @@ struct Engine{
         return {wallet, money_bet};
     }
 
-    void evaluateHands(Hand dealer, std::vector<Hand> hands){
+    void evaluateHands(Hand& dealer, std::vector<Hand>& hands){
         int dealer_score = dealer.getFinalScore();
-        //implement blackjack which checks if size is 2 and total is 21 to pay, unless dealer got natural blackjack too, if not natural u win
-        //also implemt dealer gets 10 card and hidden ace and insta flips so u lose
-        for (Hand hand : hands){
+        std::ostringstream roundSummary;
+        roundSummary << "Dealer score: " << dealer_score << ". ";
+
+        for (int i = 0; i < hands.size(); ++i){
+            Hand& hand = hands[i];
             int score = hand.getFinalScore();
+            std::string outcome = "Push";
 
             if (hands.size() == 1 && hand.isBlackjack()){
                 wallet += static_cast<double>(hand.getBetSize()) * 1.5;
+                outcome = "Natural Blackjack win";
             } 
             else if (dealer_score > score){
                 wallet -= static_cast<double>(hand.getBetSize());
+                outcome = "Dealer win";
             }
             else if (dealer_score < score){
                 wallet += static_cast<double>(hand.getBetSize());
+                outcome = "Player win";
             }
             else if (dealer_score == 0 && score ==0){
                 wallet -= static_cast<double>(hand.getBetSize());
+                outcome = "Player bust";
             }
+
             money_bet += hand.getBetSize();
+            roundSummary << "Hand " << (i + 1) << ": " << outcome
+                         << " (score " << score << ", bet " << hand.getBetSize() << "); ";
         }
 
-        return;
-
+        publish(EventType::RoundEnded, roundSummary.str());
+        publishWalletSnapshot();
     }
 
-    std::vector<Hand> user_play(Hand dealer, Hand& user){
+    std::vector<Hand> user_play(Hand& dealer, Hand& user){
         std::vector<Hand> hands;
         hands.reserve(4); //unnessesary but fuck it I do what I want
         user_play_hand(dealer, user, hands, false);
@@ -106,6 +123,9 @@ struct Engine{
                 if (user.check_can_double()){
                     return action;
                 }
+                else if (user.check_should_stand()){
+                    return Action::Stand;
+                }
                 else{
                     return Action::Hit;
                 }
@@ -119,6 +139,9 @@ struct Engine{
                 if (user.check_can_double()){
                     return action;
                 }
+                else if(user.check_should_stand()){
+                    return Action::Stand;
+                }
                 else{
                     return Action::Hit;
                 }
@@ -129,28 +152,34 @@ struct Engine{
     }
 
 
-    void user_play_hand(Hand dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces = false){ 
+    void user_play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces = false){ 
     
         bool game_over = false;
-        print_hand(user); 
+        const std::string handLabel = is_split_aces ? "Player (split aces)" : "Player";
+        print_hand(user, handLabel); 
 
         // If this is a split Ace hand, only deal one card and stand
         if (is_split_aces) {
+            if (eventsEnabled()){
+                publish(EventType::ActionTaken, handLabel + " forced to stand after split aces");
+            }
             game_over = true;
             hands.emplace_back(user);
             return;
         }
 
         while(!game_over){
-            //std::cout << std::endl;
             Action action = getAction(dealer, user);
             switch(action)
             {
                 case Action::Stand:
                 {
-                    print_hand(user);
+                    //print_hand(user, handLabel);
                     game_over = true;
                     hands.emplace_back(user);
+                    if (eventsEnabled()){
+                        publish(EventType::ActionTaken, describeAction(action, user, handLabel));
+                    }
                     break;
                 }
                 case Action::Hit:
@@ -159,37 +188,49 @@ struct Engine{
                         std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
                         game_over = true;
                         hands.emplace_back(user);
+                        if (eventsEnabled()){
+                            publish(EventType::ActionTaken, handLabel + " attempted to hit with insufficient cards");
+                        }
                         break;
                     }
                     user.addCard(deck->hit());
                     if (user.check_over()) {game_over = true; hands.emplace_back(user);}
-                    print_hand(user);
+                    //print_hand(user, handLabel);
+                    if (eventsEnabled()){
+                        publish(EventType::ActionTaken, describeAction(action, user, handLabel));
+                    }
                     break;
                 }
                 case Action::Double:
                 {
                     if (deck->getSize() < 1) {
-                        // Can't double, just stand instead
                         std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
                         game_over = true;
                         hands.emplace_back(user);
+                        if (eventsEnabled()){
+                            publish(EventType::ActionTaken, handLabel + " attempted to double with insufficient cards");
+                        }
                         break;
                     }
                     user.doubleBet();
                     user.addCard(deck->hit());
-                    print_hand(user);
+                    //print_hand(user, handLabel);
                     game_over = true;
                     hands.emplace_back(user);
-                   
+                    if (eventsEnabled()){
+                        publish(EventType::ActionTaken, describeAction(action, user, handLabel));
+                    }
                     break;
                 }
                 case Action::Split://only called when hand has 2 cards
                 {
                     if (deck->getSize() < 2) {
-                        // Can't split, just stand instead
                         std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
                         game_over = true;
                         hands.emplace_back(user);
+                        if (eventsEnabled()){
+                            publish(EventType::ActionTaken, handLabel + " attempted to split with insufficient cards");
+                        }
                         break;
                     }
                     
@@ -201,6 +242,14 @@ struct Engine{
                     user.addCard(deck->hit());
                     user2.addCard(deck->hit());
 
+                    if (eventsEnabled()){
+                        std::ostringstream oss;
+                        oss << handLabel << " splits into -> "
+                            << describeHand(handLabel + " (hand 1)", user) << " | "
+                            << describeHand(handLabel + " (hand 2)", user2);
+                        publish(EventType::ActionTaken, oss.str());
+                    }
+
                     user_play_hand(dealer,user2,hands,splitting_aces);
                     
                     // If splitting aces, this hand also gets only one card
@@ -209,11 +258,14 @@ struct Engine{
                         hands.emplace_back(user);
                     }
                     
-                    print_hand(user);
+                    //print_hand(user, handLabel);
                     break;
                 }
                 case Action::Skip: 
                     std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+                    if (eventsEnabled()){
+                        publish(EventType::ActionTaken, handLabel + " attempted to skip turn");
+                    }
                     break;
 
             }
@@ -262,27 +314,31 @@ struct Engine{
         }
     }
 
-    void print_initial(Hand dealer, Hand user){
+    void print_initial(Hand& dealer, Hand& user){
         peek_dealer(dealer);
         print_hand(user);
     }
 
-    void print_state(Hand dealer, Hand user){
+    void print_state(Hand& dealer, Hand& user){
+        if (eventsEnabled()){
+            publish(EventType::CardsDealt, describeHand("Dealer", dealer));
+        }
         dealer.dealer_show_cards();
-        print_hand(user);
+        //print_hand(user);
     }
 
-    void print_hand(Hand user){
-        //std::cout << "Your card" << std::endl;
+    void print_hand(Hand& user, const std::string& label = "Player"){
+        if (eventsEnabled()){
+            publish(EventType::CardsDealt, describeHand(label, user));
+        }
         user.show_cards();
-       // std::cout << "0: Stand, 1: Hit, 2: Double, 3: Stand" << std::endl;
-        //std::cout << std::endl;
     }
 
-    void peek_dealer(Hand dealer){
-        //std::cout << "Dealer card" << std::endl;
+    void peek_dealer(Hand& dealer){
+        if (eventsEnabled()){
+            publish(EventType::CardsDealt, describeHand("Dealer (showing)", dealer, true));
+        }
         dealer.peek_dealer();
-        //std::cout << std::endl;
     }
 
     Hand draw_cards(int betSize = 0){
@@ -295,6 +351,9 @@ struct Engine{
 
     void dealer_draw(Hand& dealer){
         dealer.dealer_show_cards();
+        if (eventsEnabled()){
+            publish(EventType::CardsDealt, describeHand("Dealer", dealer));
+        }
         if (dealer.isDealerOver()){
             return;
         }
@@ -304,39 +363,72 @@ struct Engine{
             }
             
             dealer.addCard(deck->hit());
+            if (eventsEnabled()){
+                publish(EventType::CardsDealt, describeHand("Dealer", dealer));
+            }
             dealer.dealer_show_cards();
         }
         return;
     }
 
-    bool insuranceHandler(Hand dealer,Hand user){
+    bool insuranceHandler(Hand& dealer,Hand& user){
 
         if (dealer.OfferInsurance()){
-            if (deck->getStrategy().shouldAcceptInsurance()){
+            bool acceptInsurance = deck->getStrategy().shouldAcceptInsurance();
+            if (eventsEnabled()){
+                std::ostringstream oss;
+                oss << "Insurance offered. Strategy " << (acceptInsurance ? "accepts" : "declines")
+                    << ". " << describeHand("Dealer", dealer, true);
+                publish(EventType::ActionTaken, oss.str());
+            }
+
+            if (acceptInsurance){
                 if (dealer.dealerHiddenTen() && user.isBlackjack()){
                     wallet += static_cast<double>(user.getBetSize()) * 0.5;
                     money_bet += user.getBetSize() * 1.5;
+                    if (eventsEnabled()){
+                        publish(EventType::RoundEnded, "Insurance wins: dealer blackjack vs player blackjack");
+                    }
+                    publishWalletSnapshot();
                     return true;
                 }
                 else if (dealer.dealerHiddenTen() && !user.isBlackjack()){
                     money_bet += user.getBetSize() * 1.5;
+                    if (eventsEnabled()){
+                        publish(EventType::RoundEnded, "Insurance wins: dealer blackjack");
+                    }
+                    publishWalletSnapshot();
                     return true;
                 }
                 else{
+                    if (eventsEnabled()){
+                        publish(EventType::ActionTaken, "Insurance declined automatically: dealer lacked blackjack");
+                    }
                     return false;
                 }
             }
             else{
                 if(dealer.dealerHiddenTen() && user.isBlackjack()){
                     money_bet += user.getBetSize() * 1;
+                    if (eventsEnabled()){
+                        publish(EventType::RoundEnded, "Dealer blackjack pushes player blackjack (no insurance)");
+                        publishWalletSnapshot();
+                    }
                     return true;
                 }
                 else if (dealer.dealerHiddenTen() && !user.isBlackjack()) {
                     wallet -= user.getBetSize();
                     money_bet += user.getBetSize()  * 1;
+                    if (eventsEnabled()){
+                        publish(EventType::RoundEnded, "Dealer blackjack; player loses without insurance");
+                        publishWalletSnapshot();
+                    }
                     return true;
                 }
                 else{
+                    if (eventsEnabled()){
+                        publish(EventType::ActionTaken, "Insurance declined; dealer lacks blackjack");
+                    }
                     return false;
                 }
             }
@@ -344,11 +436,17 @@ struct Engine{
         return false;
     }
 
-    bool dealerRobberyHandler(Hand dealer,Hand user){
+    bool dealerRobberyHandler(Hand& dealer,Hand& user){
         if (dealer.dealerShowsTen() && dealer.dealerHiddenAce()){
             if (!user.isBlackjack()){
                 wallet -= user.getBetSize();
                 money_bet += user.getBetSize()  * 1;
+            }
+            if (eventsEnabled()){
+                std::ostringstream oss;
+                oss << "Dealer flipped blackjack. " << describeHand("Dealer", dealer);
+                publish(EventType::RoundEnded, oss.str());
+                publishWalletSnapshot();
             }
             return true;
         }
@@ -356,6 +454,75 @@ struct Engine{
         
     }
 
+private:
+    bool eventsEnabled() const {
+        return emitEvents && eventBus;
+    }
+
+    void publish(EventType type, const std::string& message){
+        if (!eventsEnabled()) {
+            return;
+        }
+        eventBus->notifyObservers(type, message);
+    }
+
+    void publishWalletSnapshot(){
+        if (!eventsEnabled()) {
+            return;
+        }
+        std::ostringstream oss;
+        oss << "Wallet: " << wallet << ", Count: " << deck->getStrategy().getCount();
+        publish(EventType::GameStats, oss.str());
+        publish(EventType::GameStats, "============================================================================");
+    }
+
+    std::string describeHand(const std::string& label, Hand& hand, bool hideHoleCard = false){
+        std::ostringstream oss;
+        oss << label << " hand: ";
+        std::vector<Card> cards = hand.getCards();
+
+        if (cards.empty()){
+            oss << "<empty>";
+        } else {
+            for (size_t i = 0; i < cards.size(); ++i){
+                if (hideHoleCard && i == 1){
+                    oss << "[hidden]";
+                }
+                else {
+                    Card card = cards[i];
+                    oss << card.getRank() << " of " << card.getSuit();
+                }
+
+                if (i + 1 < cards.size()){
+                    oss << ", ";
+                }
+            }
+        }
+
+        if (hideHoleCard){
+            oss << " | score: [hidden]";
+        }
+        else{
+            oss << " | score: " << hand.getScore();
+        }
+        if (hand.getBetSize() > 0){
+            oss << " | bet: " << hand.getBetSize();
+        }
+        if (hand.isBlackjack()){
+            oss << " | Blackjack";
+        }
+        else if (hand.check_over()){
+            oss << " | Bust";
+        }
+
+        return oss.str();
+    }
+
+    std::string describeAction(Action action, Hand& hand, const std::string& label){
+        std::ostringstream oss;
+        oss << label << " chose " << action << ". " << describeHand(label, hand);
+        return oss.str();
+    }
 };
 
 #endif

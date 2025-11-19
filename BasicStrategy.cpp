@@ -36,8 +36,8 @@ const Action BasicStrategy::softTotalTable[9][10] = {
     /* A-4 (15) */ {Action::Hit, Action::Hit, Action::Double, Action::Double, Action::Double, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
     /* A-5 (16) */ {Action::Hit, Action::Hit, Action::Double, Action::Double, Action::Double, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
     /* A-6 (17) */ {Action::Hit, Action::Double, Action::Double, Action::Double, Action::Double, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
-    /* A-7 (18) */ {Action::Stand, Action::Double, Action::Double, Action::Double, Action::Double, Action::Stand, Action::Stand, Action::Hit, Action::Hit, Action::Hit},
-    /* A-8 (19) */ {Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand},
+    /* A-7 (18) */ {Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Stand, Action::Stand, Action::Hit, Action::Hit, Action::Hit},
+    /* A-8 (19) */ {Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Double, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand},
     /* A-9 (20) */ {Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand},
     /* A-10(21) */ {Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand}
 };

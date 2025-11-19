@@ -33,6 +33,8 @@ class Hand{
         bool dealerHiddenAce();
         bool isBlackjack();
         bool isHandSoft();
+        bool check_should_stand();
+        std::vector<Card> getCards() const;
 };
 
 #endif

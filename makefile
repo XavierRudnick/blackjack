@@ -1,12 +1,13 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -g
 
-OBJECTS = main.o rank.o suit.o Card.o Hand.o HiLoStrategy.o NoStrategy.o BasicStrategy.o action.o
+OBJECTS = main.o rank.o suit.o Card.o Hand.o HiLoStrategy.o NoStrategy.o BasicStrategy.o action.o \
+	observers/EventBus.o observers/ConsoleObserver.o
 
 blackjack: $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o blackjack $(OBJECTS)
 
-main.o: main.cpp Engine.h Deck.h Hand.h HiLoStrategy.h NoStrategy.h Card.h rank.h suit.h action.h
+main.o: main.cpp Engine.h Deck.h Hand.h HiLoStrategy.h Card.h rank.h suit.h action.h observers/EventBus.h observers/ConsoleObserver.h
 	$(CXX) $(CXXFLAGS) -c main.cpp
 
 rank.o: rank.cpp rank.h
@@ -32,6 +33,12 @@ BasicStrategy.o: BasicStrategy.cpp BasicStrategy.h rank.h action.h
 
 action.o: action.cpp action.h
 	$(CXX) $(CXXFLAGS) -c action.cpp
+
+observers/EventBus.o: observers/EventBus.cpp observers/EventBus.h observers/EventIssuingObservable.h observers/EventObserver.h observers/EventType.h
+	$(CXX) $(CXXFLAGS) -c observers/EventBus.cpp -o observers/EventBus.o
+
+observers/ConsoleObserver.o: observers/ConsoleObserver.cpp observers/ConsoleObserver.h observers/EventObserver.h observers/EventType.h
+	$(CXX) $(CXXFLAGS) -c observers/ConsoleObserver.cpp -o observers/ConsoleObserver.o
 
 clean:
 	rm -f *.o blackjack

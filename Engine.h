@@ -51,7 +51,6 @@ struct Engine{
             }
             else{
                 hands = user_play(dealer,user);
-                dealer_draw(dealer);
                 evaluateHands(dealer,hands);
             }
 
@@ -61,7 +60,66 @@ struct Engine{
         return {wallet, money_bet};
     }
 
+    // void evaluateHands(Hand& dealer, std::vector<Hand>& hands){
+    //     dealer_draw(dealer);
+    //     int dealer_score = dealer.getFinalScore();
+    //     std::ostringstream roundSummary;
+    //     roundSummary << "Dealer score: " << dealer_score << ". ";
+
+    //     for (int i = 0; i < hands.size(); ++i){
+    //         Hand& hand = hands[i];
+    //         int score = hand.getFinalScore();
+    //         std::string outcome = "Push";
+
+    //         if (hands.size() == 1 && hand.isBlackjack()){
+    //             wallet += static_cast<double>(hand.getBetSize()) * 1.5;
+    //             outcome = "Natural Blackjack win";
+    //         } 
+    //         else if (dealer_score > score){
+    //             wallet -= static_cast<double>(hand.getBetSize());
+    //             outcome = "Dealer win";
+    //         }
+    //         else if (dealer_score < score){
+    //             wallet += static_cast<double>(hand.getBetSize());
+    //             outcome = "Player win";
+    //         }
+    //         else if (dealer_score == 0 && score ==0){
+    //             wallet -= static_cast<double>(hand.getBetSize());
+    //             outcome = "Player bust";
+    //         }
+
+    //         money_bet += hand.getBetSize();
+    //         roundSummary << "Hand " << (i + 1) << ": " << outcome
+    //                      << " (score " << score << ", bet " << hand.getBetSize() << "); ";
+    //     }
+
+    //     publish(EventType::RoundEnded, roundSummary.str());
+    //     publishWalletSnapshot();
+    // }
+
+    std::vector<int> getPlayerScores(std::vector<Hand>& hands){
+        std::vector<int> scores;
+        for (Hand hand: hands){
+            scores.emplace_back(hand.getFinalScore());
+        }
+        return scores;
+    }
+
+    bool didHandsBust(std::vector<int> scores){
+        for (int i : scores){
+            if (i > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     void evaluateHands(Hand& dealer, std::vector<Hand>& hands){
+        std::vector<int> scores = getPlayerScores(hands);
+        if (!didHandsBust(scores)){
+            dealer_draw(dealer);
+        }
+
         int dealer_score = dealer.getFinalScore();
         std::ostringstream roundSummary;
         roundSummary << "Dealer score: " << dealer_score << ". ";

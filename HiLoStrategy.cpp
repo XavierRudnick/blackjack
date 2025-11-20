@@ -7,7 +7,7 @@ HiLoStrategy::HiLoStrategy(float deck_size){
 
 int HiLoStrategy::getBetSize() const {
     if (true_count < 1){
-        return 10;
+        return 25;
     }
     else if (true_count <= 1.5) {
         return 100;

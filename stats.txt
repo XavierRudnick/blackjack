@@ -17,3 +17,32 @@ on 100000 sims of 4 game 6 deck no strat avg profit is 992.242 and money bet per
 
 
 on 100000 sims of 4 game 6 deck no strat avg profit is 995.13 and money bet per session is 915.657, rtp is 99.46
+
+
+No counting 6 deck one shuffle  
+Average after 200000 rounds: 998.733
+Average money bet: 239.05
+Difference: -1.26742
+Money lost per 1000$ -5.30191$
+RTP 0.994698
+
+No counting 2 deck one shuffle
+Average after 200000 rounds: 999.671
+Average money bet: 81.1771
+Difference: -0.329215
+Money lost per 1000$ -4.05551$
+RTP 0.995944
+
+Hilo 2 deck one shuffle
+Average after 200000 rounds: 1188.39
+Average money bet: 4144.13
+Difference: 188.388
+Money lost per 1000$ 45.459$
+RTP 1.04546
+
+Hilo 6 deck one shuffle
+Average after 200000 rounds: 1178.35
+Average money bet: 6290.06
+Difference: 178.345
+Money lost per 1000$ 28.3535$
+RTP 1.02835

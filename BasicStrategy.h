@@ -19,6 +19,7 @@ class BasicStrategy {
         static Action getHardHandAction(int playerTotal, Rank dealerUpcard,float true_count);
         static Action getSoftHandAction(int playerTotal, Rank dealerUpcard);
         static Action getSplitAction(Rank playerSplitRank, Rank dealerUpcard,float true_count);
+        static Action shouldSurrender(int playerTotal, Rank dealerUpcard,float true_count);
 
 };
 

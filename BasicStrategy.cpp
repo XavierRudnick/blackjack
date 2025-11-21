@@ -221,3 +221,40 @@ Action BasicStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, fl
     }
 
 }
+
+Action BasicStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float true_count){
+    int dealerValue = getIndex(dealerUpcard) +2;
+    switch (playerTotal) {
+        case 17:
+            if (dealerValue == 11 && true_count >= 0) {
+                return Action::Surrender;
+            }
+            break;
+        case 16:
+            if (dealerValue == 10 && true_count >= 0) {
+                return Action::Surrender;
+            }
+            if (dealerValue == 11 && true_count >= 3) {
+                return Action::Surrender;
+            }
+            break;
+        case 15:
+            if (dealerValue == 10 && true_count >= 0) {
+                return Action::Surrender;
+            }
+            if (dealerValue == 11 && true_count >= 1) {
+                return Action::Surrender;
+            }
+            if (dealerValue == 9 && true_count >= 2) {
+                return Action::Surrender;
+            }
+            break;
+        case 14:
+            if (dealerValue == 11 && true_count >= 3) {
+                return Action::Surrender;
+            }
+            break;
+        default: return Action::Skip; break;
+    }
+    return Action::Skip;
+}

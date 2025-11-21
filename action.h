@@ -9,7 +9,8 @@ enum class Action : uint8_t {
     Hit,
     Double,
     Split,
-    Skip
+    Skip,
+    Surrender
 };
 
 std::ostream& operator<<(std::ostream& os, const Action action);

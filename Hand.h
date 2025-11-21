@@ -34,6 +34,7 @@ class Hand{
         bool isBlackjack();
         bool isHandSoft();
         bool check_should_stand();
+        bool isSoft17();
         std::vector<Card> getCards() const;
 };
 

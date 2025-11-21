@@ -84,6 +84,13 @@ bool Hand::check_over(){
     return false;
 }
 
+bool Hand::isSoft17() {
+    int score = getScore();
+    if (score == 17 && isHandSoft()) {
+        return true;
+    }
+    return false;
+}
 
 bool Hand::isDealerOver(){
     return getScore() >= 17;

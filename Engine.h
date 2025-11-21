@@ -15,23 +15,30 @@
 template <typename Strategy>
 struct Engine{
     std::optional<Deck<Strategy>> deck;
-    const uint8_t number_of_decks;
+    int number_of_decks;
     double wallet;
+    double blackjack_payout_multiplier = 1.5;
+    bool dealerHitsSoft17 = false;
+    bool doubleAfterSplitAllowed = true;
+    bool allowReSplitAces = true;
+    bool allowSurrender = false;
     int money_bet = 0;
     bool emitEvents = false;
     EventBus* eventBus = nullptr;
 
-    Engine(uint8_t deck_size,int money, Strategy strategy, bool enableEvents = false)
-        : number_of_decks(deck_size), wallet(money), emitEvents(enableEvents) {
+    // number of decks handler
+    // should I make strategy apart of builder pattern?
+
+    Engine(int deck_size,int money, Strategy strategy, bool enableEvents = false, double blackJackMultiplier = 1.5, bool dealerHitsSoft17 = false, bool doubleAfterSplitAllowed = true, bool allowReSplitAces = true, bool allowSurrender = false)
+        : number_of_decks(deck_size), wallet(money), emitEvents(enableEvents), blackjack_payout_multiplier(blackJackMultiplier), dealerHitsSoft17(dealerHitsSoft17), doubleAfterSplitAllowed(doubleAfterSplitAllowed), allowReSplitAces(allowReSplitAces), allowSurrender(allowSurrender) {
         deck.emplace(number_of_decks, std::move(strategy));
         eventBus = EventBus::getInstance();
     }
 
     std::pair<int, int> runner(){
         int num_hands_played = 0;
-        //std::cout << "starting a " << static_cast<int>(number_of_decks) << " deck game!" << std::endl;
+        
         while (deck->getSize() > number_of_decks * 13){ // reset when 3/8 left so 62.5% penetration
-            //std::cout << "========================================" << std::endl;
 
             deck->getStrategy().updateDeckSize(deck->getSize()); 
             int betSize = deck->getBetSize();
@@ -59,43 +66,6 @@ struct Engine{
         }    
         return {wallet, money_bet};
     }
-
-    // void evaluateHands(Hand& dealer, std::vector<Hand>& hands){
-    //     dealer_draw(dealer);
-    //     int dealer_score = dealer.getFinalScore();
-    //     std::ostringstream roundSummary;
-    //     roundSummary << "Dealer score: " << dealer_score << ". ";
-
-    //     for (int i = 0; i < hands.size(); ++i){
-    //         Hand& hand = hands[i];
-    //         int score = hand.getFinalScore();
-    //         std::string outcome = "Push";
-
-    //         if (hands.size() == 1 && hand.isBlackjack()){
-    //             wallet += static_cast<double>(hand.getBetSize()) * 1.5;
-    //             outcome = "Natural Blackjack win";
-    //         } 
-    //         else if (dealer_score > score){
-    //             wallet -= static_cast<double>(hand.getBetSize());
-    //             outcome = "Dealer win";
-    //         }
-    //         else if (dealer_score < score){
-    //             wallet += static_cast<double>(hand.getBetSize());
-    //             outcome = "Player win";
-    //         }
-    //         else if (dealer_score == 0 && score ==0){
-    //             wallet -= static_cast<double>(hand.getBetSize());
-    //             outcome = "Player bust";
-    //         }
-
-    //         money_bet += hand.getBetSize();
-    //         roundSummary << "Hand " << (i + 1) << ": " << outcome
-    //                      << " (score " << score << ", bet " << hand.getBetSize() << "); ";
-    //     }
-
-    //     publish(EventType::RoundEnded, roundSummary.str());
-    //     publishWalletSnapshot();
-    // }
 
     std::vector<int> getPlayerScores(std::vector<Hand>& hands){
         std::vector<int> scores;
@@ -130,7 +100,7 @@ struct Engine{
             std::string outcome = "Push";
 
             if (hands.size() == 1 && hand.isBlackjack()){
-                wallet += static_cast<double>(hand.getBetSize()) * 1.5;
+                wallet += static_cast<double>(hand.getBetSize()) * blackjack_payout_multiplier;
                 outcome = "Natural Blackjack win";
             } 
             else if (dealer_score > score){
@@ -165,6 +135,14 @@ struct Engine{
     Action getAction(Hand dealer, Hand user){
         BasicStrategy strat;
         Rank dealer_card = dealer.peek_front_card();
+
+        if(user.check_can_double() &&allowSurrender){
+            Action action = strat.shouldSurrender(user.getScore(), dealer_card, deck->getStrategy().getCount());
+            if (action == Action::Surrender) {
+                return action;
+            }
+        }
+
         if(user.check_can_split()){
             return strat.getSplitAction(user.peek_front_card(),dealer_card,deck->getStrategy().getCount());
         }
@@ -193,7 +171,7 @@ struct Engine{
         }
         else{
              Action action = strat.getHardHandAction(playerTotal,dealer_card,deck->getStrategy().getCount());
-             if (action == Action::Double){
+             if (action == Action::Double){//I think this is correct if DAS is allowed or nah. specifically for soft vals, maybe investigate
                 if (user.check_can_double()){
                     return action;
                 }
@@ -210,19 +188,51 @@ struct Engine{
     }
 
 
-    void user_play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces = false){ 
+    void user_play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces = false, bool has_split = false){ 
     
         bool game_over = false;
         const std::string handLabel = is_split_aces ? "Player (split aces)" : "Player";
         print_hand(user, handLabel); 
 
         // If this is a split Ace hand, only deal one card and stand
-        if (is_split_aces) {
-            if (eventsEnabled()){
-                publish(EventType::ActionTaken, handLabel + " forced to stand after split aces");
+        if (is_split_aces) {//rsa handler
+            user.addCard(deck->hit());
+
+            if (allowReSplitAces && user.getLastCard().getRank() == Rank::Ace) {
+                if (eventsEnabled()){
+                    publish(EventType::ActionTaken, handLabel + "split aces again");
+                }
+
+                bool splitting_aces = true;   
+                Hand user2 = Hand(user.getLastCard(),user.getBetSize());
+                user.popLastCard();
+                user.addCard(deck->hit());
+                user2.addCard(deck->hit());
+
+                if (eventsEnabled()){
+                    std::ostringstream oss;
+                    oss << handLabel << " splits into -> "
+                        << describeHand(handLabel + " (hand 1)", user) << " | "
+                        << describeHand(handLabel + " (hand 2)", user2);
+                    publish(EventType::ActionTaken, oss.str());
+                }
+
+                user_play_hand(dealer,user2,hands,splitting_aces, true);
+                
+                // If splitting aces, this hand also gets only one card
+                if (splitting_aces) {
+                    game_over = true;
+                    hands.emplace_back(user);
+                }
+                return;
+            } 
+            else {
+                if (eventsEnabled()){
+                    publish(EventType::ActionTaken, handLabel + " forced to stand after split aces");
+                }
+                game_over = true;
+                hands.emplace_back(user);
             }
-            game_over = true;
-            hands.emplace_back(user);
             return;
         }
 
@@ -270,6 +280,22 @@ struct Engine{
                         }
                         break;
                     }
+                    if (has_split && !doubleAfterSplitAllowed){
+                        //print_hand(user, handLabel);
+                        game_over = true;
+                        hands.emplace_back(user);
+                        if (eventsEnabled()){
+                            publish(EventType::ActionTaken, handLabel + " cannot double after split; hits instead");
+                        }
+
+                        user.addCard(deck->hit());
+                        if (user.check_over()) {game_over = true; hands.emplace_back(user);}
+                        //print_hand(user, handLabel);
+                        if (eventsEnabled()){
+                            publish(EventType::ActionTaken, describeAction(action, user, handLabel));
+                        }
+                        break;
+                    }
                     user.doubleBet();
                     user.addCard(deck->hit());
                     //print_hand(user, handLabel);
@@ -308,7 +334,7 @@ struct Engine{
                         publish(EventType::ActionTaken, oss.str());
                     }
 
-                    user_play_hand(dealer,user2,hands,splitting_aces);
+                    user_play_hand(dealer,user2,hands,splitting_aces, true);
                     
                     // If splitting aces, this hand also gets only one card
                     if (splitting_aces) {
@@ -317,6 +343,18 @@ struct Engine{
                     }
                     
                     //print_hand(user, handLabel);
+                    break;
+                }
+                case Action::Surrender://probably rework this, dont like maniputlating wallet here :/
+                {
+                    wallet -= static_cast<double>(user.getBetSize()) * 0.5;
+                    money_bet += user.getBetSize();
+                    game_over = true;
+                    //hands.emplace_back(user); dont place in hands to be evaluated later
+                    if (eventsEnabled()){
+                        publish(EventType::ActionTaken, describeAction(action, user, handLabel));
+                        publishWalletSnapshot();
+                    }
                     break;
                 }
                 case Action::Skip: 
@@ -412,10 +450,10 @@ struct Engine{
         if (eventsEnabled()){
             publish(EventType::CardsDealt, describeHand("Dealer", dealer));
         }
-        if (dealer.isDealerOver()){
+        if (dealer.isDealerOver() || (dealer.isSoft17() && !dealerHitsSoft17)) {
             return;
         }
-        while (!dealer.isDealerOver()){
+        while (!dealer.isDealerOver() || (dealer.isSoft17() && dealerHitsSoft17)) {
             if (deck->getSize() < 1) {
                 throw std::runtime_error("Not enough cards to draw initial hand 271");
             }
@@ -428,6 +466,7 @@ struct Engine{
         }
         return;
     }
+
 
     bool insuranceHandler(Hand& dealer,Hand& user){
 

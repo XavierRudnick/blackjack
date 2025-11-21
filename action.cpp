@@ -19,6 +19,9 @@ std::ostream& operator<<(std::ostream& os, const Action action){
             case Action::Skip:
                 os << "Skip";
                 break;
+            case Action::Surrender:
+                os << "Surrender";
+                break;
 
         }
     return os;

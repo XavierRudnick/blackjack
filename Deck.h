@@ -18,7 +18,7 @@ class Deck{
         Strategy strategy;
 
     public:
-        Deck(uint8_t deck_size, Strategy strategy_input) : strategy(std::move(strategy_input)){
+        Deck(int deck_size, Strategy strategy_input) : strategy(std::move(strategy_input)){
             deck.reserve(deck_size * NUM_CARDS_IN_DECK);  // Pre-allocate memory to avoid reallocations
            // std::cout << "hello" << deck_size << std::endl;
             for(int i = 0; i < deck_size; i++){

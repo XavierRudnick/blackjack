@@ -6,9 +6,10 @@
 #include "NoStrategy.h"
 #include "observers/ConsoleObserver.h"
 #include "observers/EventBus.h"
+#include "EngineBuilder.h"
 
 int main(){
-    uint8_t num_decks_used = 2;
+    uint8_t num_decks_used = 6;
     const bool visualize = false;
     const int iterations = visualize ? 1 : 200000;
 
@@ -24,7 +25,16 @@ int main(){
         std::pair<double, int> profit = {1000, 0};
         HiLoStrategy hilo = HiLoStrategy(num_decks_used);
         NoStrategy noStrat = NoStrategy(num_decks_used);
-        profit = Engine(num_decks_used,profit.first, hilo, visualize).runner(); 
+        Engine hiLoEngine = EngineBuilder()
+                                    .setDeckSize(num_decks_used)
+                                    .setInitialWallet(1000)
+                                    //.enableEvents(visualize)
+                                    .with3To2Payout()
+                                    .withS17Rules()
+                                    .allowDoubleAfterSplit()
+                                    //.allowSurrender()
+                                    .build(hilo);
+        profit = hiLoEngine.runner();
         swag.first += profit.first;
         swag.second += profit.second;
     }

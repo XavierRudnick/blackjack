@@ -191,7 +191,8 @@ Action BasicStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, floa
     }
     
     int playerIdx = playerTotal - 5;  // Player total 5 maps to index 0
-    if (Action deviation = shouldDeviatefromHard(playerTotal, dealerUpcard, true_count); deviation != Action::Skip) {
+    Action deviation = shouldDeviatefromHard(playerTotal, dealerUpcard, true_count);
+    if (deviation != Action::Skip) {
         return deviation;
     }
     else{
@@ -212,8 +213,8 @@ Action BasicStrategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
 Action BasicStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, float true_count) {
     int dealerIdx = getIndex(dealerUpcard);
     int pairIdx = getIndex(playerSplitRank);
-    
-    if (Action deviation = shouldDeviatefromSplit(playerSplitRank, dealerUpcard, true_count); deviation != Action::Skip) {
+    Action deviation = shouldDeviatefromSplit(playerSplitRank, dealerUpcard, true_count);
+    if (deviation != Action::Skip) {
         return deviation;
     }
     else{

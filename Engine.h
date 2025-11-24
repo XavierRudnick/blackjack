@@ -419,7 +419,6 @@ struct Engine{
         if (eventsEnabled()){
             publish(EventType::CardsDealt, describeHand("Dealer", dealer));
         }
-        dealer.dealer_show_cards();
         //print_hand(user);
     }
 
@@ -427,14 +426,12 @@ struct Engine{
         if (eventsEnabled()){
             publish(EventType::CardsDealt, describeHand(label, user));
         }
-        user.show_cards();
     }
 
     void peek_dealer(Hand& dealer){
         if (eventsEnabled()){
             publish(EventType::CardsDealt, describeHand("Dealer (showing)", dealer, true));
         }
-        dealer.peek_dealer();
     }
 
     Hand draw_cards(int betSize = 0){
@@ -446,7 +443,6 @@ struct Engine{
     }
 
     void dealer_draw(Hand& dealer){
-        dealer.dealer_show_cards();
         if (eventsEnabled()){
             publish(EventType::CardsDealt, describeHand("Dealer", dealer));
         }
@@ -462,7 +458,6 @@ struct Engine{
             if (eventsEnabled()){
                 publish(EventType::CardsDealt, describeHand("Dealer", dealer));
             }
-            dealer.dealer_show_cards();
         }
         return;
     }

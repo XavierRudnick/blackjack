@@ -9,8 +9,8 @@
 #include "EngineBuilder.h"
 
 int main(){
-    uint8_t num_decks_used = 6;
-    const bool visualize = false;
+    uint8_t num_decks_used = 2;
+    const bool visualize = true;
     const int iterations = visualize ? 1 : 200000;
 
     ConsoleObserver consoleObserver;
@@ -28,7 +28,7 @@ int main(){
         Engine hiLoEngine = EngineBuilder()
                                     .setDeckSize(num_decks_used)
                                     .setInitialWallet(1000)
-                                    //.enableEvents(visualize)
+                                    .enableEvents(visualize)
                                     .with3To2Payout()
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()

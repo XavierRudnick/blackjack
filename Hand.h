@@ -16,9 +16,6 @@ class Hand{
         void doubleBet();
         Card getLastCard();
         void popLastCard();
-        void show_cards();
-        void dealer_show_cards();
-        void peek_dealer();
         bool check_can_split();
         bool check_can_double();
         void addCard(Card card);

@@ -16,27 +16,22 @@ class EngineBuilder {
 
     public:
         EngineBuilder& setDeckSize(int deck_size);
-
         EngineBuilder& setInitialWallet(double wallet);
-
         EngineBuilder& enableEvents(bool enable);
 
         EngineBuilder& with3To2Payout() ;
         EngineBuilder& with6To5Payout() ;
 
         EngineBuilder& withH17Rules();
-
         EngineBuilder& withS17Rules();
 
         EngineBuilder& allowReSplitAces();
         EngineBuilder& noReSplitAces();
 
         EngineBuilder& allowDoubleAfterSplit();
-        
         EngineBuilder& noDoubleAfterSplit();
 
         EngineBuilder& allowSurrender();
-
         EngineBuilder& noSurrender();
 
         template <typename Strategy>

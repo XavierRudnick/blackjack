@@ -24,19 +24,16 @@ struct Engine{
     bool allowSurrender = false;
     int money_bet = 0;
     bool emitEvents = false;
+    bool autoPlay = true;
     EventBus* eventBus = nullptr;
 
-    // number of decks handler
-    // should I make strategy apart of builder pattern?
-
-    Engine(int deck_size,int money, Strategy strategy, bool enableEvents = false, double blackJackMultiplier = 1.5, bool dealerHitsSoft17 = false, bool doubleAfterSplitAllowed = true, bool allowReSplitAces = true, bool allowSurrender = false)
-        : number_of_decks(deck_size), wallet(money), emitEvents(enableEvents), blackjack_payout_multiplier(blackJackMultiplier), dealerHitsSoft17(dealerHitsSoft17), doubleAfterSplitAllowed(doubleAfterSplitAllowed), allowReSplitAces(allowReSplitAces), allowSurrender(allowSurrender) {
+    Engine(int deck_size,int money, Strategy strategy, bool enableEvents = false, double blackJackMultiplier = 1.5, bool dealerHitsSoft17 = false, bool doubleAfterSplitAllowed = true, bool allowReSplitAces = true, bool allowSurrender = false, bool autoPlay = true)
+        : number_of_decks(deck_size), wallet(money), emitEvents(enableEvents), blackjack_payout_multiplier(blackJackMultiplier), dealerHitsSoft17(dealerHitsSoft17), doubleAfterSplitAllowed(doubleAfterSplitAllowed), allowReSplitAces(allowReSplitAces), allowSurrender(allowSurrender), autoPlay(autoPlay) {
         deck.emplace(number_of_decks, std::move(strategy));
         eventBus = EventBus::getInstance();
     }
 
     std::pair<int, int> runner(){
-        int num_hands_played = 0;
         
         while (deck->getSize() > number_of_decks * 13){ // reset when 3/8 left so 62.5% penetration
 
@@ -47,7 +44,6 @@ struct Engine{
             Hand dealer = draw_cards();
             Hand user = draw_cards(betSize);
             peek_dealer(dealer);
-            num_hands_played += 1;
             if (insuranceHandler(dealer,user)){
                 print_state(dealer, user);
                 hands = {user};
@@ -128,7 +124,13 @@ struct Engine{
     std::vector<Hand> user_play(Hand& dealer, Hand& user){
         std::vector<Hand> hands;
         hands.reserve(4); //unnessesary but fuck it I do what I want
-        user_play_hand(dealer, user, hands, false);
+        if (autoPlay){
+            user_play_hand(dealer, user, hands, false);
+        }
+        else{
+            user_play_hand_manual(dealer, user, hands, false);
+        }
+        
         return hands;
     }
 
@@ -263,7 +265,7 @@ struct Engine{
                     }
                     user.addCard(deck->hit());
                     if (user.check_over()) {game_over = true; hands.emplace_back(user);}
-                    //print_hand(user, handLabel);
+
                     if (eventsEnabled()){
                         publish(EventType::ActionTaken, describeAction(action, user, handLabel));
                     }
@@ -368,44 +370,109 @@ struct Engine{
         }
 
     }
-    void user_play_hand_manual(Hand& user, std::vector<Hand>& hands){ //need to implement strategy for here
+    void user_play_hand_manual(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces = false, bool has_split = false){ //need to implement strategy for here
         int choice;
         bool game_over = false;
-        print_hand(user);
+        const std::string handLabel = is_split_aces ? "Player (split aces)" : "Player";
+        print_hand(user, handLabel); 
+
+        
 
         while(!game_over){
-            //std::cin >> choice;
+            std::cin >> choice;
             //std::cout << std::endl;
+            Action action = Action::Skip;
             switch(choice)
             {
                 case 0:
-                    print_hand(user);
+                    action = Action::Stand;
                     game_over = true;
                     hands.emplace_back(user);
-                    break;
-                case 1:
-                    user.addCard(deck->hit());
-                    if (user.check_over()) {game_over = true; hands.emplace_back(user);}
-                    print_hand(user);
-                    break;
-                case 2:
-                    user.doubleBet();
-                    user.addCard(deck->hit());
-                    print_hand(user);
-                    game_over = true;
-                    hands.emplace_back(user);
-                    break;
-                case 3:
-                    if (user.check_can_split()){
-                        Hand user2 = Hand(user.getLastCard(),user.getBetSize());
-                        user.popLastCard();
-                        user.addCard(deck->hit());
-                        user2.addCard(deck->hit());
-
-                        user_play_hand_manual(user2,hands);
-                        print_hand(user);
+                    if (eventsEnabled()){
+                        publish(EventType::ActionTaken, describeAction(action, user, handLabel));
                     }
                     break;
+                case 1:
+                    action = Action::Hit;
+                    if (deck->getSize() < 1) {
+                        std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+                        game_over = true;
+                        hands.emplace_back(user);
+                        if (eventsEnabled()){
+                            publish(EventType::ActionTaken, handLabel + " attempted to hit with insufficient cards");
+                        }
+                        break;
+                    }
+                    user.addCard(deck->hit());
+                    if (user.check_over()) {game_over = true; hands.emplace_back(user);}
+                    if (eventsEnabled()){
+                        publish(EventType::ActionTaken, describeAction(action, user, handLabel));
+                    }
+                    break;
+                case 2:
+                {
+                    action = Action::Double;
+                    if (deck->getSize() < 1) {
+                        std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+                        game_over = true;
+                        hands.emplace_back(user);
+                        if (eventsEnabled()){
+                            publish(EventType::ActionTaken, handLabel + " attempted to double with insufficient cards");
+                        }
+                        break;
+                    }
+                    user.doubleBet();
+                    user.addCard(deck->hit());
+
+                    game_over = true;
+                    hands.emplace_back(user);
+                    if (eventsEnabled()){
+                        publish(EventType::ActionTaken, describeAction(action, user, handLabel));
+                    }
+                    break;
+                }
+                    
+                case 3:
+                {
+                    action = Action::Split;
+                    if (deck->getSize() < 2) {
+                        std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+                        game_over = true;
+                        hands.emplace_back(user);
+                        if (eventsEnabled()){
+                            publish(EventType::ActionTaken, handLabel + " attempted to split with insufficient cards");
+                        }
+                        break;
+                    }
+                    
+                    // Check if we're splitting Aces
+                    bool splitting_aces = (user.peek_front_card() == Rank::Ace);
+                    
+                    Hand user2 = Hand(user.getLastCard(),user.getBetSize());
+                    user.popLastCard();
+                    user.addCard(deck->hit());
+                    user2.addCard(deck->hit());
+
+                    if (eventsEnabled()){
+                        std::ostringstream oss;
+                        oss << handLabel << " splits into -> "
+                            << describeHand(handLabel + " (hand 1)", user) << " | "
+                            << describeHand(handLabel + " (hand 2)", user2);
+                        publish(EventType::ActionTaken, oss.str());
+                    }
+
+                    user_play_hand_manual(dealer,user2,hands,splitting_aces, true);
+                    
+                    // If splitting aces, this hand also gets only one card
+                    if (splitting_aces) {
+                        game_over = true;
+                        hands.emplace_back(user);
+                    }
+                    
+                    //print_hand(user, handLabel);
+                    break;
+                }
+
             }
         }
     }
@@ -563,7 +630,7 @@ private:
             return;
         }
         std::ostringstream oss;
-        oss << "Wallet: " << wallet << ", Count: " << deck->getStrategy().getCount();
+        oss << "Wallet: " << wallet << " | Count: " << deck->getStrategy().getCount() << " | Decks Left: " << deck->getStrategy().getDecksLeft();
         publish(EventType::GameStats, oss.str());
         publish(EventType::GameStats, "============================================================================");
     }

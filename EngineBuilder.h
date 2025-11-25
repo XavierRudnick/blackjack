@@ -13,6 +13,7 @@ class EngineBuilder {
         bool doubleAfterSplitAllowed_ = true;
         bool allowReSplitAces_ = true;
         bool allowSurrender_ = false;
+        bool autoPlay = true;
 
     public:
         EngineBuilder& setDeckSize(int deck_size);
@@ -34,9 +35,12 @@ class EngineBuilder {
         EngineBuilder& allowSurrender();
         EngineBuilder& noSurrender();
 
+        EngineBuilder& allowAutoPlay();
+        EngineBuilder& allowManualPlay();
+
         template <typename Strategy>
         Engine<Strategy> build(Strategy strat) {
-            Engine<Strategy> engine(number_of_decks_, wallet_, std::move(strat), emitEvents_, blackjack_payout_multiplier_, dealerHitsSoft17_, doubleAfterSplitAllowed_, allowReSplitAces_, allowSurrender_);
+            Engine<Strategy> engine(number_of_decks_, wallet_, std::move(strat), emitEvents_, blackjack_payout_multiplier_, dealerHitsSoft17_, doubleAfterSplitAllowed_, allowReSplitAces_, allowSurrender_,autoPlay);
             engine.eventBus = EventBus::getInstance();
             return engine;
         }

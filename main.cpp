@@ -9,7 +9,7 @@
 #include "EngineBuilder.h"
 
 int main(){
-    uint8_t num_decks_used = 2;
+    int num_decks_used = 2;
     const bool visualize = true;
     const int iterations = visualize ? 1 : 200000;
 
@@ -33,6 +33,7 @@ int main(){
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()
                                     //.allowSurrender()
+                                    .allowManualPlay()
                                     .build(hilo);
         profit = hiLoEngine.runner();
         swag.first += profit.first;

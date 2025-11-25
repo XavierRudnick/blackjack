@@ -69,4 +69,14 @@ EngineBuilder& EngineBuilder::noSurrender() {
     return *this;
 }
 
+EngineBuilder& EngineBuilder::allowAutoPlay(){
+    this->autoPlay = true;
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::allowManualPlay(){
+    this->autoPlay = false;
+    return *this;
+}
+
 

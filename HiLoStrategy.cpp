@@ -87,6 +87,10 @@ float HiLoStrategy::getCount(){
     return true_count;
 }
 
+float HiLoStrategy::getDecksLeft(){
+    return num_decks_left;
+}
+
 bool HiLoStrategy::shouldAcceptInsurance(){
     if (true_count >= 3){//mathmatical point where insurance is profitable accoding to gemini
         return true;

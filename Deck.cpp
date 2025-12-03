@@ -16,9 +16,6 @@ Deck::Deck(int deck_size){
 }
 
 std::pair<Card,Card> Deck::deal(){
-    if (deck.size() < 2) {
-        throw std::runtime_error("Not enough cards in deck to deal 39");
-    }
     Card first = deck.back();
     deck.pop_back();
     Card second = deck.back();
@@ -28,9 +25,6 @@ std::pair<Card,Card> Deck::deal(){
 }
 
 Card Deck::hit(){
-    if (deck.empty()) {
-        throw std::runtime_error("Deck is empty - cannot hit 62");
-    }
     Card val = deck.back();
     deck.pop_back();
 

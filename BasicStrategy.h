@@ -7,6 +7,7 @@
 
 class BasicStrategy {
     private:
+        static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
         static const Action hardTotalTable[16][10];
         static const Action softTotalTable[9][10];
         static const Action splitTable[10][10];

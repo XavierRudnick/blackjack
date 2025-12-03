@@ -61,7 +61,7 @@ int HiLoStrategy::getBetSize() {
 
 void HiLoStrategy::updateCount(Card card) {
     Rank rank = card.getRank();
-    int score = static_cast<int>(rank) + 2;//add 2 to account for enum starting at 0
+    int score = static_cast<int>(rank) + INDEX_OFFSET;
 
     if (score <= 6){
         running_count += 1;

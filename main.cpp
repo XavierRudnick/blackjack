@@ -12,7 +12,7 @@
 
 int main(){
     int num_decks_used = 2;
-    const bool visualize = false;
+    const bool visualize = true;
     const int iterations = visualize ? 1 : 1000000;
     // float scores[iterations];
 
@@ -34,12 +34,12 @@ int main(){
         Engine hiLoEngine = EngineBuilder()
                                     .setDeckSize(num_decks_used)
                                     .setInitialWallet(1000)
-                                    .enableEvents(true)
+                                    .enableEvents(visualize)
                                     .with3To2Payout()
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()
                                     //.allowSurrender()
-                                    //.allowManualPlay()
+                                    .allowManualPlay()
                                     .build(std::move(hilo));
         profit = hiLoEngine.runner();
 

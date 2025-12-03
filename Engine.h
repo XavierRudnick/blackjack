@@ -403,6 +403,7 @@ struct Engine{
             std::cin >> choice;
             //std::cout << std::endl;
             Action action = Action::Skip;
+            Action optimal = getAction(dealer, user);
             switch(choice)
             {
                 case 0:
@@ -411,6 +412,7 @@ struct Engine{
                     hands.emplace_back(user);
                     if (eventsEnabled()){
                         publish(EventType::ActionTaken, describeAction(action, user, handLabel));
+                        publish(EventType::ActionTaken, optimalAction(optimal, user,handLabel));
                     }
                     break;
                 case 1:
@@ -433,6 +435,7 @@ struct Engine{
                     if (user.check_over()) {game_over = true; hands.emplace_back(user);}
                     if (eventsEnabled()){
                         publish(EventType::ActionTaken, describeAction(action, user, handLabel));
+                        publish(EventType::ActionTaken, optimalAction(optimal, user,handLabel));
                     }
                     break;
                 }
@@ -457,6 +460,7 @@ struct Engine{
                     hands.emplace_back(user);
                     if (eventsEnabled()){
                         publish(EventType::ActionTaken, describeAction(action, user, handLabel));
+                        publish(EventType::ActionTaken, optimalAction(optimal, user,handLabel));
                     }
                     break;
                 }
@@ -492,6 +496,7 @@ struct Engine{
                             << describeHand(handLabel + " (hand 1)", user) << " | "
                             << describeHand(handLabel + " (hand 2)", user2);
                         publish(EventType::ActionTaken, oss.str());
+                        publish(EventType::ActionTaken, optimalAction(optimal, user,handLabel));
                     }
 
                     user_play_hand_manual(dealer,user2,hands,splitting_aces, true);
@@ -565,8 +570,8 @@ struct Engine{
 
 
     bool insuranceHandler(Hand& dealer,Hand& user){
-
         if (dealer.OfferInsurance()){
+            print_hand(user);
             bool acceptInsurance = deck->getStrategy().shouldAcceptInsurance();
             if (eventsEnabled()){
                 std::ostringstream oss;
@@ -719,6 +724,12 @@ private:
     std::string describeAction(Action action, Hand& hand, const std::string& label){
         std::ostringstream oss;
         oss << label << " chose " << action << ". " << describeHand(label, hand);
+        return oss.str();
+    }
+
+    std::string optimalAction(Action action, Hand& hand, const std::string& label){
+        std::ostringstream oss;
+        oss << label << " optimal action : " << action << ". ";
         return oss.str();
     }
 };

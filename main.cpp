@@ -25,7 +25,7 @@ int main(){
     }
 
     std::pair<double, int> swag = {0, 0};
-    //auto start_time = std::chrono::high_resolution_clock::now();
+    auto start_time = std::chrono::high_resolution_clock::now();
 
 
     for (int i = 0; i < iterations; i++){
@@ -44,14 +44,14 @@ int main(){
                                     .build(hilo);
         profit = hiLoEngine.runner();
 
-    //    scores[i] = profit.first;
+    //   scores[i] = profit.first;
         swag.first += profit.first;
         swag.second += profit.second;
     }
 
-    // auto end_time = std::chrono::high_resolution_clock::now();
-    // auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
-    // std::cout << "Simulation time for " << num_decks_used << " decks and " << iterations << " iterations: " << duration.count() / 1000000.0 << " seconds." << std::endl;
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
+    std::cout << "Simulation time for " << num_decks_used << " decks and " << iterations << " iterations: " << duration.count() / 1000000.0 << " seconds." << std::endl;
 
 
     if (visualize) {

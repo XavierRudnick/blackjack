@@ -20,8 +20,8 @@ class EngineBuilder {
         EngineBuilder& setInitialWallet(double wallet);
         EngineBuilder& enableEvents(bool enable);
 
-        EngineBuilder& with3To2Payout() ;
-        EngineBuilder& with6To5Payout() ;
+        EngineBuilder& with3To2Payout();
+        EngineBuilder& with6To5Payout();
 
         EngineBuilder& withH17Rules();
         EngineBuilder& withS17Rules();
@@ -38,9 +38,8 @@ class EngineBuilder {
         EngineBuilder& allowAutoPlay();
         EngineBuilder& allowManualPlay();
 
-        template <typename Strategy>
-        Engine<Strategy> build(Strategy strat) {
-            Engine<Strategy> engine(number_of_decks_, wallet_, std::move(strat), emitEvents_, blackjack_payout_multiplier_, dealerHitsSoft17_, doubleAfterSplitAllowed_, allowReSplitAces_, allowSurrender_,autoPlay);
+        Engine build(std::unique_ptr<CountingStrategy> countingStrategy) {
+            Engine engine(number_of_decks_, wallet_, std::move(countingStrategy), emitEvents_, blackjack_payout_multiplier_, dealerHitsSoft17_, doubleAfterSplitAllowed_, allowReSplitAces_, allowSurrender_,autoPlay);
             engine.eventBus = EventBus::getInstance();
             return engine;
         }

@@ -5,7 +5,7 @@ HiLoStrategy::HiLoStrategy(float deck_size){
     num_decks_left = deck_size;
 }
 
-int HiLoStrategy::getBetSize() const {
+int HiLoStrategy::getBetSize() {
     // if (true_count < 1){
     //     return 25;
     // }
@@ -32,7 +32,6 @@ int HiLoStrategy::getBetSize() const {
     // }
 
     //xav bet spread
-    //*
     if (true_count < 1){
         return 5;
     }
@@ -58,7 +57,6 @@ int HiLoStrategy::getBetSize() const {
         return 200;
     }
 
-    //*/
 }
 
 void HiLoStrategy::updateCount(Card card) {
@@ -83,7 +81,7 @@ void HiLoStrategy::updateDeckSize(int num_cards_left){
     return;
 }
 
-float HiLoStrategy::getCount(){
+float HiLoStrategy::getTrueCount(){
     return true_count;
 }
 

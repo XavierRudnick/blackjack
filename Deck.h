@@ -1,13 +1,10 @@
 #ifndef DECK_H
 #define DECK_H
 
-#include <vector>
 #include <random>
-#include <algorithm>
-#include <stdexcept>
+#include <vector>
 #include "Card.h"
 
-template <typename Strategy>
 class Deck{
     private:
         const int NUM_RANK = 13;
@@ -15,67 +12,12 @@ class Deck{
         const int NUM_CARDS_IN_DECK = 52;
         std::vector<Card> deck;
         std::mt19937 rand;
-        Strategy strategy;
 
     public:
-        Deck(int deck_size, Strategy strategy_input) : strategy(std::move(strategy_input)){
-            deck.reserve(deck_size * NUM_CARDS_IN_DECK);  // Pre-allocate memory to avoid reallocations
-            for(int i = 0; i < deck_size; i++){
-                for(int rank = 0; rank < NUM_RANK; rank++){
-                    for(int suit = 0; suit < NUM_SUIT; suit++){
-                        deck.emplace_back(Card(static_cast<Rank>(rank),static_cast<Suit>(suit)));  // use emplace back to construct in place, o(1)
-                    }
-                }
-            }
-
-            rand.seed(std::random_device{}());
-            std::shuffle(deck.begin(), deck.end(), rand);
-        }
-
-        std::pair<Card,Card> deal(){
-            if (deck.size() < 2) {
-                throw std::runtime_error("Not enough cards in deck to deal 39");
-            }
-            Card first = deck.back();
-            deck.pop_back();
-            Card second = deck.back();
-            deck.pop_back();
-            // strategy.updateCount(first);
-            // strategy.updateCount(second);
-            return {first,second};
-        }
-
-        Card hit(){
-            if (deck.empty()) {
-                throw std::runtime_error("Deck is empty - cannot hit 62");
-            }
-            Card val = deck.back();
-            deck.pop_back();
-            // strategy.updateCount(val);
-            return val;
-        }
-
-        void countCard(Card card){
-            strategy.updateCount(card);
-        }
-
-
-        int getSize(){
-            return deck.size();
-        }
-
-        void updateStrategyDeckSize(){
-            strategy.updateDeckSize(getSize());
-            return;
-        }
-
-        Strategy& getStrategy(){
-            return strategy;
-        }
-
-        int getBetSize(){
-            return strategy.getBetSize();
-        }
+        Deck(int deck_size);
+        std::pair<Card,Card> deal();
+        Card hit();
+        int getSize();
 };
 
 #endif

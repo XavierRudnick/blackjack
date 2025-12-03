@@ -8,14 +8,13 @@
 #include "observers/EventBus.h"
 #include "EngineBuilder.h"
 #include <chrono> 
-//#include <boost/math/distributions/normal.hpp>
 
 
 int main(){
     int num_decks_used = 2;
-    const bool visualize = true;
+    const bool visualize = false;
     const int iterations = visualize ? 1 : 1000000;
-   // float scores[iterations];
+    // float scores[iterations];
 
     ConsoleObserver consoleObserver;
     if (visualize) {
@@ -30,8 +29,8 @@ int main(){
 
     for (int i = 0; i < iterations; i++){
         std::pair<double, int> profit = {1000, 0};
-        HiLoStrategy hilo = HiLoStrategy(num_decks_used);
-        NoStrategy noStrat = NoStrategy(num_decks_used);
+        auto hilo = std::make_unique<HiLoStrategy>(num_decks_used);
+        auto no = std::make_unique<NoStrategy>(num_decks_used);
         Engine hiLoEngine = EngineBuilder()
                                     .setDeckSize(num_decks_used)
                                     .setInitialWallet(1000)
@@ -40,8 +39,8 @@ int main(){
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()
                                     //.allowSurrender()
-                                    .allowManualPlay()
-                                    .build(hilo);
+                                    //.allowManualPlay()
+                                    .build(std::move(hilo));
         profit = hiLoEngine.runner();
 
     //   scores[i] = profit.first;

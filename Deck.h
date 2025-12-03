@@ -40,8 +40,8 @@ class Deck{
             deck.pop_back();
             Card second = deck.back();
             deck.pop_back();
-            strategy.updateCount(first);
-            strategy.updateCount(second);
+            // strategy.updateCount(first);
+            // strategy.updateCount(second);
             return {first,second};
         }
 
@@ -51,12 +51,22 @@ class Deck{
             }
             Card val = deck.back();
             deck.pop_back();
-            strategy.updateCount(val);
+            // strategy.updateCount(val);
             return val;
         }
 
+        void countCard(Card card){
+            strategy.updateCount(card);
+        }
+
+
         int getSize(){
             return deck.size();
+        }
+
+        void updateStrategyDeckSize(){
+            strategy.updateDeckSize(getSize());
+            return;
         }
 
         Strategy& getStrategy(){

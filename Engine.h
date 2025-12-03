@@ -14,51 +14,57 @@
 
 template <typename Strategy>
 struct Engine{
-    std::optional<Deck<Strategy>> deck;
+
     int number_of_decks;
+    int money_bet = 0;
+    int PENETRATION_THRESHOLD; 
     double wallet;
     double blackjack_payout_multiplier = 1.5;
+
     bool dealerHitsSoft17 = false;
     bool doubleAfterSplitAllowed = true;
     bool allowReSplitAces = true;
     bool allowSurrender = false;
-    int money_bet = 0;
     bool emitEvents = false;
     bool autoPlay = true;
+
     EventBus* eventBus = nullptr;
+    std::optional<Deck<Strategy>> deck;
 
     Engine(int deck_size,int money, Strategy strategy, bool enableEvents = false, double blackJackMultiplier = 1.5, bool dealerHitsSoft17 = false, bool doubleAfterSplitAllowed = true, bool allowReSplitAces = true, bool allowSurrender = false, bool autoPlay = true)
         : number_of_decks(deck_size), wallet(money), emitEvents(enableEvents), blackjack_payout_multiplier(blackJackMultiplier), dealerHitsSoft17(dealerHitsSoft17), doubleAfterSplitAllowed(doubleAfterSplitAllowed), allowReSplitAces(allowReSplitAces), allowSurrender(allowSurrender), autoPlay(autoPlay) {
         deck.emplace(number_of_decks, std::move(strategy));
         eventBus = EventBus::getInstance();
+        PENETRATION_THRESHOLD = number_of_decks * 13;    
     }
 
     std::pair<int, int> runner(){
         
-        while (deck->getSize() > number_of_decks * 13){ // reset when 3/8 left so 62.5% penetration
-
-            deck->getStrategy().updateDeckSize(deck->getSize()); 
-            int betSize = deck->getBetSize();
+        while (deck->getSize() > PENETRATION_THRESHOLD){
+            deck->updateStrategyDeckSize();
             std::vector<Hand> hands;
 
+            int bet = deck->getBetSize();
             Hand dealer = draw_cards();
-            Hand user = draw_cards(betSize);
+            Hand user = draw_cards(bet);
+
+            // Count visible cards
+            deck->countCard(dealer.getCards()[0]);
+            for (const auto& card : user.getCards()) {
+                deck->countCard(card);
+            }
+
             peek_dealer(dealer);
             if (insuranceHandler(dealer,user)){
                 print_state(dealer, user);
-                hands = {user};
             }
             else if (dealerRobberyHandler(dealer,user)){
                 print_state(dealer, user);
-                hands = {user};
             }
             else{
                 hands = user_play(dealer,user);
                 evaluateHands(dealer,hands);
             }
-
-            //std::cout << "wallet total : " << wallet << std::endl;
-            //std::cout << "true count : " << deck->getStrategy().getCount() << std::endl;
         }    
         return {wallet, money_bet};
     }
@@ -72,8 +78,8 @@ struct Engine{
     }
 
     bool didHandsBust(std::vector<int> scores){
-        for (int i : scores){
-            if (i > 0) {
+        for (int score : scores){
+            if (score > 0) {
                 return false;
             }
         }
@@ -81,6 +87,7 @@ struct Engine{
     }
 
     void evaluateHands(Hand& dealer, std::vector<Hand>& hands){
+        deck->countCard(dealer.getCards()[1]); // Reveal hole card
         std::vector<int> scores = getPlayerScores(hands);
         if (!didHandsBust(scores)){
             dealer_draw(dealer);
@@ -90,25 +97,25 @@ struct Engine{
         std::ostringstream roundSummary;
         roundSummary << "Dealer score: " << dealer_score << ". ";
 
-        for (int i = 0; i < hands.size(); ++i){
+        for (int i = 0; i < hands.size(); i++){
             Hand& hand = hands[i];
             int score = hand.getFinalScore();
             std::string outcome = "Push";
 
             if (hands.size() == 1 && hand.isBlackjack()){
-                wallet += static_cast<double>(hand.getBetSize()) * blackjack_payout_multiplier;
+                wallet += hand.getBetSize() * blackjack_payout_multiplier;
                 outcome = "Natural Blackjack win";
             } 
             else if (dealer_score > score){
-                wallet -= static_cast<double>(hand.getBetSize());
+                wallet -= hand.getBetSize();
                 outcome = "Dealer win";
             }
             else if (dealer_score < score){
-                wallet += static_cast<double>(hand.getBetSize());
+                wallet += hand.getBetSize();
                 outcome = "Player win";
             }
             else if (dealer_score == 0 && score ==0){
-                wallet -= static_cast<double>(hand.getBetSize());
+                wallet -= hand.getBetSize();
                 outcome = "Player bust";
             }
 
@@ -138,7 +145,7 @@ struct Engine{
         BasicStrategy strat;
         Rank dealer_card = dealer.peek_front_card();
 
-        if(user.check_can_double() &&allowSurrender){
+        if(user.check_can_double() && allowSurrender){
             Action action = strat.shouldSurrender(user.getScore(), dealer_card, deck->getStrategy().getCount());
             if (action == Action::Surrender) {
                 return action;
@@ -198,7 +205,9 @@ struct Engine{
 
         // If this is a split Ace hand, only deal one card and stand
         if (is_split_aces) {//rsa handler
-            user.addCard(deck->hit());
+            Card c = deck->hit();
+            deck->countCard(c);
+            user.addCard(c);
 
             if (allowReSplitAces && user.getLastCard().getRank() == Rank::Ace) {
                 if (eventsEnabled()){
@@ -208,8 +217,12 @@ struct Engine{
                 bool splitting_aces = true;   
                 Hand user2 = Hand(user.getLastCard(),user.getBetSize());
                 user.popLastCard();
-                user.addCard(deck->hit());
-                user2.addCard(deck->hit());
+                Card c1 = deck->hit();
+                deck->countCard(c1);
+                user.addCard(c1);
+                Card c2 = deck->hit();
+                deck->countCard(c2);
+                user2.addCard(c2);
 
                 if (eventsEnabled()){
                     std::ostringstream oss;
@@ -263,7 +276,9 @@ struct Engine{
                         }
                         break;
                     }
-                    user.addCard(deck->hit());
+                    Card c = deck->hit();
+                    deck->countCard(c);
+                    user.addCard(c);
                     if (user.check_over()) {game_over = true; hands.emplace_back(user);}
 
                     if (eventsEnabled()){
@@ -290,7 +305,9 @@ struct Engine{
                             publish(EventType::ActionTaken, handLabel + " cannot double after split; hits instead");
                         }
 
-                        user.addCard(deck->hit());
+                        Card c = deck->hit();
+                        deck->countCard(c);
+                        user.addCard(c);
                         if (user.check_over()) {game_over = true; hands.emplace_back(user);}
                         //print_hand(user, handLabel);
                         if (eventsEnabled()){
@@ -299,7 +316,9 @@ struct Engine{
                         break;
                     }
                     user.doubleBet();
-                    user.addCard(deck->hit());
+                    Card c = deck->hit();
+                    deck->countCard(c);
+                    user.addCard(c);
                     //print_hand(user, handLabel);
                     game_over = true;
                     hands.emplace_back(user);
@@ -325,8 +344,12 @@ struct Engine{
                     
                     Hand user2 = Hand(user.getLastCard(),user.getBetSize());
                     user.popLastCard();
-                    user.addCard(deck->hit());
-                    user2.addCard(deck->hit());
+                    Card c1 = deck->hit();
+                    deck->countCard(c1);
+                    user.addCard(c1);
+                    Card c2 = deck->hit();
+                    deck->countCard(c2);
+                    user2.addCard(c2);
 
                     if (eventsEnabled()){
                         std::ostringstream oss;
@@ -376,8 +399,6 @@ struct Engine{
         const std::string handLabel = is_split_aces ? "Player (split aces)" : "Player";
         print_hand(user, handLabel); 
 
-        
-
         while(!game_over){
             std::cin >> choice;
             //std::cout << std::endl;
@@ -393,6 +414,7 @@ struct Engine{
                     }
                     break;
                 case 1:
+                {
                     action = Action::Hit;
                     if (deck->getSize() < 1) {
                         std::cout << "HOW DID YOU REACH THIS YOU ARE COOKED!!!!!!!!!!!!!!!!!!!!!" << std::endl;
@@ -403,12 +425,17 @@ struct Engine{
                         }
                         break;
                     }
-                    user.addCard(deck->hit());
+                    
+                    Card c = deck->hit();
+                    deck->countCard(c);
+                    user.addCard(c);
+                    
                     if (user.check_over()) {game_over = true; hands.emplace_back(user);}
                     if (eventsEnabled()){
                         publish(EventType::ActionTaken, describeAction(action, user, handLabel));
                     }
                     break;
+                }
                 case 2:
                 {
                     action = Action::Double;
@@ -422,7 +449,9 @@ struct Engine{
                         break;
                     }
                     user.doubleBet();
-                    user.addCard(deck->hit());
+                    Card c = deck->hit();
+                    deck->countCard(c);
+                    user.addCard(c);
 
                     game_over = true;
                     hands.emplace_back(user);
@@ -450,8 +479,12 @@ struct Engine{
                     
                     Hand user2 = Hand(user.getLastCard(),user.getBetSize());
                     user.popLastCard();
-                    user.addCard(deck->hit());
-                    user2.addCard(deck->hit());
+                    Card c1 = deck->hit();
+                    deck->countCard(c1);
+                    user.addCard(c1);
+                    Card c2 = deck->hit();
+                    deck->countCard(c2);
+                    user2.addCard(c2);
 
                     if (eventsEnabled()){
                         std::ostringstream oss;
@@ -486,7 +519,6 @@ struct Engine{
         if (eventsEnabled()){
             publish(EventType::CardsDealt, describeHand("Dealer", dealer));
         }
-        //print_hand(user);
     }
 
     void print_hand(Hand& user, const std::string& label = "Player"){
@@ -521,7 +553,9 @@ struct Engine{
                 throw std::runtime_error("Not enough cards to draw initial hand 271");
             }
             
-            dealer.addCard(deck->hit());
+            Card c = deck->hit();
+            deck->countCard(c);
+            dealer.addCard(c);
             if (eventsEnabled()){
                 publish(EventType::CardsDealt, describeHand("Dealer", dealer));
             }
@@ -543,6 +577,7 @@ struct Engine{
 
             if (acceptInsurance){
                 if (dealer.dealerHiddenTen() && user.isBlackjack()){
+                    deck->countCard(dealer.getCards()[1]); // Reveal hole card
                     wallet += static_cast<double>(user.getBetSize()) * 0.5;
                     money_bet += user.getBetSize();
                     if (eventsEnabled()){
@@ -552,6 +587,7 @@ struct Engine{
                     return true;
                 }
                 else if (dealer.dealerHiddenTen() && !user.isBlackjack()){
+                    deck->countCard(dealer.getCards()[1]); // Reveal hole card
                     money_bet += user.getBetSize();
                     if (eventsEnabled()){
                         publish(EventType::RoundEnded, "Insurance wins: dealer blackjack");
@@ -568,6 +604,7 @@ struct Engine{
             }
             else{
                 if(dealer.dealerHiddenTen() && user.isBlackjack()){
+                    deck->countCard(dealer.getCards()[1]); // Reveal hole card
                     money_bet += user.getBetSize();
                     if (eventsEnabled()){
                         publish(EventType::RoundEnded, "Dealer blackjack pushes player blackjack (no insurance)");
@@ -576,6 +613,7 @@ struct Engine{
                     return true;
                 }
                 else if (dealer.dealerHiddenTen() && !user.isBlackjack()) {
+                    deck->countCard(dealer.getCards()[1]); // Reveal hole card
                     wallet -= user.getBetSize();
                     money_bet += user.getBetSize();
                     if (eventsEnabled()){
@@ -597,6 +635,7 @@ struct Engine{
 
     bool dealerRobberyHandler(Hand& dealer,Hand& user){
         if (dealer.dealerShowsTen() && dealer.dealerHiddenAce()){
+            deck->countCard(dealer.getCards()[1]); // Reveal hole card
             if (!user.isBlackjack()){
                 wallet -= user.getBetSize();
                 money_bet += user.getBetSize()  * 1;
@@ -630,7 +669,7 @@ private:
             return;
         }
         std::ostringstream oss;
-        oss << "Wallet: " << wallet << " | Count: " << deck->getStrategy().getCount() << " | Decks Left: " << deck->getStrategy().getDecksLeft();
+        oss << "Wallet: " << wallet << " | True Count: " << deck->getStrategy().getCount() << " | Running Count: " << deck->getStrategy().getRunningCount() << " | Decks Left: " << deck->getStrategy().getDecksLeft();
         publish(EventType::GameStats, oss.str());
         publish(EventType::GameStats, "============================================================================");
     }

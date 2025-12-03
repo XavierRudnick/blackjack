@@ -2,6 +2,7 @@
 #include <cmath>
 
 NoStrategy::NoStrategy(float deck_size){
+    num_decks_left = deck_size;
     return;
 }
 
@@ -18,6 +19,14 @@ void NoStrategy::updateDeckSize(int num_cards_left){
 }
 
 float NoStrategy::getCount(){
+    return 0;
+}
+
+float NoStrategy::getDecksLeft(){
+    return num_decks_left;
+}
+
+float NoStrategy::getRunningCount(){
     return 0;
 }
 

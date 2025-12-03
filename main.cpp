@@ -7,11 +7,15 @@
 #include "observers/ConsoleObserver.h"
 #include "observers/EventBus.h"
 #include "EngineBuilder.h"
+#include <chrono> 
+//#include <boost/math/distributions/normal.hpp>
+
 
 int main(){
     int num_decks_used = 2;
     const bool visualize = true;
-    const int iterations = visualize ? 1 : 200000;
+    const int iterations = visualize ? 1 : 1000000;
+   // float scores[iterations];
 
     ConsoleObserver consoleObserver;
     if (visualize) {
@@ -21,6 +25,9 @@ int main(){
     }
 
     std::pair<double, int> swag = {0, 0};
+    //auto start_time = std::chrono::high_resolution_clock::now();
+
+
     for (int i = 0; i < iterations; i++){
         std::pair<double, int> profit = {1000, 0};
         HiLoStrategy hilo = HiLoStrategy(num_decks_used);
@@ -28,7 +35,7 @@ int main(){
         Engine hiLoEngine = EngineBuilder()
                                     .setDeckSize(num_decks_used)
                                     .setInitialWallet(1000)
-                                    .enableEvents(visualize)
+                                    .enableEvents(true)
                                     .with3To2Payout()
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()
@@ -36,18 +43,25 @@ int main(){
                                     .allowManualPlay()
                                     .build(hilo);
         profit = hiLoEngine.runner();
+
+    //    scores[i] = profit.first;
         swag.first += profit.first;
         swag.second += profit.second;
     }
+
+    // auto end_time = std::chrono::high_resolution_clock::now();
+    // auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
+    // std::cout << "Simulation time for " << num_decks_used << " decks and " << iterations << " iterations: " << duration.count() / 1000000.0 << " seconds." << std::endl;
+
 
     if (visualize) {
         EventBus::getInstance()->removeObserver(&consoleObserver);
     }
 
     double average = swag.first / iterations;
-    double avg_money_bet = static_cast<double>(swag.second) / iterations;
+    double avg_money_bet = swag.second / iterations;
     double diff = average-1000;
-    double normal =   1000.0 / avg_money_bet;
+    double normal =  1000.0 / avg_money_bet;
     double money_lost_per = diff * normal;
     double rtp = (1000+money_lost_per) /1000;
 
@@ -59,3 +73,5 @@ int main(){
     //std::cout << "RTP: " << rtp << std::endl;
     return 0;
 }
+
+

@@ -79,12 +79,16 @@ void HiLoStrategy::updateCount(Card card) {
 
 void HiLoStrategy::updateDeckSize(int num_cards_left){
     float decks_left_unrounded = num_cards_left / 52.0; 
-    num_decks_left = std::round(decks_left_unrounded * 2.0) / 2.0;//convert to only count int .5 segments
+    num_decks_left = std::round(decks_left_unrounded * 2.0) / 2.0;//convert to only count float .5 segments
     return;
 }
 
 float HiLoStrategy::getCount(){
     return true_count;
+}
+
+float HiLoStrategy::getRunningCount(){
+    return running_count;
 }
 
 float HiLoStrategy::getDecksLeft(){

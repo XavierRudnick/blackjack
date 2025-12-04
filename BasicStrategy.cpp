@@ -1,7 +1,5 @@
 #include "BasicStrategy.h"
 
-//implement illustrias 18 for deviations from uncounted optimal table  
-
 // Hard total strategy table (player total 5-20 vs dealer 2-9, 10, A)
 // Rows: player totals 5-20
 // Columns: dealer upcard 2, 3, 4, 5, 6, 7, 8, 9, 10/J/Q/K, A
@@ -78,98 +76,100 @@ int BasicStrategy::getIndex(Rank upcard) {
     }
 }
 
-Action BasicStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float true_count){
+//implementing illustrias 18 (18 common strategy deviations based on count)
+Action BasicStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float trueCount){
     int dealerValue = getIndex(dealerUpcard) + INDEX_OFFSET;
+
     switch (playerTotal) {
         case 16:
-            if (dealerValue == 10 && true_count >= 0) {
+            if (dealerValue == 10 && trueCount >= 0) {
                 return Action::Stand;
             }
-            if (dealerValue == 9 && true_count >= 5) {
+            if (dealerValue == 9 && trueCount >= 5) {
                 return Action::Stand;
             }
             break;
             
         case 15: 
-            if (dealerValue == 10 && true_count >= 4) {
+            if (dealerValue == 10 && trueCount >= 4) {
                 return Action::Stand;
             }
             break;
             
         case 13:
-            if (dealerValue == 2 && true_count <= -1) { 
+            if (dealerValue == 2 && trueCount <= -1) { 
                 return Action::Stand;
             }
-            if (dealerValue == 3 && true_count <= -2) { 
+            if (dealerValue == 3 && trueCount <= -2) { 
                 return Action::Stand;
             }
             break;
 
         case 12:
-            if (dealerValue == 3 && true_count >= 2) {
+            if (dealerValue == 3 && trueCount >= 2) {
                 return Action::Stand;
             }
-            if (dealerValue == 2 && true_count >= 3) {
+            if (dealerValue == 2 && trueCount >= 3) {
                 return Action::Stand;
             }
-            if (dealerValue == 4 && true_count <= 0){
+            if (dealerValue == 4 && trueCount <= 0){
                 return Action::Hit;
             }
-            if (dealerValue == 5 && true_count <= -2){
+            if (dealerValue == 5 && trueCount <= -2){
                 return Action::Hit;
             }
-            if (dealerValue == 6 && true_count <= -1){
+            if (dealerValue == 6 && trueCount <= -1){
                 return Action::Hit;
             }
             break;
         case 11:
-            if (dealerValue == 11 && true_count >= 1){
+            if (dealerValue == 11 && trueCount >= 1){
                 return Action::Double;
             }
             break;
         case 10:
-            if (dealerValue == 10 && true_count >=4){
+            if (dealerValue == 10 && trueCount >=4){
                 return Action::Double;
             }
-            if (dealerValue == 11 && true_count >= 4){
+            if (dealerValue == 11 && trueCount >= 4){
                 return Action::Double;
             }
             break;
         case 9:
-            if (dealerValue == 2  && true_count >= 1){
+            if (dealerValue == 2  && trueCount >= 1){
                 return Action::Double;
             }
-            if (dealerValue == 7  && true_count >= 3){
+            if (dealerValue == 7  && trueCount >= 3){
                 return Action::Double;
             }
             break;
-        default: return Action::Skip; break;
+        default: return Action::Skip;
     }
     return Action::Skip;
 }
 
-Action BasicStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float true_count){
+Action BasicStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float trueCount){
     int dealerValue = getIndex(dealerUpcard) + INDEX_OFFSET;
     int playerValue = getIndex(playerRank) + INDEX_OFFSET;
     switch (playerValue) {
         case 9:
-            if (dealerValue == 7 && true_count >= 4) {
+            if (dealerValue == 7 && trueCount >= 4) {
                 return Action::Split;
             }
-            if (dealerValue == 11 && true_count >= 5) {
+            if (dealerValue == 11 && trueCount >= 5) {
                 return Action::Split;
             }
             break;
         
         // Commented out, very obvious counting cards when you split on tens    
         // case 10: 
-        //     if (dealerValue == 5 && true_count >= 5) {
+        //     if (dealerValue == 5 && trueCount >= 5) {
         //         return Action::Split;
         //     }
-        //     if (dealerValue == 4 && true_count >= 6) {
+        //     if (dealerValue == 4 && trueCount >= 6) {
         //         return Action::Split;
         //     }
-        //     if (dealerValue == 6 && true_count >= 4) {
+        //     if (dealerValue == 6 && trueCount >= 4) {
         //         return Action::Split;
         //     }
         //     break;
@@ -178,20 +178,11 @@ Action BasicStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard,
     return Action::Skip;
 }
 
-Action BasicStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float true_count) {
+Action BasicStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float trueCount) {
     int dealerIdx = getIndex(dealerUpcard);
     
-    // Bounds check: if playerTotal < 5, default to hit
-    if (playerTotal < 5) {
-        return Action::Hit;
-    }
-    // Bounds check: if playerTotal > 20, default to stand
-    if (playerTotal > 20) {
-        return Action::Stand;
-    }
-    
-    int playerIdx = playerTotal - 5;  // Player total 5 maps to index 0
-    Action deviation = shouldDeviatefromHard(playerTotal, dealerUpcard, true_count);
+    int playerIdx = playerTotal - 5;  // Player total 5 maps to index 0 Since chart starts at 5
+    Action deviation = shouldDeviatefromHard(playerTotal, dealerUpcard, trueCount);
     if (deviation != Action::Skip) {
         return deviation;
     }
@@ -203,17 +194,17 @@ Action BasicStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, floa
 
 Action BasicStrategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
     int dealerIdx = getIndex(dealerUpcard);
-    int playerIdx = playerTotal - 13;  // Soft 13 maps to index 0
+    int playerIdx = playerTotal - 13;  // Soft 13 maps to index 0 Since chart starts at A,2
     
     Action action = softTotalTable[playerIdx][dealerIdx];
 
     return action;
 }
 
-Action BasicStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, float true_count) {
+Action BasicStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, float trueCount) {
     int dealerIdx = getIndex(dealerUpcard);
     int pairIdx = getIndex(playerSplitRank);
-    Action deviation = shouldDeviatefromSplit(playerSplitRank, dealerUpcard, true_count);
+    Action deviation = shouldDeviatefromSplit(playerSplitRank, dealerUpcard, trueCount);
     if (deviation != Action::Skip) {
         return deviation;
     }
@@ -223,35 +214,35 @@ Action BasicStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, fl
 
 }
 
-Action BasicStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float true_count){
+Action BasicStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
     int dealerValue = getIndex(dealerUpcard) + INDEX_OFFSET;
     switch (playerTotal) {
         case 17:
-            if (dealerValue == 11 && true_count >= 0) {
+            if (dealerValue == 11 && trueCount >= 0) {
                 return Action::Surrender;
             }
             break;
         case 16:
-            if (dealerValue == 10 && true_count >= 0) {
+            if (dealerValue == 10 && trueCount >= 0) {
                 return Action::Surrender;
             }
-            if (dealerValue == 11 && true_count >= 3) {
+            if (dealerValue == 11 && trueCount >= 3) {
                 return Action::Surrender;
             }
             break;
         case 15:
-            if (dealerValue == 10 && true_count >= 0) {
+            if (dealerValue == 10 && trueCount >= 0) {
                 return Action::Surrender;
             }
-            if (dealerValue == 11 && true_count >= 1) {
+            if (dealerValue == 11 && trueCount >= 1) {
                 return Action::Surrender;
             }
-            if (dealerValue == 9 && true_count >= 2) {
+            if (dealerValue == 9 && trueCount >= 2) {
                 return Action::Surrender;
             }
             break;
         case 14:
-            if (dealerValue == 11 && true_count >= 3) {
+            if (dealerValue == 11 && trueCount >= 3) {
                 return Action::Surrender;
             }
             break;

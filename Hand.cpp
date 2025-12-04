@@ -104,6 +104,7 @@ int Hand::getScore(){
 int Hand::getFinalScore(){
     int score = getScore();
 
+    //if player busts return 0 as final score
     if (score > 21){
         return 0;
     }
@@ -176,6 +177,18 @@ bool Hand::isBlackjack(){
             return true;
         }
         else if (frontAce && backTen){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Hand::isAces(){
+    if (hand.size() == 2){
+        bool frontAce = hand.front().isAce();
+        bool backAce = hand.back().isAce();
+
+        if (frontAce && backAce){
             return true;
         }
     }

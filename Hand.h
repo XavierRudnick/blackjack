@@ -32,6 +32,7 @@ class Hand{
         bool isHandSoft();
         bool check_should_stand();
         bool isSoft17();
+        bool isAces();
         std::vector<Card> getCards() const;
 };
 

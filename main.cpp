@@ -39,7 +39,7 @@ int main(){
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()
                                     //.allowSurrender()
-                                    .allowManualPlay()
+                                    //.allowManualPlay()
                                     .build(std::move(hilo));
         profit = hiLoEngine.runner();
 

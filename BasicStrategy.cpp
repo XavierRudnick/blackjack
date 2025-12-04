@@ -79,7 +79,7 @@ int BasicStrategy::getIndex(Rank upcard) {
 }
 
 Action BasicStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float true_count){
-    int dealerValue = getIndex(dealerUpcard) +2;
+    int dealerValue = getIndex(dealerUpcard) + INDEX_OFFSET;
     switch (playerTotal) {
         case 16:
             if (dealerValue == 10 && true_count >= 0) {
@@ -149,8 +149,8 @@ Action BasicStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, 
 }
 
 Action BasicStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float true_count){
-    int dealerValue = getIndex(dealerUpcard) +2;
-    int playerValue = getIndex(playerRank) +2;
+    int dealerValue = getIndex(dealerUpcard) + INDEX_OFFSET;
+    int playerValue = getIndex(playerRank) + INDEX_OFFSET;
     switch (playerValue) {
         case 9:
             if (dealerValue == 7 && true_count >= 4) {
@@ -224,7 +224,7 @@ Action BasicStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, fl
 }
 
 Action BasicStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float true_count){
-    int dealerValue = getIndex(dealerUpcard) +2;
+    int dealerValue = getIndex(dealerUpcard) + INDEX_OFFSET;
     switch (playerTotal) {
         case 17:
             if (dealerValue == 11 && true_count >= 0) {

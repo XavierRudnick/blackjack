@@ -82,7 +82,7 @@ Action BasicStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, 
 
     switch (playerTotal) {
         case 16:
-            if (dealerValue == 10 && trueCount >= 0) {
+            if (dealerValue == 10 && trueCount > 0) {
                 return Action::Stand;
             }
             if (dealerValue == 9 && trueCount >= 5) {
@@ -112,7 +112,7 @@ Action BasicStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, 
             if (dealerValue == 2 && trueCount >= 3) {
                 return Action::Stand;
             }
-            if (dealerValue == 4 && trueCount <= 0){
+            if (dealerValue == 4 && trueCount < 0){
                 return Action::Hit;
             }
             if (dealerValue == 5 && trueCount <= -2){
@@ -179,6 +179,13 @@ Action BasicStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard,
 }
 
 Action BasicStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float trueCount) {
+    if (playerTotal < 5) {
+        return Action::Hit;
+    }
+
+    if (playerTotal > 20) {
+        return Action::Stand;
+    }
     int dealerIdx = getIndex(dealerUpcard);
     
     int playerIdx = playerTotal - 5;  // Player total 5 maps to index 0 Since chart starts at 5

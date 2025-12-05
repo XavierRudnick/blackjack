@@ -16,11 +16,11 @@
 
 class Engine{
 private:
-    int number_of_decks;
-    int money_bet = 0;
+    int numDecks;
+    double totalMoneyBet = 0;
     int PENETRATION_THRESHOLD; 
     double wallet;
-    double blackjack_payout_multiplier = 1.5;
+    double blackjackPayoutMultiplier = 1.5;
     bool dealerHitsSoft17 = false;
     bool doubleAfterSplitAllowed = true;
     bool allowReSplitAces = true;
@@ -38,11 +38,13 @@ private:
     std::string optimalAction(Action action, Hand& hand, const std::string& label);
     std::string describeHand(const std::string& label, Hand& hand, bool hideHoleCard = false);
 
-public:
     EventBus* eventBus = nullptr;
 
+public:
     Engine(int deck_size,int money, std::unique_ptr<CountingStrategy> strategy, bool enableEvents = false, double blackJackMultiplier = 1.5, bool dealerHitsSoft17 = false, bool doubleAfterSplitAllowed = true, bool allowReSplitAces = true, bool allowSurrender = false, bool autoPlay = true);
-    std::pair<int, int> runner();
+    std::pair<double, double> runner();
+
+private:
     std::vector<int> getPlayerScores(std::vector<Hand>& hands);
     bool didHandsBust(std::vector<int> scores);
     void evaluateHands(Hand& dealer, std::vector<Hand>& hands);

@@ -6,7 +6,7 @@
 
 
 EngineBuilder& EngineBuilder::setDeckSize(int deck_size) {
-    number_of_decks = deck_size;
+    numDecks = deck_size;
     return *this;
 }
 
@@ -21,11 +21,11 @@ EngineBuilder& EngineBuilder::enableEvents(bool enable) {
 }
 
 EngineBuilder& EngineBuilder::with3To2Payout() {
-    blackjack_payout_multiplier = 1.5;
+    blackjackPayoutMultiplier = 1.5;
     return *this;
 }
 EngineBuilder& EngineBuilder::with6To5Payout() {
-    blackjack_payout_multiplier = 1.2;
+    blackjackPayoutMultiplier = 1.2;
     return *this;
 }
 

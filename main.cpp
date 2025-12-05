@@ -11,8 +11,8 @@
 
 
 int main(){
-    int num_decks_used = 2;
-    const bool visualize = true;
+    int num_decks_used = 6;
+    const bool visualize = false;
     const int iterations = visualize ? 1 : 1000000;
     // float scores[iterations];
 
@@ -23,12 +23,12 @@ int main(){
         bus->registerObserver(&consoleObserver, {EventType::CardsDealt, EventType::ActionTaken, EventType::RoundEnded, EventType::GameStats});
     }
 
-    std::pair<double, int> swag = {0, 0};
+    std::pair<double, double> swag = {0, 0};
     auto start_time = std::chrono::high_resolution_clock::now();
 
 
     for (int i = 0; i < iterations; i++){
-        std::pair<double, int> profit = {1000, 0};
+        std::pair<double, double> profit = {1000, 0};
         auto hilo = std::make_unique<HiLoStrategy>(num_decks_used);
         auto no = std::make_unique<NoStrategy>(num_decks_used);
         Engine hiLoEngine = EngineBuilder()
@@ -40,7 +40,7 @@ int main(){
                                     .allowDoubleAfterSplit()
                                     //.allowSurrender()
                                     //.allowManualPlay()
-                                    .build(std::move(hilo));
+                                    .build(std::move(no));
         profit = hiLoEngine.runner();
 
     //   scores[i] = profit.first;
@@ -69,7 +69,7 @@ int main(){
     std::cout << "Difference: " << diff << std::endl;
     std::cout << "Money gained/lost per 1000$ " << money_lost_per << "$" << std::endl;
     std::cout << "RTP " << rtp << std::endl;
-    //std::cout << "RTP: " << rtp << std::endl;
+
     return 0;
 }
 

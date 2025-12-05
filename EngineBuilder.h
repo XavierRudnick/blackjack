@@ -5,10 +5,10 @@
 
 class EngineBuilder {
     private:
-        int number_of_decks = 2;
+        int numDecks = 2;
         double wallet = 1000.0;
         bool emitEvents = false;
-        double blackjack_payout_multiplier = 1.5;
+        double blackjackPayoutMultiplier = 1.5;
         bool dealerHitsSoft17= false;
         bool doubleAfterSplitAllowed = true;
         bool allowReSplitAces_ = true;
@@ -39,8 +39,7 @@ class EngineBuilder {
         EngineBuilder& allowManualPlay();
 
         Engine build(std::unique_ptr<CountingStrategy> countingStrategy) {
-            Engine engine(number_of_decks, wallet, std::move(countingStrategy), emitEvents, blackjack_payout_multiplier, dealerHitsSoft17, doubleAfterSplitAllowed, allowReSplitAces_, allowSurrender_,autoPlay);
-            engine.eventBus = EventBus::getInstance();
+            Engine engine(numDecks, wallet, std::move(countingStrategy), emitEvents, blackjackPayoutMultiplier, dealerHitsSoft17, doubleAfterSplitAllowed, allowReSplitAces_, allowSurrender_,autoPlay);
             return engine;
         }
 };

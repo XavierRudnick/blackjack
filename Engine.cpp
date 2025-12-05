@@ -6,17 +6,17 @@ Engine::Engine(int deck_size, int money, std::unique_ptr<CountingStrategy> strat
                bool allowReSplitAces, bool allowSurrender, 
                bool autoPlay)
 
-    : number_of_decks(deck_size), countingStrategy(std::move(strategy)), wallet(money), 
-      emitEvents(enableEvents), blackjack_payout_multiplier(blackJackMultiplier), 
+    : numDecks(deck_size), countingStrategy(std::move(strategy)), wallet(money), 
+      emitEvents(enableEvents), blackjackPayoutMultiplier(blackJackMultiplier), 
       dealerHitsSoft17(dealerHitsSoft17), doubleAfterSplitAllowed(doubleAfterSplitAllowed), 
       allowReSplitAces(allowReSplitAces), allowSurrender(allowSurrender), autoPlay(autoPlay) {
     
-    deck.emplace(number_of_decks);
+    deck.emplace(numDecks);
     eventBus = EventBus::getInstance();
-    PENETRATION_THRESHOLD = number_of_decks * 13;
+    PENETRATION_THRESHOLD = numDecks * 13;
 }
 
-std::pair<int, int> Engine::runner(){  
+std::pair<double, double> Engine::runner(){  
     while (deck->getSize() > PENETRATION_THRESHOLD){
 
         countingStrategy->updateDeckSize(deck->getSize());
@@ -45,7 +45,7 @@ std::pair<int, int> Engine::runner(){
             evaluateHands(dealer,hands);
         }
     }    
-    return {wallet, money_bet};
+    return {wallet, totalMoneyBet};
 }
 
 std::vector<int> Engine::getPlayerScores(std::vector<Hand>& hands){
@@ -84,7 +84,7 @@ void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
         std::string outcome = "Push";
 
         if (hands.size() == 1 && hand.isBlackjack()){
-            wallet += hand.getBetSize() * blackjack_payout_multiplier;
+            wallet += hand.getBetSize() * blackjackPayoutMultiplier;
             outcome = "Natural Blackjack win";
         } 
         else if (dealer_score > score){
@@ -100,7 +100,7 @@ void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
             outcome = "Player bust";
         }
 
-        money_bet += hand.getBetSize();
+        totalMoneyBet += hand.getBetSize();
         roundSummary << "Hand " << (i + 1) << ": " << outcome
                         << " (score " << score << ", bet " << hand.getBetSize() << "); ";
     }
@@ -233,7 +233,6 @@ void Engine::user_play_hand_manual(Hand& dealer, Hand& user, std::vector<Hand>& 
 
     while(!game_over){
         std::cin >> choice;
-        Action action = Action::Skip;
         Action optimal = getAction(dealer, user);
         switch(choice)
         {
@@ -300,7 +299,11 @@ void Engine::dealer_draw(Hand& dealer){
     if (eventsEnabled()){
         publish(EventType::CardsDealt, describeHand("Dealer", dealer));
     }
-    if (dealer.isDealerOver() || (dealer.isSoft17() && !dealerHitsSoft17)) {
+    // Fix: Check for Hard 17 or > 17. If Soft 17, check rule.
+    bool isSoft17 = dealer.isSoft17();
+    int score = dealer.getScore();
+    
+    if (score > 17 || (score == 17 && !isSoft17) || (isSoft17 && !dealerHitsSoft17)) {
         return;
     }
     while (!dealer.isDealerOver() || (dealer.isSoft17() && dealerHitsSoft17)) {
@@ -335,7 +338,7 @@ bool Engine::insuranceHandler(Hand& dealer,Hand& user){
             if (dealer.dealerHiddenTen() && user.isBlackjack()){
                 countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
                 wallet += static_cast<double>(user.getBetSize()); //this is correct
-                money_bet += user.getBetSize() * 1.5;
+                totalMoneyBet += user.getBetSize() * 1.5;
                 if (eventsEnabled()){
                     publish(EventType::RoundEnded, "Insurance wins: dealer blackjack vs player blackjack");
                 }
@@ -344,7 +347,7 @@ bool Engine::insuranceHandler(Hand& dealer,Hand& user){
             }
             else if (dealer.dealerHiddenTen() && !user.isBlackjack()){
                 countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
-                money_bet += user.getBetSize() * 1.5;
+                totalMoneyBet += user.getBetSize() * 1.5;
                 if (eventsEnabled()){
                     publish(EventType::RoundEnded, "Insurance wins: dealer blackjack");
                 }
@@ -356,14 +359,14 @@ bool Engine::insuranceHandler(Hand& dealer,Hand& user){
                     publish(EventType::ActionTaken, "Insurance accepted automatically: dealer lacked blackjack");
                 }
                 wallet -= static_cast<double>(user.getBetSize()) * 0.5; //this is correct
-                money_bet += user.getBetSize() * 0.5;
+                totalMoneyBet += user.getBetSize() * 0.5;
                 return false;
             }
         }
         else{
             if(dealer.dealerHiddenTen() && user.isBlackjack()){
                 countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
-                money_bet += user.getBetSize();
+                totalMoneyBet += user.getBetSize();
                 if (eventsEnabled()){
                     publish(EventType::RoundEnded, "Dealer blackjack pushes player blackjack (no insurance)");
                     publishWalletSnapshot();
@@ -373,7 +376,7 @@ bool Engine::insuranceHandler(Hand& dealer,Hand& user){
             else if (dealer.dealerHiddenTen() && !user.isBlackjack()) {
                 countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
                 wallet -= user.getBetSize();
-                money_bet += user.getBetSize();
+                totalMoneyBet += user.getBetSize();
                 if (eventsEnabled()){
                     publish(EventType::RoundEnded, "Dealer blackjack; player loses without insurance");
                     publishWalletSnapshot();
@@ -398,7 +401,7 @@ bool Engine::dealerRobberyHandler(Hand& dealer,Hand& user){
         if (!user.isBlackjack()){
             wallet -= user.getBetSize();
         }
-        money_bet += user.getBetSize();
+        totalMoneyBet += user.getBetSize();
         if (eventsEnabled()){
             std::ostringstream oss;
             oss << "Dealer flipped blackjack. " << describeHand("Dealer", dealer);
@@ -533,7 +536,7 @@ bool Engine::splitHandler(Hand& user, Hand& dealer, std::vector<Hand>& hands, st
 
 bool Engine::surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel){
     wallet -= static_cast<double>(user.getBetSize()) * 0.5;
-    money_bet += user.getBetSize();
+    totalMoneyBet += user.getBetSize();
 
     if (eventsEnabled()){
         publish(EventType::ActionTaken, describeAction(Action::Surrender, user, handLabel));

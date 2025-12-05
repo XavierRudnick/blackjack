@@ -1,5 +1,4 @@
 ---------------------------------
-Fix split they dont print correclty for manual play
 Simulation time for 2 decks and 1000000 iterations: 185.266 seconds.
 Average after 1000000 rounds: 1018.89
 Average money bet: 477
@@ -14,7 +13,6 @@ Difference: 18.4844
 Money gained/lost per 1000$ 21.6952$
 RTP 1.0217
 
--------------------------------
 Simulation time for 2 decks and 1000000 iterations: 178.999 seconds.
 Average after 1000000 rounds: 999.55
 Average money bet: 82
@@ -30,9 +28,49 @@ Money gained/lost per 1000$ -5.65521$
 RTP 0.994345
 
 -------------------------------
-Simulation time for 2 decks and 1000000 iterations: 407.086 seconds.
-Average after 1000000 rounds: 1019.04
-Average money bet: 476
-Difference: 19.041
-Money gained/lost per 1000$ 40.0021$
-RTP 1.04
+oop code
+Simulation time for 2 decks and 1000000 iterations: 53.5332 seconds.
+Average after 1000000 rounds: 999.648
+Average money bet: 82
+Difference: -0.351972
+Money gained/lost per 1000$ -4.29234$
+RTP 0.995708
+
+Simulation time for 6 decks and 1000000 iterations: 121.162 seconds.
+Average after 1000000 rounds: 999.043
+Average money bet: 242
+Difference: -0.957465
+Money gained/lost per 1000$ -3.95647$
+RTP 0.996044
+
+xav bet spread:
+
+Simulation time for 2 decks and 1000000 iterations: 54.6701 seconds.
+Average after 1000000 rounds: 1012.48
+Average money bet: 490.47
+Difference: 12.4777
+Money gained/lost per 1000$ 25.4404$
+RTP 1.02544
+
+Simulation time for 6 decks and 1000000 iterations: 129.337 seconds.
+Average after 1000000 rounds: 1009.66
+Average money bet: 871
+Difference: 9.66411
+Money gained/lost per 1000$ 11.0954$
+RTP 1.0111
+
+Q bet spread:
+
+Simulation time for 2 decks and 1000000 iterations: 54.5026 seconds.
+Average after 1000000 rounds: 1126.45
+Average money bet: 4480.92
+Difference: 126.446
+Money gained/lost per 1000$ 28.2187$
+RTP 1.02822
+
+Simulation time for 6 decks and 1000000 iterations: 123.837 seconds.
+Average after 1000000 rounds: 1112.72
+Average money bet: 7201.68
+Difference: 112.72
+Money gained/lost per 1000$ 15.6519$
+RTP 1.01565

@@ -12,6 +12,5 @@ enum struct EventType {
     All
 };
 
-//std::ostream& operator<<(std::ostream& os, const EventType eventType);
 
 #endif

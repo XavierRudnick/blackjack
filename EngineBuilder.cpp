@@ -10,6 +10,11 @@ EngineBuilder& EngineBuilder::setDeckSize(int deck_size) {
     return *this;
 }
 
+EngineBuilder& EngineBuilder::setDeck(Deck d) {
+    deck.emplace(d);
+    return *this;
+}
+
 EngineBuilder& EngineBuilder::setInitialWallet(double money) {
     wallet = money;
     return *this;

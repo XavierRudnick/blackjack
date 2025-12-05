@@ -1,14 +1,31 @@
 CXX = g++
+# -std=c++17 fixes your "enum class" and initialization errors
 CXXFLAGS = -std=c++17 -Wall -Wextra -g
 
-OBJECTS = main.o rank.o suit.o Card.o Hand.o Deck.o HiLoStrategy.o NoStrategy.o BasicStrategy.o action.o Engine.o EngineBuilder.o \
-	observers/EventBus.o observers/ConsoleObserver.o
+# 1. COMMON_OBJECTS: Everything EXCEPT main.o and test.o
+COMMON_OBJECTS = rank.o suit.o Card.o Hand.o Deck.o HiLoStrategy.o NoStrategy.o \
+                 BasicStrategy.o action.o Engine.o EngineBuilder.o \
+                 observers/EventBus.o observers/ConsoleObserver.o
 
-blackjack: $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o blackjack $(OBJECTS)
+# 2. Default Target: Build both the game and the tests
+all: blackjack test
+
+# 3. Link the Game (main.o + Common)
+blackjack: main.o $(COMMON_OBJECTS)
+	$(CXX) $(CXXFLAGS) -o blackjack main.o $(COMMON_OBJECTS)
+
+# 4. Link the Tests (test.o + Common)
+test: test.o $(COMMON_OBJECTS)
+	$(CXX) $(CXXFLAGS) -o run_tests test.o $(COMMON_OBJECTS)
+
+# --- Compilation Rules ---
 
 main.o: main.cpp Engine.h Deck.h Hand.h CountingStrategy.h NoStrategy.h HiLoStrategy.h Card.h rank.h suit.h action.h observers/EventBus.h observers/ConsoleObserver.h
 	$(CXX) $(CXXFLAGS) -c main.cpp
+
+# New rule for test.cpp
+test.o: test.cpp Engine.h Deck.h Hand.h Card.h rank.h suit.h
+	$(CXX) $(CXXFLAGS) -c test.cpp
 
 rank.o: rank.cpp rank.h
 	$(CXX) $(CXXFLAGS) -c rank.cpp
@@ -49,5 +66,6 @@ observers/ConsoleObserver.o: observers/ConsoleObserver.cpp observers/ConsoleObse
 EngineBuilder.o: EngineBuilder.cpp EngineBuilder.h Engine.h CountingStrategy.h
 	$(CXX) $(CXXFLAGS) -c EngineBuilder.cpp
 
+# 5. Clean up (Added run_tests and test.o)
 clean:
-	rm -f *.o blackjack
+	rm -f *.o observers/*.o blackjack run_tests

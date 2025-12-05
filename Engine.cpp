@@ -1,17 +1,16 @@
 #include "Engine.h"
 
-Engine::Engine(int deck_size, int money, std::unique_ptr<CountingStrategy> strategy, 
+Engine::Engine(int deck_size, int money, Deck deck, std::unique_ptr<CountingStrategy> strategy, 
                bool enableEvents, double blackJackMultiplier, 
                bool dealerHitsSoft17, bool doubleAfterSplitAllowed, 
                bool allowReSplitAces, bool allowSurrender, 
                bool autoPlay)
 
-    : numDecks(deck_size), countingStrategy(std::move(strategy)), wallet(money), 
+    : numDecks(deck_size),wallet(money), deck(std::move(deck)), countingStrategy(std::move(strategy)), 
       emitEvents(enableEvents), blackjackPayoutMultiplier(blackJackMultiplier), 
       dealerHitsSoft17(dealerHitsSoft17), doubleAfterSplitAllowed(doubleAfterSplitAllowed), 
       allowReSplitAces(allowReSplitAces), allowSurrender(allowSurrender), autoPlay(autoPlay) {
     
-    deck.emplace(numDecks);
     eventBus = EventBus::getInstance();
     PENETRATION_THRESHOLD = numDecks * 13;
 }
@@ -66,10 +65,32 @@ bool Engine::didHandsBust(std::vector<int> scores){
     return true;
 }
 
+bool Engine::didPlayerGetBlackjack(std::vector<Hand>& hands){
+    if (hands.size() == 1 && hands[0].isBlackjack()){
+        return true;
+    }
+    return false;
+}
+
 void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
     countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
 
     std::vector<int> scores = getPlayerScores(hands);
+
+    if(didPlayerGetBlackjack(hands) && !dealer.isBlackjack()){
+        std::ostringstream roundSummary;
+        roundSummary << "Natural Blackjack win! " << ". ";
+        wallet += hands[0].getBetSize() * blackjackPayoutMultiplier;
+
+        std::string outcome = "Natural Blackjack win";
+        totalMoneyBet += hands[0].getBetSize();
+        roundSummary << "Hand " << (1) << ": " << outcome
+                        << " (score " << 21 << ", bet " << hands[0].getBetSize() << "); ";
+        publish(EventType::RoundEnded, roundSummary.str());
+        publishWalletSnapshot();
+        return;
+    }
+
     if (!didHandsBust(scores)){
         dealer_draw(dealer);
     }

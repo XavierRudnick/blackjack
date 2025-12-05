@@ -11,8 +11,8 @@
 
 
 int main(){
-    int num_decks_used = 6;
-    const bool visualize = false;
+    int num_decks_used = 2;
+    const bool visualize = true;
     const int iterations = visualize ? 1 : 1000000;
     // float scores[iterations];
 
@@ -31,8 +31,10 @@ int main(){
         std::pair<double, double> profit = {1000, 0};
         auto hilo = std::make_unique<HiLoStrategy>(num_decks_used);
         auto no = std::make_unique<NoStrategy>(num_decks_used);
+        Deck deck = Deck(num_decks_used);
         Engine hiLoEngine = EngineBuilder()
                                     .setDeckSize(num_decks_used)
+                                    .setDeck(deck)
                                     .setInitialWallet(1000)
                                     .enableEvents(visualize)
                                     .with3To2Payout()
@@ -40,7 +42,7 @@ int main(){
                                     .allowDoubleAfterSplit()
                                     //.allowSurrender()
                                     //.allowManualPlay()
-                                    .build(std::move(no));
+                                    .build(std::move(hilo));
         profit = hiLoEngine.runner();
 
     //   scores[i] = profit.first;

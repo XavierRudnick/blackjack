@@ -15,6 +15,7 @@ class Deck{
 
     public:
         Deck(int deck_size);
+        Deck testDeck(std::vector<Card> stackedCards);
         std::pair<Card,Card> deal();
         Card hit();
         int getSize();

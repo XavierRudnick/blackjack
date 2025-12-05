@@ -14,9 +14,12 @@ class EngineBuilder {
         bool allowReSplitAces_ = true;
         bool allowSurrender_ = false;
         bool autoPlay = true;
+        std::optional<Deck> deck;
 
     public:
         EngineBuilder& setDeckSize(int deck_size);
+        EngineBuilder& setDeck(Deck deck);
+
         EngineBuilder& setInitialWallet(double wallet);
         EngineBuilder& enableEvents(bool enable);
 
@@ -39,7 +42,7 @@ class EngineBuilder {
         EngineBuilder& allowManualPlay();
 
         Engine build(std::unique_ptr<CountingStrategy> countingStrategy) {
-            Engine engine(numDecks, wallet, std::move(countingStrategy), emitEvents, blackjackPayoutMultiplier, dealerHitsSoft17, doubleAfterSplitAllowed, allowReSplitAces_, allowSurrender_,autoPlay);
+            Engine engine(numDecks, wallet, *deck, std::move(countingStrategy), emitEvents, blackjackPayoutMultiplier, dealerHitsSoft17, doubleAfterSplitAllowed, allowReSplitAces_, allowSurrender_,autoPlay);
             return engine;
         }
 };

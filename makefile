@@ -1,78 +1,54 @@
 CXX = g++
-# -std=c++17 fixes your "enum class" and initialization errors
 CXXFLAGS = -std=c++17 -Wall -Wextra -g
+CPPFLAGS = -Iinclude -Iinclude/core -Iinclude/strategy -Iinclude/players -Iinclude/observers
+OBJDIR = build
 
-# 1. COMMON_OBJECTS: Everything EXCEPT main.o and test.o
-COMMON_OBJECTS = rank.o suit.o Card.o Hand.o Deck.o HiLoStrategy.o NoStrategy.o \
-                 BasicStrategy.o action.o Engine.o EngineBuilder.o \
-                 observers/EventBus.o observers/ConsoleObserver.o \
-                 BotPlayer.o HumanPlayer.o Bankroll.o GameReporter.o
+CORE_SOURCES = \
+    src/core/rank.cpp \
+    src/core/suit.cpp \
+    src/core/action.cpp \
+    src/core/Card.cpp \
+    src/core/Hand.cpp \
+    src/core/Deck.cpp \
+    src/core/Engine.cpp \
+    src/core/EngineBuilder.cpp \
+    src/core/GameReporter.cpp \
+    src/core/Bankroll.cpp
 
-# 2. Default Target: Build both the game and the tests
+STRATEGY_SOURCES = \
+    src/strategy/BasicStrategy.cpp \
+    src/strategy/HiLoStrategy.cpp \
+    src/strategy/NoStrategy.cpp
+
+PLAYER_SOURCES = \
+    src/players/BotPlayer.cpp \
+    src/players/HumanPlayer.cpp
+
+OBSERVER_SOURCES = \
+    src/observers/EventBus.cpp \
+    src/observers/ConsoleObserver.cpp
+
+COMMON_SOURCES = $(CORE_SOURCES) $(STRATEGY_SOURCES) $(PLAYER_SOURCES) $(OBSERVER_SOURCES)
+COMMON_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(COMMON_SOURCES))
+
+BLACKJACK_SOURCES = src/main.cpp
+BLACKJACK_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(BLACKJACK_SOURCES))
+
+TEST_SOURCES = src/test.cpp
+TEST_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(TEST_SOURCES))
+
 all: blackjack test
 
-# 3. Link the Game (main.o + Common)
-blackjack: main.o $(COMMON_OBJECTS)
-	$(CXX) $(CXXFLAGS) -o blackjack main.o $(COMMON_OBJECTS)
+blackjack: $(BLACKJACK_OBJECTS) $(COMMON_OBJECTS)
+	$(CXX) $(CXXFLAGS) -o blackjack $(BLACKJACK_OBJECTS) $(COMMON_OBJECTS)
 
-# 4. Link the Tests (test.o + Common)
-test: test.o $(COMMON_OBJECTS)
-	$(CXX) $(CXXFLAGS) -o run_tests test.o $(COMMON_OBJECTS)
+test: $(TEST_OBJECTS) $(COMMON_OBJECTS)
+	$(CXX) $(CXXFLAGS) -o run_tests $(TEST_OBJECTS) $(COMMON_OBJECTS)
 
-# --- Compilation Rules ---
+$(OBJDIR)/%.o: src/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
-main.o: main.cpp Engine.h Deck.h Hand.h CountingStrategy.h NoStrategy.h HiLoStrategy.h Card.h rank.h suit.h action.h observers/EventBus.h observers/ConsoleObserver.h
-	$(CXX) $(CXXFLAGS) -c main.cpp
-
-# New rule for test.cpp
-test.o: test.cpp Engine.h Deck.h Hand.h Card.h rank.h suit.h
-	$(CXX) $(CXXFLAGS) -c test.cpp
-
-rank.o: rank.cpp rank.h
-	$(CXX) $(CXXFLAGS) -c rank.cpp
-
-suit.o: suit.cpp suit.h
-	$(CXX) $(CXXFLAGS) -c suit.cpp
-
-Card.o: Card.cpp Card.h rank.h suit.h
-	$(CXX) $(CXXFLAGS) -c Card.cpp
-
-Hand.o: Hand.cpp Hand.h Card.h rank.h suit.h
-	$(CXX) $(CXXFLAGS) -c Hand.cpp
-
-Deck.o: Deck.cpp Deck.h Card.h
-	$(CXX) $(CXXFLAGS) -c Deck.cpp
-
-HiLoStrategy.o: HiLoStrategy.cpp HiLoStrategy.h Card.h rank.h suit.h CountingStrategy.h
-	$(CXX) $(CXXFLAGS) -c HiLoStrategy.cpp
-
-NoStrategy.o: NoStrategy.cpp NoStrategy.h Card.h rank.h suit.h CountingStrategy.h
-	$(CXX) $(CXXFLAGS) -c NoStrategy.cpp
-
-BasicStrategy.o: BasicStrategy.cpp BasicStrategy.h rank.h action.h
-	$(CXX) $(CXXFLAGS) -c BasicStrategy.cpp
-
-action.o: action.cpp action.h
-	$(CXX) $(CXXFLAGS) -c action.cpp
-
-Engine.o: Engine.cpp Engine.h Deck.h Hand.h CountingStrategy.h BasicStrategy.h action.h observers/EventBus.h observers/EventType.h
-	$(CXX) $(CXXFLAGS) -c Engine.cpp
-
-observers/EventBus.o: observers/EventBus.cpp observers/EventBus.h observers/EventIssuingObservable.h observers/EventObserver.h observers/EventType.h
-	$(CXX) $(CXXFLAGS) -c observers/EventBus.cpp -o observers/EventBus.o
-
-observers/ConsoleObserver.o: observers/ConsoleObserver.cpp observers/ConsoleObserver.h observers/EventObserver.h observers/EventType.h
-	$(CXX) $(CXXFLAGS) -c observers/ConsoleObserver.cpp -o observers/ConsoleObserver.o
-
-EngineBuilder.o: EngineBuilder.cpp EngineBuilder.h Engine.h CountingStrategy.h
-	$(CXX) $(CXXFLAGS) -c EngineBuilder.cpp
-
-BotPlayer.o: BotPlayer.cpp BotPlayer.h Player.h BasicStrategy.h
-	$(CXX) $(CXXFLAGS) -c BotPlayer.cpp
-
-HumanPlayer.o: HumanPlayer.cpp HumanPlayer.h Player.h action.h BasicStrategy.h
-	$(CXX) $(CXXFLAGS) -c HumanPlayer.cpp
-
-# 5. Clean up (Added run_tests and test.o)
 clean:
-	rm -f *.o observers/*.o blackjack run_tests
+	rm -rf blackjack run_tests $(OBJDIR)
+	rm -f *.o src/*.o src/*/*.o

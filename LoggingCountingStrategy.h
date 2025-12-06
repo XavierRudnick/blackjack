@@ -15,9 +15,9 @@ private:
     std::unique_ptr<CountingStrategy> inner_;
     EventBus* bus_;
 
-    static std::string toStr(float v) {
+    static std::string toStr(float value) {
         std::ostringstream oss;
-        oss << v;
+        oss << value;
         return oss.str();
     }
 
@@ -27,11 +27,11 @@ private:
         return oss.str();
     }
 
-    void emit(const std::string& msg) const {
+    void emit(const std::string& message) const {
         if (bus_) {
-            bus_->notifyObservers(EventType::GameStats, msg);
+            bus_->notifyObservers(EventType::GameStats, message);
         } else {
-            std::cout << "[CountLog] " << msg << "\n";
+            std::cout << "[CountLog] " << message << "\n";
         }
     }
 

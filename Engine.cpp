@@ -89,6 +89,7 @@ void Engine::NaturalBlackJackHandler(Hand& dealer, Hand& user){
 
     std::string outcome = "Natural Blackjack win";
     roundSummary << "Hand " << (1) << ": " << outcome << " (score " << 21 << ", bet " << user.getBetSize() << "); ";
+
     reporter->reportRoundResult(roundSummary.str());
     reporter->reportStats(bankroll, *countingStrategy);
     return;
@@ -339,9 +340,9 @@ bool Engine::doubleHandler(Hand& user, std::vector<Hand>& hands, std::string han
     bankroll.addTotalBet(user.getBetSize());
 
     user.doubleBet();
-    Card c = deck->hit();
-    countingStrategy->updateCount(c);
-    user.addCard(c);
+    Card card = deck->hit();
+    countingStrategy->updateCount(card);
+    user.addCard(card);
     hands.emplace_back(user);
 
     reporter->reportAction(Action::Double, user, handLabel);
@@ -363,13 +364,13 @@ bool Engine::splitHandler(Player& player, Hand& user, Hand& dealer, std::vector<
     bankroll.withdraw(user2.getBetSize());
     bankroll.addTotalBet(user2.getBetSize());
 
-    Card c1 = deck->hit();
-    countingStrategy->updateCount(c1);
-    user.addCard(c1);
+    Card card1 = deck->hit();
+    countingStrategy->updateCount(card1);
+    user.addCard(card1);
 
-    Card c2 = deck->hit();
-    countingStrategy->updateCount(c2);
-    user2.addCard(c2);
+    Card card2 = deck->hit();
+    countingStrategy->updateCount(card2);
+    user2.addCard(card2);
 
     reporter->reportSplit(handLabel, user, user2);
 

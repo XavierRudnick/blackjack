@@ -19,9 +19,9 @@ int main(){
     // float scores[iterations];
 
     ConsoleObserver consoleObserver;
+    auto* bus = EventBus::getInstance();
+    bus->detachAll();
     if (visualize) {
-        auto* bus = EventBus::getInstance();
-        bus->detachAll();
         bus->registerObserver(&consoleObserver, {EventType::CardsDealt, EventType::ActionTaken, EventType::RoundEnded, EventType::GameStats});
     }
 
@@ -37,6 +37,7 @@ int main(){
         auto robot = std::make_unique<BotPlayer>(false); // false for allowSurrender, matching commented out .allowSurrender()
         Deck deck = Deck(num_decks_used);
         Engine hiLoEngine = EngineBuilder()
+                                    .withEventBus(bus)
                                     .setDeckSize(num_decks_used)
                                     .setDeck(deck)
                                     .setPenetrationThreshold(.75)
@@ -46,7 +47,7 @@ int main(){
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()
                                     //.allowSurrender()
-                                    .build(std::move(no), std::move(robot));
+                                    .build(std::move(hilo), std::move(robot));
         profit = hiLoEngine.runner();
 
     //   scores[i] = profit.first;

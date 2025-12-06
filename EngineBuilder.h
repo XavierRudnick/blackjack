@@ -7,10 +7,13 @@ class EngineBuilder {
     private:
         Engine::GameConfig gameConfig;
         std::optional<Deck> deck;
+        EventBus* eventBus = nullptr;
 
     public:
         EngineBuilder& setDeckSize(int deck_size);
         EngineBuilder& setDeck(Deck deck);
+
+        EngineBuilder& withEventBus(EventBus* bus);
 
         EngineBuilder& setInitialWallet(double wallet);
         EngineBuilder& enableEvents(bool enable);

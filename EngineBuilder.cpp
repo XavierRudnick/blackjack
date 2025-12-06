@@ -2,6 +2,7 @@
 #include "observers/EventBus.h"
 #include <functional>
 #include "EngineBuilder.h"
+#include <stdexcept>
 
 
 
@@ -12,6 +13,11 @@ EngineBuilder& EngineBuilder::setDeckSize(int deck_size) {
 
 EngineBuilder& EngineBuilder::setDeck(Deck d) {
     deck.emplace(d);
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::withEventBus(EventBus* bus) {
+    eventBus = bus;
     return *this;
 }
 
@@ -79,6 +85,6 @@ EngineBuilder& EngineBuilder::noSurrender() {
 }
 
 Engine EngineBuilder::build(std::unique_ptr<CountingStrategy> countingStrategy, std::unique_ptr<Player> player) {
-    Engine engine(gameConfig, *deck, std::move(countingStrategy), std::move(player));
+    Engine engine(gameConfig, *deck, std::move(countingStrategy), std::move(player), eventBus);
     return engine;
 }

@@ -37,6 +37,7 @@ Engine setupEngine(std::vector<Card> stack, double initialWallet = 1000) {
     Deck riggedDeck = Deck::createTestDeck(stack);
 
     return EngineBuilder()
+            .withEventBus(bus)
             .setDeckSize(0)
             .setDeck(riggedDeck)
             .setInitialWallet(initialWallet)

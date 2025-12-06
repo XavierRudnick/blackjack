@@ -1,11 +1,15 @@
 #include "Engine.h"
 #include "Deck.h"
 
-Engine::Engine(const GameConfig& gameConfig, Deck deck, std::unique_ptr<CountingStrategy> strategy, std::unique_ptr<Player> player)
+Engine::Engine(const GameConfig& gameConfig,
+               Deck deck,
+               std::unique_ptr<CountingStrategy> strategy,
+               std::unique_ptr<Player> player,
+               EventBus* eventBus)
 
     : bankroll(gameConfig.wallet), config(gameConfig), deck(std::move(deck)), countingStrategy(std::move(strategy)), player(std::move(player)) {
     
-    reporter = std::make_unique<GameReporter>(EventBus::getInstance(), config.emitEvents);
+    reporter = std::make_unique<GameReporter>(eventBus, config.emitEvents);
     config.penetrationThreshold = (1-config.penetrationThreshold) * config.numDecks * Deck::NUM_CARDS_IN_DECK;
 }
 
@@ -212,15 +216,6 @@ bool Engine::handleInsurancePhase(Hand& dealer, Hand& user) {
 
     std::ostringstream oss;
     oss << "Insurance offered. Strategy " << (accepted ? "accepts" : "declines");
-    // We can't easily use describeHand here because it's private in GameReporter.
-    // But we can report the message.
-    // Or add a method to GameReporter?
-    // reporter->reportInsuranceOffer(accepted, dealer);
-    // For now, let's just report the message.
-    // Wait, describeHand("Dealer", dealer, true) was used.
-    // reporter->reportHand(dealer, "Dealer", true) prints the hand.
-    // But here we want to append it to the message.
-    // Maybe just report the message and then report the hand?
     reporter->reportMessage(EventType::ActionTaken, oss.str());
     reporter->reportHand(dealer, "Dealer", true);
 
@@ -251,54 +246,16 @@ bool Engine::handleInsuranceAccepted(Hand& dealer, Hand& user) {
         countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
         
         if (playerHasBlackjack) {
-            // Insurance pays 2:1 on half bet -> wins 1 unit.
-            // Main bet pushes -> returns 1 unit.
-            // Total return: 2 units.
-            // Cost: 1 unit (main) + 0.5 unit (ins).
-            // Net: +0.5 unit.
-            // Wait. Insurance bet is 0.5. Pays 2:1 -> 1.0 profit. Total return 1.5.
-            // Main bet 1.0. Pushes -> 1.0 return.
-            // Total return 2.5.
-            // Cost 1.5. Net +1.0.
-            // My previous math: "config.wallet += user.getBetSize()" (1.0).
-            // If wallet deducted 1.0 (main) + 0.5 (ins).
-            // Return 2.5.
-            // Net +1.0.
-            // So deposit 2.5 * bet? No.
-            // Let's trace:
-            // Wallet: 1000.
-            // Bet 10 -> 990.
-            // Ins 5 -> 985.
-            // Win Ins: +15 (5 bet + 10 profit). -> 1000.
-            // Push Main: +10. -> 1010.
-            // Net +10.
-            // So deposit 2.5 * bet.
             bankroll.deposit(user.getBetSize() * 2.5);
-            // totalMoneyBet += user.getBetSize() * config.blackjackPayoutMultiplier; // Tracking?
-            
             reporter->reportInsuranceResult("Insurance wins: dealer blackjack vs player blackjack");
         } else {
-            // Player NO BJ.
-            // Bet 10 -> 990.
-            // Ins 5 -> 985.
-            // Win Ins: +15. -> 1000.
-            // Lose Main: +0. -> 1000.
-            // Net 0.
-            // So deposit 1.5 * bet.
             bankroll.deposit(user.getBetSize() * 1.5);
-            // totalMoneyBet += user.getBetSize() * config.blackjackPayoutMultiplier; // Tracking?
-
             reporter->reportInsuranceResult("Insurance wins: dealer blackjack");
         }
         reporter->reportStats(bankroll, *countingStrategy);
         return true; 
     } else {
         reporter->reportMessage(EventType::ActionTaken, "Insurance accepted automatically: dealer lacked blackjack");
-        // Insurance lost.
-        // Bet 10 -> 990.
-        // Ins 5 -> 985.
-        // Lose Ins.
-        // Main continues.
         bankroll.withdraw(user.getBetSize() * INSURANCEBETCOST);
         bankroll.addTotalBet(user.getBetSize() * INSURANCEBETCOST);
         return false; // Round continues
@@ -312,15 +269,12 @@ bool Engine::handleInsuranceDeclined(Hand& dealer, Hand& user) {
     if (dealerHasBlackjack) {
         countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
         if (playerHasBlackjack) {
-            // Push. Return bet.
+
             bankroll.deposit(user.getBetSize());
-            // totalMoneyBet += user.getBetSize();
             reporter->reportRoundResult("Dealer blackjack pushes player blackjack (no insurance)");
             reporter->reportStats(bankroll, *countingStrategy);
         } else {
-            // Lose. Do nothing.
-            // config.wallet -= user.getBetSize();
-            // totalMoneyBet += user.getBetSize();
+
             reporter->reportRoundResult("Dealer blackjack; player loses without insurance");
             reporter->reportStats(bankroll, *countingStrategy);
         }
@@ -337,16 +291,8 @@ bool Engine::dealerRobberyHandler(Hand& dealer,Hand& user){
         countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
         if (!user.isBlackjack()){
             // Lose. Do nothing.
-            // config.wallet -= user.getBetSize();
         } else {
-            // Push?
-            // If dealer has BJ (Ace hidden), and player has BJ.
-            // It's a push.
-            // But wait, dealerRobberyHandler checks "dealerShowsTen() && dealerHiddenAce()".
-            // That is BJ.
-            // If user has BJ, it's a push.
-            // If user NO BJ, lose.
-            // So if user.isBlackjack(), we should return bet.
+
              bankroll.deposit(user.getBetSize());
         }
         // totalMoneyBet += user.getBetSize();
@@ -455,10 +401,8 @@ bool Engine::splitHandler(Player& player, Hand& user, Hand& dealer, std::vector<
 }
 
 bool Engine::surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel){
-    // Return half bet
-    bankroll.deposit(static_cast<double>(user.getBetSize()) * SURRENDERMULTIPLIER);
-    // totalMoneyBet += user.getBetSize(); // Already added when bet placed
 
+    bankroll.deposit(static_cast<double>(user.getBetSize()) * SURRENDERMULTIPLIER);
     reporter->reportAction(Action::Surrender, user, handLabel);
     reporter->reportStats(bankroll, *countingStrategy);
     return true;

@@ -77,7 +77,11 @@ private:
     bool surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel);
    
 public:
-    Engine(const GameConfig& gameConfig,Deck deck, std::unique_ptr<CountingStrategy> strategy, std::unique_ptr<Player> player);
+        Engine(const GameConfig& gameConfig,
+            Deck deck,
+            std::unique_ptr<CountingStrategy> strategy,
+            std::unique_ptr<Player> player,
+            EventBus* eventBus);
     std::pair<double, double> runner();
 
 };

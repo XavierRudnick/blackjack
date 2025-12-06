@@ -7,6 +7,7 @@
 #include "observers/ConsoleObserver.h"
 #include "observers/EventBus.h"
 #include "EngineBuilder.h"
+#include "HumanPlayer.h"
 #include <chrono> 
 
 
@@ -31,6 +32,7 @@ int main(){
         std::pair<double, double> profit = {1000, 0};
         auto hilo = std::make_unique<HiLoStrategy>(num_decks_used);
         auto no = std::make_unique<NoStrategy>(num_decks_used);
+        auto player = std::make_unique<HumanPlayer>(false); // false for allowSurrender, matching commented out .allowSurrender()
         Deck deck = Deck(num_decks_used);
         Engine hiLoEngine = EngineBuilder()
                                     .setDeckSize(num_decks_used)
@@ -42,8 +44,7 @@ int main(){
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()
                                     //.allowSurrender()
-                                    .allowManualPlay()
-                                    .build(std::move(hilo));
+                                    .build(std::move(hilo), std::move(player));
         profit = hiLoEngine.runner();
 
     //   scores[i] = profit.first;

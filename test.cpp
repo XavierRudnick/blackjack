@@ -11,6 +11,7 @@
 #include "observers/ConsoleObserver.h"
 #include "observers/EventBus.h"
 #include "EngineBuilder.h"
+#include "BotPlayer.h"
 
 // --- Helper for Setup ---
 // Uses reverse order: {LastDealt, ..., Player2, Player1, DealerHole, DealerUp}
@@ -33,6 +34,7 @@ Engine setupEngine(std::vector<Card> stack, double initialWallet = 1000) {
 
     // Use BasicStrategy to ensure predictable hits/stands
     auto strategy = std::make_unique<NoStrategy>(0); 
+    auto player = std::make_unique<BotPlayer>(false); // Default bot player
     Deck deck = Deck(num_decks_used);
     Deck riggedDeck = deck.testDeck(stack);
 
@@ -44,7 +46,7 @@ Engine setupEngine(std::vector<Card> stack, double initialWallet = 1000) {
             .with3To2Payout()
             .withS17Rules()
             .allowDoubleAfterSplit()
-            .build(std::move(strategy));
+            .build(std::move(strategy), std::move(player));
 }
 
 // ----------------------------------------------------------------

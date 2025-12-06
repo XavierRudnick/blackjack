@@ -1,11 +1,9 @@
 #include "Engine.h"
 #include "Deck.h"
-#include "BotPlayer.h"
-#include "HumanPlayer.h"
 
-Engine::Engine(const GameConfig& gameConfig, Deck deck, std::unique_ptr<CountingStrategy> strategy)
+Engine::Engine(const GameConfig& gameConfig, Deck deck, std::unique_ptr<CountingStrategy> strategy, std::unique_ptr<Player> player)
 
-    : config(gameConfig), deck(std::move(deck)), countingStrategy(std::move(strategy)) {
+    : config(gameConfig), deck(std::move(deck)), countingStrategy(std::move(strategy)), player(std::move(player)) {
     
     eventBus = EventBus::getInstance();
     config.penetrationThreshold = (1-config.penetrationThreshold) * config.numDecks * Deck::NUM_CARDS_IN_DECK;
@@ -130,13 +128,6 @@ std::vector<Hand> Engine::user_play(Hand& dealer, Hand& user){
     std::vector<Hand> hands;
     hands.reserve(4);
     
-    std::unique_ptr<Player> player;
-    if (config.autoPlay){
-        player = std::make_unique<BotPlayer>(config.allowSurrender);
-    } else {
-        player = std::make_unique<HumanPlayer>(config.allowSurrender);
-    }
-
     play_hand(*player, dealer, user, hands, false);
     return hands;
 }

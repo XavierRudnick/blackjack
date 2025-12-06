@@ -32,11 +32,6 @@ class EngineBuilder {
         EngineBuilder& allowSurrender();
         EngineBuilder& noSurrender();
 
-        EngineBuilder& allowAutoPlay();
-        EngineBuilder& allowManualPlay();
-
-
-
-        Engine build(std::unique_ptr<CountingStrategy> countingStrategy);
+        Engine build(std::unique_ptr<CountingStrategy> countingStrategy, std::unique_ptr<Player> player);
 };
 #endif

@@ -33,7 +33,6 @@ public:
         bool allowReSplitAces = true;
         bool allowSurrender = false;
         bool emitEvents = false;
-        bool autoPlay = true;
     };
 
 private:
@@ -41,6 +40,7 @@ private:
 
     std::optional<Deck> deck;
     std::unique_ptr<CountingStrategy> countingStrategy;
+    std::unique_ptr<Player> player;
     EventBus* eventBus = nullptr;
 
     //observer pattern and prints
@@ -80,7 +80,7 @@ private:
     bool surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel);
    
 public:
-    Engine(const GameConfig& gameConfig,Deck deck, std::unique_ptr<CountingStrategy> strategy);
+    Engine(const GameConfig& gameConfig,Deck deck, std::unique_ptr<CountingStrategy> strategy, std::unique_ptr<Player> player);
     std::pair<double, double> runner();
 
 };

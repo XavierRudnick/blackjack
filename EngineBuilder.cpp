@@ -78,17 +78,7 @@ EngineBuilder& EngineBuilder::noSurrender() {
     return *this;
 }
 
-EngineBuilder& EngineBuilder::allowAutoPlay(){
-    gameConfig.autoPlay = true;
-    return *this;
-}
-
-EngineBuilder& EngineBuilder::allowManualPlay(){
-    gameConfig.autoPlay = false;
-    return *this;
-}
-
-Engine EngineBuilder::build(std::unique_ptr<CountingStrategy> countingStrategy) {
-    Engine engine(gameConfig, *deck, std::move(countingStrategy));
+Engine EngineBuilder::build(std::unique_ptr<CountingStrategy> countingStrategy, std::unique_ptr<Player> player) {
+    Engine engine(gameConfig, *deck, std::move(countingStrategy), std::move(player));
     return engine;
 }

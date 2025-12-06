@@ -81,19 +81,19 @@ void HiLoStrategy::updateDeckSize(int num_cards_left){
     return;
 }
 
-float HiLoStrategy::getTrueCount(){
+float HiLoStrategy::getTrueCount() const{
     return true_count;
 }
 
-float HiLoStrategy::getRunningCount(){
+float HiLoStrategy::getRunningCount() const{
     return running_count;
 }
 
-float HiLoStrategy::getDecksLeft(){
+float HiLoStrategy::getDecksLeft() const{
     return num_decks_left;
 }
 
-bool HiLoStrategy::shouldAcceptInsurance(){
+bool HiLoStrategy::shouldAcceptInsurance() const{
     if (true_count >= 3){//mathmatical point where insurance is profitable accoding to gemini
         return true;
     }

@@ -9,11 +9,11 @@ class CountingStrategy {
         virtual void updateCount(Card card) = 0;
         virtual void updateDeckSize(int num_cards_left) = 0;
 
-        virtual float getTrueCount() = 0;
-        virtual float getDecksLeft() = 0;
-        virtual float getRunningCount() = 0;
+        virtual float getTrueCount() const = 0;
+        virtual float getDecksLeft() const = 0;
+        virtual float getRunningCount() const = 0;
         
-        virtual bool shouldAcceptInsurance() = 0;
+        virtual bool shouldAcceptInsurance() const = 0;
         virtual ~CountingStrategy() = default;
 };
 

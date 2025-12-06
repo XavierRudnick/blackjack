@@ -6,7 +6,7 @@ CXXFLAGS = -std=c++17 -Wall -Wextra -g
 COMMON_OBJECTS = rank.o suit.o Card.o Hand.o Deck.o HiLoStrategy.o NoStrategy.o \
                  BasicStrategy.o action.o Engine.o EngineBuilder.o \
                  observers/EventBus.o observers/ConsoleObserver.o \
-                 BotPlayer.o HumanPlayer.o Bankroll.o
+                 BotPlayer.o HumanPlayer.o Bankroll.o GameReporter.o
 
 # 2. Default Target: Build both the game and the tests
 all: blackjack test

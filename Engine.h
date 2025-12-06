@@ -15,6 +15,7 @@
 #include "observers/EventBus.h"
 #include "Player.h"
 #include "Bankroll.h"
+#include "GameReporter.h"
 
 class Engine{
 private:
@@ -42,19 +43,7 @@ private:
     std::optional<Deck> deck;
     std::unique_ptr<CountingStrategy> countingStrategy;
     std::unique_ptr<Player> player;
-    EventBus* eventBus = nullptr;
-
-    //observer pattern and prints
-    bool eventsEnabled() const;
-    void publish(EventType type, const std::string& message);
-    void publishWalletSnapshot();
-    std::string describeAction(Action action, Hand& hand, const std::string& label);
-    std::string optimalAction(Action action, Hand& hand, const std::string& label);
-    std::string describeHand(const std::string& label, Hand& hand, bool hideHoleCard = false);
-
-    void print_state(Hand& dealer, Hand& user);
-    void print_hand(Hand& user, const std::string& label = "Player");
-    void peek_dealer(Hand& dealer);
+    std::unique_ptr<GameReporter> reporter;
 
     //hand evaluation logic
     std::vector<int> getPlayerScores(std::vector<Hand>& hands);

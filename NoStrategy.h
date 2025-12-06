@@ -12,10 +12,10 @@ class NoStrategy : public CountingStrategy { //in docs note deck size is counted
         int getBetSize() override;
         void updateCount(Card card) override;
         void updateDeckSize(int num_cards_left) override;
-        float getTrueCount() override;
-        float getDecksLeft() override;
-        float getRunningCount() override;
-        bool shouldAcceptInsurance() override;
+        float getTrueCount() const override;
+        float getDecksLeft() const override;
+        float getRunningCount() const override;
+        bool shouldAcceptInsurance() const override;
 };
 
 #endif

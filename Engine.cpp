@@ -3,9 +3,9 @@
 
 Engine::Engine(const GameConfig& gameConfig, Deck deck, std::unique_ptr<CountingStrategy> strategy, std::unique_ptr<Player> player)
 
-    : config(gameConfig), deck(std::move(deck)), countingStrategy(std::move(strategy)), player(std::move(player)), bankroll(gameConfig.wallet) {
+    : bankroll(gameConfig.wallet), config(gameConfig), deck(std::move(deck)), countingStrategy(std::move(strategy)), player(std::move(player)) {
     
-    eventBus = EventBus::getInstance();
+    reporter = std::make_unique<GameReporter>(EventBus::getInstance(), config.emitEvents);
     config.penetrationThreshold = (1-config.penetrationThreshold) * config.numDecks * Deck::NUM_CARDS_IN_DECK;
 }
 
@@ -34,7 +34,7 @@ void Engine::playHand(){
         countingStrategy->updateCount(card);
     }
 
-    peek_dealer(dealer);
+    reporter->reportHand(dealer, "Dealer (showing)", true);
     if (handleInsurancePhase(dealer,user)){
         return;
     }
@@ -86,8 +86,8 @@ void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
         std::string outcome = "Natural Blackjack win";
         roundSummary << "Hand " << (1) << ": " << outcome
                         << " (score " << 21 << ", bet " << hands[0].getBetSize() << "); ";
-        publish(EventType::RoundEnded, roundSummary.str());
-        publishWalletSnapshot();
+        reporter->reportRoundResult(roundSummary.str());
+        reporter->reportStats(bankroll, *countingStrategy);
         return;
     }
 
@@ -131,8 +131,8 @@ void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
                         << " (score " << score << ", bet " << hand.getBetSize() << "); ";
     }
 
-    publish(EventType::RoundEnded, roundSummary.str());
-    publishWalletSnapshot();
+    reporter->reportRoundResult(roundSummary.str());
+    reporter->reportStats(bankroll, *countingStrategy);
 }
 
 std::vector<Hand> Engine::user_play(Hand& dealer, Hand& user){
@@ -146,7 +146,7 @@ std::vector<Hand> Engine::user_play(Hand& dealer, Hand& user){
 void Engine::play_hand(Player& player, Hand& dealer, Hand& user, std::vector<Hand>& hands, bool has_split_aces, bool has_split){ 
     bool game_over = false;
     const std::string handLabel = has_split_aces ? "Player (split aces)" : "Player";
-    print_hand(user, handLabel); 
+    reporter->reportHand(user, handLabel); 
 
     while(!game_over){
         Action action = player.getAction(user, dealer, countingStrategy->getTrueCount());
@@ -174,33 +174,13 @@ void Engine::play_hand(Player& player, Hand& dealer, Hand& user, std::vector<Han
     }
 }
 
-void Engine::print_state(Hand& dealer, Hand& user){
-    if (eventsEnabled()){
-        publish(EventType::CardsDealt, describeHand("Dealer", dealer));
-    }
-}
-
-void Engine::print_hand(Hand& user, const std::string& label){
-    if (eventsEnabled()){
-        publish(EventType::CardsDealt, describeHand(label, user));
-    }
-}
-
-void Engine::peek_dealer(Hand& dealer){
-    if (eventsEnabled()){
-        publish(EventType::CardsDealt, describeHand("Dealer (showing)", dealer, true));
-    }
-}
-
 Hand Engine::draw_cards(int betSize){
     Hand hand = Hand(deck->deal(), betSize);
     return hand;
 }
 
 void Engine::dealer_draw(Hand& dealer){
-    if (eventsEnabled()){
-        publish(EventType::CardsDealt, describeHand("Dealer", dealer));
-    }
+    reporter->reportHand(dealer, "Dealer");
     // Fix: Check for Hard 17 or > 17. If Soft 17, check rule.
     bool isSoft17 = dealer.isSoft17();
     int score = dealer.getScore();
@@ -216,9 +196,7 @@ void Engine::dealer_draw(Hand& dealer){
         Card c = deck->hit();
         countingStrategy->updateCount(c);
         dealer.addCard(c);
-        if (eventsEnabled()){
-            publish(EventType::CardsDealt, describeHand("Dealer", dealer));
-        }
+        reporter->reportHand(dealer, "Dealer");
     }
     return;
 }
@@ -229,15 +207,22 @@ bool Engine::handleInsurancePhase(Hand& dealer, Hand& user) {
         return false;
     }
 
-    print_hand(user);
+    reporter->reportHand(user, "Player");
     bool accepted = askInsurance();
 
-    if (eventsEnabled()) {
-        std::ostringstream oss;
-        oss << "Insurance offered. Strategy " << (accepted ? "accepts" : "declines")
-            << ". " << describeHand("Dealer", dealer, true);
-        publish(EventType::ActionTaken, oss.str());
-    }
+    std::ostringstream oss;
+    oss << "Insurance offered. Strategy " << (accepted ? "accepts" : "declines");
+    // We can't easily use describeHand here because it's private in GameReporter.
+    // But we can report the message.
+    // Or add a method to GameReporter?
+    // reporter->reportInsuranceOffer(accepted, dealer);
+    // For now, let's just report the message.
+    // Wait, describeHand("Dealer", dealer, true) was used.
+    // reporter->reportHand(dealer, "Dealer", true) prints the hand.
+    // But here we want to append it to the message.
+    // Maybe just report the message and then report the hand?
+    reporter->reportMessage(EventType::ActionTaken, oss.str());
+    reporter->reportHand(dealer, "Dealer", true);
 
     return resolveInsurance(accepted, dealer, user);
 }
@@ -291,9 +276,7 @@ bool Engine::handleInsuranceAccepted(Hand& dealer, Hand& user) {
             bankroll.deposit(user.getBetSize() * 2.5);
             // totalMoneyBet += user.getBetSize() * config.blackjackPayoutMultiplier; // Tracking?
             
-            if (eventsEnabled()) {
-                publish(EventType::RoundEnded, "Insurance wins: dealer blackjack vs player blackjack");
-            }
+            reporter->reportInsuranceResult("Insurance wins: dealer blackjack vs player blackjack");
         } else {
             // Player NO BJ.
             // Bet 10 -> 990.
@@ -305,16 +288,12 @@ bool Engine::handleInsuranceAccepted(Hand& dealer, Hand& user) {
             bankroll.deposit(user.getBetSize() * 1.5);
             // totalMoneyBet += user.getBetSize() * config.blackjackPayoutMultiplier; // Tracking?
 
-            if (eventsEnabled()) {
-                publish(EventType::RoundEnded, "Insurance wins: dealer blackjack");
-            }
+            reporter->reportInsuranceResult("Insurance wins: dealer blackjack");
         }
-        publishWalletSnapshot();
+        reporter->reportStats(bankroll, *countingStrategy);
         return true; 
     } else {
-        if (eventsEnabled()) {
-            publish(EventType::ActionTaken, "Insurance accepted automatically: dealer lacked blackjack");
-        }
+        reporter->reportMessage(EventType::ActionTaken, "Insurance accepted automatically: dealer lacked blackjack");
         // Insurance lost.
         // Bet 10 -> 990.
         // Ins 5 -> 985.
@@ -336,31 +315,25 @@ bool Engine::handleInsuranceDeclined(Hand& dealer, Hand& user) {
             // Push. Return bet.
             bankroll.deposit(user.getBetSize());
             // totalMoneyBet += user.getBetSize();
-            if (eventsEnabled()) {
-                publish(EventType::RoundEnded, "Dealer blackjack pushes player blackjack (no insurance)");
-                publishWalletSnapshot();
-            }
+            reporter->reportRoundResult("Dealer blackjack pushes player blackjack (no insurance)");
+            reporter->reportStats(bankroll, *countingStrategy);
         } else {
             // Lose. Do nothing.
             // config.wallet -= user.getBetSize();
             // totalMoneyBet += user.getBetSize();
-            if (eventsEnabled()) {
-                publish(EventType::RoundEnded, "Dealer blackjack; player loses without insurance");
-                publishWalletSnapshot();
-            }
+            reporter->reportRoundResult("Dealer blackjack; player loses without insurance");
+            reporter->reportStats(bankroll, *countingStrategy);
         }
         return true; 
     } else {
-        if (eventsEnabled()) {
-            publish(EventType::ActionTaken, "Insurance declined; dealer lacks blackjack");
-        }
+        reporter->reportMessage(EventType::ActionTaken, "Insurance declined; dealer lacks blackjack");
         return false;
     }
 }
 
 bool Engine::dealerRobberyHandler(Hand& dealer,Hand& user){
     if (dealer.dealerShowsTen() && dealer.dealerHiddenAce()){
-        print_hand(user);
+        reporter->reportHand(user, "Player"); // Assuming label is Player? Or pass it?
         countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
         if (!user.isBlackjack()){
             // Lose. Do nothing.
@@ -377,12 +350,8 @@ bool Engine::dealerRobberyHandler(Hand& dealer,Hand& user){
              bankroll.deposit(user.getBetSize());
         }
         // totalMoneyBet += user.getBetSize();
-        if (eventsEnabled()){
-            std::ostringstream oss;
-            oss << "Dealer flipped blackjack. " << describeHand("Dealer", dealer);
-            publish(EventType::RoundEnded, oss.str());
-            publishWalletSnapshot();
-        }
+        reporter->reportDealerFlip(dealer);
+        reporter->reportStats(bankroll, *countingStrategy);
         return true;
     }
     return false;
@@ -391,9 +360,7 @@ bool Engine::dealerRobberyHandler(Hand& dealer,Hand& user){
 
 bool Engine::standHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel){
     hands.emplace_back(user);
-    if (eventsEnabled()){
-        publish(EventType::ActionTaken, describeAction(Action::Stand, user, handLabel));
-    }
+    reporter->reportAction(Action::Stand, user, handLabel);
     return true;
 }
 
@@ -402,9 +369,7 @@ bool Engine::hitHandler(Hand& user, std::vector<Hand>& hands, std::string handLa
     countingStrategy->updateCount(c);
     user.addCard(c);
 
-    if (eventsEnabled()){
-        publish(EventType::ActionTaken, describeAction(Action::Hit, user, handLabel));
-    }
+    reporter->reportAction(Action::Hit, user, handLabel);
 
     if (user.check_over()) {hands.emplace_back(user); return true;}
 
@@ -414,9 +379,7 @@ bool Engine::hitHandler(Hand& user, std::vector<Hand>& hands, std::string handLa
 bool Engine::doubleHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel,bool has_split){
     if (has_split && !config.doubleAfterSplitAllowed){
         //hands.emplace_back(user);
-        if (eventsEnabled()){
-            publish(EventType::ActionTaken, handLabel + " cannot double after split; hits instead");
-        }
+        reporter->reportMessage(EventType::ActionTaken, handLabel + " cannot double after split; hits instead");
 
         Card c = deck->hit();
         countingStrategy->updateCount(c);
@@ -424,9 +387,7 @@ bool Engine::doubleHandler(Hand& user, std::vector<Hand>& hands, std::string han
 
         hands.emplace_back(user);
 
-        if (eventsEnabled()){
-            publish(EventType::ActionTaken, describeAction(Action::Double, user, handLabel));
-        }
+        reporter->reportAction(Action::Double, user, handLabel);
         return true;
     }
 
@@ -440,9 +401,7 @@ bool Engine::doubleHandler(Hand& user, std::vector<Hand>& hands, std::string han
     user.addCard(c);
     hands.emplace_back(user);
 
-    if (eventsEnabled()){
-        publish(EventType::ActionTaken, describeAction(Action::Double, user, handLabel));
-    }
+    reporter->reportAction(Action::Double, user, handLabel);
     return true;
 }
 
@@ -469,13 +428,7 @@ bool Engine::splitHandler(Player& player, Hand& user, Hand& dealer, std::vector<
     countingStrategy->updateCount(c2);
     user2.addCard(c2);
 
-    if (eventsEnabled()){
-        std::ostringstream oss;
-        oss << handLabel << " splits into -> "
-            << describeHand(handLabel + " (hand 1)", user) << " | "
-            << describeHand(handLabel + " (hand 2)", user2);
-        publish(EventType::ActionTaken, oss.str());
-    }
+    reporter->reportSplit(handLabel, user, user2);
 
     if (splitting_aces) {
         if (user.isAces()){
@@ -506,84 +459,7 @@ bool Engine::surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string 
     bankroll.deposit(static_cast<double>(user.getBetSize()) * SURRENDERMULTIPLIER);
     // totalMoneyBet += user.getBetSize(); // Already added when bet placed
 
-    if (eventsEnabled()){
-        publish(EventType::ActionTaken, describeAction(Action::Surrender, user, handLabel));
-        publishWalletSnapshot();
-    }
+    reporter->reportAction(Action::Surrender, user, handLabel);
+    reporter->reportStats(bankroll, *countingStrategy);
     return true;
-}
-
-bool Engine::eventsEnabled() const {
-    return config.emitEvents && eventBus;
-}
-
-void Engine::publish(EventType type, const std::string& message){
-    if (!eventsEnabled()) {
-        return;
-    }
-    eventBus->notifyObservers(type, message);
-}
-
-void Engine::publishWalletSnapshot(){
-    if (!eventsEnabled()) {
-        return;
-    }
-    std::ostringstream oss;
-    oss << "Wallet: " << bankroll.getBalance() << " | True Count: " << countingStrategy->getTrueCount() << " | Running Count: " << countingStrategy->getRunningCount() << " | Decks Left: " << countingStrategy->getDecksLeft();
-    publish(EventType::GameStats, oss.str());
-    publish(EventType::GameStats, "============================================================================");
-}
-
-std::string Engine::describeHand(const std::string& label, Hand& hand, bool hideHoleCard){
-    std::ostringstream oss;
-    oss << label << " hand: ";
-    std::vector<Card> cards = hand.getCards();
-
-    if (cards.empty()){
-        oss << "<empty>";
-    } else {
-        for (size_t i = 0; i < cards.size(); ++i){
-            if (hideHoleCard && i == 1){
-                oss << "[hidden]";
-            }
-            else {
-                Card card = cards[i];
-                oss << card.getRank() << " of " << card.getSuit();
-            }
-
-            if (i + 1 < cards.size()){
-                oss << ", ";
-            }
-        }
-    }
-
-    if (hideHoleCard){
-        oss << " | score: [hidden]";
-    }
-    else{
-        oss << " | score: " << hand.getScore();
-    }
-    if (hand.getBetSize() > 0){
-        oss << " | bet: " << hand.getBetSize();
-    }
-    if (hand.isBlackjack()){
-        oss << " | Blackjack";
-    }
-    else if (hand.check_over()){
-        oss << " | Bust";
-    }
-
-    return oss.str();
-}
-
-std::string Engine::describeAction(Action action, Hand& hand, const std::string& label){
-    std::ostringstream oss;
-    oss << label << " chose " << action << ". " << describeHand(label, hand);
-    return oss.str();
-}
-
-std::string Engine::optimalAction(Action action, Hand& hand, const std::string& label){
-    std::ostringstream oss;
-    oss << label << " optimal action : " << action << ". ";
-    return oss.str();
 }

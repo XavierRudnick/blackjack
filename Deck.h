@@ -16,7 +16,7 @@ class Deck{
         static const int NUM_CARDS_IN_DECK = 52;
 
         Deck(int deck_size);
-        Deck testDeck(std::vector<Card> stackedCards);
+        static Deck createTestDeck(std::vector<Card> stackedCards);
         std::pair<Card,Card> deal();
         Card hit();
         int getSize();

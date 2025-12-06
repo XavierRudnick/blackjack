@@ -11,34 +11,37 @@ Engine::Engine(const GameConfig& gameConfig, Deck deck, std::unique_ptr<Counting
 
 std::pair<double, double> Engine::runner(){  
     while (deck->getSize() > config.penetrationThreshold ){
-
-        countingStrategy->updateDeckSize(deck->getSize());
-        std::vector<Hand> hands;
-
-        int bet = countingStrategy->getBetSize();
-        Hand dealer = draw_cards();
-        Hand user = draw_cards(bet);
-
-        // Count visible cards
-        countingStrategy->updateCount(dealer.getCards()[0]);
-
-        for (Card card : user.getCards()) {
-            countingStrategy->updateCount(card);
-        }
-
-        peek_dealer(dealer);
-        if (insuranceHandler(dealer,user)){
-            continue;
-        }
-        else if (dealerRobberyHandler(dealer,user)){
-            continue;
-        }
-        else{
-            hands = user_play(dealer,user);
-            evaluateHands(dealer,hands);
-        }
+        playHand();
     }    
     return {config.wallet, totalMoneyBet};
+}
+
+void Engine::playHand(){
+    countingStrategy->updateDeckSize(deck->getSize());
+    std::vector<Hand> hands;
+
+    int bet = countingStrategy->getBetSize();
+    Hand dealer = draw_cards();
+    Hand user = draw_cards(bet);
+
+    // Count visible cards
+    countingStrategy->updateCount(dealer.getCards()[0]);
+
+    for (Card card : user.getCards()) {
+        countingStrategy->updateCount(card);
+    }
+
+    peek_dealer(dealer);
+    if (handleInsurancePhase(dealer,user)){
+        return;
+    }
+    else if (dealerRobberyHandler(dealer,user)){
+        return;
+    }
+    else{
+        hands = user_play(dealer,user);
+        evaluateHands(dealer,hands);
+    }
 }
 
 std::vector<int> Engine::getPlayerScores(std::vector<Hand>& hands){
@@ -213,76 +216,100 @@ void Engine::dealer_draw(Hand& dealer){
 }
 
 
-bool Engine::insuranceHandler(Hand& dealer,Hand& user){
-    if (dealer.OfferInsurance()){
-        print_hand(user);
-        bool acceptInsurance = countingStrategy->shouldAcceptInsurance();
-
-        if (eventsEnabled()){
-            std::ostringstream oss;
-            oss << "Insurance offered. Strategy " << (acceptInsurance ? "accepts" : "declines")
-                << ". " << describeHand("Dealer", dealer, true);
-            publish(EventType::ActionTaken, oss.str());
-        }
-
-        if (acceptInsurance){
-            if (dealer.dealerHiddenTen() && user.isBlackjack()){
-                countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
-                config.wallet += static_cast<double>(user.getBetSize()); //this is correct
-                totalMoneyBet += user.getBetSize() * config.blackjackPayoutMultiplier;
-                if (eventsEnabled()){
-                    publish(EventType::RoundEnded, "Insurance wins: dealer blackjack vs player blackjack");
-                }
-                publishWalletSnapshot();
-                return true;
-            }
-            else if (dealer.dealerHiddenTen() && !user.isBlackjack()){
-                countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
-                totalMoneyBet += user.getBetSize() * config.blackjackPayoutMultiplier;
-                if (eventsEnabled()){
-                    publish(EventType::RoundEnded, "Insurance wins: dealer blackjack");
-                }
-                publishWalletSnapshot();
-                return true;
-            }
-            else{
-                if (eventsEnabled()){
-                    publish(EventType::ActionTaken, "Insurance accepted automatically: dealer lacked blackjack");
-                }
-                config.wallet -= static_cast<double>(user.getBetSize()) * INSURANCEBETCOST; //this is correct
-                totalMoneyBet += user.getBetSize() * INSURANCEBETCOST;
-                return false;
-            }
-        }
-        else{
-            if(dealer.dealerHiddenTen() && user.isBlackjack()){
-                countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
-                totalMoneyBet += user.getBetSize();
-                if (eventsEnabled()){
-                    publish(EventType::RoundEnded, "Dealer blackjack pushes player blackjack (no insurance)");
-                    publishWalletSnapshot();
-                }
-                return true;
-            }
-            else if (dealer.dealerHiddenTen() && !user.isBlackjack()) {
-                countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
-                config.wallet -= user.getBetSize();
-                totalMoneyBet += user.getBetSize();
-                if (eventsEnabled()){
-                    publish(EventType::RoundEnded, "Dealer blackjack; player loses without insurance");
-                    publishWalletSnapshot();
-                }
-                return true;
-            }
-            else{
-                if (eventsEnabled()){
-                    publish(EventType::ActionTaken, "Insurance declined; dealer lacks blackjack");
-                }
-                return false;
-            }
-        }
+bool Engine::handleInsurancePhase(Hand& dealer, Hand& user) {
+    if (!canOfferInsurance(dealer)) {
+        return false;
     }
-    return false;
+
+    print_hand(user);
+    bool accepted = askInsurance();
+
+    if (eventsEnabled()) {
+        std::ostringstream oss;
+        oss << "Insurance offered. Strategy " << (accepted ? "accepts" : "declines")
+            << ". " << describeHand("Dealer", dealer, true);
+        publish(EventType::ActionTaken, oss.str());
+    }
+
+    return resolveInsurance(accepted, dealer, user);
+}
+
+bool Engine::canOfferInsurance(Hand& dealer) {
+    return dealer.OfferInsurance();
+}
+
+bool Engine::askInsurance() {
+    return countingStrategy->shouldAcceptInsurance();
+}
+
+bool Engine::resolveInsurance(bool accepted, Hand& dealer, Hand& user) {
+    if (accepted) {
+        return handleInsuranceAccepted(dealer, user);
+    } else {
+        return handleInsuranceDeclined(dealer, user);
+    }
+}
+
+bool Engine::handleInsuranceAccepted(Hand& dealer, Hand& user) {
+    bool dealerHasBlackjack = dealer.dealerHiddenTen();
+    bool playerHasBlackjack = user.isBlackjack();
+
+    if (dealerHasBlackjack) {
+        countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
+        
+        if (playerHasBlackjack) {
+            config.wallet += user.getBetSize(); 
+            totalMoneyBet += user.getBetSize() * config.blackjackPayoutMultiplier; // Tracking?
+            
+            if (eventsEnabled()) {
+                publish(EventType::RoundEnded, "Insurance wins: dealer blackjack vs player blackjack");
+            }
+        } else {
+            totalMoneyBet += user.getBetSize() * config.blackjackPayoutMultiplier; // Tracking?
+
+            if (eventsEnabled()) {
+                publish(EventType::RoundEnded, "Insurance wins: dealer blackjack");
+            }
+        }
+        publishWalletSnapshot();
+        return true; 
+    } else {
+        if (eventsEnabled()) {
+            publish(EventType::ActionTaken, "Insurance accepted automatically: dealer lacked blackjack");
+        }
+        config.wallet -= static_cast<double>(user.getBetSize()) * INSURANCEBETCOST;
+        totalMoneyBet += user.getBetSize() * INSURANCEBETCOST;
+        return false; // Round continues
+    }
+}
+
+bool Engine::handleInsuranceDeclined(Hand& dealer, Hand& user) {
+    bool dealerHasBlackjack = dealer.dealerHiddenTen();
+    bool playerHasBlackjack = user.isBlackjack();
+
+    if (dealerHasBlackjack) {
+        countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
+        if (playerHasBlackjack) {
+            totalMoneyBet += user.getBetSize();
+            if (eventsEnabled()) {
+                publish(EventType::RoundEnded, "Dealer blackjack pushes player blackjack (no insurance)");
+                publishWalletSnapshot();
+            }
+        } else {
+            config.wallet -= user.getBetSize();
+            totalMoneyBet += user.getBetSize();
+            if (eventsEnabled()) {
+                publish(EventType::RoundEnded, "Dealer blackjack; player loses without insurance");
+                publishWalletSnapshot();
+            }
+        }
+        return true; 
+    } else {
+        if (eventsEnabled()) {
+            publish(EventType::ActionTaken, "Insurance declined; dealer lacks blackjack");
+        }
+        return false;
+    }
 }
 
 bool Engine::dealerRobberyHandler(Hand& dealer,Hand& user){

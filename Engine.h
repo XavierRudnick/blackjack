@@ -70,7 +70,14 @@ private:
     void dealer_draw(Hand& dealer);
 
     //game logic
-    bool insuranceHandler(Hand& dealer,Hand& user);
+    void playHand();
+
+    bool handleInsurancePhase(Hand& dealer, Hand& user);
+    bool canOfferInsurance(Hand& dealer);
+    bool askInsurance();
+    bool resolveInsurance(bool accepted, Hand& dealer, Hand& user);
+    bool handleInsuranceAccepted(Hand& dealer, Hand& user);
+    bool handleInsuranceDeclined(Hand& dealer, Hand& user);
     bool dealerRobberyHandler(Hand& dealer,Hand& user);
 
     bool standHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel);

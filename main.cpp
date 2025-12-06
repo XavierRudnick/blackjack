@@ -8,12 +8,13 @@
 #include "observers/EventBus.h"
 #include "EngineBuilder.h"
 #include "HumanPlayer.h"
+#include "BotPlayer.h"
 #include <chrono> 
 
 
 int main(){
     int num_decks_used = 2;
-    const bool visualize = true;
+    const bool visualize = false;
     const int iterations = visualize ? 1 : 1000000;
     // float scores[iterations];
 
@@ -33,6 +34,7 @@ int main(){
         auto hilo = std::make_unique<HiLoStrategy>(num_decks_used);
         auto no = std::make_unique<NoStrategy>(num_decks_used);
         auto player = std::make_unique<HumanPlayer>(false); // false for allowSurrender, matching commented out .allowSurrender()
+        auto robot = std::make_unique<BotPlayer>(false); // false for allowSurrender, matching commented out .allowSurrender()
         Deck deck = Deck(num_decks_used);
         Engine hiLoEngine = EngineBuilder()
                                     .setDeckSize(num_decks_used)
@@ -44,7 +46,7 @@ int main(){
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()
                                     //.allowSurrender()
-                                    .build(std::move(hilo), std::move(player));
+                                    .build(std::move(hilo), std::move(robot));
         profit = hiLoEngine.runner();
 
     //   scores[i] = profit.first;

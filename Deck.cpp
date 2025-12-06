@@ -15,9 +15,10 @@ Deck::Deck(int deck_size){
     std::shuffle(deck.begin(), deck.end(), rand);
 }
 
-Deck Deck::testDeck(std::vector<Card> stackedCards) {
-    deck = stackedCards;
-    return *this; 
+Deck Deck::createTestDeck(std::vector<Card> stackedCards) {
+    Deck d(0);
+    d.deck = stackedCards;
+    return d;
 } 
 
 std::pair<Card,Card> Deck::deal(){

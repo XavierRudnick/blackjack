@@ -16,7 +16,6 @@
 // --- Helper for Setup ---
 // Uses reverse order: {LastDealt, ..., Player2, Player1, DealerHole, DealerUp}
 Engine setupEngine(std::vector<Card> stack, double initialWallet = 1000) {
-    int num_decks_used = 2;
     const bool visualize = true; // Set to true to see logs in console
 
     static ConsoleObserver consoleObserver; // Static to persist
@@ -35,8 +34,7 @@ Engine setupEngine(std::vector<Card> stack, double initialWallet = 1000) {
     // Use BasicStrategy to ensure predictable hits/stands
     auto strategy = std::make_unique<NoStrategy>(0); 
     auto player = std::make_unique<BotPlayer>(false); // Default bot player
-    Deck deck = Deck(num_decks_used);
-    Deck riggedDeck = deck.testDeck(stack);
+    Deck riggedDeck = Deck::createTestDeck(stack);
 
     return EngineBuilder()
             .setDeckSize(0)

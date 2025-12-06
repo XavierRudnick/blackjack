@@ -13,6 +13,7 @@
 #include "action.h"
 #include "BasicStrategy.h"
 #include "observers/EventBus.h"
+#include "Player.h"
 
 class Engine{
 private:
@@ -25,7 +26,7 @@ public:
     struct GameConfig {
         int numDecks = 2;
         double wallet = 1000.0;
-        int penetrationThreshold = .75;
+        float penetrationThreshold = .75;
         double blackjackPayoutMultiplier = 1.5; 
         bool dealerHitsSoft17 = false;
         bool doubleAfterSplitAllowed = true;
@@ -61,10 +62,8 @@ private:
     void evaluateHands(Hand& dealer, std::vector<Hand>& hands);
     
     //hand play logic
-    Action getAction(Hand dealer, Hand user);
     std::vector<Hand> user_play(Hand& dealer, Hand& user);
-    void user_play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces = false, bool has_split = false);
-    void user_play_hand_manual(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces = false, bool has_split = false);
+    void play_hand(Player& player, Hand& dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces = false, bool has_split = false);
 
     //card drawing logic
     Hand draw_cards(int betSize = 0);
@@ -77,7 +76,7 @@ private:
     bool standHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel);
     bool hitHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel);
     bool doubleHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel,bool has_split);
-    bool splitHandler(Hand& user,Hand& dealer, std::vector<Hand>& hands, std::string handLabel,bool has_split, bool is_split_aces);
+    bool splitHandler(Player& player, Hand& user,Hand& dealer, std::vector<Hand>& hands, std::string handLabel,bool has_split, bool is_split_aces);
     bool surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel);
    
 public:

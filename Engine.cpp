@@ -1,7 +1,10 @@
 #include "Engine.h"
 #include "Deck.h"
+#include "BotPlayer.h"
+#include "HumanPlayer.h"
 
 Engine::Engine(const GameConfig& gameConfig, Deck deck, std::unique_ptr<CountingStrategy> strategy)
+
     : config(gameConfig), deck(std::move(deck)), countingStrategy(std::move(strategy)) {
     
     eventBus = EventBus::getInstance();
@@ -126,161 +129,45 @@ void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
 std::vector<Hand> Engine::user_play(Hand& dealer, Hand& user){
     std::vector<Hand> hands;
     hands.reserve(4);
-    if (config.autoPlay){
-        user_play_hand(dealer, user, hands, false);
-    }
-    else{
-        user_play_hand_manual(dealer, user, hands, false);
-    }
     
+    std::unique_ptr<Player> player;
+    if (config.autoPlay){
+        player = std::make_unique<BotPlayer>(config.allowSurrender);
+    } else {
+        player = std::make_unique<HumanPlayer>(config.allowSurrender);
+    }
+
+    play_hand(*player, dealer, user, hands, false);
     return hands;
 }
 
-Action Engine::getAction(Hand dealer, Hand user){
-    Rank dealer_card = dealer.peek_front_card();
-
-    if(user.check_can_double() && config.allowSurrender){
-        Action action = BasicStrategy::shouldSurrender(user.getScore(), dealer_card, countingStrategy->getTrueCount());
-        if (action == Action::Surrender) {
-            return action;
-        }
-    }
-    
-
-    if(user.check_can_split()){
-        return BasicStrategy::getSplitAction(user.peek_front_card(),dealer_card,countingStrategy->getTrueCount());
-    }
-
-    int playerTotal = user.getScore();
-
-    if(user.isHandSoft()){
-        Action action = BasicStrategy::getSoftHandAction(playerTotal,dealer_card);
-
-        if (action == Action::Double){
-            if (user.check_can_double()){
-                return action;
-            }
-            else if (user.check_should_stand()){
-                return Action::Stand;
-            }
-            else{
-                return Action::Hit;
-            }
-        }
-
-        return action;
-    }
-    else{
-            Action action = BasicStrategy::getHardHandAction(playerTotal,dealer_card,countingStrategy->getTrueCount());
-            if (action == Action::Double){//I think this is correct if DAS is allowed or nah. specifically for soft vals, maybe investigate
-            if (user.check_can_double()){
-                return action;
-            }
-            else if(user.check_should_stand()){
-                return Action::Stand;
-            }
-            else{
-                return Action::Hit;
-            }
-        }
-        return action;
-    }
-
-}
-
-
-void Engine::user_play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool has_split_aces, bool has_split){ 
-
+void Engine::play_hand(Player& player, Hand& dealer, Hand& user, std::vector<Hand>& hands, bool has_split_aces, bool has_split){ 
     bool game_over = false;
     const std::string handLabel = has_split_aces ? "Player (split aces)" : "Player";
     print_hand(user, handLabel); 
 
     while(!game_over){
-        Action action = getAction(dealer, user);
+        Action action = player.getAction(user, dealer, countingStrategy->getTrueCount());
+        
         switch(action)
         {
             case Action::Stand:
-            {
                 game_over = standHandler(user, hands, handLabel);
                 break;
-            }
             case Action::Hit:
-            {
                 game_over = hitHandler(user, hands, handLabel);
                 break;
-            }
             case Action::Double:
-            {
                 game_over = doubleHandler(user, hands, handLabel, has_split);
                 break;
-            }
             case Action::Split:
-            {
-                game_over = splitHandler(user, dealer, hands, handLabel, has_split_aces, true);
+                game_over = splitHandler(player, user, dealer, hands, handLabel, has_split_aces, true);
                 break;
-            }
-            case Action::Surrender://probably rework this, dont like maniputlating config.wallet here :/
-            {
+            case Action::Surrender:
                 game_over = surrenderHandler(user, hands, handLabel);
                 break;
-            }
             case Action::Skip: 
-            {
-                //should never reach here
-                std::cout << "HOW DID YOU REACH THIS SKIP!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-                if (eventsEnabled()){
-                    publish(EventType::ActionTaken, handLabel + " attempted to skip turn");
-                }
                 break;
-            }
-
-        }
-    }
-
-}
-void Engine::user_play_hand_manual(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool has_split_aces, bool has_split){ //need to implement strategy for here
-    int choice;
-    bool game_over = false;
-    const std::string handLabel = has_split_aces ? "Player (split aces)" : "Player";
-    print_hand(user, handLabel); 
-
-    while(!game_over){
-        std::cin >> choice;
-        Action optimal = getAction(dealer, user);
-        switch(choice)
-        {
-            case 0:
-                game_over = standHandler(user, hands, handLabel);
-                if (eventsEnabled()){
-                    publish(EventType::ActionTaken, optimalAction(optimal, user,handLabel));
-                }          
-                break;
-            case 1:
-            {
-                game_over = hitHandler(user, hands, handLabel);
-                if (eventsEnabled()){
-                    publish(EventType::ActionTaken, optimalAction(optimal, user,handLabel));
-                }
-                break;
-            }
-            case 2:
-            {
-                game_over = doubleHandler(user, hands, handLabel, has_split);
-                if (eventsEnabled()){
-                    publish(EventType::ActionTaken, optimalAction(optimal, user,handLabel));
-                }
-                break;
-            }
-                
-            case 3:
-            {
-                game_over = splitHandler(user, dealer, hands, handLabel, has_split_aces, true);
-                if (eventsEnabled()){
-                    publish(EventType::ActionTaken, optimalAction(optimal, user,handLabel));
-                }
-                break;
-            }
-
         }
     }
 }
@@ -480,7 +367,7 @@ bool Engine::doubleHandler(Hand& user, std::vector<Hand>& hands, std::string han
     return true;
 }
 
-bool Engine::splitHandler(Hand& user, Hand& dealer, std::vector<Hand>& hands, std::string handLabel, bool has_split_aces,bool has_split){
+bool Engine::splitHandler(Player& player, Hand& user, Hand& dealer, std::vector<Hand>& hands, std::string handLabel, bool has_split_aces,bool has_split){
      // Check if we're splitting Aces
     bool splitting_aces = (user.peek_front_card() == Rank::Ace);
 
@@ -509,24 +396,14 @@ bool Engine::splitHandler(Hand& user, Hand& dealer, std::vector<Hand>& hands, st
 
     if (splitting_aces) {
         if (user.isAces()){
-            if (config.autoPlay){
-                user_play_hand(dealer,user,hands,true, true);
-            }
-            else{
-                user_play_hand_manual(dealer,user,hands,true, true);
-            }
+            play_hand(player, dealer,user,hands,true, true);
         }
         else{
             hands.emplace_back(user);
         }
         
         if (user2.isAces()){
-            if (config.autoPlay){
-                user_play_hand(dealer,user2,hands,true, true);
-            }
-            else{
-                user_play_hand_manual(dealer,user2,hands,true, true);
-            }
+            play_hand(player, dealer,user2,hands,true, true);
         }
         else{
             hands.emplace_back(user2);
@@ -535,14 +412,8 @@ bool Engine::splitHandler(Hand& user, Hand& dealer, std::vector<Hand>& hands, st
         return true;
     }
     else{
-        if (config.autoPlay){
-            user_play_hand(dealer,user,hands,false, true);
-            user_play_hand(dealer,user2,hands,false, true);
-        }
-        else{
-            user_play_hand_manual(dealer,user,hands,false, true);
-            user_play_hand_manual(dealer,user2,hands,false, true);
-        }
+        play_hand(player, dealer,user,hands,false, true);
+        play_hand(player, dealer,user2,hands,false, true);
     }
     return true;
 }

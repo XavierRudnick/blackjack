@@ -35,13 +35,14 @@ int main(){
         Engine hiLoEngine = EngineBuilder()
                                     .setDeckSize(num_decks_used)
                                     .setDeck(deck)
+                                    .setPenetrationThreshold(.75)
                                     .setInitialWallet(1000)
                                     .enableEvents(visualize)
                                     .with3To2Payout()
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()
                                     //.allowSurrender()
-                                    //.allowManualPlay()
+                                    .allowManualPlay()
                                     .build(std::move(hilo));
         profit = hiLoEngine.runner();
 

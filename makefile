@@ -5,7 +5,8 @@ CXXFLAGS = -std=c++17 -Wall -Wextra -g
 # 1. COMMON_OBJECTS: Everything EXCEPT main.o and test.o
 COMMON_OBJECTS = rank.o suit.o Card.o Hand.o Deck.o HiLoStrategy.o NoStrategy.o \
                  BasicStrategy.o action.o Engine.o EngineBuilder.o \
-                 observers/EventBus.o observers/ConsoleObserver.o
+                 observers/EventBus.o observers/ConsoleObserver.o \
+                 BotPlayer.o HumanPlayer.o
 
 # 2. Default Target: Build both the game and the tests
 all: blackjack test
@@ -65,6 +66,12 @@ observers/ConsoleObserver.o: observers/ConsoleObserver.cpp observers/ConsoleObse
 
 EngineBuilder.o: EngineBuilder.cpp EngineBuilder.h Engine.h CountingStrategy.h
 	$(CXX) $(CXXFLAGS) -c EngineBuilder.cpp
+
+BotPlayer.o: BotPlayer.cpp BotPlayer.h Player.h BasicStrategy.h
+	$(CXX) $(CXXFLAGS) -c BotPlayer.cpp
+
+HumanPlayer.o: HumanPlayer.cpp HumanPlayer.h Player.h action.h BasicStrategy.h
+	$(CXX) $(CXXFLAGS) -c HumanPlayer.cpp
 
 # 5. Clean up (Added run_tests and test.o)
 clean:

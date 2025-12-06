@@ -7,7 +7,8 @@ NoStrategy::NoStrategy(float deck_size){
 }
 
 int NoStrategy::getBetSize() {
-    return 5;
+    constexpr int defaultBetSize = 5;
+    return defaultBetSize;
 }
 
 void NoStrategy::updateCount(Card card) {

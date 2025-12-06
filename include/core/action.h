@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cstdint>
 
-enum class Action : uint8_t {
+enum class Action : int {
     Stand,
     Hit,
     Double,

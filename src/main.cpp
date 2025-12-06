@@ -14,7 +14,7 @@
 
 int main(){
     int numDecksUsed = 2;
-    const bool visualize = true;
+    const bool visualize = false;
     const int iterations = visualize ? 1 : 1000000;
     // float scores[iterations];
 
@@ -50,7 +50,7 @@ int main(){
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()
                                     //.allowSurrender()
-                                    .build(std::move(no), std::move(robot));
+                                    .build(std::move(hilo), std::move(robot));
         profit = hiLoEngine.runner();
 
     //   scores[i] = profit.first;

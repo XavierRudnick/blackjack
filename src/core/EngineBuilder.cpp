@@ -11,8 +11,8 @@ EngineBuilder& EngineBuilder::setDeckSize(int deck_size) {
     return *this;
 }
 
-EngineBuilder& EngineBuilder::setDeck(Deck d) {
-    deck.emplace(d);
+EngineBuilder& EngineBuilder::setDeck(Deck inputDeck) {
+    deck.emplace(inputDeck);
     return *this;
 }
 

@@ -22,7 +22,6 @@ std::ostream& operator<<(std::ostream& os, const Action action){
             case Action::Surrender:
                 os << "Surrender";
                 break;
-
         }
     return os;
 }

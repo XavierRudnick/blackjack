@@ -63,10 +63,13 @@ void HiLoStrategy::updateCount(Card card) {
     Rank rank = card.getRank();
     int score = static_cast<int>(rank) + INDEX_OFFSET;
 
-    if (score <= 6){
+    constexpr int lowerCard = 6;
+    constexpr int upperCard = 10;
+
+    if (score <= lowerCard){
         running_count += 1;
     }
-    else if (score >= 10){
+    else if (score >= upperCard){
         running_count -= 1;
     }
 
@@ -94,7 +97,8 @@ float HiLoStrategy::getDecksLeft() const{
 }
 
 bool HiLoStrategy::shouldAcceptInsurance() const{
-    if (true_count >= 3){//mathmatical point where insurance is profitable accoding to gemini
+    constexpr int insuranceThreshold = 3; //mathmatical point where insurance is profitable accoding to gemini
+    if (true_count >= insuranceThreshold){
         return true;
     }
     return false;

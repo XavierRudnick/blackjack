@@ -10,6 +10,7 @@ private:
 public:
     HumanPlayer(bool allowSurrender = false);
     Action getAction(Hand& user, Hand& dealer, float trueCount) override;
+    Action getOptimalAction(Hand& user, Hand& dealer, float trueCount);
 };
 
 #endif

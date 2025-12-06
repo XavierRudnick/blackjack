@@ -1,6 +1,9 @@
 #include "Bankroll.h"
 
-Bankroll::Bankroll(double initialBalance) : balance(initialBalance), totalMoneyBet(0) {}
+Bankroll::Bankroll(double initialBalance) {
+    balance = initialBalance;
+    totalMoneyBet = 0;
+}
 
 void Bankroll::deposit(double amount) {
     balance += amount;

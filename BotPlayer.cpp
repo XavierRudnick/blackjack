@@ -3,17 +3,17 @@
 BotPlayer::BotPlayer(bool allowSurrender) : allowSurrender(allowSurrender) {}
 
 Action BotPlayer::getAction(Hand& user, Hand& dealer, float trueCount) {
-    Rank dealer_card = dealer.peek_front_card();
+    Rank dealer_card = dealer.peekFrontCard();
 
-    if(user.check_can_double() && allowSurrender){
+    if(user.checkCanDouble() && allowSurrender){
         Action action = BasicStrategy::shouldSurrender(user.getScore(), dealer_card, trueCount);
         if (action == Action::Surrender) {
             return action;
         }
     }
 
-    if(user.check_can_split()){
-        return BasicStrategy::getSplitAction(user.peek_front_card(), dealer_card, trueCount);
+    if(user.checkCanSplit()){
+        return BasicStrategy::getSplitAction(user.peekFrontCard(), dealer_card, trueCount);
     }
 
     int playerTotal = user.getScore();
@@ -22,10 +22,10 @@ Action BotPlayer::getAction(Hand& user, Hand& dealer, float trueCount) {
         Action action = BasicStrategy::getSoftHandAction(playerTotal, dealer_card);
 
         if (action == Action::Double){
-            if (user.check_can_double()){
+            if (user.checkCanDouble()){
                 return action;
             }
-            else if (user.check_should_stand()){
+            else if (user.checkShouldStand()){
                 return Action::Stand;
             }
             else{
@@ -37,10 +37,10 @@ Action BotPlayer::getAction(Hand& user, Hand& dealer, float trueCount) {
     else{
         Action action = BasicStrategy::getHardHandAction(playerTotal, dealer_card, trueCount);
         if (action == Action::Double){
-            if (user.check_can_double()){
+            if (user.checkCanDouble()){
                 return action;
             }
-            else if(user.check_should_stand()){
+            else if(user.checkShouldStand()){
                 return Action::Stand;
             }
             else{

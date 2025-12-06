@@ -14,23 +14,29 @@ class Hand{
         
         int getBetSize();
         void doubleBet();
+
         Card getLastCard();
         void popLastCard();
-        bool check_can_split();
-        bool check_can_double();
         void addCard(Card card);
-        bool check_over();
+
+        bool checkCanSplit();
+        bool checkCanDouble();
+        bool checkShouldStand();
+
+        bool checkOver();
+        bool isDealerOver();
+
         int getScore();
         int getFinalScore();
+
         bool OfferInsurance();
         bool dealerHiddenTen();
-        bool isDealerOver();
-        Rank peek_front_card();
         bool dealerShowsTen();
         bool dealerHiddenAce();
+        Rank peekFrontCard();
+
         bool isBlackjack();
         bool isHandSoft();
-        bool check_should_stand();
         bool isSoft17();
         bool isAces();
         std::vector<Card> getCards() const;

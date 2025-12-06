@@ -10,6 +10,12 @@
 #include "CountingStrategy.h"
 
 class GameReporter {
+private:
+    EventBus* eventBus;
+    bool enabled;
+
+    std::string describeHand(const std::string& label, Hand& hand, bool hideHoleCard = false);
+
 public:
     GameReporter(EventBus* bus, bool enabled);
     
@@ -23,12 +29,6 @@ public:
     void reportDealerFlip(Hand& dealer);
     void reportStats(const Bankroll& bankroll, const CountingStrategy& strategy);
     void reportMessage(EventType type, const std::string& message);
-
-private:
-    EventBus* eventBus;
-    bool enabled;
-
-    std::string describeHand(const std::string& label, Hand& hand, bool hideHoleCard = false);
 };
 
 #endif

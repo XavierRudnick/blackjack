@@ -2,6 +2,10 @@
 #define BANKROLL_H
 
 class Bankroll {
+private:
+    double balance;
+    double totalMoneyBet;
+    
 public:
     Bankroll(double initialBalance = 0);
     
@@ -12,10 +16,6 @@ public:
     double getTotalMoneyBet() const;
     
     void addTotalBet(double amount);
-
-private:
-    double balance;
-    double totalMoneyBet;
 };
 
 #endif

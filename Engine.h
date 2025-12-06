@@ -18,11 +18,6 @@
 #include "GameReporter.h"
 
 class Engine{
-private:
-
-    Bankroll bankroll;
-    static constexpr double SURRENDERMULTIPLIER = .5;
-    static constexpr double INSURANCEBETCOST = .5;
 
 public:
     struct GameConfig {
@@ -37,7 +32,20 @@ public:
         bool emitEvents = false;
     };
 
+    Engine(
+        const GameConfig& gameConfig, 
+        Deck deck,
+        std::unique_ptr<CountingStrategy> strategy,
+        std::unique_ptr<Player> player,
+        EventBus* eventBus
+    );
+
+    std::pair<double, double> runner();
+
 private:
+    Bankroll bankroll;
+    static constexpr double SURRENDERMULTIPLIER = .5;
+    static constexpr double INSURANCEBETCOST = .5;
     GameConfig config;
 
     std::optional<Deck> deck;
@@ -48,7 +56,8 @@ private:
     //hand evaluation logic
     std::vector<int> getPlayerScores(std::vector<Hand>& hands);
     bool didHandsBust(std::vector<int> scores);
-    bool didPlayerGetBlackjack(std::vector<Hand>& hands);
+    bool didPlayerGetNaturalBlackjack(std::vector<Hand>& hands);
+    void NaturalBlackJackHandler(Hand& dealer, Hand& user);
     void evaluateHands(Hand& dealer, std::vector<Hand>& hands);
     
     //hand play logic
@@ -76,13 +85,6 @@ private:
     bool splitHandler(Player& player, Hand& user,Hand& dealer, std::vector<Hand>& hands, std::string handLabel,bool has_split, bool is_split_aces);
     bool surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel);
    
-public:
-        Engine(const GameConfig& gameConfig,
-            Deck deck,
-            std::unique_ptr<CountingStrategy> strategy,
-            std::unique_ptr<Player> player,
-            EventBus* eventBus);
-    std::pair<double, double> runner();
 
 };
 

@@ -4,14 +4,12 @@
 
 HumanPlayer::HumanPlayer(bool allowSurrender) : allowSurrender(allowSurrender) {}
 
-Action HumanPlayer::getAction(Hand& user, Hand& dealer, float trueCount) {
-    // Calculate optimal action for hint
-    Action optimalAction = Action::Stand; // Default
-    Rank dealer_card = dealer.peek_front_card();
+Action HumanPlayer::getOptimalAction(Hand& user, Hand& dealer, float trueCount) {
+    Action optimalAction = Action::Stand;
+    Rank dealer_card = dealer.peekFrontCard();
 
-    // Logic copied from BotPlayer for hint
     bool found = false;
-    if(user.check_can_double() && allowSurrender){
+    if(user.checkCanDouble() && allowSurrender){
         Action action = BasicStrategy::shouldSurrender(user.getScore(), dealer_card, trueCount);
         if (action == Action::Surrender) {
             optimalAction = action;
@@ -19,8 +17,8 @@ Action HumanPlayer::getAction(Hand& user, Hand& dealer, float trueCount) {
         }
     }
 
-    if(!found && user.check_can_split()){
-        optimalAction = BasicStrategy::getSplitAction(user.peek_front_card(), dealer_card, trueCount);
+    if(!found && user.checkCanSplit()){
+        optimalAction = BasicStrategy::getSplitAction(user.peekFrontCard(), dealer_card, trueCount);
         found = true;
     }
 
@@ -29,9 +27,9 @@ Action HumanPlayer::getAction(Hand& user, Hand& dealer, float trueCount) {
         if(user.isHandSoft()){
             Action action = BasicStrategy::getSoftHandAction(playerTotal, dealer_card);
             if (action == Action::Double){
-                if (user.check_can_double()){
+                if (user.checkCanDouble()){
                     optimalAction = action;
-                } else if (user.check_should_stand()){
+                } else if (user.checkShouldStand()){
                     optimalAction = Action::Stand;
                 } else{
                     optimalAction = Action::Hit;
@@ -42,9 +40,9 @@ Action HumanPlayer::getAction(Hand& user, Hand& dealer, float trueCount) {
         } else {
             Action action = BasicStrategy::getHardHandAction(playerTotal, dealer_card, trueCount);
             if (action == Action::Double){
-                if (user.check_can_double()){
+                if (user.checkCanDouble()){
                     optimalAction = action;
-                } else if(user.check_should_stand()){
+                } else if(user.checkShouldStand()){
                     optimalAction = Action::Stand;
                 } else{
                     optimalAction = Action::Hit;
@@ -54,6 +52,12 @@ Action HumanPlayer::getAction(Hand& user, Hand& dealer, float trueCount) {
             }
         }
     }
+
+    return optimalAction;
+}
+
+Action HumanPlayer::getAction(Hand& user, Hand& dealer, float trueCount) {
+    Action optimalAction = getOptimalAction(user, dealer, trueCount);
 
     int choice;
     std::cout << "Your hand score: " << user.getScore() << std::endl;

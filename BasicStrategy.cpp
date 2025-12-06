@@ -186,6 +186,7 @@ Action BasicStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, floa
     if (playerTotal > 20) {
         return Action::Stand;
     }
+    
     int dealerIdx = getIndex(dealerUpcard);
     
     int playerIdx = playerTotal - 5;  // Player total 5 maps to index 0 Since chart starts at 5

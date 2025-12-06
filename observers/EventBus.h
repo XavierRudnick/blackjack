@@ -8,6 +8,16 @@
 #include "EventIssuingObservable.h"
 
 class EventBus : public EventIssuingObservable {
+private:
+    EventBus() = default;
+    EventBus(const EventBus&) = delete;
+    EventBus& operator=(const EventBus&) = delete; //deletes the copy-assignment operator to keep EventBus a true singleton
+
+    std::vector<EventObserver*> getObservers(EventType eventType);
+
+    std::map<EventType, std::vector<EventObserver*>> observers;
+    static EventBus* instance;
+
 public:
     static EventBus* getInstance();
 
@@ -21,16 +31,6 @@ public:
     void detachAll();
 
     ~EventBus() override;
-
-private:
-    EventBus() = default;
-    EventBus(const EventBus&) = delete;
-    EventBus& operator=(const EventBus&) = delete;
-
-    std::vector<EventObserver*> getObservers(EventType eventType);
-
-    std::map<EventType, std::vector<EventObserver*>> observers;
-    static EventBus* instance;
 };
 
 #endif

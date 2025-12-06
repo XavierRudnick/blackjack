@@ -16,7 +16,7 @@ void GameReporter::reportHand(Hand& hand, const std::string& label, bool hideHol
 void GameReporter::reportAction(Action action, Hand& hand, const std::string& label) {
     if (enabled && eventBus) {
         std::ostringstream oss;
-        oss << label << " chose " << action << ". " << describeHand(label, hand);
+        oss << label << " chose " << action << "." << describeHand(label, hand);
         eventBus->notifyObservers(EventType::ActionTaken, oss.str());
     }
 }
@@ -24,9 +24,8 @@ void GameReporter::reportAction(Action action, Hand& hand, const std::string& la
 void GameReporter::reportSplit(const std::string& label, Hand& hand1, Hand& hand2) {
     if (enabled && eventBus) {
         std::ostringstream oss;
-        oss << label << " splits into -> "
-            << describeHand(label + " (hand 1)", hand1) << " | "
-            << describeHand(label + " (hand 2)", hand2);
+        oss << label << " splits into:" << describeHand(label + " (hand 1)", hand1)
+            << "\n" << describeHand(label + " (hand 2)", hand2);
         eventBus->notifyObservers(EventType::ActionTaken, oss.str());
     }
 }
@@ -46,7 +45,7 @@ void GameReporter::reportRoundResult(const std::string& message) {
 void GameReporter::reportDealerFlip(Hand& dealer) {
     if (enabled && eventBus) {
         std::ostringstream oss;
-        oss << "Dealer flipped blackjack. " << describeHand("Dealer", dealer);
+        oss << "Dealer flipped blackjack." << describeHand("Dealer", dealer);
         eventBus->notifyObservers(EventType::RoundEnded, oss.str());
     }
 }
@@ -54,12 +53,15 @@ void GameReporter::reportDealerFlip(Hand& dealer) {
 void GameReporter::reportStats(const Bankroll& bankroll, const CountingStrategy& strategy) {
     if (enabled && eventBus) {
         std::ostringstream oss;
-        oss << "Wallet: " << bankroll.getBalance() 
-            << " | True Count: " << strategy.getTrueCount() 
-            << " | Running Count: " << strategy.getRunningCount() 
-            << " | Decks Left: " << strategy.getDecksLeft();
+        oss << "\n==================\n"
+            << "Table Stats\n"
+            << "------------------\n"
+            << "  Wallet       : " << bankroll.getBalance() << "\n"
+            << "  True Count   : " << strategy.getTrueCount() << "\n"
+            << "  Running Count: " << strategy.getRunningCount() << "\n"
+            << "  Decks Left   : " << strategy.getDecksLeft() << "\n"
+            << "==================";
         eventBus->notifyObservers(EventType::GameStats, oss.str());
-        eventBus->notifyObservers(EventType::GameStats, "============================================================================");
     }
 }
 
@@ -71,12 +73,13 @@ void GameReporter::reportMessage(EventType type, const std::string& message) {
 
 std::string GameReporter::describeHand(const std::string& label, Hand& hand, bool hideHoleCard) {
     std::ostringstream oss;
-    oss << label << " hand: ";
+    oss << "\n" << label << " hand\n";
     std::vector<Card> cards = hand.getCards();
 
     if (cards.empty()){
-        oss << "<empty>";
+        oss << "  Cards: <empty>";
     } else {
+        oss << "  Cards: ";
         for (size_t i = 0; i < cards.size(); ++i){
             if (hideHoleCard && i == 1){
                 oss << "[hidden]";
@@ -93,19 +96,19 @@ std::string GameReporter::describeHand(const std::string& label, Hand& hand, boo
     }
 
     if (hideHoleCard){
-        oss << " | score: [hidden]";
+        oss << "\n  Score: [hidden]";
     }
     else{
-        oss << " | score: " << hand.getScore();
+        oss << "\n  Score: " << hand.getScore();
     }
     if (hand.getBetSize() > 0){
-        oss << " | bet: " << hand.getBetSize();
+        oss << "\n  Bet  : " << hand.getBetSize();
     }
     if (hand.isBlackjack()){
-        oss << " | Blackjack";
+        oss << "\n  Status: Blackjack";
     }
-    else if (hand.check_over()){
-        oss << " | Bust";
+    else if (hand.checkOver()){
+        oss << "\n  Status: Bust";
     }
 
     return oss.str();

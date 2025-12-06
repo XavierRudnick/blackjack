@@ -13,12 +13,10 @@
 #include "EngineBuilder.h"
 #include "BotPlayer.h"
 
-// --- Helper for Setup ---
-// Uses reverse order: {LastDealt, ..., Player2, Player1, DealerHole, DealerUp}
 Engine setupEngine(std::vector<Card> stack, double initialWallet = 1000) {
-    const bool visualize = true; // Set to true to see logs in console
+    const bool visualize = true; 
 
-    static ConsoleObserver consoleObserver; // Static to persist
+    static ConsoleObserver consoleObserver; 
     auto* bus = EventBus::getInstance();
     bus->detachAll(); // Clear previous observers
     
@@ -31,9 +29,9 @@ Engine setupEngine(std::vector<Card> stack, double initialWallet = 1000) {
         });
     }
 
-    // Use BasicStrategy to ensure predictable hits/stands
     auto strategy = std::make_unique<NoStrategy>(0); 
-    auto player = std::make_unique<BotPlayer>(false); // Default bot player
+    auto player = std::make_unique<BotPlayer>(false);
+
     Deck riggedDeck = Deck::createTestDeck(stack);
 
     return EngineBuilder()
@@ -53,21 +51,6 @@ Engine setupEngine(std::vector<Card> stack, double initialWallet = 1000) {
 // ----------------------------------------------------------------
 void testNaturalBlackjackPayout() {
     std::cout << "\n--- Running testNaturalBlackjackPayout ---" << std::endl;
-
-    // Order: Dealer Hit, Player Hit, P2, P1, D_Hole, D_Up
-    std::vector<Card> stackedCards = {
-        Card(Rank::Three, Suit::Clubs),  // 6. Dealer Hit (if needed)
-        Card(Rank::Five, Suit::Hearts),  // 5. Player Hit (if needed)
-        Card(Rank::Five, Suit::Clubs),   // 4. Player Card 2 (Total 15 w/ below)
-        Card(Rank::King, Suit::Clubs),   // 3. Player Card 1 
-        Card(Rank::Five, Suit::Hearts),  // 2. Dealer Hole
-        Card(Rank::Ace, Suit::Spades),   // 1. Dealer Up (Ace)
-    };
-    
-    // NOTE: The stack above is from your example. 
-    // It actually results in Player 15 vs Dealer Ace.
-    // Let's force a Blackjack:
-    // P: Ace, King. D: 5, 5.
     
     std::vector<Card> blackjackStack = {
         Card(Rank::King, Suit::Clubs),   // 4. Player Card 2 (King)
@@ -92,18 +75,6 @@ void testNaturalBlackjackPayout() {
 void testSplitAcesOneCardLogic() {
     std::cout << "\n--- Running testSplitAcesOneCardLogic ---" << std::endl;
 
-    // Scenario:
-    // Dealer: 6 (Up), 5 (Hole) -> 11.
-    // Player: Ace, Ace. -> Split.
-    // Hand 1: Ace + King -> 21. (Stop).
-    // Hand 2: Ace + Queen -> 21. (Stop).
-    // Dealer plays: Draws 10 -> 21. Push. (Or Bust). Let's make Dealer Bust.
-    // Dealer: 6 + 5 + 6(Draw) = 17? No, make bust. 6+5+10 = 21.
-    // Let's make dealer bust: 6+5 = 11. Draw 10 = 21 (Push).
-    // Draw King = 21 (Push). 
-    // Let's make Dealer draw 5, then 10 -> 26 Bust.
-    
-    // Correct Vector for your engine (LIFO):
     std::vector<Card> reversedStack = {
         Card(Rank::Six, Suit::Diamonds),  // 6. Dealer Hit (Total 22)
         Card(Rank::Queen, Suit::Spades),  // 5. Split Hand 2 Draw
@@ -117,10 +88,6 @@ void testSplitAcesOneCardLogic() {
     Engine engine = setupEngine(reversedStack);
     auto result = engine.runner();
 
-    // Bet 5 -> Split (5+5=10 risk).
-    // Both Hands 21. Dealer 22 (Bust).
-    // Win 5 on Hand 1, Win 5 on Hand 2. Total Profit 10.
-    // Final Wallet: 1010.
     std::cout << "Final: " << result.first << std::endl;
     assert(result.first == 1010);
     std::cout << "PASSED" << std::endl;
@@ -134,14 +101,6 @@ void testSplitAcesOneCardLogic() {
 void testDoubleSoftHand() {
     std::cout << "\n--- Running testDoubleSoftHand ---" << std::endl;
 
-    // Dealer: 6, 5 (11)
-    // Player: A, 6 (17) -> Double
-    // Player Draw: 4 -> 21.
-    // Dealer Draw: 10 -> 21. (Push).
-    
-    // Stack (Bottom to Top / Draw Order):
-    // D_Hit(10), P_Double_Card(4), P2(6), P1(A), D_Hole(5), D_Up(6)
-    
     std::vector<Card> stack = {
         Card(Rank::Ten, Suit::Diamonds), // Dealer draws 10 -> 21
         Card(Rank::Four, Suit::Clubs),   // Player doubles, gets 4 -> 21
@@ -154,9 +113,6 @@ void testDoubleSoftHand() {
     Engine engine = setupEngine(stack);
     auto result = engine.runner();
 
-    // Bet 5 -> Double -> Bet 10.
-    // Player 21. Dealer 21. Push.
-    // Wallet should be 1000.
     std::cout << "Final: " << result.first << std::endl;
     assert(result.first == 1000);
     std::cout << "PASSED" << std::endl;
@@ -167,9 +123,6 @@ void testDoubleSoftHand() {
 // ----------------------------------------------------------------
 void testDealerBustChain() {
     std::cout << "\n--- Running testDealerBustChain ---" << std::endl;
-
-    // P: 10, 10 (20). Stand.
-    // D: 5, 4 (9). Hit(2) -> 11. Hit(5) -> 16. Hit(10) -> 26 Bust.
     
     std::vector<Card> stack = {
         Card(Rank::Ten, Suit::Diamonds), // D Hit 3 (Bust)
@@ -184,7 +137,6 @@ void testDealerBustChain() {
     Engine engine = setupEngine(stack);
     auto result = engine.runner();
 
-    // Bet 5. Win. Wallet 1005.
     std::cout << "Final: " << result.first << std::endl;
     assert(result.first == 1005);
     std::cout << "PASSED" << std::endl;
@@ -195,9 +147,6 @@ void testDealerBustChain() {
 // ----------------------------------------------------------------
 void testBlackjackPush() {
     std::cout << "\n--- Running testBlackjackPush ---" << std::endl;
-
-    // P: A, K (BJ)
-    // D: A, Q (BJ)
     
     std::vector<Card> stack = {
         Card(Rank::King, Suit::Clubs),   // P2
@@ -221,18 +170,6 @@ void testBlackjackPush() {
 void testSplitAcesTwiceLogic() {
     std::cout << "\n--- Running testSplitAcesTwiceCardLogic ---" << std::endl;
 
-    // Scenario:
-    // Dealer: 6 (Up), 5 (Hole) -> 11.
-    // Player: Ace, Ace. -> Split.
-    // Hand 1: Ace + King -> 21. (Stop).
-    // Hand 2: Ace + Queen -> 21. (Stop).
-    // Dealer plays: Draws 10 -> 21. Push. (Or Bust). Let's make Dealer Bust.
-    // Dealer: 6 + 5 + 6(Draw) = 17? No, make bust. 6+5+10 = 21.
-    // Let's make dealer bust: 6+5 = 11. Draw 10 = 21 (Push).
-    // Draw King = 21 (Push). 
-    // Let's make Dealer draw 5, then 10 -> 26 Bust.
-    
-    // Correct Vector for your engine (LIFO):
     std::vector<Card> reversedStack = {
         Card(Rank::Six, Suit::Diamonds),  // 6. Dealer Hit (Total 22)
         Card(Rank::Seven, Suit::Hearts),  // 5. Split Hand 2 Draw
@@ -248,10 +185,6 @@ void testSplitAcesTwiceLogic() {
     Engine engine = setupEngine(reversedStack);
     auto result = engine.runner();
 
-    // Bet 5 -> Split (5+5=10 risk).
-    // Both Hands 21. Dealer 22 (Bust).
-    // Win 5 on Hand 1, Win 5 on Hand 2. Total Profit 10.
-    // Final Wallet: 1010.
     std::cout << "Final: " << result.first << std::endl;
     assert(result.first == 1015);
     std::cout << "PASSED" << std::endl;

@@ -1,14 +1,20 @@
 #include "Engine.h"
 #include "Deck.h"
 
-Engine::Engine(const GameConfig& gameConfig,
-               Deck deck,
-               std::unique_ptr<CountingStrategy> strategy,
-               std::unique_ptr<Player> player,
-               EventBus* eventBus)
-
-    : bankroll(gameConfig.wallet), config(gameConfig), deck(std::move(deck)), countingStrategy(std::move(strategy)), player(std::move(player)) {
+Engine::Engine(
+    const GameConfig& gameConfig,
+    Deck deck,
+    std::unique_ptr<CountingStrategy> strategy,
+    std::unique_ptr<Player> player,
+    EventBus* eventBus
+)
+    : bankroll(gameConfig.wallet), 
+    config(gameConfig), 
+    deck(std::move(deck)), 
+    countingStrategy(std::move(strategy)), 
+    player(std::move(player)) 
     
+{
     reporter = std::make_unique<GameReporter>(eventBus, config.emitEvents);
     config.penetrationThreshold = (1-config.penetrationThreshold) * config.numDecks * Deck::NUM_CARDS_IN_DECK;
 }
@@ -69,29 +75,32 @@ bool Engine::didHandsBust(std::vector<int> scores){
     return true;
 }
 
-bool Engine::didPlayerGetBlackjack(std::vector<Hand>& hands){
+bool Engine::didPlayerGetNaturalBlackjack(std::vector<Hand>& hands){
     if (hands.size() == 1 && hands[0].isBlackjack()){
         return true;
     }
     return false;
 }
 
+void Engine::NaturalBlackJackHandler(Hand& dealer, Hand& user){
+    std::ostringstream roundSummary;
+    roundSummary << "Natural Blackjack win! " << ". ";
+    bankroll.deposit(user.getBetSize() + user.getBetSize() * config.blackjackPayoutMultiplier);
+
+    std::string outcome = "Natural Blackjack win";
+    roundSummary << "Hand " << (1) << ": " << outcome << " (score " << 21 << ", bet " << user.getBetSize() << "); ";
+    reporter->reportRoundResult(roundSummary.str());
+    reporter->reportStats(bankroll, *countingStrategy);
+    return;
+}   
+
 void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
     countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
 
     std::vector<int> scores = getPlayerScores(hands);
 
-    if(didPlayerGetBlackjack(hands) && !dealer.isBlackjack()){
-        std::ostringstream roundSummary;
-        roundSummary << "Natural Blackjack win! " << ". ";
-        // Return bet + winnings
-        bankroll.deposit(hands[0].getBetSize() + hands[0].getBetSize() * config.blackjackPayoutMultiplier);
-
-        std::string outcome = "Natural Blackjack win";
-        roundSummary << "Hand " << (1) << ": " << outcome
-                        << " (score " << 21 << ", bet " << hands[0].getBetSize() << "); ";
-        reporter->reportRoundResult(roundSummary.str());
-        reporter->reportStats(bankroll, *countingStrategy);
+    if(didPlayerGetNaturalBlackjack(hands) && !dealer.isBlackjack()){
+        NaturalBlackJackHandler(dealer, hands[0]);
         return;
     }
 
@@ -108,31 +117,21 @@ void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
         int score = hand.getFinalScore();
         std::string outcome = "Push";
 
-        if (hands.size() == 1 && hand.isBlackjack()){
-            // Return bet + winnings
-            bankroll.deposit(hand.getBetSize() + hand.getBetSize() * config.blackjackPayoutMultiplier);
-            outcome = "Natural Blackjack win";
-        } 
-        else if (dealer_score > score){
-            // Lost, money already gone
+        if (dealer_score > score){
             outcome = "Dealer win";
         }
         else if (dealer_score < score){
-            // Win, return bet + winnings (1:1)
             bankroll.deposit(hand.getBetSize() * 2);
             outcome = "Player win";
         }
         else if (dealer_score == 0 && score ==0){
-            // Bust, money already gone
             outcome = "Player bust";
         }
         else {
-            // Push, return bet
             bankroll.deposit(hand.getBetSize());
         }
 
-        roundSummary << "Hand " << (i + 1) << ": " << outcome
-                        << " (score " << score << ", bet " << hand.getBetSize() << "); ";
+        roundSummary << "Hand " << (i + 1) << ": " << outcome << " (score " << score << ", bet " << hand.getBetSize() << "); ";
     }
 
     reporter->reportRoundResult(roundSummary.str());
@@ -287,7 +286,7 @@ bool Engine::handleInsuranceDeclined(Hand& dealer, Hand& user) {
 
 bool Engine::dealerRobberyHandler(Hand& dealer,Hand& user){
     if (dealer.dealerShowsTen() && dealer.dealerHiddenAce()){
-        reporter->reportHand(user, "Player"); // Assuming label is Player? Or pass it?
+        reporter->reportHand(user, "Player"); 
         countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
         if (!user.isBlackjack()){
             // Lose. Do nothing.
@@ -295,7 +294,6 @@ bool Engine::dealerRobberyHandler(Hand& dealer,Hand& user){
 
              bankroll.deposit(user.getBetSize());
         }
-        // totalMoneyBet += user.getBetSize();
         reporter->reportDealerFlip(dealer);
         reporter->reportStats(bankroll, *countingStrategy);
         return true;
@@ -317,14 +315,13 @@ bool Engine::hitHandler(Hand& user, std::vector<Hand>& hands, std::string handLa
 
     reporter->reportAction(Action::Hit, user, handLabel);
 
-    if (user.check_over()) {hands.emplace_back(user); return true;}
+    if (user.checkOver()) {hands.emplace_back(user); return true;}
 
     return false;
 }
 
 bool Engine::doubleHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel,bool has_split){
     if (has_split && !config.doubleAfterSplitAllowed){
-        //hands.emplace_back(user);
         reporter->reportMessage(EventType::ActionTaken, handLabel + " cannot double after split; hits instead");
 
         Card c = deck->hit();
@@ -353,7 +350,7 @@ bool Engine::doubleHandler(Hand& user, std::vector<Hand>& hands, std::string han
 
 bool Engine::splitHandler(Player& player, Hand& user, Hand& dealer, std::vector<Hand>& hands, std::string handLabel, bool has_split_aces,bool has_split){
      // Check if we're splitting Aces
-    bool splitting_aces = (user.peek_front_card() == Rank::Ace);
+    bool splitting_aces = (user.peekFrontCard() == Rank::Ace);
 
     if (splitting_aces && has_split_aces && !config.allowReSplitAces){
          hitHandler(user, hands, handLabel);

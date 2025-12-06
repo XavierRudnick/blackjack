@@ -6,11 +6,12 @@
 #include "EventObserver.h"
 
 class ConsoleObserver : public EventObserver {
+private:
+    const std::string eventTypeToString(EventType eventType);
+
 public:
     void update(EventType eventType, const std::string& message) override;
 
-private:
-    const char* eventTypeToString(EventType eventType) const;
 };
 
 #endif

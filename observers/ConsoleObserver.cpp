@@ -6,7 +6,7 @@ void ConsoleObserver::update(EventType eventType, const std::string& message) {
     std::cout << "[" << eventTypeToString(eventType) << "] " << message << std::endl;
 }
 
-const char* ConsoleObserver::eventTypeToString(EventType eventType) const {
+const std::string ConsoleObserver::eventTypeToString(EventType eventType) {
     switch (eventType) {
         case EventType::GameStats:
             return "GameStats";

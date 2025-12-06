@@ -18,9 +18,11 @@ class Engine{
 private:
     int numDecks;
     double totalMoneyBet = 0;
-    int PENETRATION_THRESHOLD; 
+    int penetrationThreshold; 
     double wallet;
     double blackjackPayoutMultiplier = 1.5;
+    static const int SURRENDERMULTIPLIER = .5;
+    static const int INSURANCEBETCOST = .5;
     bool dealerHitsSoft17 = false;
     bool doubleAfterSplitAllowed = true;
     bool allowReSplitAces = true;

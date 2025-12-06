@@ -12,11 +12,11 @@ Engine::Engine(int deck_size, int money, Deck deck, std::unique_ptr<CountingStra
       allowReSplitAces(allowReSplitAces), allowSurrender(allowSurrender), autoPlay(autoPlay) {
     
     eventBus = EventBus::getInstance();
-    PENETRATION_THRESHOLD = numDecks * 13;
+    penetrationThreshold  = numDecks * 13;
 }
 
 std::pair<double, double> Engine::runner(){  
-    while (deck->getSize() > PENETRATION_THRESHOLD){
+    while (deck->getSize() > penetrationThreshold ){
 
         countingStrategy->updateDeckSize(deck->getSize());
         std::vector<Hand> hands;
@@ -144,11 +144,10 @@ std::vector<Hand> Engine::user_play(Hand& dealer, Hand& user){
 }
 
 Action Engine::getAction(Hand dealer, Hand user){
-    BasicStrategy basicStrategy;
     Rank dealer_card = dealer.peek_front_card();
 
     if(user.check_can_double() && allowSurrender){
-        Action action = basicStrategy.shouldSurrender(user.getScore(), dealer_card, countingStrategy->getTrueCount());
+        Action action = BasicStrategy::shouldSurrender(user.getScore(), dealer_card, countingStrategy->getTrueCount());
         if (action == Action::Surrender) {
             return action;
         }
@@ -156,13 +155,13 @@ Action Engine::getAction(Hand dealer, Hand user){
     
 
     if(user.check_can_split()){
-        return basicStrategy.getSplitAction(user.peek_front_card(),dealer_card,countingStrategy->getTrueCount());
+        return BasicStrategy::getSplitAction(user.peek_front_card(),dealer_card,countingStrategy->getTrueCount());
     }
 
     int playerTotal = user.getScore();
 
     if(user.isHandSoft()){
-        Action action = basicStrategy.getSoftHandAction(playerTotal,dealer_card);
+        Action action = BasicStrategy::getSoftHandAction(playerTotal,dealer_card);
 
         if (action == Action::Double){
             if (user.check_can_double()){
@@ -179,7 +178,7 @@ Action Engine::getAction(Hand dealer, Hand user){
         return action;
     }
     else{
-            Action action = basicStrategy.getHardHandAction(playerTotal,dealer_card,countingStrategy->getTrueCount());
+            Action action = BasicStrategy::getHardHandAction(playerTotal,dealer_card,countingStrategy->getTrueCount());
             if (action == Action::Double){//I think this is correct if DAS is allowed or nah. specifically for soft vals, maybe investigate
             if (user.check_can_double()){
                 return action;
@@ -359,7 +358,7 @@ bool Engine::insuranceHandler(Hand& dealer,Hand& user){
             if (dealer.dealerHiddenTen() && user.isBlackjack()){
                 countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
                 wallet += static_cast<double>(user.getBetSize()); //this is correct
-                totalMoneyBet += user.getBetSize() * 1.5;
+                totalMoneyBet += user.getBetSize() * blackjackPayoutMultiplier;
                 if (eventsEnabled()){
                     publish(EventType::RoundEnded, "Insurance wins: dealer blackjack vs player blackjack");
                 }
@@ -368,7 +367,7 @@ bool Engine::insuranceHandler(Hand& dealer,Hand& user){
             }
             else if (dealer.dealerHiddenTen() && !user.isBlackjack()){
                 countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
-                totalMoneyBet += user.getBetSize() * 1.5;
+                totalMoneyBet += user.getBetSize() * blackjackPayoutMultiplier;
                 if (eventsEnabled()){
                     publish(EventType::RoundEnded, "Insurance wins: dealer blackjack");
                 }
@@ -379,8 +378,8 @@ bool Engine::insuranceHandler(Hand& dealer,Hand& user){
                 if (eventsEnabled()){
                     publish(EventType::ActionTaken, "Insurance accepted automatically: dealer lacked blackjack");
                 }
-                wallet -= static_cast<double>(user.getBetSize()) * 0.5; //this is correct
-                totalMoneyBet += user.getBetSize() * 0.5;
+                wallet -= static_cast<double>(user.getBetSize()) * INSURANCEBETCOST; //this is correct
+                totalMoneyBet += user.getBetSize() * INSURANCEBETCOST;
                 return false;
             }
         }
@@ -556,7 +555,7 @@ bool Engine::splitHandler(Hand& user, Hand& dealer, std::vector<Hand>& hands, st
 }
 
 bool Engine::surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel){
-    wallet -= static_cast<double>(user.getBetSize()) * 0.5;
+    wallet -= static_cast<double>(user.getBetSize()) * SURRENDERMULTIPLIER;
     totalMoneyBet += user.getBetSize();
 
     if (eventsEnabled()){

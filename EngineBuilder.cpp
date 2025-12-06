@@ -6,7 +6,7 @@
 
 
 EngineBuilder& EngineBuilder::setDeckSize(int deck_size) {
-    numDecks = deck_size;
+    gameConfig.numDecks = deck_size;
     return *this;
 }
 
@@ -16,72 +16,79 @@ EngineBuilder& EngineBuilder::setDeck(Deck d) {
 }
 
 EngineBuilder& EngineBuilder::setInitialWallet(double money) {
-    wallet = money;
+    gameConfig.wallet = money;
     return *this;
 }
 
+EngineBuilder& EngineBuilder::setPenetrationThreshold(float threshold){
+    gameConfig.penetrationThreshold = threshold;
+    return *this;
+}
 EngineBuilder& EngineBuilder::enableEvents(bool enable) {
-    emitEvents = enable;
+    gameConfig.emitEvents = enable;
     return *this;
 }
 
 EngineBuilder& EngineBuilder::with3To2Payout() {
-    blackjackPayoutMultiplier = 1.5;
+    gameConfig.blackjackPayoutMultiplier = 1.5;
     return *this;
 }
 EngineBuilder& EngineBuilder::with6To5Payout() {
-    blackjackPayoutMultiplier = 1.2;
+    gameConfig.blackjackPayoutMultiplier = 1.2;
     return *this;
 }
 
 EngineBuilder& EngineBuilder::withH17Rules() {
-    dealerHitsSoft17 = true;
+    gameConfig.dealerHitsSoft17 = true;
     return *this;
 }
 
 EngineBuilder& EngineBuilder::withS17Rules() {
-    dealerHitsSoft17 = false;
+    gameConfig.dealerHitsSoft17 = false;
     return *this;
 }
 
 EngineBuilder& EngineBuilder::allowDoubleAfterSplit() {
-    doubleAfterSplitAllowed = true;
+    gameConfig.doubleAfterSplitAllowed = true;
     return *this;
 }
 
 EngineBuilder& EngineBuilder::noDoubleAfterSplit() {
-    doubleAfterSplitAllowed = false;
+    gameConfig.doubleAfterSplitAllowed = false;
     return *this;
 }
 
 EngineBuilder& EngineBuilder::allowReSplitAces() {
-    allowReSplitAces_ = true;
+    gameConfig.allowReSplitAces = true;
     return *this;
 }
 
 EngineBuilder& EngineBuilder::noReSplitAces() {
-    allowReSplitAces_ = false;
+    gameConfig.allowReSplitAces = false;
     return *this;
 }
 
 EngineBuilder& EngineBuilder::allowSurrender() {
-    allowSurrender_ = true;
+    gameConfig.allowSurrender = true;
     return *this;
 }
 
 EngineBuilder& EngineBuilder::noSurrender() {
-    allowSurrender_ = false;
+    gameConfig.allowSurrender = false;
     return *this;
 }
 
 EngineBuilder& EngineBuilder::allowAutoPlay(){
-    autoPlay = true;
+    gameConfig.autoPlay = true;
     return *this;
 }
 
 EngineBuilder& EngineBuilder::allowManualPlay(){
-    autoPlay = false;
+    gameConfig.autoPlay = false;
     return *this;
 }
 
-
+Engine EngineBuilder::build(std::unique_ptr<CountingStrategy> countingStrategy) {
+    Engine engine(gameConfig, *deck, std::move(countingStrategy));
+    return engine;
+}

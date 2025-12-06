@@ -7,13 +7,14 @@
 
 class Deck{
     private:
-        const int NUM_RANK = 13;
-        const int NUM_SUIT = 4;
-        const int NUM_CARDS_IN_DECK = 52;
         std::vector<Card> deck;
         std::mt19937 rand;
 
     public:
+        static const int NUM_RANK = 13;
+        static const int NUM_SUIT = 4;
+        static const int NUM_CARDS_IN_DECK = 52;
+
         Deck(int deck_size);
         Deck testDeck(std::vector<Card> stackedCards);
         std::pair<Card,Card> deal();

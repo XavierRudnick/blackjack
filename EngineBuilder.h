@@ -5,15 +5,7 @@
 
 class EngineBuilder {
     private:
-        int numDecks = 2;
-        double wallet = 1000.0;
-        bool emitEvents = false;
-        double blackjackPayoutMultiplier = 1.5;
-        bool dealerHitsSoft17= false;
-        bool doubleAfterSplitAllowed = true;
-        bool allowReSplitAces_ = true;
-        bool allowSurrender_ = false;
-        bool autoPlay = true;
+        Engine::GameConfig gameConfig;
         std::optional<Deck> deck;
 
     public:
@@ -22,6 +14,8 @@ class EngineBuilder {
 
         EngineBuilder& setInitialWallet(double wallet);
         EngineBuilder& enableEvents(bool enable);
+
+        EngineBuilder& setPenetrationThreshold(float threshold);
 
         EngineBuilder& with3To2Payout();
         EngineBuilder& with6To5Payout();
@@ -41,9 +35,8 @@ class EngineBuilder {
         EngineBuilder& allowAutoPlay();
         EngineBuilder& allowManualPlay();
 
-        Engine build(std::unique_ptr<CountingStrategy> countingStrategy) {
-            Engine engine(numDecks, wallet, *deck, std::move(countingStrategy), emitEvents, blackjackPayoutMultiplier, dealerHitsSoft17, doubleAfterSplitAllowed, allowReSplitAces_, allowSurrender_,autoPlay);
-            return engine;
-        }
+
+
+        Engine build(std::unique_ptr<CountingStrategy> countingStrategy);
 };
 #endif

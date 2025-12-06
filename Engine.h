@@ -16,19 +16,27 @@
 
 class Engine{
 private:
-    int numDecks;
+
     double totalMoneyBet = 0;
-    int penetrationThreshold; 
-    double wallet;
-    double blackjackPayoutMultiplier = 1.5;
     static const int SURRENDERMULTIPLIER = .5;
     static const int INSURANCEBETCOST = .5;
-    bool dealerHitsSoft17 = false;
-    bool doubleAfterSplitAllowed = true;
-    bool allowReSplitAces = true;
-    bool allowSurrender = false;
-    bool emitEvents = false;
-    bool autoPlay = true;
+
+public:
+    struct GameConfig {
+        int numDecks = 2;
+        double wallet = 1000.0;
+        int penetrationThreshold = .75;
+        double blackjackPayoutMultiplier = 1.5; 
+        bool dealerHitsSoft17 = false;
+        bool doubleAfterSplitAllowed = true;
+        bool allowReSplitAces = true;
+        bool allowSurrender = false;
+        bool emitEvents = false;
+        bool autoPlay = true;
+    };
+
+private:
+    GameConfig config;
 
     std::optional<Deck> deck;
     std::unique_ptr<CountingStrategy> countingStrategy;
@@ -73,7 +81,7 @@ private:
     bool surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel);
    
 public:
-    Engine(int deck_size,int money,Deck deck, std::unique_ptr<CountingStrategy> strategy, bool enableEvents = false, double blackJackMultiplier = 1.5, bool dealerHitsSoft17 = false, bool doubleAfterSplitAllowed = true, bool allowReSplitAces = true, bool allowSurrender = false, bool autoPlay = true);
+    Engine(const GameConfig& gameConfig,Deck deck, std::unique_ptr<CountingStrategy> strategy);
     std::pair<double, double> runner();
 
 };

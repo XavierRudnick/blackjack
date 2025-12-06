@@ -14,13 +14,14 @@
 #include "BasicStrategy.h"
 #include "observers/EventBus.h"
 #include "Player.h"
+#include "Bankroll.h"
 
 class Engine{
 private:
 
-    double totalMoneyBet = 0;
-    static const int SURRENDERMULTIPLIER = .5;
-    static const int INSURANCEBETCOST = .5;
+    Bankroll bankroll;
+    static constexpr double SURRENDERMULTIPLIER = .5;
+    static constexpr double INSURANCEBETCOST = .5;
 
 public:
     struct GameConfig {

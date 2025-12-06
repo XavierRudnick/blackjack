@@ -3,7 +3,7 @@
 
 Engine::Engine(const GameConfig& gameConfig, Deck deck, std::unique_ptr<CountingStrategy> strategy, std::unique_ptr<Player> player)
 
-    : config(gameConfig), deck(std::move(deck)), countingStrategy(std::move(strategy)), player(std::move(player)) {
+    : config(gameConfig), deck(std::move(deck)), countingStrategy(std::move(strategy)), player(std::move(player)), bankroll(gameConfig.wallet) {
     
     eventBus = EventBus::getInstance();
     config.penetrationThreshold = (1-config.penetrationThreshold) * config.numDecks * Deck::NUM_CARDS_IN_DECK;
@@ -13,7 +13,7 @@ std::pair<double, double> Engine::runner(){
     while (deck->getSize() > config.penetrationThreshold ){
         playHand();
     }    
-    return {config.wallet, totalMoneyBet};
+    return {bankroll.getBalance(), bankroll.getTotalMoneyBet()};
 }
 
 void Engine::playHand(){
@@ -21,6 +21,9 @@ void Engine::playHand(){
     std::vector<Hand> hands;
 
     int bet = countingStrategy->getBetSize();
+    bankroll.withdraw(bet);
+    bankroll.addTotalBet(bet);
+
     Hand dealer = draw_cards();
     Hand user = draw_cards(bet);
 
@@ -77,10 +80,10 @@ void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
     if(didPlayerGetBlackjack(hands) && !dealer.isBlackjack()){
         std::ostringstream roundSummary;
         roundSummary << "Natural Blackjack win! " << ". ";
-        config.wallet += hands[0].getBetSize() * config.blackjackPayoutMultiplier;
+        // Return bet + winnings
+        bankroll.deposit(hands[0].getBetSize() + hands[0].getBetSize() * config.blackjackPayoutMultiplier);
 
         std::string outcome = "Natural Blackjack win";
-        totalMoneyBet += hands[0].getBetSize();
         roundSummary << "Hand " << (1) << ": " << outcome
                         << " (score " << 21 << ", bet " << hands[0].getBetSize() << "); ";
         publish(EventType::RoundEnded, roundSummary.str());
@@ -102,23 +105,28 @@ void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
         std::string outcome = "Push";
 
         if (hands.size() == 1 && hand.isBlackjack()){
-            config.wallet += hand.getBetSize() * config.blackjackPayoutMultiplier;
+            // Return bet + winnings
+            bankroll.deposit(hand.getBetSize() + hand.getBetSize() * config.blackjackPayoutMultiplier);
             outcome = "Natural Blackjack win";
         } 
         else if (dealer_score > score){
-            config.wallet -= hand.getBetSize();
+            // Lost, money already gone
             outcome = "Dealer win";
         }
         else if (dealer_score < score){
-            config.wallet += hand.getBetSize();
+            // Win, return bet + winnings (1:1)
+            bankroll.deposit(hand.getBetSize() * 2);
             outcome = "Player win";
         }
         else if (dealer_score == 0 && score ==0){
-            config.wallet -= hand.getBetSize();
+            // Bust, money already gone
             outcome = "Player bust";
         }
+        else {
+            // Push, return bet
+            bankroll.deposit(hand.getBetSize());
+        }
 
-        totalMoneyBet += hand.getBetSize();
         roundSummary << "Hand " << (i + 1) << ": " << outcome
                         << " (score " << score << ", bet " << hand.getBetSize() << "); ";
     }
@@ -258,14 +266,44 @@ bool Engine::handleInsuranceAccepted(Hand& dealer, Hand& user) {
         countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
         
         if (playerHasBlackjack) {
-            config.wallet += user.getBetSize(); 
-            totalMoneyBet += user.getBetSize() * config.blackjackPayoutMultiplier; // Tracking?
+            // Insurance pays 2:1 on half bet -> wins 1 unit.
+            // Main bet pushes -> returns 1 unit.
+            // Total return: 2 units.
+            // Cost: 1 unit (main) + 0.5 unit (ins).
+            // Net: +0.5 unit.
+            // Wait. Insurance bet is 0.5. Pays 2:1 -> 1.0 profit. Total return 1.5.
+            // Main bet 1.0. Pushes -> 1.0 return.
+            // Total return 2.5.
+            // Cost 1.5. Net +1.0.
+            // My previous math: "config.wallet += user.getBetSize()" (1.0).
+            // If wallet deducted 1.0 (main) + 0.5 (ins).
+            // Return 2.5.
+            // Net +1.0.
+            // So deposit 2.5 * bet? No.
+            // Let's trace:
+            // Wallet: 1000.
+            // Bet 10 -> 990.
+            // Ins 5 -> 985.
+            // Win Ins: +15 (5 bet + 10 profit). -> 1000.
+            // Push Main: +10. -> 1010.
+            // Net +10.
+            // So deposit 2.5 * bet.
+            bankroll.deposit(user.getBetSize() * 2.5);
+            // totalMoneyBet += user.getBetSize() * config.blackjackPayoutMultiplier; // Tracking?
             
             if (eventsEnabled()) {
                 publish(EventType::RoundEnded, "Insurance wins: dealer blackjack vs player blackjack");
             }
         } else {
-            totalMoneyBet += user.getBetSize() * config.blackjackPayoutMultiplier; // Tracking?
+            // Player NO BJ.
+            // Bet 10 -> 990.
+            // Ins 5 -> 985.
+            // Win Ins: +15. -> 1000.
+            // Lose Main: +0. -> 1000.
+            // Net 0.
+            // So deposit 1.5 * bet.
+            bankroll.deposit(user.getBetSize() * 1.5);
+            // totalMoneyBet += user.getBetSize() * config.blackjackPayoutMultiplier; // Tracking?
 
             if (eventsEnabled()) {
                 publish(EventType::RoundEnded, "Insurance wins: dealer blackjack");
@@ -277,8 +315,13 @@ bool Engine::handleInsuranceAccepted(Hand& dealer, Hand& user) {
         if (eventsEnabled()) {
             publish(EventType::ActionTaken, "Insurance accepted automatically: dealer lacked blackjack");
         }
-        config.wallet -= static_cast<double>(user.getBetSize()) * INSURANCEBETCOST;
-        totalMoneyBet += user.getBetSize() * INSURANCEBETCOST;
+        // Insurance lost.
+        // Bet 10 -> 990.
+        // Ins 5 -> 985.
+        // Lose Ins.
+        // Main continues.
+        bankroll.withdraw(user.getBetSize() * INSURANCEBETCOST);
+        bankroll.addTotalBet(user.getBetSize() * INSURANCEBETCOST);
         return false; // Round continues
     }
 }
@@ -290,14 +333,17 @@ bool Engine::handleInsuranceDeclined(Hand& dealer, Hand& user) {
     if (dealerHasBlackjack) {
         countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
         if (playerHasBlackjack) {
-            totalMoneyBet += user.getBetSize();
+            // Push. Return bet.
+            bankroll.deposit(user.getBetSize());
+            // totalMoneyBet += user.getBetSize();
             if (eventsEnabled()) {
                 publish(EventType::RoundEnded, "Dealer blackjack pushes player blackjack (no insurance)");
                 publishWalletSnapshot();
             }
         } else {
-            config.wallet -= user.getBetSize();
-            totalMoneyBet += user.getBetSize();
+            // Lose. Do nothing.
+            // config.wallet -= user.getBetSize();
+            // totalMoneyBet += user.getBetSize();
             if (eventsEnabled()) {
                 publish(EventType::RoundEnded, "Dealer blackjack; player loses without insurance");
                 publishWalletSnapshot();
@@ -317,9 +363,20 @@ bool Engine::dealerRobberyHandler(Hand& dealer,Hand& user){
         print_hand(user);
         countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
         if (!user.isBlackjack()){
-            config.wallet -= user.getBetSize();
+            // Lose. Do nothing.
+            // config.wallet -= user.getBetSize();
+        } else {
+            // Push?
+            // If dealer has BJ (Ace hidden), and player has BJ.
+            // It's a push.
+            // But wait, dealerRobberyHandler checks "dealerShowsTen() && dealerHiddenAce()".
+            // That is BJ.
+            // If user has BJ, it's a push.
+            // If user NO BJ, lose.
+            // So if user.isBlackjack(), we should return bet.
+             bankroll.deposit(user.getBetSize());
         }
-        totalMoneyBet += user.getBetSize();
+        // totalMoneyBet += user.getBetSize();
         if (eventsEnabled()){
             std::ostringstream oss;
             oss << "Dealer flipped blackjack. " << describeHand("Dealer", dealer);
@@ -373,6 +430,10 @@ bool Engine::doubleHandler(Hand& user, std::vector<Hand>& hands, std::string han
         return true;
     }
 
+    // Deduct additional bet
+    bankroll.withdraw(user.getBetSize());
+    bankroll.addTotalBet(user.getBetSize());
+
     user.doubleBet();
     Card c = deck->hit();
     countingStrategy->updateCount(c);
@@ -395,6 +456,10 @@ bool Engine::splitHandler(Player& player, Hand& user, Hand& dealer, std::vector<
     
     Hand user2 = Hand(user.getLastCard(),user.getBetSize());
     user.popLastCard();
+
+    // Deduct bet for new hand
+    bankroll.withdraw(user2.getBetSize());
+    bankroll.addTotalBet(user2.getBetSize());
 
     Card c1 = deck->hit();
     countingStrategy->updateCount(c1);
@@ -437,8 +502,9 @@ bool Engine::splitHandler(Player& player, Hand& user, Hand& dealer, std::vector<
 }
 
 bool Engine::surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel){
-    config.wallet -= static_cast<double>(user.getBetSize()) * SURRENDERMULTIPLIER;
-    totalMoneyBet += user.getBetSize();
+    // Return half bet
+    bankroll.deposit(static_cast<double>(user.getBetSize()) * SURRENDERMULTIPLIER);
+    // totalMoneyBet += user.getBetSize(); // Already added when bet placed
 
     if (eventsEnabled()){
         publish(EventType::ActionTaken, describeAction(Action::Surrender, user, handLabel));
@@ -463,7 +529,7 @@ void Engine::publishWalletSnapshot(){
         return;
     }
     std::ostringstream oss;
-    oss << "Wallet: " << config.wallet << " | True Count: " << countingStrategy->getTrueCount() << " | Running Count: " << countingStrategy->getRunningCount() << " | Decks Left: " << countingStrategy->getDecksLeft();
+    oss << "Wallet: " << bankroll.getBalance() << " | True Count: " << countingStrategy->getTrueCount() << " | Running Count: " << countingStrategy->getRunningCount() << " | Decks Left: " << countingStrategy->getDecksLeft();
     publish(EventType::GameStats, oss.str());
     publish(EventType::GameStats, "============================================================================");
 }

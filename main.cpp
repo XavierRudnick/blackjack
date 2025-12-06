@@ -46,7 +46,7 @@ int main(){
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()
                                     //.allowSurrender()
-                                    .build(std::move(hilo), std::move(robot));
+                                    .build(std::move(no), std::move(robot));
         profit = hiLoEngine.runner();
 
     //   scores[i] = profit.first;

@@ -3,11 +3,12 @@
 
 #include <vector>
 #include "Card.h"
-
+#include "BasicStrategy.h"
 class Hand{
     private:
         std::vector<Card> hand;
         int bet_size_;
+        static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
     public:
         Hand(std::pair<Card,Card> cards, int bet_size);
         Hand(Card card, int bet_size);

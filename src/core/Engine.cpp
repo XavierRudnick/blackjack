@@ -141,7 +141,6 @@ void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
 
 std::vector<Hand> Engine::user_play(Hand& dealer, Hand& user){
     std::vector<Hand> hands;
-    hands.reserve(4);
     
     play_hand(*player, dealer, user, hands, false);
     return hands;

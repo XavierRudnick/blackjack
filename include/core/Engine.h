@@ -33,11 +33,11 @@ public:
     };
 
     Engine(
-        const GameConfig& gameConfig, 
+        const GameConfig& gameConfig, //pass by reference to avoid copy
         Deck deck,
-        std::unique_ptr<CountingStrategy> strategy,
+        std::unique_ptr<CountingStrategy> strategy, //allows for passing different counting strategies, also says engine owns objects
         std::unique_ptr<Player> player,
-        EventBus* eventBus
+        EventBus* eventBus // not owned can be nullptr
     );
 
     std::pair<double, double> runner();

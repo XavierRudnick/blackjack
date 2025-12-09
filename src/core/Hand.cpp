@@ -88,7 +88,7 @@ int Hand::getScore(){
             score += 10;
         }
         else{
-            score += static_cast<int>(rank) + 2;
+            score += static_cast<int>(rank) + INDEX_OFFSET;
         }
     }
 
@@ -127,7 +127,7 @@ bool Hand::isHandSoft() {
             score += 10;
         }
         else{
-            score += static_cast<int>(rank) + 2;
+            score += static_cast<int>(rank) + INDEX_OFFSET;
         }
     }
 

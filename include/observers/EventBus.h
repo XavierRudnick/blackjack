@@ -10,7 +10,7 @@
 class EventBus : public EventIssuingObservable {
 private:
     EventBus() = default;
-    EventBus(const EventBus&) = delete;
+    EventBus(const EventBus&) = delete;  //deletes the copy-assignment operator to keep EventBus a true singleton
     EventBus& operator=(const EventBus&) = delete; //deletes the copy-assignment operator to keep EventBus a true singleton
 
     std::vector<EventObserver*> getObservers(EventType eventType);

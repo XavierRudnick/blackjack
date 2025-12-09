@@ -141,7 +141,6 @@ void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
 
 std::vector<Hand> Engine::user_play(Hand& dealer, Hand& user){
     std::vector<Hand> hands;
-    hands.reserve(4);
     
     play_hand(*player, dealer, user, hands, false);
     return hands;
@@ -354,7 +353,9 @@ bool Engine::splitHandler(Player& player, Hand& user, Hand& dealer, std::vector<
     bool splitting_aces = (user.peekFrontCard() == Rank::Ace);
 
     if (splitting_aces && has_split_aces && !config.allowReSplitAces){
-         hitHandler(user, hands, handLabel);
+        // Resplitting aces not allowed: just add the hand and stop.
+        hands.emplace_back(user);
+        return true;
     }
     
     Hand user2 = Hand(user.getLastCard(),user.getBetSize());
@@ -375,26 +376,23 @@ bool Engine::splitHandler(Player& player, Hand& user, Hand& dealer, std::vector<
     reporter->reportSplit(handLabel, user, user2);
 
     if (splitting_aces) {
-        if (user.isAces()){
-            play_hand(player, dealer,user,hands,true, true);
-        }
-        else{
+        // One-card only after splitting aces; allow resplit only when the new hand is still two aces.
+        if (user.isAces() && config.allowReSplitAces) {
+            splitHandler(player, user, dealer, hands, handLabel, true, true);
+        } else {
             hands.emplace_back(user);
         }
-        
-        if (user2.isAces()){
-            play_hand(player, dealer,user2,hands,true, true);
-        }
-        else{
+
+        if (user2.isAces() && config.allowReSplitAces) {
+            splitHandler(player, user2, dealer, hands, handLabel, true, true);
+        } else {
             hands.emplace_back(user2);
         }
-        
         return true;
     }
-    else{
-        play_hand(player, dealer,user,hands,false, true);
-        play_hand(player, dealer,user2,hands,false, true);
-    }
+
+    play_hand(player, dealer, user, hands, false, true);
+    play_hand(player, dealer, user2, hands, false, true);
     return true;
 }
 

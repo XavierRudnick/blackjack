@@ -179,17 +179,19 @@ Action BasicStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard,
 }
 
 Action BasicStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float trueCount) {
-    if (playerTotal < 5) {
+    constexpr int lowerBound = 5;
+    constexpr int upperBound = 20;
+    if (playerTotal < lowerBound) {
         return Action::Hit;
     }
 
-    if (playerTotal > 20) {
+    if (playerTotal > upperBound) {
         return Action::Stand;
     }
     
     int dealerIdx = getIndex(dealerUpcard);
     
-    int playerIdx = playerTotal - 5;  // Player total 5 maps to index 0 Since chart starts at 5
+    int playerIdx = playerTotal - lowerBound;  // Player total 5 maps to index 0 Since chart starts at 5
     Action deviation = shouldDeviatefromHard(playerTotal, dealerUpcard, trueCount);
     if (deviation != Action::Skip) {
         return deviation;
@@ -201,8 +203,9 @@ Action BasicStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, floa
 }
 
 Action BasicStrategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
+    constexpr int lowerBound = 13;
     int dealerIdx = getIndex(dealerUpcard);
-    int playerIdx = playerTotal - 13;  // Soft 13 maps to index 0 Since chart starts at A,2
+    int playerIdx = playerTotal - lowerBound;  // Soft 13 maps to index 0 Since chart starts at A,2
     
     Action action = softTotalTable[playerIdx][dealerIdx];
 

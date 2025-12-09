@@ -3,6 +3,7 @@
 
 Deck::Deck(int deck_size){
     deck.reserve(deck_size * NUM_CARDS_IN_DECK);  // Pre-allocate memory to avoid reallocations
+    
     for(int i = 0; i < deck_size; i++){
         for(int rank = 0; rank < NUM_RANK; rank++){
             for(int suit = 0; suit < NUM_SUIT; suit++){

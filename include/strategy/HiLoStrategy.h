@@ -2,6 +2,7 @@
 #define HILOSTRATEGY_H
 
 #include "Card.h"
+#include "Deck.h"
 #include "CountingStrategy.h"
 
 class HiLoStrategy : public CountingStrategy { //in docs note deck size is counted 100% accuratly in half size increments

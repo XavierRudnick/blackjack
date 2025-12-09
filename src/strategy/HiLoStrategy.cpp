@@ -5,7 +5,7 @@ HiLoStrategy::HiLoStrategy(float deck_size){
     num_decks_left = deck_size;
 }
 
-int HiLoStrategy::getBetSize() const {
+int HiLoStrategy::getBetSize() {
     // if (true_count < 1){
     //     return 25;
     // }
@@ -32,7 +32,6 @@ int HiLoStrategy::getBetSize() const {
     // }
 
     //xav bet spread
-    //*
     if (true_count < 1){
         return 5;
     }
@@ -58,12 +57,11 @@ int HiLoStrategy::getBetSize() const {
         return 200;
     }
 
-    //*/
 }
 
 void HiLoStrategy::updateCount(Card card) {
     Rank rank = card.getRank();
-    int score = static_cast<int>(rank) + 2;//add 2 to account for enum starting at 0
+    int score = static_cast<int>(rank) + INDEX_OFFSET;
 
     if (score <= 6){
         running_count += 1;
@@ -83,19 +81,19 @@ void HiLoStrategy::updateDeckSize(int num_cards_left){
     return;
 }
 
-float HiLoStrategy::getCount(){
+float HiLoStrategy::getTrueCount() const{
     return true_count;
 }
 
-float HiLoStrategy::getRunningCount(){
+float HiLoStrategy::getRunningCount() const{
     return running_count;
 }
 
-float HiLoStrategy::getDecksLeft(){
+float HiLoStrategy::getDecksLeft() const{
     return num_decks_left;
 }
 
-bool HiLoStrategy::shouldAcceptInsurance(){
+bool HiLoStrategy::shouldAcceptInsurance() const{
     if (true_count >= 3){//mathmatical point where insurance is profitable accoding to gemini
         return true;
     }

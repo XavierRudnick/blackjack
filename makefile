@@ -1,47 +1,54 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -g
+CPPFLAGS = -Iinclude -Iinclude/core -Iinclude/strategy -Iinclude/players -Iinclude/observers
+OBJDIR = build
 
-OBJECTS = main.o rank.o suit.o Card.o Hand.o HiLoStrategy.o NoStrategy.o BasicStrategy.o action.o EngineBuilder.o \
-	observers/EventBus.o observers/ConsoleObserver.o
+CORE_SOURCES = \
+    src/core/rank.cpp \
+    src/core/suit.cpp \
+    src/core/action.cpp \
+    src/core/Card.cpp \
+    src/core/Hand.cpp \
+    src/core/Deck.cpp \
+    src/core/Engine.cpp \
+    src/core/EngineBuilder.cpp \
+    src/core/GameReporter.cpp \
+    src/core/Bankroll.cpp
 
-blackjack: $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o blackjack $(OBJECTS)
+STRATEGY_SOURCES = \
+    src/strategy/BasicStrategy.cpp \
+    src/strategy/HiLoStrategy.cpp \
+    src/strategy/NoStrategy.cpp
 
-main.o: main.cpp Engine.h Deck.h Hand.h HiLoStrategy.h Card.h rank.h suit.h action.h observers/EventBus.h observers/ConsoleObserver.h
-	$(CXX) $(CXXFLAGS) -c main.cpp
+PLAYER_SOURCES = \
+    src/players/BotPlayer.cpp \
+    src/players/HumanPlayer.cpp
 
-rank.o: rank.cpp rank.h
-	$(CXX) $(CXXFLAGS) -c rank.cpp
+OBSERVER_SOURCES = \
+    src/observers/EventBus.cpp \
+    src/observers/ConsoleObserver.cpp
 
-suit.o: suit.cpp suit.h
-	$(CXX) $(CXXFLAGS) -c suit.cpp
+COMMON_SOURCES = $(CORE_SOURCES) $(STRATEGY_SOURCES) $(PLAYER_SOURCES) $(OBSERVER_SOURCES)
+COMMON_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(COMMON_SOURCES))
 
-Card.o: Card.cpp Card.h rank.h suit.h
-	$(CXX) $(CXXFLAGS) -c Card.cpp
+BLACKJACK_SOURCES = src/main.cpp
+BLACKJACK_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(BLACKJACK_SOURCES))
 
-Hand.o: Hand.cpp Hand.h Card.h rank.h suit.h
-	$(CXX) $(CXXFLAGS) -c Hand.cpp
+TEST_SOURCES = src/test.cpp
+TEST_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(TEST_SOURCES))
 
-HiLoStrategy.o: HiLoStrategy.cpp HiLoStrategy.h Card.h rank.h suit.h
-	$(CXX) $(CXXFLAGS) -c HiLoStrategy.cpp
+all: blackjack test
 
-NoStrategy.o: NoStrategy.cpp NoStrategy.h Card.h rank.h suit.h
-	$(CXX) $(CXXFLAGS) -c NoStrategy.cpp
+blackjack: $(BLACKJACK_OBJECTS) $(COMMON_OBJECTS)
+	$(CXX) $(CXXFLAGS) -o blackjack $(BLACKJACK_OBJECTS) $(COMMON_OBJECTS)
 
-BasicStrategy.o: BasicStrategy.cpp BasicStrategy.h rank.h action.h
-	$(CXX) $(CXXFLAGS) -c BasicStrategy.cpp
+test: $(TEST_OBJECTS) $(COMMON_OBJECTS)
+	$(CXX) $(CXXFLAGS) -o run_tests $(TEST_OBJECTS) $(COMMON_OBJECTS)
 
-action.o: action.cpp action.h
-	$(CXX) $(CXXFLAGS) -c action.cpp
-
-observers/EventBus.o: observers/EventBus.cpp observers/EventBus.h observers/EventIssuingObservable.h observers/EventObserver.h observers/EventType.h
-	$(CXX) $(CXXFLAGS) -c observers/EventBus.cpp -o observers/EventBus.o
-
-observers/ConsoleObserver.o: observers/ConsoleObserver.cpp observers/ConsoleObserver.h observers/EventObserver.h observers/EventType.h
-	$(CXX) $(CXXFLAGS) -c observers/ConsoleObserver.cpp -o observers/ConsoleObserver.o
-
-EngineBuilder.o: EngineBuilder.cpp EngineBuilder.h Engine.h
-	$(CXX) $(CXXFLAGS) -c EngineBuilder.cpp
+$(OBJDIR)/%.o: src/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o blackjack
+	rm -rf blackjack run_tests $(OBJDIR)
+	rm -f *.o src/*.o src/*/*.o

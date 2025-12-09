@@ -6,7 +6,7 @@ NoStrategy::NoStrategy(float deck_size){
     return;
 }
 
-int NoStrategy::getBetSize() const {
+int NoStrategy::getBetSize() {
     return 5;
 }
 
@@ -18,18 +18,18 @@ void NoStrategy::updateDeckSize(int num_cards_left){
     return;
 }
 
-float NoStrategy::getCount(){
+float NoStrategy::getTrueCount() const{
     return 0;
 }
 
-float NoStrategy::getDecksLeft(){
+float NoStrategy::getDecksLeft() const{
     return num_decks_left;
 }
 
-float NoStrategy::getRunningCount(){
+float NoStrategy::getRunningCount() const{
     return 0;
 }
 
-bool NoStrategy::shouldAcceptInsurance(){
+bool NoStrategy::shouldAcceptInsurance() const{
     return false;
 }

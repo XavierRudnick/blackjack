@@ -1,54 +1,4 @@
-With 100000 sims, avg wallet total post session of 12 games of 2 was 10530 with quattro bet spread
-With 100000 sims, avg wallet total post session of 8 games of 6 was 10108 with quattro bet spread
-
-
-2 deck game with 62.5% ur playing 12 rounds per game
-6 deck game with 62.5% ur playing 35 rounds per game so ur losing 5.25$ 
-
-running 50000 sims, ave wallet total post 12 games of 2 deck with no strat is 996, avg money bet per session is 799, expected to lose 4$, success
-running 50000 sims, ave wallet total post 12 games of 2 deck with hilo is 1530, avg money bet per session is 15553 success?
-
-running 50000 sims, ave wallet total post 4 games of 6 deck with hilo is 1080, avg money bet per session is 6508 success?
-running 50000 sims, ave wallet total post 4 games of 6 deck with no strat is 995, avg money bet per session is 782, expected to lose 4$, success
-
-
-on 500000 sims of 12 game 2 deck no strat avg profit is 993.712 and money bet per session is 925.411, so for every 1000 bet u would lose 6.795$ so rtp 99.32
-on 100000 sims of 4 game 6 deck no strat avg profit is 992.242 and money bet per session is 908.839, so for every 1000 bet u would lose 8.5338$ so rtp 99.15
-
-
-on 100000 sims of 4 game 6 deck no strat avg profit is 995.13 and money bet per session is 915.657, rtp is 99.46
-
-
-No counting 6 deck one shuffle  
-Average after 200000 rounds: 998.733
-Average money bet: 239.05
-Difference: -1.26742
-Money lost per 1000$ -5.30191$
-RTP 0.994698
-
-No counting 2 deck one shuffle
-Average after 200000 rounds: 999.671
-Average money bet: 81.1771
-Difference: -0.329215
-Money lost per 1000$ -4.05551$
-RTP 0.995944
-
-Hilo 2 deck one shuffle
-Average after 200000 rounds: 1188.39
-Average money bet: 4144.13
-Difference: 188.388
-Money lost per 1000$ 45.459$
-RTP 1.04546
-
-Hilo 6 deck one shuffle
-Average after 200000 rounds: 1178.35
-Average money bet: 6290.06
-Difference: 178.345
-Money lost per 1000$ 28.3535$
-RTP 1.02835
-
 ---------------------------------
-Fix split they dont print correclty for manual play
 Simulation time for 2 decks and 1000000 iterations: 185.266 seconds.
 Average after 1000000 rounds: 1018.89
 Average money bet: 477
@@ -76,3 +26,84 @@ Average money bet: 242
 Difference: -1.36856
 Money gained/lost per 1000$ -5.65521$
 RTP 0.994345
+
+-------------------------------
+oop code
+Simulation time for 2 decks and 1000000 iterations: 53.5332 seconds.
+Average after 1000000 rounds: 999.648
+Average money bet: 82
+Difference: -0.351972
+Money gained/lost per 1000$ -4.29234$
+RTP 0.995708
+
+Simulation time for 6 decks and 1000000 iterations: 121.162 seconds.
+Average after 1000000 rounds: 999.043
+Average money bet: 242
+Difference: -0.957465
+Money gained/lost per 1000$ -3.95647$
+RTP 0.996044
+
+xav bet spread:
+
+Simulation time for 2 decks and 1000000 iterations: 54.6701 seconds.
+Average after 1000000 rounds: 1012.48
+Average money bet: 490.47
+Difference: 12.4777
+Money gained/lost per 1000$ 25.4404$
+RTP 1.02544
+
+Simulation time for 6 decks and 1000000 iterations: 129.337 seconds.
+Average after 1000000 rounds: 1009.66
+Average money bet: 871
+Difference: 9.66411
+Money gained/lost per 1000$ 11.0954$
+RTP 1.0111
+
+Q bet spread:
+
+Simulation time for 2 decks and 1000000 iterations: 54.5026 seconds.
+Average after 1000000 rounds: 1126.45
+Average money bet: 4480.92
+Difference: 126.446
+Money gained/lost per 1000$ 28.2187$
+RTP 1.02822
+
+Simulation time for 6 decks and 1000000 iterations: 123.837 seconds.
+Average after 1000000 rounds: 1112.72
+Average money bet: 7201.68
+Difference: 112.72
+Money gained/lost per 1000$ 15.6519$
+RTP 1.01565
+
+
+
+FINAL STATS
+==============================
+Simulation time for 2 decks and 1000000 iterations: 59.6766 seconds.
+Average after 1000000 rounds: 1016.74
+Average money bet: 489.321
+Difference: 16.7408
+Money gained/lost per 1000$ 34.2123$
+RTP 1.03421
+
+Simulation time for 6 decks and 1000000 iterations: 135.438 seconds.
+Average after 1000000 rounds: 1015.87
+Average money bet: 871.495
+Difference: 15.8696
+Money gained/lost per 1000$ 18.2096$
+RTP 1.01821
+
+================================
+Simulation time for 2 decks and 1000000 iterations: 56.0248 seconds.
+Average after 1000000 rounds: 999.84
+Average money bet: 82.9615
+Difference: -0.160488
+Money gained/lost per 1000$ -1.93448$
+RTP 0.998066
+
+Simulation time for 6 decks and 1000000 iterations: 130.736 seconds.
+Average after 1000000 rounds: 999.266
+Average money bet: 244.511
+Difference: -0.733772
+Money gained/lost per 1000$ -3.00098$
+RTP 0.996999

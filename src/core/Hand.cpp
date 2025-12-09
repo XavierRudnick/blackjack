@@ -29,7 +29,7 @@ void Hand::popLastCard(){
     return;
 }
 
-Rank Hand::peek_front_card(){
+Rank Hand::peekFrontCard(){
     return hand.front().getRank();
 }
 
@@ -49,12 +49,11 @@ bool Hand::dealerHiddenAce(){
     return hand.back().isAce();
 }
 
-
 void Hand::addCard(Card card){
     hand.emplace_back(card);
 }
 
-bool Hand::check_over(){
+bool Hand::checkOver(){
     if (getScore() > 21){
         return true;
     }
@@ -140,21 +139,21 @@ bool Hand::isHandSoft() {
     return (score <= 21) && (soft_aces > 0);
 }
 
-bool Hand::check_can_split(){
+bool Hand::checkCanSplit(){
     if (hand.size() == 2 && hand.front().getRank() == hand.back().getRank()){
         return true;
     }
     return false;
 } 
 
-bool Hand::check_can_double(){
+bool Hand::checkCanDouble(){
     if (hand.size() == 2){
         return true;
     }
     return false;
 } 
 
-bool Hand::check_should_stand(){
+bool Hand::checkShouldStand(){
     if (getScore() == 18 || getScore() == 19){
         return true;
     }
@@ -176,6 +175,18 @@ bool Hand::isBlackjack(){
             return true;
         }
         else if (frontAce && backTen){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Hand::isAces(){
+    if (hand.size() == 2){
+        bool frontAce = hand.front().isAce();
+        bool backAce = hand.back().isAce();
+
+        if (frontAce && backAce){
             return true;
         }
     }

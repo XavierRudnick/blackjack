@@ -18,11 +18,12 @@ class HiLoStrategy : public CountingStrategy { //in docs note deck size is count
         int getBetSize() override;
         void updateCount(Card card) override;       
         void updateDeckSize(int num_cards_left) override;
+        
         float getTrueCount() const override;
         float getDecksLeft() const override;
         float getRunningCount() const override;
-        bool shouldAcceptInsurance() const override;
 
+        bool shouldAcceptInsurance() const override;
         Action shouldDeviatefromHard(int playerTotal, Rank dealerUpcard,float true_count) override;
         Action shouldDeviatefromSplit(Rank playerSplitRank, Rank dealerUpcard,float true_count) override;
         Action shouldSurrender(int playerTotal, Rank dealerUpcard,float true_count) override;

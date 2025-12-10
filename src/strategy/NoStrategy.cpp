@@ -72,3 +72,15 @@ Action NoStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, float
     return BasicStrategy::splitTable[pairIdx][dealerIdx];
     
 }
+
+Action NoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float trueCount){
+    return Action::Skip;
+}
+
+Action NoStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float trueCount){
+    return Action::Skip;
+}
+
+Action NoStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
+    return Action::Skip;
+}

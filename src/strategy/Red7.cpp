@@ -1,13 +1,13 @@
-#include "KoStrategy.h"
+#include "Red7Strategy.h"
 #include <cmath>
 
-KoStrategy::KoStrategy(float deck_size){
+Red7Strategy::Red7Strategy(float deck_size){
     num_decks_left = deck_size;
-    true_count = deck_size * -4; //initial running count for KO system
+    true_count = deck_size * -2; //initial running count for KO system
     deckStartSize = deck_size;
 }
 
-int KoStrategy::getBetSize() {
+int Red7Strategy::getBetSize() {
     if (deckStartSize == 2){
         if (true_count < 1){
             return 25;
@@ -15,19 +15,19 @@ int KoStrategy::getBetSize() {
         else if (true_count < 2) {
             return 100;
         } 
-        else if (true_count < 3.0) { 
+        else if (true_count < 3) { 
             return 300;
         } 
-        else if (true_count < 4.0) {
+        else if (true_count < 4) {
             return 500;
         } 
-        else if (true_count < 5.0) {
+        else if (true_count < 5) {
             return 1000;
         } 
-        else if (true_count < 6.0) {
+        else if (true_count < 6) {
             return 1600;
         } 
-        else if (true_count < 7.0) {
+        else if (true_count < 7) {
             return 2000;
         } 
         else {
@@ -35,25 +35,25 @@ int KoStrategy::getBetSize() {
         }
     }
     else if (deckStartSize == 6){
-        if (true_count < -5){
+        if (true_count < -3){
             return 25;
         }
-        else if (true_count < -4) {
+        else if (true_count < -1) {
             return 100;
         } 
-        else if (true_count < -3) { 
+        else if (true_count < 1) { 
             return 300;
         } 
-        else if (true_count < -2) {
+        else if (true_count < 2) {
             return 500;
         } 
-        else if (true_count < -1) {
+        else if (true_count < 3) {
             return 1000;
         } 
-        else if (true_count < 0) {
+        else if (true_count < 5) {
             return 1600;
         } 
-        else if (true_count < 1) {
+        else if (true_count < 7) {
             return 1800;
         } 
         else {
@@ -88,14 +88,20 @@ int KoStrategy::getBetSize() {
 
 }
 
-void KoStrategy::updateCount(Card card) {
+void Red7Strategy::updateCount(Card card) {
     Rank rank = card.getRank();
+    Suit suit = card.getSuit();
     int score = static_cast<int>(rank) + INDEX_OFFSET;
 
     constexpr int lowerCard = 7;
     constexpr int upperCard = 10;
 
-    if (score <= lowerCard){
+    if (rank == Rank::Seven){ //red seven rule
+        if (suit == Suit::Hearts || suit == Suit::Diamonds){
+            true_count += 1;
+        }     
+    }
+    else if (score <= lowerCard){
         true_count += 1;
     }
     else if (score >= upperCard){
@@ -105,33 +111,33 @@ void KoStrategy::updateCount(Card card) {
     return;
 }
 
-void KoStrategy::updateDeckSize(int num_cards_left){
+void Red7Strategy::updateDeckSize(int num_cards_left){
     float decks_left_unrounded = num_cards_left / Deck::NUM_CARDS_IN_DECK; 
     num_decks_left = std::round(decks_left_unrounded * 2.0) / 2.0;//convert to only count float .5 segments
     return;
 }
 
-float KoStrategy::getTrueCount() const{
+float Red7Strategy::getTrueCount() const{
     return true_count;
 }
 
-float KoStrategy::getRunningCount() const{
+float Red7Strategy::getRunningCount() const{
     return true_count;
 }
 
-float KoStrategy::getDecksLeft() const{
+float Red7Strategy::getDecksLeft() const{
     return num_decks_left;
 }
 
-bool KoStrategy::shouldAcceptInsurance() const{
-    constexpr int insuranceThreshold = 5; //mathmatical point where insurance is profitable accoding to gemini
+bool Red7Strategy::shouldAcceptInsurance() const{
+    constexpr int insuranceThreshold = 2; //mathmatical point where insurance is profitable accoding to gemini
     if (true_count >= insuranceThreshold){
         return true;
     }
     return false;
 }
 
-Action KoStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float trueCount) {
+Action Red7Strategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float trueCount) {
     constexpr int lowerBound = 5;
     constexpr int upperBound = 20;
     if (playerTotal < lowerBound) {
@@ -155,7 +161,7 @@ Action KoStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float t
     
 }
 
-Action KoStrategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
+Action Red7Strategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
     constexpr int lowerBound = 13;
     int dealerIdx = BasicStrategy::getIndex(dealerUpcard);
     int playerIdx = playerTotal - lowerBound;  // Soft 13 maps to index 0 Since chart starts at A,2
@@ -165,7 +171,7 @@ Action KoStrategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
     return action;
 }
 
-Action KoStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, float trueCount) {
+Action Red7Strategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, float trueCount) {
     int dealerIdx = BasicStrategy::getIndex(dealerUpcard);
     int pairIdx = BasicStrategy::getIndex(playerSplitRank);
     Action deviation = shouldDeviatefromSplit(playerSplitRank, dealerUpcard, trueCount);
@@ -178,7 +184,7 @@ Action KoStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, float
 }
 
 
-Action KoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float trueCount){
+Action Red7Strategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float trueCount){
     int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
 
     switch (playerTotal) {
@@ -186,18 +192,33 @@ Action KoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, flo
             if (dealerValue == 10 && trueCount > 0) {
                 return Action::Stand;
             }
-            if (dealerValue == 9 && trueCount >= 5) {
+            break;
+        case 15:
+            if (dealerValue == 10 && trueCount >= 2) {
                 return Action::Stand;
+            }
+            break;
+        case 12:
+            if (dealerValue == 3 && trueCount >= 2) {
+                return Action::Stand;
+            }
+            if (dealerValue == 2 && trueCount >= 2) {
+                return Action::Stand;
+            }
+            break;
+        case 10:
+            if (dealerValue == 11 && trueCount >= 4) {
+                return Action::Double;
             }
             break;
     }
     return Action::Skip;
 }
 
-Action KoStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float trueCount){
+Action Red7Strategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float trueCount){
     return Action::Skip;
 }
 
-Action KoStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
+Action Red7Strategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
     return Action::Skip;
 }

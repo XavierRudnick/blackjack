@@ -100,6 +100,8 @@ public:
         return action;
     }
 
+    ~LoggingCountingStrategy() override = default;
+
 };
 
 #endif

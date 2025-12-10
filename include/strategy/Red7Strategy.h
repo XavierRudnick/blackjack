@@ -1,19 +1,19 @@
-#ifndef KOSTRATEGY_H
-#define KOSTRATEGY_H
+#ifndef RED7STRATEGY_H
+#define RED7STRATEGY_H
 
 #include "Card.h"
 #include "Deck.h"
 #include "CountingStrategy.h"
 #include "BasicStrategy.h"
 
-class KoStrategy : public CountingStrategy { //in docs note deck size is counted 100% accuratly in half size increments
+class Red7Strategy : public CountingStrategy { //in docs note deck size is counted 100% accuratly in half size increments
     private:
         float num_decks_left = 0;
         float true_count = 0; //initial running count for KO system
         float deckStartSize = 0;
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
     public:
-        KoStrategy(float deck_size);
+        Red7Strategy(float deck_size);
         int getBetSize() override;
         void updateCount(Card card) override;       
         void updateDeckSize(int num_cards_left) override;
@@ -30,7 +30,7 @@ class KoStrategy : public CountingStrategy { //in docs note deck size is counted
         Action getSoftHandAction(int playerTotal, Rank dealerUpcard) override;
         Action getSplitAction(Rank playerSplitRank, Rank dealerUpcard,float true_count) override;
 
-        ~KoStrategy() override = default;
+        ~Red7Strategy() override = default;
 };
 
 #endif

@@ -35,7 +35,6 @@ public:
     Engine(
         const GameConfig& gameConfig, //pass by reference to avoid copy
         Deck deck,
-        std::unique_ptr<CountingStrategy> strategy, //allows for passing different counting strategies, also says engine owns objects
         std::unique_ptr<Player> player,
         EventBus* eventBus // not owned can be nullptr
     );
@@ -49,7 +48,6 @@ private:
     GameConfig config;
 
     std::optional<Deck> deck;
-    std::unique_ptr<CountingStrategy> countingStrategy;
     std::unique_ptr<Player> player;
     std::unique_ptr<GameReporter> reporter;
 
@@ -62,7 +60,7 @@ private:
     
     //hand play logic
     std::vector<Hand> user_play(Hand& dealer, Hand& user);
-    void play_hand(Player& player, Hand& dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces = false, bool has_split = false);
+    void play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces = false, bool has_split = false);
 
     //card drawing logic
     Hand draw_cards(int betSize = 0);
@@ -82,7 +80,7 @@ private:
     bool standHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel);
     bool hitHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel);
     bool doubleHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel,bool has_split);
-    bool splitHandler(Player& player, Hand& user,Hand& dealer, std::vector<Hand>& hands, std::string handLabel,bool has_split, bool is_split_aces);
+    bool splitHandler(Hand& user,Hand& dealer, std::vector<Hand>& hands, std::string handLabel,bool has_split, bool is_split_aces);
     bool surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel);
    
 

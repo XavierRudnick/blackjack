@@ -17,7 +17,9 @@ CORE_SOURCES = \
 
 STRATEGY_SOURCES = \
     src/strategy/BasicStrategy.cpp \
+    src/strategy/CountingStrategy.cpp \
     src/strategy/HiLoStrategy.cpp \
+    src/strategy/KoStrategy.cpp \
     src/strategy/NoStrategy.cpp
 
 PLAYER_SOURCES = \

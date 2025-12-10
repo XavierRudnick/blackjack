@@ -64,6 +64,42 @@ public:
         return accept;
     }
 
+    Action shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float trueCount) override {
+        Action action = inner_->shouldDeviatefromHard(playerTotal, dealerUpcard, trueCount);
+        emit("Logged deviation query: shouldDeviatefromHard");
+        return action;
+    }
+
+    Action shouldDeviatefromSplit(Rank playerSplitRank, Rank dealerUpcard, float trueCount) override {
+        Action action = inner_->shouldDeviatefromSplit(playerSplitRank, dealerUpcard, trueCount);
+        emit("Logged deviation query: shouldDeviatefromSplit");
+        return action;
+    }
+
+    Action shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount) override {
+        Action action = inner_->shouldSurrender(playerTotal, dealerUpcard, trueCount);
+        emit("Logged deviation query: shouldSurrender");
+        return action;
+    }
+
+    Action getHardHandAction(int playerTotal, Rank dealerUpcard, float trueCount) override {
+        Action action = inner_->getHardHandAction(playerTotal, dealerUpcard, trueCount);
+        emit("Logged action: getHardHandAction");
+        return action;
+    }
+
+    Action getSoftHandAction(int playerTotal, Rank dealerUpcard) override {
+        Action action = inner_->getSoftHandAction(playerTotal, dealerUpcard);
+        emit("Logged action: getSoftHandAction");
+        return action;
+    }
+
+    Action getSplitAction(Rank playerSplitRank, Rank dealerUpcard, float trueCount) override {
+        Action action = inner_->getSplitAction(playerSplitRank, dealerUpcard, trueCount);
+        emit("Logged action: getSplitAction");
+        return action;
+    }
+
 };
 
 #endif

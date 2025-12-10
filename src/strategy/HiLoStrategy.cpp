@@ -103,3 +103,187 @@ bool HiLoStrategy::shouldAcceptInsurance() const{
     }
     return false;
 }
+
+Action HiLoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float trueCount){
+    int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
+
+    switch (playerTotal) {
+        case 16:
+            if (dealerValue == 10 && trueCount > 0) {
+                return Action::Stand;
+            }
+            if (dealerValue == 9 && trueCount >= 5) {
+                return Action::Stand;
+            }
+            break;
+            
+        case 15: 
+            if (dealerValue == 10 && trueCount >= 4) {
+                return Action::Stand;
+            }
+            break;
+            
+        case 13:
+            if (dealerValue == 2 && trueCount <= -1) { 
+                return Action::Stand;
+            }
+            if (dealerValue == 3 && trueCount <= -2) { 
+                return Action::Stand;
+            }
+            break;
+
+        case 12:
+            if (dealerValue == 3 && trueCount >= 2) {
+                return Action::Stand;
+            }
+            if (dealerValue == 2 && trueCount >= 3) {
+                return Action::Stand;
+            }
+            if (dealerValue == 4 && trueCount < 0){
+                return Action::Hit;
+            }
+            if (dealerValue == 5 && trueCount <= -2){
+                return Action::Hit;
+            }
+            if (dealerValue == 6 && trueCount <= -1){
+                return Action::Hit;
+            }
+            break;
+        case 11:
+            if (dealerValue == 11 && trueCount >= 1){
+                return Action::Double;
+            }
+            break;
+        case 10:
+            if (dealerValue == 10 && trueCount >=4){
+                return Action::Double;
+            }
+            if (dealerValue == 11 && trueCount >= 4){
+                return Action::Double;
+            }
+            break;
+        case 9:
+            if (dealerValue == 2  && trueCount >= 1){
+                return Action::Double;
+            }
+            if (dealerValue == 7  && trueCount >= 3){
+                return Action::Double;
+            }
+            break;
+        default: return Action::Skip;
+    }
+    return Action::Skip;
+}
+
+Action HiLoStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float trueCount){
+    int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
+    int playerValue = BasicStrategy::getIndex(playerRank) + INDEX_OFFSET;
+    switch (playerValue) {
+        case 9:
+            if (dealerValue == 7 && trueCount >= 4) {
+                return Action::Split;
+            }
+            if (dealerValue == 11 && trueCount >= 5) {
+                return Action::Split;
+            }
+            break;
+        
+        // Commented out, very obvious counting cards when you split on tens    
+        // case 10: 
+        //     if (dealerValue == 5 && trueCount >= 5) {
+        //         return Action::Split;
+        //     }
+        //     if (dealerValue == 4 && trueCount >= 6) {
+        //         return Action::Split;
+        //     }
+        //     if (dealerValue == 6 && trueCount >= 4) {
+        //         return Action::Split;
+        //     }
+        //     break;
+        default: return Action::Skip; break;
+    }
+    return Action::Skip;
+}
+
+Action HiLoStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
+    int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
+    switch (playerTotal) {
+        case 17:
+            if (dealerValue == 11 && trueCount >= 0) {
+                return Action::Surrender;
+            }
+            break;
+        case 16:
+            if (dealerValue == 10 && trueCount >= 0) {
+                return Action::Surrender;
+            }
+            if (dealerValue == 11 && trueCount >= 3) {
+                return Action::Surrender;
+            }
+            break;
+        case 15:
+            if (dealerValue == 10 && trueCount >= 0) {
+                return Action::Surrender;
+            }
+            if (dealerValue == 11 && trueCount >= 1) {
+                return Action::Surrender;
+            }
+            if (dealerValue == 9 && trueCount >= 2) {
+                return Action::Surrender;
+            }
+            break;
+        case 14:
+            if (dealerValue == 11 && trueCount >= 3) {
+                return Action::Surrender;
+            }
+            break;
+        default: return Action::Skip; break;
+    }
+    return Action::Skip;
+}
+
+Action HiLoStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float trueCount) {
+    constexpr int lowerBound = 5;
+    constexpr int upperBound = 20;
+    if (playerTotal < lowerBound) {
+        return Action::Hit;
+    }
+
+    if (playerTotal > upperBound) {
+        return Action::Stand;
+    }
+    
+    int dealerIdx = BasicStrategy::getIndex(dealerUpcard);
+    
+    int playerIdx = playerTotal - lowerBound;  // Player total 5 maps to index 0 Since chart starts at 5
+    Action deviation = shouldDeviatefromHard(playerTotal, dealerUpcard, trueCount);
+    if (deviation != Action::Skip) {
+        return deviation;
+    }
+    else{
+        return BasicStrategy::hardTotalTable[playerIdx][dealerIdx];
+    }
+    
+}
+
+Action HiLoStrategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
+    constexpr int lowerBound = 13;
+    int dealerIdx = BasicStrategy::getIndex(dealerUpcard);
+    int playerIdx = playerTotal - lowerBound;  // Soft 13 maps to index 0 Since chart starts at A,2
+    
+    Action action = BasicStrategy::softTotalTable[playerIdx][dealerIdx];
+
+    return action;
+}
+
+Action HiLoStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, float trueCount) {
+    int dealerIdx = BasicStrategy::getIndex(dealerUpcard);
+    int pairIdx = BasicStrategy::getIndex(playerSplitRank);
+    Action deviation = shouldDeviatefromSplit(playerSplitRank, dealerUpcard, trueCount);
+    if (deviation != Action::Skip) {
+        return deviation;
+    }
+    else{
+        return BasicStrategy::splitTable[pairIdx][dealerIdx];
+    }
+}

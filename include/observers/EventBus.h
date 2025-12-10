@@ -16,6 +16,7 @@ private:
     std::vector<EventObserver*> getObservers(EventType eventType);
 
     std::map<EventType, std::vector<EventObserver*>> observers;
+    
     static EventBus* instance;
 
 public:

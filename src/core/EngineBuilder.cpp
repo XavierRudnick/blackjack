@@ -84,7 +84,7 @@ EngineBuilder& EngineBuilder::noSurrender() {
     return *this;
 }
 
-Engine EngineBuilder::build(std::unique_ptr<CountingStrategy> countingStrategy, std::unique_ptr<Player> player) {
-    Engine engine(gameConfig, *deck, std::move(countingStrategy), std::move(player), eventBus);
+Engine EngineBuilder::build(std::unique_ptr<Player> player) {
+    Engine engine(gameConfig, *deck, std::move(player), eventBus);
     return engine;
 }

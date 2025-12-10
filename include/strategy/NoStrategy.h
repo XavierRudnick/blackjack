@@ -3,6 +3,8 @@
 
 #include "CountingStrategy.h"
 #include "Card.h"
+#include "action.h"
+#include "BasicStrategy.h"
 
 class NoStrategy : public CountingStrategy { //in docs note deck size is counted 100% accuratly in half size increments
     private:
@@ -16,6 +18,14 @@ class NoStrategy : public CountingStrategy { //in docs note deck size is counted
         float getDecksLeft() const override;
         float getRunningCount() const override;
         bool shouldAcceptInsurance() const override;
+
+        Action getHardHandAction(int playerTotal, Rank dealerUpcard,float true_count) override;
+        Action getSoftHandAction(int playerTotal, Rank dealerUpcard) override;
+        Action getSplitAction(Rank playerSplitRank, Rank dealerUpcard,float true_count) override;
+
+         ~NoStrategy() override = default;
+
+
 };
 
 #endif

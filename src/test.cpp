@@ -29,8 +29,8 @@ Engine setupEngine(std::vector<Card> stack, double initialWallet = 1000) {
         });
     }
 
-    auto strategy = std::make_unique<NoStrategy>(0); 
-    auto player = std::make_unique<BotPlayer>(false);
+    auto strategy = std::make_unique<NoStrategy>(0);
+    auto player = std::make_unique<BotPlayer>(false, std::move(strategy));
 
     Deck riggedDeck = Deck::createTestDeck(stack);
 
@@ -43,7 +43,7 @@ Engine setupEngine(std::vector<Card> stack, double initialWallet = 1000) {
             .with3To2Payout()
             .withS17Rules()
             .allowDoubleAfterSplit()
-            .build(std::move(strategy), std::move(player));
+            .build(std::move(player));
 }
 
 // ----------------------------------------------------------------

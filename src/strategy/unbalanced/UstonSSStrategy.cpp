@@ -1,13 +1,13 @@
-#include "Red7Strategy.h"
+#include "UstonSSStrategy.h"
 #include <cmath>
 
-Red7Strategy::Red7Strategy(float deck_size){
+UstonSSStrategy::UstonSSStrategy(float deck_size){
     num_decks_left = deck_size;
     true_count = deck_size * -4; //initial running count for KO system
     deckStartSize = deck_size;
 }
 
-int Red7Strategy::getBetSize() {
+int UstonSSStrategy::getBetSize() {
     if (deckStartSize == 2){
         if (true_count < 1){
             return 25;
@@ -88,7 +88,7 @@ int Red7Strategy::getBetSize() {
 
 }
 
-void Red7Strategy::updateCount(Card card) {
+void UstonSSStrategy::updateCount(Card card) {
     Rank rank = card.getRank();
     Suit suit = card.getSuit();
     int score = static_cast<int>(rank) + INDEX_OFFSET;
@@ -133,25 +133,25 @@ void Red7Strategy::updateCount(Card card) {
     return;
 }
 
-void Red7Strategy::updateDeckSize(int num_cards_left){
+void UstonSSStrategy::updateDeckSize(int num_cards_left){
     float decks_left_unrounded = num_cards_left / Deck::NUM_CARDS_IN_DECK; 
     num_decks_left = std::round(decks_left_unrounded * 2.0) / 2.0;//convert to only count float .5 segments
     return;
 }
 
-float Red7Strategy::getTrueCount() const{
+float UstonSSStrategy::getTrueCount() const{
     return true_count;
 }
 
-float Red7Strategy::getRunningCount() const{
+float UstonSSStrategy::getRunningCount() const{
     return true_count;
 }
 
-float Red7Strategy::getDecksLeft() const{
+float UstonSSStrategy::getDecksLeft() const{
     return num_decks_left;
 }
 
-bool Red7Strategy::shouldAcceptInsurance() const{
+bool UstonSSStrategy::shouldAcceptInsurance() const{
     constexpr int insuranceThreshold = 5; //mathmatical point where insurance is profitable accoding to gemini
     if (true_count >= insuranceThreshold){
         return true;
@@ -159,7 +159,7 @@ bool Red7Strategy::shouldAcceptInsurance() const{
     return false;
 }
 
-Action Red7Strategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float trueCount) {
+Action UstonSSStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float trueCount) {
     constexpr int lowerBound = 5;
     constexpr int upperBound = 20;
     if (playerTotal < lowerBound) {
@@ -183,7 +183,7 @@ Action Red7Strategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float
     
 }
 
-Action Red7Strategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
+Action UstonSSStrategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
     constexpr int lowerBound = 13;
     int dealerIdx = BasicStrategy::getIndex(dealerUpcard);
     int playerIdx = playerTotal - lowerBound;  // Soft 13 maps to index 0 Since chart starts at A,2
@@ -193,7 +193,7 @@ Action Red7Strategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
     return action;
 }
 
-Action Red7Strategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, float trueCount) {
+Action UstonSSStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, float trueCount) {
     int dealerIdx = BasicStrategy::getIndex(dealerUpcard);
     int pairIdx = BasicStrategy::getIndex(playerSplitRank);
     Action deviation = shouldDeviatefromSplit(playerSplitRank, dealerUpcard, trueCount);
@@ -206,7 +206,7 @@ Action Red7Strategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, flo
 }
 
 
-Action Red7Strategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float trueCount){
+Action UstonSSStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float trueCount){
     int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
 
     switch (playerTotal) {
@@ -232,10 +232,10 @@ Action Red7Strategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, f
     return Action::Skip;
 }
 
-Action Red7Strategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float trueCount){
+Action UstonSSStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float trueCount){
     return Action::Skip;
 }
 
-Action Red7Strategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
+Action UstonSSStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
     return Action::Skip;
 }

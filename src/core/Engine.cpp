@@ -4,14 +4,12 @@
 Engine::Engine(
     const GameConfig& gameConfig,
     Deck deck,
-    std::unique_ptr<CountingStrategy> strategy,
     std::unique_ptr<Player> player,
     EventBus* eventBus
 )
     : bankroll(gameConfig.wallet), 
     config(gameConfig), 
     deck(std::move(deck)), 
-    countingStrategy(std::move(strategy)), 
     player(std::move(player)) 
     
 {
@@ -27,10 +25,10 @@ std::pair<double, double> Engine::runner(){
 }
 
 void Engine::playHand(){
-    countingStrategy->updateDeckSize(deck->getSize());
+    player->updateDeckStrategySize(deck->getSize());
     std::vector<Hand> hands;
 
-    int bet = countingStrategy->getBetSize();
+    int bet = player->getBetSize();
     bankroll.withdraw(bet);
     bankroll.addTotalBet(bet);
 
@@ -38,10 +36,10 @@ void Engine::playHand(){
     Hand user = draw_cards(bet);
 
     // Count visible cards
-    countingStrategy->updateCount(dealer.getCards()[0]);
+    player->updateCount(dealer.getCards()[0]);
 
     for (Card card : user.getCards()) {
-        countingStrategy->updateCount(card);
+        player->updateCount(card);
     }
 
     reporter->reportHand(dealer, "Dealer (showing)", true);
@@ -91,12 +89,12 @@ void Engine::NaturalBlackJackHandler(Hand& dealer, Hand& user){
     roundSummary << "Hand " << (1) << ": " << outcome << " (score " << 21 << ", bet " << user.getBetSize() << "); ";
 
     reporter->reportRoundResult(roundSummary.str());
-    reporter->reportStats(bankroll, *countingStrategy);
+    reporter->reportStats(bankroll, *player->getStrategy());
     return;
 }   
 
 void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
-    countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
+    player->updateCount(dealer.getCards()[1]); // Reveal hole card
 
     std::vector<int> scores = getPlayerScores(hands);
 
@@ -136,23 +134,23 @@ void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
     }
 
     reporter->reportRoundResult(roundSummary.str());
-    reporter->reportStats(bankroll, *countingStrategy);
+    reporter->reportStats(bankroll, *player->getStrategy());
 }
 
 std::vector<Hand> Engine::user_play(Hand& dealer, Hand& user){
     std::vector<Hand> hands;
     
-    play_hand(*player, dealer, user, hands, false);
+    play_hand(dealer, user, hands, false);
     return hands;
 }
 
-void Engine::play_hand(Player& player, Hand& dealer, Hand& user, std::vector<Hand>& hands, bool has_split_aces, bool has_split){ 
+void Engine::play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool has_split_aces, bool has_split){ 
     bool game_over = false;
     const std::string handLabel = has_split_aces ? "Player (split aces)" : "Player";
     reporter->reportHand(user, handLabel); 
 
     while(!game_over){
-        Action action = player.getAction(user, dealer, countingStrategy->getTrueCount());
+        Action action = player->getAction(user, dealer, player->getTrueCount());
         
         switch(action)
         {
@@ -166,7 +164,7 @@ void Engine::play_hand(Player& player, Hand& dealer, Hand& user, std::vector<Han
                 game_over = doubleHandler(user, hands, handLabel, has_split);
                 break;
             case Action::Split:
-                game_over = splitHandler(player, user, dealer, hands, handLabel, has_split_aces, true);
+                game_over = splitHandler(user, dealer, hands, handLabel, has_split_aces, true);
                 break;
             case Action::Surrender:
                 game_over = surrenderHandler(user, hands, handLabel);
@@ -197,7 +195,7 @@ void Engine::dealer_draw(Hand& dealer){
         }
         
         Card c = deck->hit();
-        countingStrategy->updateCount(c);
+        player->updateCount(c);
         dealer.addCard(c);
         reporter->reportHand(dealer, "Dealer");
     }
@@ -226,7 +224,7 @@ bool Engine::canOfferInsurance(Hand& dealer) {
 }
 
 bool Engine::askInsurance() {
-    return countingStrategy->shouldAcceptInsurance();
+    return player->shouldAcceptInsurance();
 }
 
 bool Engine::resolveInsurance(bool accepted, Hand& dealer, Hand& user) {
@@ -242,7 +240,7 @@ bool Engine::handleInsuranceAccepted(Hand& dealer, Hand& user) {
     bool playerHasBlackjack = user.isBlackjack();
 
     if (dealerHasBlackjack) {
-        countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
+        player->updateCount(dealer.getCards()[1]); // Reveal hole card
         
         if (playerHasBlackjack) {
             bankroll.deposit(user.getBetSize() * 2.5);
@@ -251,7 +249,7 @@ bool Engine::handleInsuranceAccepted(Hand& dealer, Hand& user) {
             bankroll.deposit(user.getBetSize() * 1.5);
             reporter->reportInsuranceResult("Insurance wins: dealer blackjack");
         }
-        reporter->reportStats(bankroll, *countingStrategy);
+        reporter->reportStats(bankroll, *player->getStrategy());
         return true; 
     } else {
         reporter->reportMessage(EventType::ActionTaken, "Insurance accepted automatically: dealer lacked blackjack");
@@ -266,16 +264,16 @@ bool Engine::handleInsuranceDeclined(Hand& dealer, Hand& user) {
     bool playerHasBlackjack = user.isBlackjack();
 
     if (dealerHasBlackjack) {
-        countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
+        player->updateCount(dealer.getCards()[1]); // Reveal hole card
         if (playerHasBlackjack) {
 
             bankroll.deposit(user.getBetSize());
             reporter->reportRoundResult("Dealer blackjack pushes player blackjack (no insurance)");
-            reporter->reportStats(bankroll, *countingStrategy);
+            reporter->reportStats(bankroll, *player->getStrategy());
         } else {
 
             reporter->reportRoundResult("Dealer blackjack; player loses without insurance");
-            reporter->reportStats(bankroll, *countingStrategy);
+            reporter->reportStats(bankroll, *player->getStrategy());
         }
         return true; 
     } else {
@@ -287,7 +285,7 @@ bool Engine::handleInsuranceDeclined(Hand& dealer, Hand& user) {
 bool Engine::dealerRobberyHandler(Hand& dealer,Hand& user){
     if (dealer.dealerShowsTen() && dealer.dealerHiddenAce()){
         reporter->reportHand(user, "Player"); 
-        countingStrategy->updateCount(dealer.getCards()[1]); // Reveal hole card
+        player->updateCount(dealer.getCards()[1]); // Reveal hole card
         if (!user.isBlackjack()){
             // Lose. Do nothing.
         } else {
@@ -295,7 +293,7 @@ bool Engine::dealerRobberyHandler(Hand& dealer,Hand& user){
              bankroll.deposit(user.getBetSize());
         }
         reporter->reportDealerFlip(dealer);
-        reporter->reportStats(bankroll, *countingStrategy);
+        reporter->reportStats(bankroll, *player->getStrategy());
         return true;
     }
     return false;
@@ -310,7 +308,7 @@ bool Engine::standHandler(Hand& user, std::vector<Hand>& hands, std::string hand
 
 bool Engine::hitHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel){
     Card c = deck->hit();
-    countingStrategy->updateCount(c);
+    player->updateCount(c);
     user.addCard(c);
 
     reporter->reportAction(Action::Hit, user, handLabel);
@@ -325,7 +323,7 @@ bool Engine::doubleHandler(Hand& user, std::vector<Hand>& hands, std::string han
         reporter->reportMessage(EventType::ActionTaken, handLabel + " cannot double after split; hits instead");
 
         Card c = deck->hit();
-        countingStrategy->updateCount(c);
+        player->updateCount(c);
         user.addCard(c);
 
         hands.emplace_back(user);
@@ -340,7 +338,7 @@ bool Engine::doubleHandler(Hand& user, std::vector<Hand>& hands, std::string han
 
     user.doubleBet();
     Card card = deck->hit();
-    countingStrategy->updateCount(card);
+    player->updateCount(card);
     user.addCard(card);
     hands.emplace_back(user);
 
@@ -348,7 +346,7 @@ bool Engine::doubleHandler(Hand& user, std::vector<Hand>& hands, std::string han
     return true;
 }
 
-bool Engine::splitHandler(Player& player, Hand& user, Hand& dealer, std::vector<Hand>& hands, std::string handLabel, bool has_split_aces,bool has_split){
+bool Engine::splitHandler(Hand& user, Hand& dealer, std::vector<Hand>& hands, std::string handLabel, bool has_split_aces,bool has_split){
      // Check if we're splitting Aces
     bool splitting_aces = (user.peekFrontCard() == Rank::Ace);
 
@@ -366,11 +364,11 @@ bool Engine::splitHandler(Player& player, Hand& user, Hand& dealer, std::vector<
     bankroll.addTotalBet(user2.getBetSize());
 
     Card card1 = deck->hit();
-    countingStrategy->updateCount(card1);
+    player->updateCount(card1);
     user.addCard(card1);
 
     Card card2 = deck->hit();
-    countingStrategy->updateCount(card2);
+    player->updateCount(card2);
     user2.addCard(card2);
 
     reporter->reportSplit(handLabel, user, user2);
@@ -378,21 +376,21 @@ bool Engine::splitHandler(Player& player, Hand& user, Hand& dealer, std::vector<
     if (splitting_aces) {
         // One-card only after splitting aces; allow resplit only when the new hand is still two aces.
         if (user.isAces() && config.allowReSplitAces) {
-            splitHandler(player, user, dealer, hands, handLabel, true, true);
+            splitHandler(user, dealer, hands, handLabel, true, true);
         } else {
             hands.emplace_back(user);
         }
 
         if (user2.isAces() && config.allowReSplitAces) {
-            splitHandler(player, user2, dealer, hands, handLabel, true, true);
+            splitHandler(user2, dealer, hands, handLabel, true, true);
         } else {
             hands.emplace_back(user2);
         }
         return true;
     }
 
-    play_hand(player, dealer, user, hands, false, true);
-    play_hand(player, dealer, user2, hands, false, true);
+    play_hand(dealer, user, hands, false, true);
+    play_hand(dealer, user2, hands, false, true);
     return true;
 }
 
@@ -400,6 +398,6 @@ bool Engine::surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string 
 
     bankroll.deposit(static_cast<double>(user.getBetSize()) * SURRENDERMULTIPLIER);
     reporter->reportAction(Action::Surrender, user, handLabel);
-    reporter->reportStats(bankroll, *countingStrategy);
+    reporter->reportStats(bankroll, *player->getStrategy());
     return true;
 }

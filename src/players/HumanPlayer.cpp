@@ -2,7 +2,35 @@
 #include "BasicStrategy.h"
 #include <limits>
 
-HumanPlayer::HumanPlayer(bool allowSurrender) : allowSurrender(allowSurrender) {}
+HumanPlayer::HumanPlayer(bool allowSurrender, std::unique_ptr<CountingStrategy> strat)
+    : allowSurrender(allowSurrender), strategy(std::move(strat)) {}
+
+CountingStrategy* HumanPlayer::getStrategy() {
+    return strategy.get();
+}
+
+void HumanPlayer::updateDeckStrategySize(int num_cards_left) {
+    strategy->updateDeckSize(num_cards_left);
+    return;
+}
+
+int HumanPlayer::getBetSize() {
+    return strategy->getBetSize();
+}
+
+void HumanPlayer::updateCount(Card card) {
+    strategy->updateCount(card);
+    return;
+    
+}
+
+float HumanPlayer::getTrueCount() {
+    return strategy->getTrueCount();
+}
+
+bool HumanPlayer::shouldAcceptInsurance() {
+    return strategy->shouldAcceptInsurance();
+}
 
 Action HumanPlayer::getOptimalAction(Hand& user, Hand& dealer, float trueCount) {
     Action optimalAction = Action::Stand;
@@ -10,7 +38,7 @@ Action HumanPlayer::getOptimalAction(Hand& user, Hand& dealer, float trueCount) 
 
     bool found = false;
     if(user.checkCanDouble() && allowSurrender){
-        Action action = BasicStrategy::shouldSurrender(user.getScore(), dealer_card, trueCount);
+        Action action = strategy->shouldSurrender(user.getScore(), dealer_card, trueCount);
         if (action == Action::Surrender) {
             optimalAction = action;
             found = true;
@@ -18,14 +46,14 @@ Action HumanPlayer::getOptimalAction(Hand& user, Hand& dealer, float trueCount) 
     }
 
     if(!found && user.checkCanSplit()){
-        optimalAction = BasicStrategy::getSplitAction(user.peekFrontCard(), dealer_card, trueCount);
+        optimalAction = strategy->getSplitAction(user.peekFrontCard(), dealer_card, trueCount);
         found = true;
     }
 
     if (!found) {
         int playerTotal = user.getScore();
         if(user.isHandSoft()){
-            Action action = BasicStrategy::getSoftHandAction(playerTotal, dealer_card);
+            Action action = strategy->getSoftHandAction(playerTotal, dealer_card);
             if (action == Action::Double){
                 if (user.checkCanDouble()){
                     optimalAction = action;
@@ -38,7 +66,7 @@ Action HumanPlayer::getOptimalAction(Hand& user, Hand& dealer, float trueCount) 
                 optimalAction = action;
             }
         } else {
-            Action action = BasicStrategy::getHardHandAction(playerTotal, dealer_card, trueCount);
+            Action action = strategy->getHardHandAction(playerTotal, dealer_card, trueCount);
             if (action == Action::Double){
                 if (user.checkCanDouble()){
                     optimalAction = action;

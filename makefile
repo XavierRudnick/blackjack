@@ -1,6 +1,6 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -g
-CPPFLAGS = -Iinclude -Iinclude/core -Iinclude/strategy -Iinclude/players -Iinclude/observers
+CPPFLAGS = -Iinclude -Iinclude/core -Iinclude/strategy -Iinclude/strategy/balanced -Iinclude/strategy/unbalanced -Iinclude/players -Iinclude/observers
 OBJDIR = build
 
 CORE_SOURCES = \
@@ -16,9 +16,7 @@ CORE_SOURCES = \
     src/core/Bankroll.cpp
 
 STRATEGY_SOURCES = \
-    src/strategy/BasicStrategy.cpp \
-    src/strategy/HiLoStrategy.cpp \
-    src/strategy/NoStrategy.cpp
+    $(wildcard src/strategy/*.cpp src/strategy/balanced/*.cpp src/strategy/unbalanced/*.cpp)
 
 PLAYER_SOURCES = \
     src/players/BotPlayer.cpp \

@@ -2,7 +2,6 @@
 #define HILOSTRATEGY_H
 
 #include "Card.h"
-#include "Deck.h"
 #include "action.h"
 #include "CountingStrategy.h"
 #include "BasicStrategy.h"

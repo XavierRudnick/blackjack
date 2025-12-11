@@ -1,76 +1,103 @@
-#include "HiLoStrategy.h"
+#include "R14Strategy.h"
 #include <cmath>
 
-HiLoStrategy::HiLoStrategy(float deck_size){
+R14Strategy::R14Strategy(float deck_size){
     num_decks_left = deck_size;
 }
 
-int HiLoStrategy::getBetSize() {
-    // if (true_count < 1){
-    //     return 25;
-    // }
-    // else if (true_count <= 1.5) {
-    //     return 100;
-    // } 
-    // else if (true_count < 3.0) { 
-    //     return 300;
-    // } 
-    // else if (true_count < 4.0) {
-    //     return 500;
-    // } 
-    // else if (true_count < 5.0) {
-    //     return 1000;
-    // } 
-    // else if (true_count < 6.0) {
-    //     return 1600;
-    // } 
-    // else if (true_count < 7.0) {
-    //     return 2000;
-    // } 
-    // else {
-    //     return 2000;
-    // }
-
-    //xav bet spread
+int R14Strategy::getBetSize() {
     if (true_count < 1){
-        return 5;
+        return 25;
     }
     else if (true_count <= 1.5) {
-        return 20;
-    } 
-    else if (true_count < 3.0) { 
-        return 30;
-    } 
-    else if (true_count < 4.0) {
-        return 50;
-    } 
-    else if (true_count < 5.0) {
         return 100;
     } 
+    else if (true_count < 3.0) { 
+        return 300;
+    } 
+    else if (true_count < 4.0) {
+        return 500;
+    } 
+    else if (true_count < 5.0) {
+        return 1000;
+    } 
     else if (true_count < 6.0) {
-        return 160;
+        return 1600;
     } 
     else if (true_count < 7.0) {
-        return 200;
+        return 2000;
     } 
     else {
-        return 200;
+        return 2000;
     }
+
+    //xav bet spread
+    // if (true_count < 1){
+    //     return 5;
+    // }
+    // else if (true_count <= 1.5) {
+    //     return 20;
+    // } 
+    // else if (true_count < 3.0) { 
+    //     return 30;
+    // } 
+    // else if (true_count < 4.0) {
+    //     return 50;
+    // } 
+    // else if (true_count < 5.0) {
+    //     return 100;
+    // } 
+    // else if (true_count < 6.0) {
+    //     return 160;
+    // } 
+    // else if (true_count < 7.0) {
+    //     return 200;
+    // } 
+    // else {
+    //     return 200;
+    // }
 
 }
 
-void HiLoStrategy::updateCount(Card card) {
+void R14Strategy::updateCount(Card card) {
     Rank rank = card.getRank();
     int score = static_cast<int>(rank) + INDEX_OFFSET;
 
-    constexpr int lowerCard = 6;
-    constexpr int upperCard = 10;
-
-    if (score <= lowerCard){
+    switch (score)
+    {
+    case 2:
+        running_count += 2;
+        break;
+    case 3:
+        running_count += 2;
+        break;
+    case 4:
+        running_count += 3;
+        break;
+    case 5:
+        running_count += 4;
+        break;
+    case 6: 
+        running_count += 2;
+        break;
+    case 7:
         running_count += 1;
-    }
-    else if (score >= upperCard){
-        running_count -= 1;
+        break;
+    case 8:
+        running_count += 0;
+        break;
+    case 9:         
+        running_count -= 2;
+        break;
+    case 10:
+        running_count -= 3;
+        break;
+    case 11: //Ace
+        running_count += 0;
+        break;
+    
+    default:
+        break;
     }
 
     float raw = running_count / num_decks_left; 
@@ -78,25 +105,25 @@ void HiLoStrategy::updateCount(Card card) {
     return;
 }
 
-void HiLoStrategy::updateDeckSize(int num_cards_left){
+void R14Strategy::updateDeckSize(int num_cards_left){
     float decks_left_unrounded = num_cards_left / Deck::NUM_CARDS_IN_DECK; 
     num_decks_left = std::round(decks_left_unrounded * 2.0) / 2.0;//convert to only count float .5 segments
     return;
 }
 
-float HiLoStrategy::getTrueCount() const{
+float R14Strategy::getTrueCount() const{
     return true_count;
 }
 
-float HiLoStrategy::getRunningCount() const{
+float R14Strategy::getRunningCount() const{
     return running_count;
 }
 
-float HiLoStrategy::getDecksLeft() const{
+float R14Strategy::getDecksLeft() const{
     return num_decks_left;
 }
 
-bool HiLoStrategy::shouldAcceptInsurance() const{
+bool R14Strategy::shouldAcceptInsurance() const{
     constexpr int insuranceThreshold = 3; //mathmatical point where insurance is profitable accoding to gemini
     if (true_count >= insuranceThreshold){
         return true;
@@ -104,7 +131,7 @@ bool HiLoStrategy::shouldAcceptInsurance() const{
     return false;
 }
 
-Action HiLoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float trueCount){
+Action R14Strategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float trueCount){
     int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
 
     switch (playerTotal) {
@@ -112,9 +139,7 @@ Action HiLoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, f
             if (dealerValue == 10 && trueCount > 0) {
                 return Action::Stand;
             }
-            if (dealerValue == 9 && trueCount >= 5) {
-                return Action::Stand;
-            }
+
             break;
             
         case 15: 
@@ -123,70 +148,15 @@ Action HiLoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, f
             }
             break;
             
-        case 13:
-            if (dealerValue == 2 && trueCount <= -1) { 
-                return Action::Stand;
-            }
-            if (dealerValue == 3 && trueCount <= -2) { 
-                return Action::Stand;
-            }
-            break;
-
-        case 12:
-            if (dealerValue == 3 && trueCount >= 2) {
-                return Action::Stand;
-            }
-            if (dealerValue == 2 && trueCount >= 3) {
-                return Action::Stand;
-            }
-            if (dealerValue == 4 && trueCount < 0){
-                return Action::Hit;
-            }
-            if (dealerValue == 5 && trueCount <= -2){
-                return Action::Hit;
-            }
-            if (dealerValue == 6 && trueCount <= -1){
-                return Action::Hit;
-            }
-            break;
-        case 11:
-            if (dealerValue == 11 && trueCount >= 1){
-                return Action::Double;
-            }
-            break;
-        case 10:
-            if (dealerValue == 10 && trueCount >=4){
-                return Action::Double;
-            }
-            if (dealerValue == 11 && trueCount >= 4){
-                return Action::Double;
-            }
-            break;
-        case 9:
-            if (dealerValue == 2  && trueCount >= 1){
-                return Action::Double;
-            }
-            if (dealerValue == 7  && trueCount >= 3){
-                return Action::Double;
-            }
-            break;
         default: return Action::Skip;
     }
     return Action::Skip;
 }
 
-Action HiLoStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float trueCount){
+Action R14Strategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float trueCount){
     int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
     int playerValue = BasicStrategy::getIndex(playerRank) + INDEX_OFFSET;
     switch (playerValue) {
-        case 9:
-            if (dealerValue == 7 && trueCount >= 4) {
-                return Action::Split;
-            }
-            if (dealerValue == 11 && trueCount >= 5) {
-                return Action::Split;
-            }
-            break;
         
         // Commented out, very obvious counting cards when you split on tens    
         // case 10: 
@@ -205,7 +175,7 @@ Action HiLoStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, 
     return Action::Skip;
 }
 
-Action HiLoStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
+Action R14Strategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
     int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
     switch (playerTotal) {
         case 17:
@@ -242,7 +212,7 @@ Action HiLoStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float t
     return Action::Skip;
 }
 
-Action HiLoStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float trueCount) {
+Action R14Strategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float trueCount) {
     constexpr int lowerBound = 5;
     constexpr int upperBound = 20;
     if (playerTotal < lowerBound) {
@@ -266,7 +236,7 @@ Action HiLoStrategy::getHardHandAction(int playerTotal, Rank dealerUpcard, float
     
 }
 
-Action HiLoStrategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
+Action R14Strategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
     constexpr int lowerBound = 13;
     int dealerIdx = BasicStrategy::getIndex(dealerUpcard);
     int playerIdx = playerTotal - lowerBound;  // Soft 13 maps to index 0 Since chart starts at A,2
@@ -276,7 +246,7 @@ Action HiLoStrategy::getSoftHandAction(int playerTotal, Rank dealerUpcard) {
     return action;
 }
 
-Action HiLoStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, float trueCount) {
+Action R14Strategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, float trueCount) {
     int dealerIdx = BasicStrategy::getIndex(dealerUpcard);
     int pairIdx = BasicStrategy::getIndex(playerSplitRank);
     Action deviation = shouldDeviatefromSplit(playerSplitRank, dealerUpcard, trueCount);

@@ -14,7 +14,7 @@
 
 int main(){
     int numDecksUsed = 2;
-    const bool visualize = true;
+    const bool visualize = false;
     const int iterations = visualize ? 1 : 1000000;
     // float scores[iterations];
 
@@ -36,7 +36,7 @@ int main(){
         auto hiloLog = std::make_unique<LoggingCountingStrategy>(std::make_unique<HiLoStrategy>(numDecksUsed), visualize ? bus : nullptr);
         auto no = std::make_unique<NoStrategy>(numDecksUsed);
 
-        auto player = std::make_unique<HumanPlayer>(false); // false for allowSurrender, matching commented out .allowSurrender()
+        //auto player = std::make_unique<HumanPlayer>(false); // false for allowSurrender, matching commented out .allowSurrender()
         auto robot = std::make_unique<BotPlayer>(false); 
         Deck deck = Deck(numDecksUsed);
         Engine hiLoEngine = EngineBuilder()
@@ -50,7 +50,7 @@ int main(){
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()
                                     //.allowSurrender()
-                                    .build(std::move(no), std::move(robot));
+                                    .build(std::move(hilo), std::move(robot));
         profit = hiLoEngine.runner();
 
     //   scores[i] = profit.first;

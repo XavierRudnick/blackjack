@@ -35,6 +35,9 @@ class EngineBuilder {
         EngineBuilder& allowSurrender();
         EngineBuilder& noSurrender();
 
+        EngineBuilder& enableMontiCarlo();
+        EngineBuilder& noMontiCarlo();
+
         Engine build(std::unique_ptr<Player> player);
 };
 #endif

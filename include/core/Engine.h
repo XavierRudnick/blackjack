@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include <memory>
-
+#include <map>
 #include "Deck.h"
 #include "Hand.h"
 #include "CountingStrategy.h"
@@ -16,6 +16,7 @@
 #include "Player.h"
 #include "Bankroll.h"
 #include "GameReporter.h"
+#include "FixedEngine.h"
 
 class Engine{
 
@@ -30,6 +31,7 @@ public:
         bool allowReSplitAces = true;
         bool allowSurrender = false;
         bool emitEvents = false;
+        bool enabelMontiCarlo = false;
     };
 
     Engine(
@@ -40,6 +42,7 @@ public:
     );
 
     std::pair<double, double> runner();
+    FixedEngine runnerMonte();
 
 private:
     Bankroll bankroll;
@@ -50,6 +53,8 @@ private:
     std::optional<Deck> deck;
     std::unique_ptr<Player> player;
     std::unique_ptr<GameReporter> reporter;
+
+    FixedEngine fixedEngine;
 
     //hand evaluation logic
     std::vector<int> getPlayerScores(std::vector<Hand>& hands);
@@ -82,6 +87,10 @@ private:
     bool doubleHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel,bool has_split);
     bool splitHandler(Hand& user,Hand& dealer, std::vector<Hand>& hands, std::string handLabel,bool has_split, bool is_split_aces);
     bool surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel);
+
+    void playForcedHand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces, bool has_split, Action forcedAction);
+    void calculateEV(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces, bool has_split, Action forcedAction, float trueCount);
+
    
 
 };

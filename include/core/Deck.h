@@ -20,6 +20,7 @@ class Deck{
         std::pair<Card,Card> deal();
         Card hit();
         int getSize();
+        Deck clone() const;
 };
 
 #endif

@@ -13,7 +13,8 @@ CORE_SOURCES = \
     src/core/Engine.cpp \
     src/core/EngineBuilder.cpp \
     src/core/GameReporter.cpp \
-    src/core/Bankroll.cpp
+    src/core/Bankroll.cpp \
+    src/core/FixedEngine.cpp
 
 STRATEGY_SOURCES = \
     $(wildcard src/strategy/*.cpp src/strategy/balanced/*.cpp src/strategy/unbalanced/*.cpp)
@@ -49,4 +50,4 @@ $(OBJDIR)/%.o: src/%.cpp
 
 clean:
 	rm -rf blackjack run_tests $(OBJDIR)
-	rm -f *.o src/*.o src/*/*.o
+	find . -name "*.o" -delete

@@ -11,12 +11,14 @@
 #include "BotPlayer.h"
 #include <chrono> 
 #include "LoggingCountingStrategy.h"
+#include "FixedEngine.h"
 
 int main(){
-    int numDecksUsed = 2;
+    int numDecksUsed = 6;
     const bool visualize = false;
-    const int iterations = visualize ? 1 : 1000000;
+    const int iterations = visualize ? 1 : 5000000;
     // float scores[iterations];
+    FixedEngine fixedEngineTotal;
 
     ConsoleObserver consoleObserver;
     auto* bus = EventBus::getInstance();
@@ -49,19 +51,23 @@ int main(){
                                     .with3To2Payout()
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()
+                                    .enableMontiCarlo()
                                     //.allowSurrender()
                                     .build(std::move(robot));
-        profit = hiLoEngine.runner();
+        //profit = hiLoEngine.runner();
+        FixedEngine fixedEngine = hiLoEngine.runnerMonte();
+        fixedEngineTotal.merge(fixedEngine);
 
     //   scores[i] = profit.first;
-        gameStats.first += profit.first;
-        gameStats.second += profit.second;
+        // gameStats.first += profit.first;
+        // gameStats.second += profit.second;
     }
 
     auto end_time = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
     std::cout << "Simulation time for " << numDecksUsed << " decks and " << iterations << " iterations: " << duration.count() / 1000000.0 << " seconds." << std::endl;
 
+    fixedEngineTotal.printResults();
 
     if (visualize) {
         EventBus::getInstance()->removeObserver(&consoleObserver);

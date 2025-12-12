@@ -48,3 +48,9 @@ Card Deck::hit(){
 int Deck::getSize(){
     return deck.size();
 }
+
+Deck Deck::clone() const{
+    Deck copy(0);
+    copy.deck = this->deck;
+    return copy;
+}

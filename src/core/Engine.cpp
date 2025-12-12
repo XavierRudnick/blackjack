@@ -20,8 +20,15 @@ Engine::Engine(
 std::pair<double, double> Engine::runner(){  
     while (deck->getSize() > config.penetrationThreshold ){
         playHand();
-    }    
+    }  
     return {bankroll.getBalance(), bankroll.getTotalMoneyBet()};
+}
+
+FixedEngine Engine::runnerMonte(){  
+    while (deck->getSize() > config.penetrationThreshold ){
+        playHand();
+    }  
+    return {fixedEngine};
 }
 
 void Engine::playHand(){
@@ -148,6 +155,10 @@ void Engine::play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool 
     bool game_over = false;
     const std::string handLabel = has_split_aces ? "Player (split aces)" : "Player";
     reporter->reportHand(user, handLabel); 
+    
+    if (config.enabelMontiCarlo && user.getScore() == 15 && dealer.dealerShowsTen() && !dealer.dealerHiddenAce() && !user.isHandSoft()){
+        fixedEngine.calculateEV(*player, *deck, dealer, user, player->getTrueCount());
+    }
 
     while(!game_over){
         Action action = player->getAction(user, dealer, player->getTrueCount());

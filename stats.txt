@@ -139,3 +139,23 @@ Average money bet: 872.128
 Difference: 15.7517
 Money gained/lost per 1000$ 18.0612$
 RTP 1.01806
+
+
+
+Quatro Hilo
+====================================
+Simulation time for 2 decks and 1000000 iterations: 60.1816 seconds.
+Average after 1000000 rounds: 1187.42
+Average money bet: 5065.34
+Difference: 187.419
+Money gained/lost per 1000$ 37.0002$
+RTP 1.037
+
+Simulation time for 6 decks and 1000000 iterations: 149.251 seconds.
+Average after 1000000 rounds: 1171.33
+Average money bet: 7604.99
+Difference: 171.329
+Money gained/lost per 1000$ 22.5285$
+RTP 1.02253
+
+

@@ -94,6 +94,21 @@ EngineBuilder& EngineBuilder::noMontiCarlo() {
     return *this;
 }
 
+EngineBuilder& EngineBuilder::setUserHandValue(int value) {
+    gameConfig.userHandValue = value;
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::setDealerUpcardValue(int value) {
+    gameConfig.dealerUpcardValue = value;
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::setActions(std::vector<Action> actions) {
+    gameConfig.monteCarloActions = actions;
+    return *this;
+}
+
 Engine EngineBuilder::build(std::unique_ptr<Player> player) {
     Engine engine(gameConfig, *deck, std::move(player), eventBus);
     return engine;

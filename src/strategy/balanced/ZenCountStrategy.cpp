@@ -60,40 +60,39 @@ int ZenCountStrategy::getBetSize() {
 }
 
 void ZenCountStrategy::updateCount(Card card) {
-    Rank rank = card.getRank();
-    int score = static_cast<int>(rank) + INDEX_OFFSET;
+    int score = card.getValue();
 
     switch (score)
     {
     case 2:
-        true_count += 1;
+        running_count += 1;
         break;
     case 3:
-        true_count += 1;
+        running_count += 1;
         break;
     case 4:
-        true_count += 2;
+        running_count += 2;
         break;
     case 5:
-        true_count += 2;
+        running_count += 2;
         break;
     case 6: 
-        true_count += 2;
+        running_count += 2;
         break;
     case 7:
-        true_count += 1;
+        running_count += 1;
         break;
     case 8:
-        true_count += 0;
+        running_count += 0;
         break;
     case 9:         
-        true_count += 0;
+        running_count += 0;
         break;
     case 10:
-        true_count -= 2;
+        running_count -= 2;
         break;
     case 11: //Ace
-        true_count -= 1;
+        running_count -= 1;
         break;
     
     default:

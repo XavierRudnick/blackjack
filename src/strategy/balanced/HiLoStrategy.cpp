@@ -119,9 +119,9 @@ Action HiLoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, f
             if (dealerValue == 10 && trueCount > 0) {
                 return Action::Stand;
             }
-            if (dealerValue == 9 && trueCount >= 5) {
-                return Action::Stand;
-            }
+            // if (dealerValue == 9 && trueCount >= 5) {
+            //     return Action::Stand;
+            // }
             break;
             
         case 15: 
@@ -131,12 +131,12 @@ Action HiLoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, f
             break;
             
         case 13:
-            if (dealerValue == 2 && trueCount <= -1) { 
-                return Action::Stand;
-            }
-            if (dealerValue == 3 && trueCount <= -2) { 
-                return Action::Stand;
-            }
+            // if (dealerValue == 2 && trueCount <= -1) { 
+            //     return Action::Stand;
+            // }
+            // if (dealerValue == 3 && trueCount <= -2) { 
+            //     return Action::Stand;
+            // }
             break;
 
         case 12:
@@ -146,20 +146,15 @@ Action HiLoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, f
             if (dealerValue == 2 && trueCount >= 3) {
                 return Action::Stand;
             }
-            if (dealerValue == 4 && trueCount < 0){
-                return Action::Hit;
-            }
-            if (dealerValue == 5 && trueCount <= -2){
-                return Action::Hit;
-            }
-            if (dealerValue == 6 && trueCount <= -1){
-                return Action::Hit;
-            }
-            break;
-        case 11:
-            if (dealerValue == 11 && trueCount >= 1){
-                return Action::Double;
-            }
+            // if (dealerValue == 4 && trueCount < 0){
+            //     return Action::Hit;
+            // }
+            // if (dealerValue == 5 && trueCount <= -2){
+            //     return Action::Hit;
+            // }
+            // if (dealerValue == 6 && trueCount <= -1){
+            //     return Action::Hit;
+            // }
             break;
         case 10:
             if (dealerValue == 10 && trueCount >=4){

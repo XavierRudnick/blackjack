@@ -15,6 +15,7 @@ Engine::Engine(
 {
     reporter = std::make_unique<GameReporter>(eventBus, config.emitEvents);
     config.penetrationThreshold = (1-config.penetrationThreshold) * config.numDecks * Deck::NUM_CARDS_IN_DECK;
+    fixedEngine = FixedEngine(config.monteCarloActions);
 }
 
 std::pair<double, double> Engine::runner(){  
@@ -156,7 +157,7 @@ void Engine::play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool 
     const std::string handLabel = has_split_aces ? "Player (split aces)" : "Player";
     reporter->reportHand(user, handLabel); 
     
-    if (config.enabelMontiCarlo && user.getScore() == 15 && dealer.dealerShowsTen() && !dealer.dealerHiddenAce() && !user.isHandSoft()){
+    if (config.enabelMontiCarlo && user.getScore() == config.userHandValue && config.dealerUpcardValue == dealer.getCards().front().getValue() && !dealer.dealerHiddenAce() && !user.isHandSoft()){
         fixedEngine.calculateEV(*player, *deck, dealer, user, player->getTrueCount());
     }
 

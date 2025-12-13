@@ -38,6 +38,11 @@ class EngineBuilder {
         EngineBuilder& enableMontiCarlo();
         EngineBuilder& noMontiCarlo();
 
+        EngineBuilder& setUserHandValue(int value);
+        EngineBuilder& setDealerUpcardValue(int value);
+
+        EngineBuilder& setActions(std::vector<Action> actions);
+
         Engine build(std::unique_ptr<Player> player);
 };
 #endif

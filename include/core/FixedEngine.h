@@ -43,14 +43,16 @@ public:
 
     std::map<float, DecisionPoint> EVresults;
     FixedEngine();
+    FixedEngine(std::vector<Action> monteCarloActions);
     void calculateEV(Player& player,Deck& deck,Hand& dealer, Hand& user, float trueCount);
     void printResults();
+    void savetoCSVResults(const std::string& filename = "fixed_engine_results.csv") const;
     const std::map<float, DecisionPoint>& getResults() const { return EVresults; }
     void merge(const FixedEngine& other);
 private:
-    float evaluateHand(Deck& deck, Hand& dealer, Hand& user);
+    std::vector<Action> monteCarloActions;
 
-    //card drawing logic
+    float evaluateHand(Deck& deck, Hand& dealer, Hand& user);
     void dealer_draw(Deck& deck, Hand& dealer);
 
     // bool handleInsurancePhase(Hand& dealer, Hand& user);

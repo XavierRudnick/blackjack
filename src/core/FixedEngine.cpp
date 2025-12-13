@@ -1,12 +1,21 @@
 #include "FixedEngine.h"
 #include "Deck.h"
+#include "Engine.h"
+
+#include <fstream>
+#include <iomanip>
+#include <filesystem>
+#include <limits>
 
 FixedEngine::FixedEngine() {}
+FixedEngine::FixedEngine(std::vector<Action> monteCarloActions) : monteCarloActions(monteCarloActions) {}
 
 void FixedEngine::calculateEV(Player& player, Deck& deck, Hand& dealer, Hand& user, float trueCount){
 
+    
+
     // Play out the hand
-    for (Action forcedAction : {Action::Hit, Action::Stand}) {
+    for (Action forcedAction : monteCarloActions) {
         Hand simDealer = dealer;
         Hand simUser = user;
         Deck simDeck = deck.clone();
@@ -142,6 +151,38 @@ void FixedEngine::printResults(){
                       << std::endl;
         }
     }
+
+void FixedEngine::savetoCSVResults(const std::string& filename) const {
+    std::filesystem::path outPath(filename);
+    if (outPath.has_parent_path()) {
+        std::error_code ec;
+        std::filesystem::create_directories(outPath.parent_path(), ec);
+        if (ec) {
+            std::cerr << "Failed to create directory " << outPath.parent_path().string()
+                      << ": " << ec.message() << std::endl;
+            return;
+        }
+    }
+
+    std::ofstream out(outPath, std::ios::out | std::ios::trunc);
+    if (!out.is_open()) {
+        std::cerr << "Failed to open " << outPath.string() << " for writing results." << std::endl;
+        return;
+    }
+
+    out << "TrueCount,Hit EV,Stand EV,Double EV,Hands Played" << '\n';
+
+    for (const auto& [trueCount, decisionPoint] : EVresults) {
+        out << std::setprecision(std::numeric_limits<float>::max_digits10) << std::defaultfloat
+            << trueCount << ','
+            << std::fixed << std::setprecision(6)
+            << decisionPoint.hitStats.getEV() << ','
+            << decisionPoint.standStats.getEV() << ','
+            << decisionPoint.doubleStats.getEV() << ','
+            << decisionPoint.hitStats.handsPlayed
+            << '\n';
+    }
+}
 
 void FixedEngine::merge(const FixedEngine& other){
     for (const auto& [trueCount, decisionPoint] : other.EVresults) {

@@ -14,6 +14,7 @@ class Card{
         Suit getSuit();
         bool isWorthTen();
         bool isAce();
+        int getValue();
 };
 
 #endif

@@ -3,6 +3,9 @@
 
 #include "Engine.h"
 #include "HiLoStrategy.h"
+#include "ZenCountStrategy.h"
+#include "RAPCStrategy.h"
+#include "CountingStrategy.h"
 #include "NoStrategy.h"
 #include "observers/ConsoleObserver.h"
 #include "observers/EventBus.h"
@@ -10,6 +13,9 @@
 #include "HumanPlayer.h"
 #include "BotPlayer.h"
 #include <chrono> 
+#include <array>
+#include <sstream>
+#include <functional>
 #include "LoggingCountingStrategy.h"
 #include "FixedEngine.h"
 
@@ -18,7 +24,6 @@ int main(){
     const bool visualize = false;
     const int iterations = visualize ? 1 : 5000000;
     // float scores[iterations];
-    FixedEngine fixedEngineTotal;
 
     ConsoleObserver consoleObserver;
     auto* bus = EventBus::getInstance();
@@ -30,44 +35,74 @@ int main(){
 
     std::pair<double, double> gameStats = {0, 0};
     auto start_time = std::chrono::high_resolution_clock::now();
+    int userHandValuesStand[] = {16,15,12,12};
+    int dealerUpcardValuesStand[] = {10,10,3,2};
 
-    for (int i = 0; i < iterations; i++){
-        std::pair<double, double> profit = {1000, 0};
+    int userHandValuesDouble[] = {10,10,9,9};
+    int dealerUpcardValuesDouble[] = {10,11,2,7};
 
-        auto hilo = std::make_unique<HiLoStrategy>(numDecksUsed);
-        auto hiloLog = std::make_unique<LoggingCountingStrategy>(std::make_unique<HiLoStrategy>(numDecksUsed), visualize ? bus : nullptr);
-        auto no = std::make_unique<NoStrategy>(numDecksUsed);
+    std::vector<Action> monteCarloActions = {Action::Hit, Action::Double};
 
-        //auto player = std::make_unique<HumanPlayer>(false,std::move(hilo)); // false for allowSurrender, matching commented out .allowSurrender()
-        auto robot = std::make_unique<BotPlayer>(false, std::move(hilo)); // false for allowSurrender, matching commented out .allowSurrender()
-        Deck deck = Deck(numDecksUsed);
-        Engine hiLoEngine = EngineBuilder()
-                                    .withEventBus(bus)
-                                    .setDeckSize(numDecksUsed)
-                                    .setDeck(deck)
-                                    .setPenetrationThreshold(.75)
-                                    .setInitialWallet(1000)
-                                    .enableEvents(visualize)
-                                    .with3To2Payout()
-                                    .withS17Rules()
-                                    .allowDoubleAfterSplit()
-                                    .enableMontiCarlo()
-                                    //.allowSurrender()
-                                    .build(std::move(robot));
-        //profit = hiLoEngine.runner();
-        FixedEngine fixedEngine = hiLoEngine.runnerMonte();
-        fixedEngineTotal.merge(fixedEngine);
+    using StrategyFactory = std::function<std::unique_ptr<CountingStrategy>()>;
+    std::array<StrategyFactory, 3> strategyFactories = {
+        [numDecksUsed]() { return std::make_unique<HiLoStrategy>(numDecksUsed); },
+        [numDecksUsed]() { return std::make_unique<ZenCountStrategy>(numDecksUsed); },
+        [numDecksUsed]() { return std::make_unique<RAPCStrategy>(numDecksUsed); }
+    };
 
-    //   scores[i] = profit.first;
-        // gameStats.first += profit.first;
-        // gameStats.second += profit.second;
+    for (size_t k = 0; k < strategyFactories.size(); k++){
+        std::cout << "Running simulations for strategy " << k+1 << " / " << strategyFactories.size() << std::endl;
+        for (size_t j = 0; j < sizeof(userHandValuesStand)/sizeof(userHandValuesStand[0]); j++){
+            FixedEngine fixedEngineTotal;
+            for (int i = 0; i < iterations; i++){
+                [[maybe_unused]] std::pair<double, double> profit = {1000, 0};
+
+                //auto hilo = std::make_unique<HiLoStrategy>(numDecksUsed);
+                //auto hiloLog = std::make_unique<LoggingCountingStrategy>(std::make_unique<HiLoStrategy>(numDecksUsed), visualize ? bus : nullptr);
+                //auto no = std::make_unique<NoStrategy>(numDecksUsed);
+                //auto player = std::make_unique<HumanPlayer>(false,std::move(hilo)); // false for allowSurrender, matching commented out .allowSurrender()
+                auto robot = std::make_unique<BotPlayer>(false, strategyFactories[k]()); 
+                Deck deck = Deck(numDecksUsed);
+
+                Engine hiLoEngine = EngineBuilder()
+                                            .withEventBus(bus)
+                                            .setDeckSize(numDecksUsed)
+                                            .setDeck(deck)
+                                            .setPenetrationThreshold(.75)
+                                            .setInitialWallet(1000)
+                                            .enableEvents(visualize)
+                                            .with3To2Payout()
+                                            .withS17Rules()
+                                            .allowDoubleAfterSplit()
+                                            .enableMontiCarlo()
+                                            .setUserHandValue(userHandValuesDouble[j])
+                                            .setDealerUpcardValue(dealerUpcardValuesDouble[j])
+                                            .setActions(monteCarloActions)
+                                            .build(std::move(robot));
+                //profit = hiLoEngine.runner();
+                FixedEngine fixedEngine = hiLoEngine.runnerMonte();
+                fixedEngineTotal.merge(fixedEngine);
+
+                if (i % 100000 == 0 && i != 0){
+                    std::cout  << "Completed " << i << " / " << iterations << " iterations." <<std::endl;
+                }
+
+                // gameStats.first += profit.first;
+                // gameStats.second += profit.second;
+            }
+            std::ostringstream filename;
+                filename << "stats/" << "strategy_" << k+1
+                    << "_user_" << userHandValuesDouble[j]
+                    << "_dealer_" << dealerUpcardValuesDouble[j]
+                    << ".csv";
+            fixedEngineTotal.savetoCSVResults(filename.str());
+        }
     }
+    
 
     auto end_time = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
     std::cout << "Simulation time for " << numDecksUsed << " decks and " << iterations << " iterations: " << duration.count() / 1000000.0 << " seconds." << std::endl;
-
-    fixedEngineTotal.printResults();
 
     if (visualize) {
         EventBus::getInstance()->removeObserver(&consoleObserver);

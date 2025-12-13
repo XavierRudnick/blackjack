@@ -32,6 +32,9 @@ public:
         bool allowSurrender = false;
         bool emitEvents = false;
         bool enabelMontiCarlo = false;
+        int userHandValue = 0;
+        int dealerUpcardValue = 0;
+        std::vector<Action> monteCarloActions;
     };
 
     Engine(

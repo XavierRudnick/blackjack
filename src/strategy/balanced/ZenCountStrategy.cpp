@@ -140,17 +140,35 @@ Action ZenCountStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcar
             }
             
         case 15: 
-            if (dealerValue == 10 && trueCount >= 4) {
+            if (dealerValue == 10 && trueCount >= 8) {
                 return Action::Stand;
             }
             break;
 
         case 12:
-            if (dealerValue == 3 && trueCount >= 2) {
+            if (dealerValue == 3 && trueCount >= 5) {
                 return Action::Stand;
             }
             if (dealerValue == 2 && trueCount >= 3) {
                 return Action::Stand;
+            }
+            break;
+
+        case 10:
+            if (dealerValue == 10 && trueCount >= 12.5) {
+                return Action::Double;
+            }
+            if (dealerValue == 11 && trueCount > 10) {
+                return Action::Double;
+            }
+            break;
+            
+        case 9:
+            if (dealerValue == 2  && trueCount > 0) {
+                return Action::Double;
+            }
+            if (dealerValue == 7  && trueCount > 2) {
+                return Action::Double;
             }
             break;
 

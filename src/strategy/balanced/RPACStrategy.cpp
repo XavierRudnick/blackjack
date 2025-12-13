@@ -140,19 +140,28 @@ Action RAPCStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, f
 
     switch (playerTotal) {
         case 16:
-            if (dealerValue == 10 && trueCount > 0) {
+            if (dealerValue == 10 && trueCount > 1.5) {
                 return Action::Stand;
             }
 
             break;
             
         case 15: 
-            if (dealerValue == 10 && trueCount >= 4) {
+            if (dealerValue == 10 && trueCount > 14) {
                 return Action::Stand;
             }
             break;
             
         default: return Action::Skip;
+
+        case 12:
+            if (dealerValue == 3 && trueCount > 11) {
+                return Action::Stand;
+            }
+            if (dealerValue == 2 && trueCount >= 11) {
+                return Action::Stand;
+            }
+            break;
     }
     return Action::Skip;
 }

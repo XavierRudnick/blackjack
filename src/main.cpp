@@ -18,6 +18,12 @@
 #include <functional>
 #include "LoggingCountingStrategy.h"
 #include "FixedEngine.h"
+#include "MentorStrategy.h"
+#include "OmegaIIStrategy.h"
+#include "R14Strategy.h"
+#include "WongHalvesStrategy.h"
+#include "RPCStrategy.h"
+
 
 int main(){
     int numDecksUsed = 6;
@@ -44,13 +50,16 @@ int main(){
     std::vector<Action> monteCarloActions = {Action::Hit, Action::Double};
 
     using StrategyFactory = std::function<std::unique_ptr<CountingStrategy>()>;
-    std::array<StrategyFactory, 3> strategyFactories = {
-        [numDecksUsed]() { return std::make_unique<HiLoStrategy>(numDecksUsed); },
-        [numDecksUsed]() { return std::make_unique<ZenCountStrategy>(numDecksUsed); },
-        [numDecksUsed]() { return std::make_unique<RAPCStrategy>(numDecksUsed); }
+    std::array<StrategyFactory, 6> strategyFactories = {
+        [numDecksUsed]() { return std::make_unique<MentorStrategy>(numDecksUsed); },
+        [numDecksUsed]() { return std::make_unique<OmegaIIStrategy>(numDecksUsed); },
+        [numDecksUsed]() { return std::make_unique<R14Strategy>(numDecksUsed); },
+        [numDecksUsed]() { return std::make_unique<RPCStrategy>(numDecksUsed); },
+        [numDecksUsed]() { return std::make_unique<WongHalvesStrategy>(numDecksUsed); },
+        [numDecksUsed]() { return std::make_unique<NoStrategy>(numDecksUsed); }
     };
 
-    for (size_t k = 0; k < strategyFactories.size(); k++){
+    for (size_t k = 0; k < 6; k++){
         std::cout << "Running simulations for strategy " << k+1 << " / " << strategyFactories.size() << std::endl;
         for (size_t j = 0; j < sizeof(userHandValuesStand)/sizeof(userHandValuesStand[0]); j++){
             FixedEngine fixedEngineTotal;
@@ -75,8 +84,8 @@ int main(){
                                             .withS17Rules()
                                             .allowDoubleAfterSplit()
                                             .enableMontiCarlo()
-                                            .setUserHandValue(userHandValuesDouble[j])
-                                            .setDealerUpcardValue(dealerUpcardValuesDouble[j])
+                                            .setUserHandValue(userHandValuesStand[j])
+                                            .setDealerUpcardValue(dealerUpcardValuesStand[j])
                                             .setActions(monteCarloActions)
                                             .build(std::move(robot));
                 //profit = hiLoEngine.runner();
@@ -91,9 +100,9 @@ int main(){
                 // gameStats.second += profit.second;
             }
             std::ostringstream filename;
-                filename << "stats/" << "strategy_" << k+1
-                    << "_user_" << userHandValuesDouble[j]
-                    << "_dealer_" << dealerUpcardValuesDouble[j]
+                filename << "stats/" << "strategy_" << k+4
+                    << "_user_" << userHandValuesStand[j]
+                    << "_dealer_" << dealerUpcardValuesStand[j]
                     << ".csv";
             fixedEngineTotal.savetoCSVResults(filename.str());
         }

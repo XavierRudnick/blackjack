@@ -157,18 +157,18 @@ Action HiLoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, f
             // }
             break;
         case 10:
-            if (dealerValue == 10 && trueCount >=4){
+            if (dealerValue == 10 && trueCount >= 4){
                 return Action::Double;
             }
-            if (dealerValue == 11 && trueCount >= 4){
+            if (dealerValue == 11 && trueCount >= 3.5){
                 return Action::Double;
             }
             break;
         case 9:
-            if (dealerValue == 2  && trueCount >= 1){
+            if (dealerValue == 2  && trueCount >= -0.5){
                 return Action::Double;
             }
-            if (dealerValue == 7  && trueCount >= 3){
+            if (dealerValue == 7  && trueCount >= 2.5){
                 return Action::Double;
             }
             break;

@@ -59,54 +59,87 @@ int main(){
         [numDecksUsed]() { return std::make_unique<NoStrategy>(numDecksUsed); }
     };
 
-    for (size_t k = 0; k < 6; k++){
-        std::cout << "Running simulations for strategy " << k+1 << " / " << strategyFactories.size() << std::endl;
-        for (size_t j = 0; j < sizeof(userHandValuesStand)/sizeof(userHandValuesStand[0]); j++){
-            FixedEngine fixedEngineTotal;
-            for (int i = 0; i < iterations; i++){
-                [[maybe_unused]] std::pair<double, double> profit = {1000, 0};
+    for (int i = 0; i < iterations; i++){
+        std::pair<double, double> profit = {1000, 0};
 
-                //auto hilo = std::make_unique<HiLoStrategy>(numDecksUsed);
-                //auto hiloLog = std::make_unique<LoggingCountingStrategy>(std::make_unique<HiLoStrategy>(numDecksUsed), visualize ? bus : nullptr);
-                //auto no = std::make_unique<NoStrategy>(numDecksUsed);
-                //auto player = std::make_unique<HumanPlayer>(false,std::move(hilo)); // false for allowSurrender, matching commented out .allowSurrender()
-                auto robot = std::make_unique<BotPlayer>(false, strategyFactories[k]()); 
-                Deck deck = Deck(numDecksUsed);
+        auto hilo = std::make_unique<HiLoStrategy>(numDecksUsed);
+        //auto hiloLog = std::make_unique<LoggingCountingStrategy>(std::make_unique<HiLoStrategy>(numDecksUsed), visualize ? bus : nullptr);
+        //auto no = std::make_unique<NoStrategy>(numDecksUsed);
+        //auto player = std::make_unique<HumanPlayer>(false,std::move(hilo)); // false for allowSurrender, matching commented out .allowSurrender()
+        auto robot = std::make_unique<BotPlayer>(false, std::move(hilo)); 
+        Deck deck = Deck(numDecksUsed);
 
-                Engine hiLoEngine = EngineBuilder()
-                                            .withEventBus(bus)
-                                            .setDeckSize(numDecksUsed)
-                                            .setDeck(deck)
-                                            .setPenetrationThreshold(.75)
-                                            .setInitialWallet(1000)
-                                            .enableEvents(visualize)
-                                            .with3To2Payout()
-                                            .withS17Rules()
-                                            .allowDoubleAfterSplit()
-                                            .enableMontiCarlo()
-                                            .setUserHandValue(userHandValuesStand[j])
-                                            .setDealerUpcardValue(dealerUpcardValuesStand[j])
-                                            .setActions(monteCarloActions)
-                                            .build(std::move(robot));
-                //profit = hiLoEngine.runner();
-                FixedEngine fixedEngine = hiLoEngine.runnerMonte();
-                fixedEngineTotal.merge(fixedEngine);
+        Engine hiLoEngine = EngineBuilder()
+                                    .withEventBus(bus)
+                                    .setDeckSize(numDecksUsed)
+                                    .setDeck(deck)
+                                    .setPenetrationThreshold(.75)
+                                    .setInitialWallet(1000)
+                                    .enableEvents(visualize)
+                                    .with3To2Payout()
+                                    .withS17Rules()
+                                    .allowDoubleAfterSplit()
+                                    .build(std::move(robot));
+        profit = hiLoEngine.runner();
+        //FixedEngine fixedEngine = hiLoEngine.runnerMonte();
+        //fixedEngineTotal.merge(fixedEngine);
 
-                if (i % 100000 == 0 && i != 0){
-                    std::cout  << "Completed " << i << " / " << iterations << " iterations." <<std::endl;
-                }
-
-                // gameStats.first += profit.first;
-                // gameStats.second += profit.second;
-            }
-            std::ostringstream filename;
-                filename << "stats/" << "strategy_" << k+4
-                    << "_user_" << userHandValuesStand[j]
-                    << "_dealer_" << dealerUpcardValuesStand[j]
-                    << ".csv";
-            fixedEngineTotal.savetoCSVResults(filename.str());
+        if (i % 100000 == 0 && i != 0){
+            std::cout  << "Completed " << i << " / " << iterations << " iterations." <<std::endl;
         }
-    }
+
+        // gameStats.first += profit.first;
+        // gameStats.second += profit.second;
+    } 
+
+    // for (size_t k = 0; k < 6; k++){
+    //     std::cout << "Running simulations for strategy " << k+1 << " / " << strategyFactories.size() << std::endl;
+    //     for (size_t j = 0; j < sizeof(userHandValuesStand)/sizeof(userHandValuesStand[0]); j++){
+    //         FixedEngine fixedEngineTotal;
+    //         for (int i = 0; i < iterations; i++){
+    //             [[maybe_unused]] std::pair<double, double> profit = {1000, 0};
+
+    //             //auto hilo = std::make_unique<HiLoStrategy>(numDecksUsed);
+    //             //auto hiloLog = std::make_unique<LoggingCountingStrategy>(std::make_unique<HiLoStrategy>(numDecksUsed), visualize ? bus : nullptr);
+    //             //auto no = std::make_unique<NoStrategy>(numDecksUsed);
+    //             //auto player = std::make_unique<HumanPlayer>(false,std::move(hilo)); // false for allowSurrender, matching commented out .allowSurrender()
+    //             auto robot = std::make_unique<BotPlayer>(false, strategyFactories[k]()); 
+    //             Deck deck = Deck(numDecksUsed);
+
+    //             Engine hiLoEngine = EngineBuilder()
+    //                                         .withEventBus(bus)
+    //                                         .setDeckSize(numDecksUsed)
+    //                                         .setDeck(deck)
+    //                                         .setPenetrationThreshold(.75)
+    //                                         .setInitialWallet(1000)
+    //                                         .enableEvents(visualize)
+    //                                         .with3To2Payout()
+    //                                         .withS17Rules()
+    //                                         .allowDoubleAfterSplit()
+    //                                         .enableMontiCarlo()
+    //                                         .setUserHandValue(userHandValuesStand[j])
+    //                                         .setDealerUpcardValue(dealerUpcardValuesStand[j])
+    //                                         .setActions(monteCarloActions)
+    //                                         .build(std::move(robot));
+    //             //profit = hiLoEngine.runner();
+    //             FixedEngine fixedEngine = hiLoEngine.runnerMonte();
+    //             fixedEngineTotal.merge(fixedEngine);
+
+    //             if (i % 100000 == 0 && i != 0){
+    //                 std::cout  << "Completed " << i << " / " << iterations << " iterations." <<std::endl;
+    //             }
+
+    //             // gameStats.first += profit.first;
+    //             // gameStats.second += profit.second;
+    //         }
+    //         std::ostringstream filename;
+    //             filename << "stats/" << "strategy_" << k+4
+    //                 << "_user_" << userHandValuesStand[j]
+    //                 << "_dealer_" << dealerUpcardValuesStand[j]
+    //                 << ".csv";
+    //         fixedEngineTotal.savetoCSVResults(filename.str());
+    //     }
+    // }
     
 
     auto end_time = std::chrono::high_resolution_clock::now();

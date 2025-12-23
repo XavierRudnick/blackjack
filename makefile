@@ -37,7 +37,10 @@ BLACKJACK_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(BLACKJACK_SOURCES))
 TEST_SOURCES = src/test.cpp
 TEST_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(TEST_SOURCES))
 
-all: blackjack test
+TEST_FIXED_ENGINE_SOURCES = src/testFixedEngine.cpp
+TEST_FIXED_ENGINE_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(TEST_FIXED_ENGINE_SOURCES))
+
+all: blackjack test test_fixed_engine
 
 blackjack: $(BLACKJACK_OBJECTS) $(COMMON_OBJECTS)
 	$(CXX) $(CXXFLAGS) -o blackjack $(BLACKJACK_OBJECTS) $(COMMON_OBJECTS)
@@ -45,10 +48,13 @@ blackjack: $(BLACKJACK_OBJECTS) $(COMMON_OBJECTS)
 test: $(TEST_OBJECTS) $(COMMON_OBJECTS)
 	$(CXX) $(CXXFLAGS) -o run_tests $(TEST_OBJECTS) $(COMMON_OBJECTS)
 
+test_fixed_engine: $(TEST_FIXED_ENGINE_OBJECTS) $(COMMON_OBJECTS)
+	$(CXX) $(CXXFLAGS) -o run_fixed_engine_tests $(TEST_FIXED_ENGINE_OBJECTS) $(COMMON_OBJECTS)
+
 $(OBJDIR)/%.o: src/%.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
 clean:
-	rm -rf blackjack run_tests $(OBJDIR)
+	rm -rf blackjack run_tests run_fixed_engine_tests $(OBJDIR)
 	find . -name "*.o" -delete

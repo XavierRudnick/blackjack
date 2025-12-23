@@ -47,7 +47,7 @@ public:
     void calculateEV(Player& player,Deck& deck,Hand& dealer, Hand& user, float trueCount);
     void printResults();
     void savetoCSVResults(const std::string& filename = "fixed_engine_results.csv") const;
-    const std::map<float, DecisionPoint>& getResults() const { return EVresults; }
+    const std::map<float, DecisionPoint>& getResults() const;
     void merge(const FixedEngine& other);
 private:
     std::vector<Action> monteCarloActions;
@@ -63,13 +63,13 @@ private:
     // bool handleInsuranceDeclined(Hand& dealer, Hand& user);
     // bool dealerRobberyHandler(Hand& dealer,Hand& user);
 
-    bool standHandler(Hand& user);
-    bool hitHandler(Player& player, Deck& deck, Hand& user);
-    bool doubleHandler(Player& player, Deck& deck, Hand& user);
-    bool splitHandler(Hand& user,Hand& dealer, std::vector<Hand>& hands,bool has_split, bool is_split_aces);
+    bool standHandler(Hand& user, std::vector<Hand>& hands);
+    bool hitHandler(Deck& deck, Hand& user, std::vector<Hand>& hands);
+    bool doubleHandler(Deck& deck, Hand& user, std::vector<Hand>& hands, bool has_split);
+    bool splitHandler( Deck& deck, Hand& user,Hand& dealer, std::vector<Hand>& hands,bool has_split, bool is_split_aces);
     bool surrenderHandler(Hand& user, std::vector<Hand>& hands);
 
-    Hand playForcedHand(Player& player, Deck& deck, Hand& dealer, Hand& user, Action forcedAction);
+    void playForcedHand(Player& player, Deck& deck, Hand& dealer, Hand& user, std::vector<Hand>& hands, Action forcedAction,bool has_split_aces, bool has_split);
  
 
 };

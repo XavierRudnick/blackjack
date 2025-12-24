@@ -27,8 +27,8 @@
 
 int main(){
     int numDecksUsed = 6;
-    const bool visualize = true;
-    const int iterations = visualize ? 1 : 5000000;
+    const bool visualize = false;
+    const int iterations = visualize ? 1 : 500000;
     // float scores[iterations];
 
     ConsoleObserver consoleObserver;
@@ -41,33 +41,36 @@ int main(){
 
     std::pair<double, double> gameStats = {0, 0};
     auto start_time = std::chrono::high_resolution_clock::now();
-    int userHandValuesStand[] = {16,15,12,12};
-    int dealerUpcardValuesStand[] = {10,10,3,2};
+    // int userHandValuesStand[] = {16,15,12,12};
+    // int dealerUpcardValuesStand[] = {10,10,3,2};
 
-    int userHandValuesDouble[] = {10,10,9,9};
-    int dealerUpcardValuesDouble[] = {10,11,2,7};
+    // int userHandValuesDouble[] = {10,10,9,9};
+    // int dealerUpcardValuesDouble[] = {10,11,2,7};
 
-    std::vector<Action> monteCarloActions = {Action::Hit, Action::Double};
+    //std::vector<Action> monteCarloActions = {Action::Hit, Action::Double};
 
-    using StrategyFactory = std::function<std::unique_ptr<CountingStrategy>()>;
-    std::array<StrategyFactory, 6> strategyFactories = {
-        [numDecksUsed]() { return std::make_unique<MentorStrategy>(numDecksUsed); },
-        [numDecksUsed]() { return std::make_unique<OmegaIIStrategy>(numDecksUsed); },
-        [numDecksUsed]() { return std::make_unique<R14Strategy>(numDecksUsed); },
-        [numDecksUsed]() { return std::make_unique<RPCStrategy>(numDecksUsed); },
-        [numDecksUsed]() { return std::make_unique<WongHalvesStrategy>(numDecksUsed); },
-        [numDecksUsed]() { return std::make_unique<NoStrategy>(numDecksUsed); }
-    };
+    // using StrategyFactory = std::function<std::unique_ptr<CountingStrategy>()>;
+    // std::array<StrategyFactory, 6> strategyFactories = {
+    //     [numDecksUsed]() { return std::make_unique<MentorStrategy>(numDecksUsed); },
+    //     [numDecksUsed]() { return std::make_unique<OmegaIIStrategy>(numDecksUsed); },
+    //     [numDecksUsed]() { return std::make_unique<R14Strategy>(numDecksUsed); },
+    //     [numDecksUsed]() { return std::make_unique<RPCStrategy>(numDecksUsed); },
+    //     [numDecksUsed]() { return std::make_unique<WongHalvesStrategy>(numDecksUsed); },
+    //     [numDecksUsed]() { return std::make_unique<NoStrategy>(numDecksUsed); }
+    // };
+
+    Deck deck(numDecksUsed);
 
     for (int i = 0; i < iterations; i++){
+        deck.reset();
+        auto hilo = std::make_unique<HiLoStrategy>(numDecksUsed);
+        auto robot = std::make_unique<BotPlayer>(false, std::move(hilo)); 
         std::pair<double, double> profit = {1000, 0};
 
-        auto hilo = std::make_unique<HiLoStrategy>(numDecksUsed);
         //auto hiloLog = std::make_unique<LoggingCountingStrategy>(std::make_unique<HiLoStrategy>(numDecksUsed), visualize ? bus : nullptr);
         //auto no = std::make_unique<NoStrategy>(numDecksUsed);
-        auto player = std::make_unique<HumanPlayer>(false,std::move(hilo)); // false for allowSurrender, matching commented out .allowSurrender()
-        //auto robot = std::make_unique<BotPlayer>(false, std::move(hilo)); 
-        Deck deck = Deck(numDecksUsed);
+        //auto player = std::make_unique<HumanPlayer>(false,std::move(hilo)); // false for allowSurrender, matching commented out .allowSurrender()
+        
 
         Engine hiLoEngine = EngineBuilder()
                                     .withEventBus(bus)
@@ -79,7 +82,7 @@ int main(){
                                     .with3To2Payout()
                                     .withS17Rules()
                                     .allowDoubleAfterSplit()
-                                    .build(std::move(player));
+                                    .build(std::move(robot));
         profit = hiLoEngine.runner();
         //FixedEngine fixedEngine = hiLoEngine.runnerMonte();
         //fixedEngineTotal.merge(fixedEngine);

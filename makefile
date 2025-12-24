@@ -1,6 +1,6 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -g 
-#CXXFLAGS= -std=c++17 -O2 -march=native -DNDEBUG
+#CXXFLAGS = -std=c++17 -Wall -Wextra -g 
+CXXFLAGS= -std=c++17 -O3 -march=native -flto -DNDEBUG
 CPPFLAGS = -Iinclude -Iinclude/core -Iinclude/strategy -Iinclude/strategy/balanced -Iinclude/strategy/unbalanced -Iinclude/players -Iinclude/observers
 OBJDIR = build
 

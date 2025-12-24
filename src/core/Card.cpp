@@ -5,11 +5,11 @@ Card::Card(Rank rank, Suit suit){
     suit_ = suit;
 }
 
-Rank Card::getRank(){
+Rank Card::getRank() const {
     return rank_;
 }
 
-int Card::getValue(){
+int Card::getValue() const {
     switch(rank_){
         case Rank::Two: return 2;
         case Rank::Three: return 3;
@@ -31,7 +31,7 @@ int Card::getValue(){
     }
 }
 
-Suit Card::getSuit(){
+Suit Card::getSuit() const{
     return suit_;
 }
 bool Card::isWorthTen(){

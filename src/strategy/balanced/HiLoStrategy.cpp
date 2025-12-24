@@ -289,3 +289,10 @@ Action HiLoStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, flo
         return BasicStrategy::splitTable[pairIdx][dealerIdx];
     }
 }
+
+void HiLoStrategy::reset(int deckSize){
+    running_count = 0;
+    true_count = 0;
+    num_decks_left = deckSize;
+    return;
+}

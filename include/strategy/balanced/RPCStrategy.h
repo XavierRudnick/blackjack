@@ -32,6 +32,8 @@ class RPCStrategy : public CountingStrategy { //in docs note deck size is counte
         Action getSoftHandAction(int playerTotal, Rank dealerUpcard) override;
         Action getSplitAction(Rank playerSplitRank, Rank dealerUpcard,float true_count) override;
 
+        void reset(int deckSize) override;
+
         ~RPCStrategy() override = default;
 };
 

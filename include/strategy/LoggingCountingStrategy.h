@@ -54,6 +54,11 @@ public:
         emit("Deck size updated: " + std::to_string(num_cards_left) +" decks left= " + toStr(inner_->getDecksLeft()));
     }
 
+    void reset(int deckSize) override {
+        inner_->reset(deckSize);
+        emit("Count reset for deck size: " + std::to_string(deckSize));
+    }
+
     float getTrueCount() const override { return inner_->getTrueCount(); }
     float getDecksLeft() const override { return inner_->getDecksLeft(); }
     float getRunningCount() const override { return inner_->getRunningCount(); }

@@ -76,7 +76,7 @@ int Hand::getScore(){
     int score = 0;
     int soft_aces = 0;
 
-    for (Card val : hand){
+    for (const Card& val : hand){
         Rank rank = val.getRank();
 
         if (rank == Rank::Ace){
@@ -115,7 +115,7 @@ bool Hand::isHandSoft() {
     int score = 0;
     int soft_aces = 0;
 
-   for (Card val : hand){
+   for (const Card& val : hand){
         Rank rank = val.getRank();
 
         if (rank == Rank::Ace){
@@ -160,7 +160,7 @@ bool Hand::checkShouldStand(){
     return false;
 }
 
-std::vector<Card> Hand::getCards() const{
+const std::vector<Card>& Hand::getCards() const{
     return hand;
 }
 

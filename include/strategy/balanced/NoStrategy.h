@@ -28,6 +28,8 @@ class NoStrategy : public CountingStrategy { //in docs note deck size is counted
         Action shouldDeviatefromSplit(Rank playerSplitRank, Rank dealerUpcard,float true_count=0) override;
         Action shouldSurrender(int playerTotal, Rank dealerUpcard,float true_count=0) override;
 
+        void reset(int deckSize) override;
+
          ~NoStrategy() override = default;
 
 

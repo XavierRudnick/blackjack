@@ -29,6 +29,11 @@ bool BotPlayer::shouldAcceptInsurance() {
     return strategy->shouldAcceptInsurance();
 }
 
+void BotPlayer::resetCount(int deckSize) {
+    strategy->reset(deckSize);
+    return;
+}
+
 Action BotPlayer::getAction(Hand& user, Hand& dealer, float trueCount) {
     Rank dealer_card = dealer.peekFrontCard();
 

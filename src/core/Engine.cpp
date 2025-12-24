@@ -46,7 +46,7 @@ void Engine::playHand(){
     // Count visible cards
     player->updateCount(dealer.getCards()[0]);
 
-    for (Card card : user.getCards()) {
+    for (const Card& card : user.getCards()) {
         player->updateCount(card);
     }
 

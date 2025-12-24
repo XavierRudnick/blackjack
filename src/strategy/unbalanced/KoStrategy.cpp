@@ -201,3 +201,9 @@ Action KoStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, fl
 Action KoStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
     return Action::Skip;
 }
+
+void KoStrategy::reset(int deckSize){
+    num_decks_left = deckSize;
+    deckStartSize = deckSize;
+    true_count = deckSize * -4;
+}

@@ -12,8 +12,11 @@ Deck::Deck(int deck_size){
         }
     }
 
-    rand.seed(std::random_device{}());
-    std::shuffle(deck.begin(), deck.end(), rand);
+    shuffle();
+}
+
+void Deck::shuffle() {
+    std::shuffle(deck.begin(), deck.end(), getGlobalRng());
 }
 
 Deck Deck::createTestDeck(std::vector<Card> stackedCards) {
@@ -53,4 +56,8 @@ Deck Deck::clone() const{
     Deck copy(0);
     copy.deck = this->deck;
     return copy;
+}
+
+void Deck::reset(){
+    std::shuffle(deck.begin(), deck.end(), getGlobalRng());
 }

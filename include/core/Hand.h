@@ -40,7 +40,7 @@ class Hand{
         bool isHandSoft();
         bool isSoft17();
         bool isAces();
-        std::vector<Card> getCards() const;
+        const std::vector<Card>& getCards() const;
 };
 
 #endif

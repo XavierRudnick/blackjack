@@ -222,3 +222,9 @@ Action Red7Strategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, 
 Action Red7Strategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
     return Action::Skip;
 }
+
+void Red7Strategy::reset(int deckSize){
+    num_decks_left = deckSize;
+    deckStartSize = deckSize;
+    true_count = deckSize * -2;
+}

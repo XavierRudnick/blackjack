@@ -281,3 +281,9 @@ Action ZenCountStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard,
         return BasicStrategy::splitTable[pairIdx][dealerIdx];
     }
 }
+
+void ZenCountStrategy::reset(int deckSize){
+    running_count = 0;
+    true_count = 0;
+    num_decks_left = deckSize;
+}

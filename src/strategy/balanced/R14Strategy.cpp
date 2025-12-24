@@ -257,3 +257,9 @@ Action R14Strategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, floa
         return BasicStrategy::splitTable[pairIdx][dealerIdx];
     }
 }
+
+void R14Strategy::reset(int deckSize){
+    running_count = 0;
+    true_count = 0;
+    num_decks_left = deckSize;
+}

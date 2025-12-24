@@ -30,6 +30,8 @@ class KISSIIIStrategy : public CountingStrategy { //in docs note deck size is co
         Action getSoftHandAction(int playerTotal, Rank dealerUpcard) override;
         Action getSplitAction(Rank playerSplitRank, Rank dealerUpcard,float true_count) override;
 
+        void reset(int deckSize) override;
+
         ~KISSIIIStrategy() override = default;
 };
 

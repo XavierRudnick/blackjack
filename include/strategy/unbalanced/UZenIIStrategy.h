@@ -30,6 +30,8 @@ class UZenIIStrategy : public CountingStrategy { //in docs note deck size is cou
         Action getSoftHandAction(int playerTotal, Rank dealerUpcard) override;
         Action getSplitAction(Rank playerSplitRank, Rank dealerUpcard,float true_count) override;
 
+        void reset(int deckSize) override;
+
         ~UZenIIStrategy() override = default;
 };
 

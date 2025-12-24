@@ -8,28 +8,20 @@
 #include <limits>
 
 FixedEngine::FixedEngine() {}
-FixedEngine::FixedEngine(std::vector<Action> monteCarloActions) : monteCarloActions(monteCarloActions) {}
+FixedEngine::FixedEngine(std::vector<Action> monteCarloActions, const GameConfig& gameConfig) : monteCarloActions(monteCarloActions), config(gameConfig) {}
 
 void FixedEngine::calculateEV(Player& player, Deck& deck, Hand& dealer, Hand& user, float trueCount){
-    // Play out the hand
     for (Action forcedAction : monteCarloActions) {
         Hand simDealer = dealer;
         Hand simUser = user;
         Deck simDeck = deck.clone();
         std::vector<Hand> hands;
-        playForcedHand(player, simDeck, simDealer, simUser,hands, forcedAction);
-        float result = evaluateHand(simDeck, simDealer, simUser);
+        playForcedHand(player, simDeck, simDealer, simUser, hands, forcedAction, false, false);
 
-        if (forcedAction == Action::Hit) {
-            EVresults[trueCount].hitStats.addResult(result);
-        } else if (forcedAction == Action::Stand) {
-            EVresults[trueCount].standStats.addResult(result);
-        }
-        else if (forcedAction == Action::Double){
-            EVresults[trueCount].doubleStats.addResult(result * 2);
-        }
+        Hand evalDealer = simDealer;
+        evaluateHand(simDeck, evalDealer, hands, trueCount, forcedAction);
+
     }
-    
 }
 
 void FixedEngine::playForcedHand(Player& player, Deck& deck, Hand& dealer, Hand& user,std::vector<Hand>& hands, Action forcedAction,bool has_split_aces, bool has_split){
@@ -37,7 +29,7 @@ void FixedEngine::playForcedHand(Player& player, Deck& deck, Hand& dealer, Hand&
     int i = 0;
     Action action = Action::Skip;
     while(!game_over){
-        if (i == 0){
+        if (i == 0 && forcedAction != Action::Skip){
             action = forcedAction;
         }
         else{
@@ -56,10 +48,9 @@ void FixedEngine::playForcedHand(Player& player, Deck& deck, Hand& dealer, Hand&
                 game_over = doubleHandler(deck,user,hands,has_split);
                 break;
             case Action::Split: 
-                game_over = splitHandler(deck,user,dealer,hands,false,false);
+                game_over = splitHandler(player, deck, user, dealer, hands, has_split_aces, has_split);
                 break;
             case Action::Skip:
-                throw std::runtime_error("Skip isnt supposed to happen");
                 break;
             case Action::Surrender:
                 throw std::runtime_error("Surrender isnt supposed to happen");
@@ -88,7 +79,6 @@ bool FixedEngine::doubleHandler(Deck& deck, Hand& user,std::vector<Hand>& hands,
     if (has_split && !config.doubleAfterSplitAllowed){
         Card card = deck.hit();
         user.addCard(card);
-        hands.emplace_back(user);
         return false;
     }
     else{
@@ -102,7 +92,7 @@ bool FixedEngine::doubleHandler(Deck& deck, Hand& user,std::vector<Hand>& hands,
     return true;
 }
 
-bool FixedEngine::splitHandler(Deck& deck, Hand& user,Hand& dealer, std::vector<Hand>& hands,bool has_split, bool has_split_aces){
+bool FixedEngine::splitHandler(Player& player, Deck& deck, Hand& user,Hand& dealer, std::vector<Hand>& hands,bool has_split, bool has_split_aces){
          // Check if we're splitting Aces
     bool splitting_aces = (user.peekFrontCard() == Rank::Ace);
 
@@ -128,48 +118,66 @@ bool FixedEngine::splitHandler(Deck& deck, Hand& user,Hand& dealer, std::vector<
     if (splitting_aces) {
         // One-card only after splitting aces; allow resplit only when the new hand is still two aces.
         if (user.isAces() && config.allowReSplitAces) {
-            splitHandler(deck, user, dealer, hands, true, true);
+            splitHandler(player, deck, user, dealer, hands, true, true);
         } else {
             hands.emplace_back(user);
         }
 
         if (user2.isAces() && config.allowReSplitAces) {
-            splitHandler(deck, user2, dealer, hands, true, true);
+            splitHandler(player, deck, user2, dealer, hands, true, true);
         } else {
             hands.emplace_back(user2);
         }
         return true;
     }
 
-    playForcedHand(deck, dealer, user, hands, false, true);
-    playForcedHand(deck, dealer, user2, hands, false, true);
+    // Play out both split hands using normal strategy decisions
+    playForcedHand(player, deck, dealer, user, hands, Action::Skip, has_split_aces || splitting_aces, true);
+    playForcedHand(player, deck, dealer, user2, hands, Action::Skip, has_split_aces || splitting_aces, true);
     return true;
+    
 }
 
-float FixedEngine::evaluateHand(Deck& deck, Hand& dealer, Hand& user){
-    int score = user.getFinalScore();
+void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount, Action forcedAction){
+    for (Hand& hand : hands) {
+        int userScore = hand.getFinalScore();
 
-    if(user.isBlackjack() && !dealer.isBlackjack()){
-        return 1.5;
-    }
+        if(hand.isBlackjack() && !dealer.isBlackjack()){
+            EVresults[trueCount].standStats.addResult(1.5);
+            return;
+        }
 
-    if (score != 0){
-        dealer_draw(deck, dealer);
-    }
+        if (userScore != 0){
+            dealer_draw(deck,dealer);
+        }
+        
+        int dealerScore = dealer.getFinalScore();
+        float result = 0;
 
-    int dealer_score = dealer.getFinalScore();
+        if (dealerScore > userScore){
+            result = -1;
+        }
+        else if (dealerScore < userScore){
+            result = 1;
+        }
+        else if (dealerScore == 0 && userScore == 0){
+            result = -1;
+        }
+        else {
+            result = 0;
+        }
 
-    if (dealer_score > score){
-        return -1;
-    }
-    else if (dealer_score < score){
-        return 1;
-    }
-    else if (dealer_score == 0 && score == 0){
-        return -1;
-    }
-    else {
-        return 0;
+        if (forcedAction == Action::Hit) {
+            EVresults[trueCount].hitStats.addResult(result);
+        } else if (forcedAction == Action::Stand) {
+            EVresults[trueCount].standStats.addResult(result);
+        }
+        else if (forcedAction == Action::Double){
+            EVresults[trueCount].doubleStats.addResult(result * 2);
+        } else if (forcedAction == Action::Split){
+            std::cout << "Adding split result: " << result << std::endl;
+            EVresults[trueCount].splitStats.addResult(result);
+        }
     }
 
 }
@@ -194,12 +202,13 @@ void FixedEngine::dealer_draw(Deck& deck,Hand& dealer){
 }
 
 void FixedEngine::printResults(){
-        std::cout << "TrueCount, Hit EV, Stand EV, Double EV, Hands Played" << std::endl;
+        std::cout << "TrueCount, Hit EV, Stand EV, Double EV, Split EV, Hands Played" << std::endl;
         for (const auto& [trueCount, decisionPoint] : EVresults) {
             std::cout << trueCount << ", "
                       << decisionPoint.hitStats.getEV() << ", "
                       << decisionPoint.standStats.getEV() << ", "
                       << decisionPoint.doubleStats.getEV() << ", "
+                      << decisionPoint.splitStats.getEV() << ", "
                       << (decisionPoint.hitStats.handsPlayed)
                       << std::endl;
         }
@@ -223,7 +232,7 @@ void FixedEngine::savetoCSVResults(const std::string& filename) const {
         return;
     }
 
-    out << "TrueCount,Hit EV,Stand EV,Double EV,Hands Played" << '\n';
+    out << "TrueCount,Hit EV,Stand EV,Double EV,Split EV,Hands Played" << '\n';
 
     for (const auto& [trueCount, decisionPoint] : EVresults) {
         out << std::setprecision(std::numeric_limits<float>::max_digits10) << std::defaultfloat
@@ -232,6 +241,7 @@ void FixedEngine::savetoCSVResults(const std::string& filename) const {
             << decisionPoint.hitStats.getEV() << ','
             << decisionPoint.standStats.getEV() << ','
             << decisionPoint.doubleStats.getEV() << ','
+            << decisionPoint.splitStats.getEV() << ','
             << decisionPoint.hitStats.handsPlayed
             << '\n';
     }
@@ -249,6 +259,9 @@ void FixedEngine::merge(const FixedEngine& other){
 
         currentPoint.doubleStats.totalPayout += decisionPoint.doubleStats.totalPayout;
         currentPoint.doubleStats.handsPlayed += decisionPoint.doubleStats.handsPlayed;
+
+        currentPoint.splitStats.totalPayout += decisionPoint.splitStats.totalPayout;
+        currentPoint.splitStats.handsPlayed += decisionPoint.splitStats.handsPlayed;
     }
 }
 

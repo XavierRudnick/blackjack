@@ -15,7 +15,7 @@ Engine::Engine(
 {
     reporter = std::make_unique<GameReporter>(eventBus, config.emitEvents);
     config.penetrationThreshold = (1-config.penetrationThreshold) * config.numDecks * Deck::NUM_CARDS_IN_DECK;
-    fixedEngine = FixedEngine(config.monteCarloActions);
+    fixedEngine = FixedEngine(config.monteCarloActions, gameConfig);
 }
 
 std::pair<double, double> Engine::runner(){  

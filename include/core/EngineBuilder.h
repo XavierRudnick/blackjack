@@ -2,10 +2,10 @@
 #define ENGINEBUILDER_H
 
 #include "Engine.h"
-
+#include "GameConfig.h"
 class EngineBuilder {
     private:
-        Engine::GameConfig gameConfig;
+        GameConfig gameConfig;
         std::optional<Deck> deck;
         EventBus* eventBus = nullptr;
 

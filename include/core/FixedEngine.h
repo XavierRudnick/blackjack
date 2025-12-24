@@ -16,6 +16,7 @@
 #include "Player.h"
 #include "Bankroll.h"
 #include "GameReporter.h"
+#include "GameConfig.h"
 
 class FixedEngine{
 
@@ -23,6 +24,7 @@ public:
     struct ActionStats {
         double totalPayout = 0.0; 
         int handsPlayed = 0;
+        int totalWinnigs = 0;
 
         void addResult(double payout) {
             totalPayout += payout;
@@ -39,11 +41,13 @@ public:
         ActionStats hitStats;
         ActionStats standStats;
         ActionStats doubleStats;
+        ActionStats splitStats;
     };
 
     std::map<float, DecisionPoint> EVresults;
+    
     FixedEngine();
-    FixedEngine(std::vector<Action> monteCarloActions);
+    FixedEngine(std::vector<Action> monteCarloActions, const GameConfig& gameConfig = GameConfig());
     void calculateEV(Player& player,Deck& deck,Hand& dealer, Hand& user, float trueCount);
     void printResults();
     void savetoCSVResults(const std::string& filename = "fixed_engine_results.csv") const;
@@ -51,8 +55,8 @@ public:
     void merge(const FixedEngine& other);
 private:
     std::vector<Action> monteCarloActions;
-
-    float evaluateHand(Deck& deck, Hand& dealer, Hand& user);
+    GameConfig config;
+    void evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount, Action forcedAction);
     void dealer_draw(Deck& deck, Hand& dealer);
 
     // bool handleInsurancePhase(Hand& dealer, Hand& user);
@@ -66,7 +70,7 @@ private:
     bool standHandler(Hand& user, std::vector<Hand>& hands);
     bool hitHandler(Deck& deck, Hand& user, std::vector<Hand>& hands);
     bool doubleHandler(Deck& deck, Hand& user, std::vector<Hand>& hands, bool has_split);
-    bool splitHandler( Deck& deck, Hand& user,Hand& dealer, std::vector<Hand>& hands,bool has_split, bool is_split_aces);
+    bool splitHandler(Player& player, Deck& deck, Hand& user, Hand& dealer, std::vector<Hand>& hands, bool has_split, bool is_split_aces);
     bool surrenderHandler(Hand& user, std::vector<Hand>& hands);
 
     void playForcedHand(Player& player, Deck& deck, Hand& dealer, Hand& user, std::vector<Hand>& hands, Action forcedAction,bool has_split_aces, bool has_split);

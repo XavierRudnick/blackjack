@@ -822,20 +822,23 @@ void testStiffHand() {
 void testMultipleActionsPerTrueCount() {
     std::cout << "Running testMultipleActionsPerTrueCount... ";
     
-    FixedEngine engine({Action::Hit, Action::Stand});
+    FixedEngine engine({Action::Hit, Action::Split});
     
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
     // Deck for hit: player will bust
     std::vector<Card> stack = {
-        Card(Rank::Five, Suit::Hearts)  // Hit card -> bust
+        Card(Rank::Four, Suit::Diamonds),  // Hit card -> bust
+        Card(Rank::Ten, Suit::Hearts),  // Hit card -> bust
+        Card(Rank::Five, Suit::Hearts),  // Hit card -> bust
+        Card(Rank::Ten, Suit::Spades)  // Hit card -> bust
     };
     Deck deck = Deck::createTestDeck(stack);
     
-    Hand dealer(Card(Rank::Six, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Seven, Suit::Clubs), 10);
     dealer.addCard(Card(Rank::Six, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Eight, Suit::Spades), Card(Rank::Eight, Suit::Hearts)), 10);
     
     engine.calculateEV(player, deck, dealer, user, 0.0f);
     
@@ -844,16 +847,95 @@ void testMultipleActionsPerTrueCount() {
     
     // Both actions should have been simulated
     assert(decisionPoint.hitStats.handsPlayed == 1);
-    assert(decisionPoint.standStats.handsPlayed == 1);
-    
+    assert(decisionPoint.splitStats.handsPlayed == 2);
     // Hit should lose (bust), stand should win
+    std::cout << "Split EV: " << decisionPoint.splitStats.getEV() << std::endl; 
     assert(approxEqual(decisionPoint.hitStats.getEV(), -1.0));
-    assert(approxEqual(decisionPoint.standStats.getEV(), 1.0));
+    assert(approxEqual(decisionPoint.splitStats.getEV(), 0));
     
     std::cout << "PASSED" << std::endl;
 }
 
-// Test 24: Very high true count
+// Test 24: Split produces two winning hands (no doubles)
+void testSplitTwoHandsWin() {
+    std::cout << "Running testSplitTwoHandsWin... ";
+
+    // Draw order (back first):
+    // 1) First split hand gets 10 -> 18
+    // 2) Second split hand gets 9 -> 17
+    // 3) Dealer draws 10 and busts (16 -> 26)
+    std::vector<Card> stack = {
+        Card(Rank::Ten, Suit::Hearts),
+        Card(Rank::Nine, Suit::Clubs),
+        Card(Rank::Ten, Suit::Spades)
+    };
+
+    Deck deck = Deck::createTestDeck(stack);
+
+    auto strategy = std::make_unique<NoStrategy>(0);
+    BotPlayer player(false, std::move(strategy));
+
+    Hand dealer(std::make_pair(Card(Rank::Six, Suit::Clubs), Card(Rank::Ten, Suit::Diamonds)), 10);
+    Hand user(std::make_pair(Card(Rank::Eight, Suit::Spades), Card(Rank::Eight, Suit::Hearts)), 10);
+
+    std::vector<Action> actions = {Action::Split};
+    FixedEngine engine(actions);
+
+    float trueCount = 0.0f;
+    engine.calculateEV(player, deck, dealer, user, trueCount);
+
+    const auto& decisionPoint = engine.getResults().at(trueCount);
+
+    assert(decisionPoint.splitStats.handsPlayed == 2);
+    assert(approxEqual(decisionPoint.splitStats.getEV(), 1.0));
+
+    std::cout << "PASSED" << std::endl;
+}
+
+// Test 25: Split when double-after-split is disallowed
+void testSplitDoubleAfterSplitDisallowed() {
+    std::cout << "Running testSplitDoubleAfterSplitDisallowed... ";
+
+    // Draw order (back first):
+    // 1) First split hand gets 7 -> 11 (would double)
+    // 2) Second split hand gets 7 -> 11 (would double)
+    // 3) First hand forced hit (no DAS) gets 9 -> 20
+    // 4) Second hand forced hit (no DAS) gets 8 -> 19
+    // 5) Dealer draws 10 and busts (16 -> 26)
+    std::vector<Card> stack = {
+        Card(Rank::Ten, Suit::Hearts),
+        Card(Rank::Eight, Suit::Clubs),
+        Card(Rank::Nine, Suit::Diamonds),
+        Card(Rank::Seven, Suit::Spades),
+        Card(Rank::Seven, Suit::Hearts)
+    };
+
+    Deck deck = Deck::createTestDeck(stack);
+
+    auto strategy = std::make_unique<NoStrategy>(0);
+    BotPlayer player(false, std::move(strategy));
+
+    Hand dealer(std::make_pair(Card(Rank::Six, Suit::Clubs), Card(Rank::Ten, Suit::Diamonds)), 10);
+    Hand user(std::make_pair(Card(Rank::Four, Suit::Spades), Card(Rank::Four, Suit::Hearts)), 10);
+
+    GameConfig cfg;
+    cfg.doubleAfterSplitAllowed = false;
+    std::vector<Action> actions = {Action::Split};
+    FixedEngine engine(actions, cfg);
+
+    float trueCount = 0.0f;
+    engine.calculateEV(player, deck, dealer, user, trueCount);
+
+    const auto& decisionPoint = engine.getResults().at(trueCount);
+
+    assert(decisionPoint.splitStats.handsPlayed == 2);
+    assert(approxEqual(decisionPoint.splitStats.getEV(), 1.0));
+    assert(decisionPoint.doubleStats.handsPlayed == 0);
+
+    std::cout << "PASSED" << std::endl;
+}
+
+// Test 26: Very high true count
 void testVeryHighTrueCount() {
     std::cout << "Running testVeryHighTrueCount... ";
     
@@ -876,11 +958,13 @@ void testVeryHighTrueCount() {
     
     const auto& results = engine.getResults();
     assert(results.count(10.5f) == 1);
-    
+
+    const auto& decisionPoint = engine.getResults().at(trueCount);
+    //std::cout << "Stand EV: " << decisionPoint.standStats << std::endl;
     std::cout << "PASSED" << std::endl;
 }
 
-// Test 25: Dealer has Ace upcard (no blackjack)
+// Test 27: Dealer has Ace upcard (no blackjack)
 void testDealerAceUpcard() {
     std::cout << "Running testDealerAceUpcard... ";
     
@@ -910,7 +994,7 @@ void testDealerAceUpcard() {
     std::cout << "PASSED" << std::endl;
 }
 
-// Test 26: Player doubles on 10 vs dealer 9
+// Test 28: Player doubles on 10 vs dealer 9
 void testDoubleOn10() {
     std::cout << "Running testDoubleOn10... ";
     
@@ -943,7 +1027,7 @@ void testDoubleOn10() {
     std::cout << "PASSED" << std::endl;
 }
 
-// Test 27: Player has pair of 5s (treated as 10)
+// Test 29: Player has pair of 5s (treated as 10)
 void testPairOfFives() {
     std::cout << "Running testPairOfFives... ";
     
@@ -975,7 +1059,7 @@ void testPairOfFives() {
     std::cout << "PASSED" << std::endl;
 }
 
-// Test 28: Dealer multiple card draw to 17
+// Test 30: Dealer multiple card draw to 17
 void testDealerMultipleDraws() {
     std::cout << "Running testDealerMultipleDraws... ";
     
@@ -1046,6 +1130,8 @@ int main() {
     testDoubleSoftHand();
     testStiffHand();
     testMultipleActionsPerTrueCount();
+    testSplitTwoHandsWin();
+    testSplitDoubleAfterSplitDisallowed();
     testDealerAceUpcard();
     testDoubleOn10();
     testPairOfFives();

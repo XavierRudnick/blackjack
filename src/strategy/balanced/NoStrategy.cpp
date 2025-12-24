@@ -7,7 +7,7 @@ NoStrategy::NoStrategy(float deck_size){
 }
 
 int NoStrategy::getBetSize() {
-    constexpr int defaultBetSize = 5;
+    constexpr int defaultBetSize = 1;
     return defaultBetSize;
 }
 

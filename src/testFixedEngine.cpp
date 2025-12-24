@@ -67,8 +67,8 @@ void testActionStats() {
 void testCalculateEVStandOnTwenty() {
     std::cout << "Running testCalculateEVStandOnTwenty... ";
     
-    // Dealer has 16 (6+10), user has 10+10=20
-    // Dealer will draw 10 to bust at 26
+    // Dealer has 16 (6+1), user has 1+1=20
+    // Dealer will draw 1 to bust at 26
     // Deck only contains cards to be drawn during play
     std::vector<Card> stack = {
         Card(Rank::Ten, Suit::Hearts)     // Dealer will draw -> 26 (bust)
@@ -79,9 +79,9 @@ void testCalculateEVStandOnTwenty() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Six, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Six, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Ten, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
     
     // Update count with visible cards
     player.updateCount(Card(Rank::Six, Suit::Clubs));  // Dealer upcard
@@ -127,9 +127,9 @@ void testCalculateEVHitAndBust() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Five, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Five, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Five, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
     
     // Update count with visible cards
     player.updateCount(Card(Rank::Five, Suit::Clubs));
@@ -156,7 +156,7 @@ void testCalculateEVHitAndBust() {
 void testCalculateEVDouble() {
     std::cout << "Running testCalculateEVDouble... ";
     
-    // Player has 11, doubles and gets a 10 for 21
+    // Player has 11, doubles and gets a 1 for 21
     // Dealer has 6, will draw and bust
     // Cards dealt from BACK of vector, so reverse order
     std::vector<Card> stack = {
@@ -173,8 +173,8 @@ void testCalculateEVDouble() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(std::make_pair(Card(Rank::Six, Suit::Clubs), Card(Rank::Six, Suit::Diamonds)),10);
-    Hand user(std::make_pair(Card(Rank::Six, Suit::Spades), Card(Rank::Five, Suit::Hearts)), 10);
+    Hand dealer(std::make_pair(Card(Rank::Six, Suit::Clubs), Card(Rank::Six, Suit::Diamonds)),1);
+    Hand user(std::make_pair(Card(Rank::Six, Suit::Spades), Card(Rank::Five, Suit::Hearts)), 1);
     
     // Update count with visible cards
     player.updateCount(Card(Rank::Six, Suit::Clubs));  // Dealer upcard
@@ -218,9 +218,9 @@ void testMultipleTrueCounts() {
         Card(Rank::Five, Suit::Hearts)    // Hit card -> bust at 25 OR dealer draws (if Stand)
     };
     Deck deck1 = Deck::createTestDeck(stack1);
-    Hand dealer1(Card(Rank::Five, Suit::Clubs), 10);
+    Hand dealer1(Card(Rank::Five, Suit::Clubs), 1);
     dealer1.addCard(Card(Rank::Five, Suit::Diamonds));
-    Hand user1(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 10);
+    Hand user1(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
     
     player1.updateCount(Card(Rank::Five, Suit::Clubs));
     player1.updateCount(Card(Rank::Ten, Suit::Spades));
@@ -237,9 +237,9 @@ void testMultipleTrueCounts() {
         Card(Rank::Five, Suit::Spades)  // Hit card -> bust at 25 OR dealer draws (if Stand)
     };
     Deck deck2 = Deck::createTestDeck(stack2);
-    Hand dealer2(Card(Rank::Five, Suit::Clubs), 10);
+    Hand dealer2(Card(Rank::Five, Suit::Clubs), 1);
     dealer2.addCard(Card(Rank::Five, Suit::Diamonds));
-    Hand user2(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 10);
+    Hand user2(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
     
     player2.updateCount(Card(Rank::Five, Suit::Clubs));
     player2.updateCount(Card(Rank::Ten, Suit::Spades));
@@ -307,9 +307,9 @@ void testBlackjackPayout() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Five, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Five, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Five, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ace, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ace, Suit::Hearts)), 1);
     
     player.updateCount(Card(Rank::Five, Suit::Clubs));
     player.updateCount(Card(Rank::Ten, Suit::Spades));
@@ -342,9 +342,9 @@ void testPushScenario() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::King, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::King, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Queen, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
     
     player.updateCount(Card(Rank::King, Suit::Clubs));
     player.updateCount(Card(Rank::Ten, Suit::Spades));
@@ -365,11 +365,11 @@ void testPushScenario() {
     std::cout << "PASSED" << std::endl;
 }
 
-// Test 10: Dealer busts scenario
+// Test 1: Dealer busts scenario
 void testDealerBusts() {
     std::cout << "Running testDealerBusts... ";
     
-    // Player stands on 19, dealer has 15 (5+10) and draws a 10 to bust (25)
+    // Player stands on 19, dealer has 15 (5+1) and draws a 1 to bust (25)
     std::vector<Card> stack = {
         Card(Rank::Ten, Suit::Hearts)     // Dealer draws -> 25 (bust)
     };
@@ -379,9 +379,9 @@ void testDealerBusts() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Five, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Five, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Ten, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Nine, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Nine, Suit::Hearts)), 1);
     
     player.updateCount(Card(Rank::Five, Suit::Clubs));
     player.updateCount(Card(Rank::Ten, Suit::Spades));
@@ -419,9 +419,9 @@ void testMultipleHitsBeforeStand() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Ten, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Ten, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Five, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Two, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Two, Suit::Hearts)), 1);
     
     // Force first action to be Hit, subsequent actions follow player strategy
     std::vector<Action> actions = {Action::Hit};
@@ -462,8 +462,8 @@ void testAccumulatingResults() {
         };
         
         Deck deck = Deck::createTestDeck(stack);
-        Hand dealer(Card(Rank::Ten, Suit::Clubs), 10);
-        Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 10);
+        Hand dealer(Card(Rank::Ten, Suit::Clubs), 1);
+        Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
         
         player.updateCount(Card(Rank::Five, Suit::Clubs));
         player.updateCount(Card(Rank::Ten, Suit::Spades));
@@ -494,9 +494,9 @@ void testBothBlackjacks() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Ace, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Ace, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Ten, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ace, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ace, Suit::Hearts)), 1);
     
     player.updateCount(Card(Rank::Ace, Suit::Clubs));
     player.updateCount(Card(Rank::Ten, Suit::Spades));
@@ -538,9 +538,9 @@ void testDoubleDownLoss() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Ten, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Ten, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Ten, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Six, Suit::Spades), Card(Rank::Five, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Six, Suit::Spades), Card(Rank::Five, Suit::Hearts)), 1);
     
     player.updateCount(Card(Rank::Ten, Suit::Clubs));
     player.updateCount(Card(Rank::Six, Suit::Spades));
@@ -577,9 +577,9 @@ void testNegativeTrueCount() {
     };
     
     Deck deck = Deck::createTestDeck(stack);
-    Hand dealer(Card(Rank::Five, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Five, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Five, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
     
     player.updateCount(Card(Rank::Five, Suit::Clubs));
     player.updateCount(Card(Rank::Ten, Suit::Spades));
@@ -609,9 +609,9 @@ void testSoftHand() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Seven, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Seven, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Ten, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::Seven, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::Seven, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Stand};
     FixedEngine engine(actions);
@@ -627,11 +627,11 @@ void testSoftHand() {
     std::cout << "PASSED" << std::endl;
 }
 
-// Test 17: Soft hand becomes hard - A+6 hits 10
+// Test 17: Soft hand becomes hard - A+6 hits 1
 void testSoftHandBecomesHard() {
     std::cout << "Running testSoftHandBecomesHard... ";
     
-    // Player has A+6 (soft 17), hits and gets 10 -> hard 17
+    // Player has A+6 (soft 17), hits and gets 1 -> hard 17
     std::vector<Card> stack = {
         Card(Rank::Ten, Suit::Hearts)  // Hit card -> hard 17
     };
@@ -641,9 +641,9 @@ void testSoftHandBecomesHard() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Seven, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Seven, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Ten, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::Six, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::Six, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Hit};
     FixedEngine engine(actions);
@@ -671,9 +671,9 @@ void testDealerSoft17() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Ace, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Ace, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Six, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Eight, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Eight, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Stand};
     FixedEngine engine(actions);
@@ -703,9 +703,9 @@ void testThreeCard21() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Ten, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Ten, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Nine, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Seven, Suit::Spades), Card(Rank::Seven, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Seven, Suit::Spades), Card(Rank::Seven, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Hit};
     FixedEngine engine(actions);
@@ -725,7 +725,7 @@ void testThreeCard21() {
 void testDealerDrawsTo21() {
     std::cout << "Running testDealerDrawsTo21... ";
     
-    // Dealer has 11, draws 10 for 21, player has 20
+    // Dealer has 11, draws 1 for 21, player has 20
     std::vector<Card> stack = {
         Card(Rank::Ten, Suit::Hearts)  // Dealer draws -> 21
     };
@@ -735,9 +735,9 @@ void testDealerDrawsTo21() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Five, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Five, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Six, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Stand};
     FixedEngine engine(actions);
@@ -768,9 +768,9 @@ void testDoubleSoftHand() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Six, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Six, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Six, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::Six, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::Six, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Double};
     FixedEngine engine(actions);
@@ -790,7 +790,7 @@ void testDoubleSoftHand() {
 void testStiffHand() {
     std::cout << "Running testStiffHand... ";
     
-    // Player 12 stands, dealer has 2+10, draws 9 for 21
+    // Player 12 stands, dealer has 2+1, draws 9 for 21
     std::vector<Card> stack = {
         Card(Rank::Nine, Suit::Hearts)  // Dealer draws -> 21
     };
@@ -800,9 +800,9 @@ void testStiffHand() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Two, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Two, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Ten, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Two, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Two, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Stand};
     FixedEngine engine(actions);
@@ -836,9 +836,9 @@ void testMultipleActionsPerTrueCount() {
     };
     Deck deck = Deck::createTestDeck(stack);
     
-    Hand dealer(Card(Rank::Seven, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Seven, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Six, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Eight, Suit::Spades), Card(Rank::Eight, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Eight, Suit::Spades), Card(Rank::Eight, Suit::Hearts)), 1);
     
     engine.calculateEV(player, deck, dealer, user, 0.0f);
     
@@ -861,9 +861,9 @@ void testSplitTwoHandsWin() {
     std::cout << "Running testSplitTwoHandsWin... ";
 
     // Draw order (back first):
-    // 1) First split hand gets 10 -> 18
+    // 1) First split hand gets 1 -> 18
     // 2) Second split hand gets 9 -> 17
-    // 3) Dealer draws 10 and busts (16 -> 26)
+    // 3) Dealer draws 1 and busts (16 -> 26)
     std::vector<Card> stack = {
         Card(Rank::Ten, Suit::Hearts),
         Card(Rank::Nine, Suit::Clubs),
@@ -875,8 +875,8 @@ void testSplitTwoHandsWin() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
 
-    Hand dealer(std::make_pair(Card(Rank::Six, Suit::Clubs), Card(Rank::Ten, Suit::Diamonds)), 10);
-    Hand user(std::make_pair(Card(Rank::Eight, Suit::Spades), Card(Rank::Eight, Suit::Hearts)), 10);
+    Hand dealer(std::make_pair(Card(Rank::Six, Suit::Clubs), Card(Rank::Ten, Suit::Diamonds)), 1);
+    Hand user(std::make_pair(Card(Rank::Eight, Suit::Spades), Card(Rank::Eight, Suit::Hearts)), 1);
 
     std::vector<Action> actions = {Action::Split};
     FixedEngine engine(actions);
@@ -892,8 +892,7 @@ void testSplitTwoHandsWin() {
     std::cout << "PASSED" << std::endl;
 }
 
-// Test 25: Split when double-after-split is disallowed
-void testSplitDoubleAfterSplitDisallowed() {
+void testSplitDoubleAfterSplitallowed() {
     std::cout << "Running testSplitDoubleAfterSplitDisallowed... ";
 
     // Draw order (back first):
@@ -901,7 +900,7 @@ void testSplitDoubleAfterSplitDisallowed() {
     // 2) Second split hand gets 7 -> 11 (would double)
     // 3) First hand forced hit (no DAS) gets 9 -> 20
     // 4) Second hand forced hit (no DAS) gets 8 -> 19
-    // 5) Dealer draws 10 and busts (16 -> 26)
+    // 5) Dealer draws 1 and busts (16 -> 26)
     std::vector<Card> stack = {
         Card(Rank::Ten, Suit::Hearts),
         Card(Rank::Eight, Suit::Clubs),
@@ -915,8 +914,51 @@ void testSplitDoubleAfterSplitDisallowed() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
 
-    Hand dealer(std::make_pair(Card(Rank::Six, Suit::Clubs), Card(Rank::Ten, Suit::Diamonds)), 10);
-    Hand user(std::make_pair(Card(Rank::Four, Suit::Spades), Card(Rank::Four, Suit::Hearts)), 10);
+    Hand dealer(std::make_pair(Card(Rank::Six, Suit::Clubs), Card(Rank::Ten, Suit::Diamonds)), 1);
+    Hand user(std::make_pair(Card(Rank::Four, Suit::Spades), Card(Rank::Four, Suit::Hearts)), 1);
+
+    GameConfig cfg;
+    cfg.doubleAfterSplitAllowed = true;
+    std::vector<Action> actions = {Action::Split};
+    FixedEngine engine(actions, cfg);
+
+    float trueCount = 0.0f;
+    engine.calculateEV(player, deck, dealer, user, trueCount);
+
+    const auto& decisionPoint = engine.getResults().at(trueCount);
+
+    assert(decisionPoint.splitStats.handsPlayed == 2);
+    assert(approxEqual(decisionPoint.splitStats.getEV(), 2.0));
+    assert(decisionPoint.doubleStats.handsPlayed == 0);
+
+    std::cout << "PASSED" << std::endl;
+}
+
+// Test 25: Split when double-after-split is disallowed
+void testSplitDoubleAfterSplitDisallowed() {
+    std::cout << "Running testSplitDoubleAfterSplitDisallowed... ";
+
+    // Draw order (back first):
+    // 1) First split hand gets 7 -> 11 (would double)
+    // 2) Second split hand gets 7 -> 11 (would double)
+    // 3) First hand forced hit (no DAS) gets 9 -> 20
+    // 4) Second hand forced hit (no DAS) gets 8 -> 19
+    // 5) Dealer draws 1 and busts (16 -> 26)
+    std::vector<Card> stack = {
+        Card(Rank::Ten, Suit::Hearts),
+        Card(Rank::Eight, Suit::Clubs),
+        Card(Rank::Nine, Suit::Diamonds),
+        Card(Rank::Seven, Suit::Spades),
+        Card(Rank::Seven, Suit::Hearts)
+    };
+
+    Deck deck = Deck::createTestDeck(stack);
+
+    auto strategy = std::make_unique<NoStrategy>(0);
+    BotPlayer player(false, std::move(strategy));
+
+    Hand dealer(std::make_pair(Card(Rank::Six, Suit::Clubs), Card(Rank::Ten, Suit::Diamonds)), 1);
+    Hand user(std::make_pair(Card(Rank::Four, Suit::Spades), Card(Rank::Four, Suit::Hearts)), 1);
 
     GameConfig cfg;
     cfg.doubleAfterSplitAllowed = false;
@@ -949,15 +991,15 @@ void testVeryHighTrueCount() {
     };
     Deck deck = Deck::createTestDeck(stack);
     
-    Hand dealer(Card(Rank::Five, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Five, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Five, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
     
-    float trueCount = 10.5f;
+    float trueCount = 1.5f;
     engine.calculateEV(player, deck, dealer, user, trueCount);
     
     const auto& results = engine.getResults();
-    assert(results.count(10.5f) == 1);
+    assert(results.count(1.5f) == 1);
 
     const auto& decisionPoint = engine.getResults().at(trueCount);
     //std::cout << "Stand EV: " << decisionPoint.standStats << std::endl;
@@ -976,9 +1018,9 @@ void testDealerAceUpcard() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Ace, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Ace, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Six, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Nine, Suit::Spades), Card(Rank::Nine, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Nine, Suit::Spades), Card(Rank::Nine, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Stand};
     FixedEngine engine(actions);
@@ -994,11 +1036,11 @@ void testDealerAceUpcard() {
     std::cout << "PASSED" << std::endl;
 }
 
-// Test 28: Player doubles on 10 vs dealer 9
-void testDoubleOn10() {
-    std::cout << "Running testDoubleOn10... ";
+// Test 28: Player doubles on 1 vs dealer 9
+void testDoubleOn1() {
+    std::cout << "Running testDoubleOn1... ";
     
-    // Player 10, doubles and gets Ace for 21
+    // Player 1, doubles and gets Ace for 21
     std::vector<Card> stack = {
         Card(Rank::Ten, Suit::Hearts),   // Dealer draws -> 19
         Card(Rank::Ace, Suit::Hearts)    // Double card -> 21
@@ -1009,9 +1051,9 @@ void testDoubleOn10() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Nine, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Nine, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Ten, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Six, Suit::Spades), Card(Rank::Four, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Six, Suit::Spades), Card(Rank::Four, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Double};
     FixedEngine engine(actions);
@@ -1027,11 +1069,11 @@ void testDoubleOn10() {
     std::cout << "PASSED" << std::endl;
 }
 
-// Test 29: Player has pair of 5s (treated as 10)
+// Test 29: Player has pair of 5s (treated as 1)
 void testPairOfFives() {
     std::cout << "Running testPairOfFives... ";
     
-    // Player 5+5=10, stands
+    // Player 5+5=1, stands
     std::vector<Card> stack = {
         Card(Rank::Ten, Suit::Hearts)  // Dealer draws -> bust
     };
@@ -1041,9 +1083,9 @@ void testPairOfFives() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Six, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Six, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Six, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Five, Suit::Spades), Card(Rank::Five, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Five, Suit::Spades), Card(Rank::Five, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Stand};
     FixedEngine engine(actions);
@@ -1053,7 +1095,7 @@ void testPairOfFives() {
     const auto& results = engine.getResults();
     const auto& decisionPoint = results.at(0.0f);
     
-    // Player loses with 10 vs dealer bust... wait dealer should bust
+    // Player loses with 1 vs dealer bust... wait dealer should bust
     assert(approxEqual(decisionPoint.standStats.getEV(), 1.0));
     
     std::cout << "PASSED" << std::endl;
@@ -1074,9 +1116,9 @@ void testDealerMultipleDraws() {
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
     
-    Hand dealer(Card(Rank::Six, Suit::Clubs), 10);
+    Hand dealer(Card(Rank::Six, Suit::Clubs), 1);
     dealer.addCard(Card(Rank::Two, Suit::Diamonds));
-    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Eight, Suit::Hearts)), 10);
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Eight, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Stand};
     FixedEngine engine(actions);
@@ -1089,6 +1131,81 @@ void testDealerMultipleDraws() {
     // Player 18 beats dealer 17
     assert(approxEqual(decisionPoint.standStats.getEV(), 1.0));
     
+    std::cout << "PASSED" << std::endl;
+}
+
+// Test 31: Re-splitting aces allowed
+void testReSplitAcesAllowed() {
+    std::cout << "Running testReSplitAcesAllowed... ";
+
+    // Draw order (back first):
+    // After split: first hand gets Ace (re-split), second hand gets Ten
+    // After re-split: first sub-hand gets King, second sub-hand gets Queen
+    std::vector<Card> stack = {
+        Card(Rank::Ten, Suit::Diamonds),   // First hand after initial split (re-split)
+        Card(Rank::Queen, Suit::Hearts),  // Second sub-hand after re-split
+        Card(Rank::King, Suit::Clubs),    // First sub-hand after re-split
+        Card(Rank::Ten, Suit::Spades),    // Second hand after initial split
+        Card(Rank::Ace, Suit::Diamonds)   // First hand after initial split (re-split)
+    };
+
+    Deck deck = Deck::createTestDeck(stack);
+
+    auto strategy = std::make_unique<NoStrategy>(0);
+    BotPlayer player(false, std::move(strategy));
+
+    Hand dealer(std::make_pair(Card(Rank::Seven, Suit::Clubs),Card(Rank::Five, Suit::Diamonds)), 1);
+    Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::Ace, Suit::Hearts)), 1);
+
+    GameConfig cfg;
+    cfg.allowReSplitAces = true;
+    std::vector<Action> actions = {Action::Split};
+    FixedEngine engine(actions, cfg);
+
+    float trueCount = 0.0f;
+    engine.calculateEV(player, deck, dealer, user, trueCount);
+
+    const auto& decisionPoint = engine.getResults().at(trueCount);
+
+    // Should have 3 hands: initial split creates 2, re-split creates 1 more
+    assert(decisionPoint.splitStats.handsPlayed == 3);
+
+    std::cout << "PASSED" << std::endl;
+}
+
+// Test 32: Re-splitting aces disallowed
+void testReSplitAcesDisallowed() {
+    std::cout << "Running testReSplitAcesDisallowed... ";
+
+    // Same draw order as above
+    std::vector<Card> stack = {
+        Card(Rank::Queen, Suit::Hearts),  // Second hand gets this after initial split
+        Card(Rank::King, Suit::Clubs),    // First hand gets this after initial split (no re-split)
+        Card(Rank::Ten, Suit::Spades),    // Dealer or something, but not used
+        Card(Rank::Ace, Suit::Diamonds)   // Not used
+    };
+
+    Deck deck = Deck::createTestDeck(stack);
+
+    auto strategy = std::make_unique<NoStrategy>(0);
+    BotPlayer player(false, std::move(strategy));
+
+    Hand dealer(Card(Rank::Seven, Suit::Clubs), 1);
+    Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::Ace, Suit::Hearts)), 1);
+
+    GameConfig cfg;
+    cfg.allowReSplitAces = false;
+    std::vector<Action> actions = {Action::Split};
+    FixedEngine engine(actions, cfg);
+
+    float trueCount = 0.0f;
+    engine.calculateEV(player, deck, dealer, user, trueCount);
+
+    const auto& decisionPoint = engine.getResults().at(trueCount);
+
+    // Should have 2 hands: initial split creates 2, no re-split
+    assert(decisionPoint.splitStats.handsPlayed == 2);
+
     std::cout << "PASSED" << std::endl;
 }
 
@@ -1132,10 +1249,13 @@ int main() {
     testMultipleActionsPerTrueCount();
     testSplitTwoHandsWin();
     testSplitDoubleAfterSplitDisallowed();
+    testSplitDoubleAfterSplitallowed();
     testDealerAceUpcard();
-    testDoubleOn10();
+    testDoubleOn1();
     testPairOfFives();
     testDealerMultipleDraws();
+    testReSplitAcesAllowed();
+    testReSplitAcesDisallowed();
     
     std::cout << "\nAll FixedEngine tests passed successfully!" << std::endl;
     return 0;

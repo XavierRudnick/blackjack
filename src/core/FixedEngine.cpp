@@ -142,7 +142,7 @@ void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hand
     for (Hand& hand : hands) {
         int userScore = hand.getFinalScore();
 
-        if(hand.isBlackjack() && !dealer.isBlackjack()){
+        if(hand.isBlackjack() && !dealer.isBlackjack() && hands.size() == 1){
             EVresults[trueCount].standStats.addResult(1.5);
             return;
         }
@@ -152,19 +152,19 @@ void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hand
         }
         
         int dealerScore = dealer.getFinalScore();
-        float result = 0;
+        float result = hand.getBetSize();
 
         if (dealerScore > userScore){
-            result = -1;
+            result *= -1;
         }
         else if (dealerScore < userScore){
-            result = 1;
+            result *= 1;
         }
         else if (dealerScore == 0 && userScore == 0){
-            result = -1;
+            result *= -1;
         }
         else {
-            result = 0;
+            result *= 0;
         }
 
         if (forcedAction == Action::Hit) {
@@ -173,9 +173,8 @@ void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hand
             EVresults[trueCount].standStats.addResult(result);
         }
         else if (forcedAction == Action::Double){
-            EVresults[trueCount].doubleStats.addResult(result * 2);
+            EVresults[trueCount].doubleStats.addResult(result);
         } else if (forcedAction == Action::Split){
-            std::cout << "Adding split result: " << result << std::endl;
             EVresults[trueCount].splitStats.addResult(result);
         }
     }

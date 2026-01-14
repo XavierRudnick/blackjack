@@ -105,6 +105,10 @@ public:
         return action;
     }
 
+    std::string getName() override {
+        return inner_->getName();
+    }
+
     ~LoggingCountingStrategy() override = default;
 
 };

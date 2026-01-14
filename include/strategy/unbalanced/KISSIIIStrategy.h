@@ -32,6 +32,8 @@ class KISSIIIStrategy : public CountingStrategy { //in docs note deck size is co
 
         void reset(int deckSize) override;
 
+        std::string getName() override;
+
         ~KISSIIIStrategy() override = default;
 };
 

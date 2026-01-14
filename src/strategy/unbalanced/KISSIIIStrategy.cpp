@@ -223,3 +223,7 @@ void KISSIIIStrategy::reset(int deckSize){
     deckStartSize = deckSize;
     true_count = deckSize * -2;
 }
+
+std::string KISSIIIStrategy::getName() {
+    return "KISSIIIStrategy";
+}

@@ -34,6 +34,8 @@ class WongHalvesStrategy : public CountingStrategy { //in docs note deck size is
 
         void reset(int deckSize) override;
 
+        std::string getName() override;
+
         ~WongHalvesStrategy() override = default;
 };
 

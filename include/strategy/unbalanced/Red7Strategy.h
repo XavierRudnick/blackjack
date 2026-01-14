@@ -32,6 +32,8 @@ class Red7Strategy : public CountingStrategy { //in docs note deck size is count
 
         void reset(int deckSize) override;
 
+        std::string getName() override;
+
         ~Red7Strategy() override = default;
 };
 

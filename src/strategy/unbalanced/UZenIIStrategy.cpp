@@ -250,3 +250,7 @@ void UZenIIStrategy::reset(int deckSize){
     deckStartSize = deckSize;
     true_count = deckSize * -4;
 }
+
+std::string UZenIIStrategy::getName() {
+    return "UZenIIStrategy";
+}

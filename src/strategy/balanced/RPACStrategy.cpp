@@ -276,3 +276,7 @@ void RAPCStrategy::reset(int deckSize){
     true_count = 0;
     num_decks_left = deckSize;
 }
+
+std::string RAPCStrategy::getName() {
+    return "RAPCStrategy";
+}

@@ -30,6 +30,8 @@ class NoStrategy : public CountingStrategy { //in docs note deck size is counted
 
         void reset(int deckSize) override;
 
+        std::string getName() override;
+
          ~NoStrategy() override = default;
 
 

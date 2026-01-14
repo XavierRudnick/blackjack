@@ -287,3 +287,7 @@ void ZenCountStrategy::reset(int deckSize){
     true_count = 0;
     num_decks_left = deckSize;
 }
+
+std::string ZenCountStrategy::getName() {
+    return "ZenCountStrategy";
+}

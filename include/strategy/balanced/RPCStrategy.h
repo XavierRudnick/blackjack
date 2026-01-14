@@ -34,6 +34,8 @@ class RPCStrategy : public CountingStrategy { //in docs note deck size is counte
 
         void reset(int deckSize) override;
 
+        std::string getName() override;
+
         ~RPCStrategy() override = default;
 };
 

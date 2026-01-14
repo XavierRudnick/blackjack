@@ -4,16 +4,16 @@
 Engine::Engine(
     const GameConfig& gameConfig,
     Deck deck,
-    std::unique_ptr<Player> player,
+    Player* player,
     EventBus* eventBus
 )
     : bankroll(gameConfig.wallet), 
     config(gameConfig), 
     deck(std::move(deck)), 
-    player(std::move(player)) 
+    player(player) 
     
 {
-    reporter = std::make_unique<GameReporter>(eventBus, config.emitEvents);
+    reporter = new GameReporter(eventBus, config.emitEvents);
     config.penetrationThreshold = (1-config.penetrationThreshold) * config.numDecks * Deck::NUM_CARDS_IN_DECK;
     fixedEngine = FixedEngine(config.monteCarloActions, gameConfig);
 }

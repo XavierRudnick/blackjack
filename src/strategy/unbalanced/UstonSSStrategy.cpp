@@ -245,3 +245,7 @@ void UstonSSStrategy::reset(int deckSize){
     deckStartSize = deckSize;
     true_count = deckSize * -4;
 }
+
+std::string UstonSSStrategy::getName() {
+    return "UstonSSStrategy";
+}

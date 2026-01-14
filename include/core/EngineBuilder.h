@@ -20,22 +20,22 @@ class EngineBuilder {
 
         EngineBuilder& setPenetrationThreshold(float threshold);
 
-        EngineBuilder& with3To2Payout();
+        EngineBuilder& with3To2Payout(bool enable);
         EngineBuilder& with6To5Payout();
 
-        EngineBuilder& withH17Rules();
+        EngineBuilder& withH17Rules(bool enable);
         EngineBuilder& withS17Rules();
 
-        EngineBuilder& allowReSplitAces();
+        EngineBuilder& allowReSplitAces(bool enable);
         EngineBuilder& noReSplitAces();
 
-        EngineBuilder& allowDoubleAfterSplit();
+        EngineBuilder& allowDoubleAfterSplit(bool enable);
         EngineBuilder& noDoubleAfterSplit();
 
-        EngineBuilder& allowSurrender();
+        EngineBuilder& allowSurrender(bool enable);
         EngineBuilder& noSurrender();
 
-        EngineBuilder& enableMontiCarlo();
+        EngineBuilder& enableMontiCarlo(bool enable);
         EngineBuilder& noMontiCarlo();
 
         EngineBuilder& setUserHandValue(int value);
@@ -43,6 +43,6 @@ class EngineBuilder {
 
         EngineBuilder& setActions(std::vector<Action> actions);
 
-        Engine build(std::unique_ptr<Player> player);
+        Engine build(Player* player);
 };
 #endif

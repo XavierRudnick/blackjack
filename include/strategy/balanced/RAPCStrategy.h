@@ -34,6 +34,8 @@ class RAPCStrategy : public CountingStrategy { //in docs note deck size is count
 
         void reset(int deckSize) override;
 
+        std::string getName() override;
+
         ~RAPCStrategy() override = default;
 };
 

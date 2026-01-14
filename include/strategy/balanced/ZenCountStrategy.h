@@ -34,6 +34,8 @@ class ZenCountStrategy : public CountingStrategy { //in docs note deck size is c
 
         void reset(int deckSize) override;
 
+        std::string getName() override;
+
         ~ZenCountStrategy() override = default;
 };
 

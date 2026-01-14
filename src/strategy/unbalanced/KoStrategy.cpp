@@ -207,3 +207,7 @@ void KoStrategy::reset(int deckSize){
     deckStartSize = deckSize;
     true_count = deckSize * -4;
 }
+
+std::string KoStrategy::getName() {
+    return "KoStrategy";
+}

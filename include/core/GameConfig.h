@@ -9,7 +9,7 @@ struct GameConfig{
         double wallet = 1000.0;
         float penetrationThreshold = .75;
         double blackjackPayoutMultiplier = 1.5; 
-        bool dealerHitsSoft17 = false;
+        bool dealerHitsSoft17 = true;
         bool doubleAfterSplitAllowed = true;
         bool allowReSplitAces = true;
         bool allowSurrender = false;

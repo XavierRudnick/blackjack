@@ -32,6 +32,8 @@ class KoStrategy : public CountingStrategy { //in docs note deck size is counted
 
         void reset(int deckSize) override;
 
+        std::string getName() override;
+
         ~KoStrategy() override = default;
 };
 

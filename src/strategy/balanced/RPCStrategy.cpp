@@ -252,3 +252,7 @@ void RPCStrategy::reset(int deckSize){
     true_count = 0;
     num_decks_left = deckSize;
 }
+
+std::string RPCStrategy::getName() {
+    return "RPCStrategy";
+}

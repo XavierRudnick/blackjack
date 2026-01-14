@@ -26,7 +26,7 @@ public:
     Engine(
         const GameConfig& gameConfig, //pass by reference to avoid copy
         Deck deck,
-        std::unique_ptr<Player> player,
+        Player* player,
         EventBus* eventBus // not owned can be nullptr
     );
 
@@ -40,8 +40,8 @@ private:
     GameConfig config;
 
     std::optional<Deck> deck;
-    std::unique_ptr<Player> player;
-    std::unique_ptr<GameReporter> reporter;
+    Player* player;
+    GameReporter* reporter;
 
     FixedEngine fixedEngine;
 

@@ -141,7 +141,6 @@ Money gained/lost per 1000$ 18.0612$
 RTP 1.01806
 
 
-
 Quatro Hilo
 ====================================
 Simulation time for 2 decks and 1000000 iterations: 60.1816 seconds.

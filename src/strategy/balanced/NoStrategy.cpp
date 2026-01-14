@@ -88,3 +88,7 @@ Action NoStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float tru
 void NoStrategy::reset(int deckSize){
     num_decks_left = deckSize;
 }
+
+std::string NoStrategy::getName() {
+    return "NoStrategy";
+}

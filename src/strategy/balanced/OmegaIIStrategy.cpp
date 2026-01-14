@@ -270,3 +270,7 @@ void OmegaIIStrategy::reset(int deckSize){
     true_count = 0;
     num_decks_left = deckSize;
 }
+
+std::string OmegaIIStrategy::getName() {
+    return "OmegaIIStrategy";
+}

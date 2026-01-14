@@ -263,3 +263,7 @@ void R14Strategy::reset(int deckSize){
     true_count = 0;
     num_decks_left = deckSize;
 }
+
+std::string R14Strategy::getName() {
+    return "R14Strategy";
+}

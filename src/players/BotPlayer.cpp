@@ -34,6 +34,10 @@ void BotPlayer::resetCount(int deckSize) {
     return;
 }
 
+std::string BotPlayer::getStrategyName() {
+    return strategy->getName();
+}
+
 Action BotPlayer::getAction(Hand& user, Hand& dealer, float trueCount) {
     Rank dealer_card = dealer.peekFrontCard();
 

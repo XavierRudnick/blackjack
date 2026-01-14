@@ -269,3 +269,7 @@ void MentorStrategy::reset(int deckSize){
     true_count = 0;
     num_decks_left = deckSize;
 }
+
+std::string MentorStrategy::getName() {
+    return "MentorStrategy";
+}

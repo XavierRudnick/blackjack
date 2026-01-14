@@ -33,7 +33,7 @@ Engine setupEngine(std::vector<Card> stack, double initialWallet = 1000) {
     }
 
     auto strategy = std::make_unique<NoStrategy>(0);
-    auto player = std::make_unique<BotPlayer>(false, std::move(strategy));
+    BotPlayer player(false, std::move(strategy));
 
     Deck riggedDeck = Deck::createTestDeck(stack);
 
@@ -43,10 +43,10 @@ Engine setupEngine(std::vector<Card> stack, double initialWallet = 1000) {
             .setDeck(riggedDeck)
             .setInitialWallet(initialWallet)
             .enableEvents(true)
-            .with3To2Payout()
-            .withS17Rules()
-            .allowDoubleAfterSplit()
-            .build(std::move(player));
+            .with3To2Payout(true)
+            .withH17Rules(true)
+            .allowDoubleAfterSplit(true)
+            .build(&player);
 }
 
 class CountStatsObserver : public EventObserver {
@@ -101,8 +101,7 @@ RiggedRunResult runRiggedDeckWithLogging(const std::vector<Card>& stack, int num
 
     Deck riggedDeck = Deck::createTestDeck(stack);
     auto strategy = std::make_unique<LoggingCountingStrategy>(std::make_unique<HiLoStrategy>(numDecks), bus);
-    auto robot = std::make_unique<BotPlayer>(false, std::move(strategy));
-
+    BotPlayer robot(false, std::move(strategy));
     Engine engine = EngineBuilder()
                         .withEventBus(bus)
                         .setDeckSize(numDecks)
@@ -110,10 +109,10 @@ RiggedRunResult runRiggedDeckWithLogging(const std::vector<Card>& stack, int num
                         .setPenetrationThreshold(0.0f) // stop once cards drop to full-deck depth, ensuring only the rigged hands run
                         .setInitialWallet(initialWallet)
                         .enableEvents(true)
-                        .with3To2Payout()
-                        .withS17Rules()
-                        .allowDoubleAfterSplit()
-                        .build(std::move(robot));
+                        .with3To2Payout(true)
+                        .withH17Rules(true)
+                        .allowDoubleAfterSplit(true)
+                        .build(&robot);
 
     std::pair<double, double> result = engine.runner();
     bus->detachAll();

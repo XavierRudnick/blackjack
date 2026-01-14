@@ -34,6 +34,8 @@ class R14Strategy : public CountingStrategy { //in docs note deck size is counte
 
         void reset(int deckSize) override;
 
+        std::string getName() override;
+
         ~R14Strategy() override = default;
 };
 

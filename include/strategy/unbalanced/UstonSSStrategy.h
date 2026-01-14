@@ -32,6 +32,8 @@ class UstonSSStrategy : public CountingStrategy { //in docs note deck size is co
 
         void reset(int deckSize) override;
 
+        std::string getName() override;
+
         ~UstonSSStrategy() override = default;
 };
 

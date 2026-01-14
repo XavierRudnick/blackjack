@@ -23,6 +23,7 @@ public:
     float getTrueCount() override;
     bool shouldAcceptInsurance() override;
     void resetCount(int deckSize);
+    std::string getStrategyName();
 
 
 };

@@ -24,6 +24,7 @@ class CountingStrategy {
         virtual Action getSplitAction(Rank playerSplitRank, Rank dealerUpcard,float true_count)= 0 ;
 
         virtual void reset(int deckSize) = 0;
+        virtual std::string getName() = 0;
 
         virtual ~CountingStrategy() = default;
 

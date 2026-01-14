@@ -32,6 +32,8 @@ class UZenIIStrategy : public CountingStrategy { //in docs note deck size is cou
 
         void reset(int deckSize) override;
 
+        std::string getName() override;
+
         ~UZenIIStrategy() override = default;
 };
 

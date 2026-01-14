@@ -26,9 +26,9 @@
 
 void playManualGame(int numDecksUsed){
     ConsoleObserver consoleObserver;
-    EventBus* bus = EventBus::getInstance();
-    bus->detachAll();
-    bus->registerObserver(&consoleObserver, {EventType::CardsDealt, EventType::ActionTaken, EventType::RoundEnded, EventType::GameStats});
+    EventBus& bus = EventBus::getInstance();
+    bus.detachAll();
+    bus.registerObserver(&consoleObserver, {EventType::CardsDealt, EventType::ActionTaken, EventType::RoundEnded, EventType::GameStats});
 
 
     Deck deck(numDecksUsed);
@@ -37,7 +37,7 @@ void playManualGame(int numDecksUsed){
     HumanPlayer human(false, std::move(hilo)); 
 
     Engine hiLoEngine = EngineBuilder()
-                        .withEventBus(bus)
+                        .withEventBus(&bus)
                         .setDeckSize(numDecksUsed)
                         .setDeck(deck)
                         .setPenetrationThreshold(.75)
@@ -55,9 +55,9 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
 
     std::pair<double, double> gameStats = {0, 0};
     ConsoleObserver consoleObserver;
-    EventBus* bus = EventBus::getInstance();
-    bus->detachAll();
-    //bus->registerObserver(&consoleObserver, {EventType::CardsDealt, EventType::ActionTaken, EventType::RoundEnded, EventType::GameStats});
+    EventBus& bus = EventBus::getInstance();
+    //bus.detachAll();
+    //bus.registerObserver(&consoleObserver, {EventType::CardsDealt, EventType::ActionTaken, EventType::RoundEnded, EventType::GameStats});
 
     Deck deck(numDecksUsed);
     BotPlayer robot(false, std::move(strategy)); 
@@ -71,7 +71,7 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
         std::pair<double, double> profit = {1000, 0};
 
         Engine hiLoEngine = EngineBuilder()
-                                    .withEventBus(bus)
+                                    .withEventBus(&bus)
                                     .setDeckSize(numDecksUsed)
                                     .setDeck(deck)
                                     .setPenetrationThreshold(deckPenetration)
@@ -80,7 +80,7 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
                                     .with3To2Payout(true)
                                     .withH17Rules(true)
                                     .allowDoubleAfterSplit(true)
-                                    .allowReSplitAces(false)
+                                    .allowReSplitAces(true)
                                     .build(&robot);
         profit = hiLoEngine.runner();
 
@@ -114,9 +114,9 @@ void runMontesims(int numDecksUsed, int iterations,float deckPenetration, std::v
 
     std::pair<double, double> gameStats = {0, 0};
     ConsoleObserver consoleObserver;
-    auto* bus = EventBus::getInstance();
-    //bus->detachAll();
-    //bus->registerObserver(&consoleObserver, {EventType::CardsDealt, EventType::ActionTaken, EventType::RoundEnded, EventType::GameStats});
+    EventBus& bus = EventBus::getInstance();
+    //bus.detachAll();
+    //bus.registerObserver(&consoleObserver, {EventType::CardsDealt, EventType::ActionTaken, EventType::RoundEnded, EventType::GameStats});
 
     Deck deck(numDecksUsed);
 
@@ -135,7 +135,7 @@ void runMontesims(int numDecksUsed, int iterations,float deckPenetration, std::v
                     robot.resetCount(numDecksUsed);
 
                     Engine hiLoEngine = EngineBuilder()
-                                                .withEventBus(bus)
+                                                .withEventBus(&bus)
                                                 .setDeckSize(numDecksUsed)
                                                 .setDeck(deck)
                                                 .setPenetrationThreshold(deckPenetration)
@@ -184,11 +184,13 @@ void runMontesims(int numDecksUsed, int iterations,float deckPenetration, std::v
     std::cout << "Difference: " << diff << std::endl;
     std::cout << "Money gained/lost per 1000$ " << money_lost_per << "$" << std::endl;
     std::cout << "RTP " << rtp << std::endl;
+
+    //bus.detachAll();
 }
 
 int main(){
-    int numDecksUsed = 6;
-    float deckPenetration = 0.5;
+    int numDecksUsed = 2;
+    float deckPenetration = 0.75;
     bool blackJackPayout3to2 = true; 
     bool dealerHits17 = true;
     bool allowDoubleAfterSplit = true;
@@ -244,14 +246,14 @@ int main(){
     strategies.push_back(std::make_unique<OmegaIIStrategy>(numDecksUsed));
     strategies.push_back(std::make_unique<WongHalvesStrategy>(numDecksUsed));
 
+    runRTPsims(numDecksUsed, 5000000,deckPenetration,std::make_unique<HiLoStrategy>(numDecksUsed));
 
-
-    runMontesims(numDecksUsed, 1000000,deckPenetration, actionSets, strategies, dealerVplayerValuesVec,
-        blackJackPayout3to2,
-        dealerHits17,
-        allowDoubleAfterSplit,
-        allowReSplitAces
-    );
+    // runMontesims(numDecksUsed, 1000000,deckPenetration, actionSets, strategies, dealerVplayerValuesVec,
+    //     blackJackPayout3to2,
+    //     dealerHits17,
+    //     allowDoubleAfterSplit,
+    //     allowReSplitAces
+    // );
 
     //unRTPsims(numDecksUsed, 1000000,deckPenetration, std::move(no));
     

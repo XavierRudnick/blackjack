@@ -36,7 +36,7 @@ private:
     }
 
 public:
-    LoggingCountingStrategy(std::unique_ptr<CountingStrategy> inner, EventBus* bus = nullptr) : inner_(std::move(inner)), bus_(bus) {}
+    LoggingCountingStrategy(std::unique_ptr<CountingStrategy> inner, EventBus& bus) : inner_(std::move(inner)), bus_(&bus) {}
 
     int getBetSize() override {
         const int bet = inner_->getBetSize();

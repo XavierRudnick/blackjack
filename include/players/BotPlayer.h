@@ -22,6 +22,8 @@ public:
     void updateCount(Card card) override;
     float getTrueCount() override;
     bool shouldAcceptInsurance() override;
+    void resetCount(int deckSize);
+    std::string getStrategyName();
 
 
 };

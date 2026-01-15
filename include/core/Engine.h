@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include <memory>
-
+#include <map>
 #include "Deck.h"
 #include "Hand.h"
 #include "CountingStrategy.h"
@@ -16,30 +16,22 @@
 #include "Player.h"
 #include "Bankroll.h"
 #include "GameReporter.h"
+#include "FixedEngine.h"
+#include "GameConfig.h"
 
 class Engine{
 
 public:
-    struct GameConfig {
-        int numDecks = 2;
-        double wallet = 1000.0;
-        float penetrationThreshold = .75;
-        double blackjackPayoutMultiplier = 1.5; 
-        bool dealerHitsSoft17 = false;
-        bool doubleAfterSplitAllowed = true;
-        bool allowReSplitAces = true;
-        bool allowSurrender = false;
-        bool emitEvents = false;
-    };
 
     Engine(
         const GameConfig& gameConfig, //pass by reference to avoid copy
         Deck deck,
-        std::unique_ptr<Player> player,
+        Player* player,
         EventBus* eventBus // not owned can be nullptr
     );
 
     std::pair<double, double> runner();
+    FixedEngine runnerMonte();
 
 private:
     Bankroll bankroll;
@@ -48,8 +40,10 @@ private:
     GameConfig config;
 
     std::optional<Deck> deck;
-    std::unique_ptr<Player> player;
-    std::unique_ptr<GameReporter> reporter;
+    Player* player;
+    GameReporter* reporter;
+
+    FixedEngine fixedEngine;
 
     //hand evaluation logic
     std::vector<int> getPlayerScores(std::vector<Hand>& hands);
@@ -82,6 +76,10 @@ private:
     bool doubleHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel,bool has_split);
     bool splitHandler(Hand& user,Hand& dealer, std::vector<Hand>& hands, std::string handLabel,bool has_split, bool is_split_aces);
     bool surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel);
+
+    void playForcedHand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces, bool has_split, Action forcedAction);
+    void calculateEV(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool is_split_aces, bool has_split, Action forcedAction, float trueCount);
+
    
 
 };

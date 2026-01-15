@@ -36,7 +36,7 @@ private:
     }
 
 public:
-    LoggingCountingStrategy(std::unique_ptr<CountingStrategy> inner, EventBus* bus = nullptr) : inner_(std::move(inner)), bus_(bus) {}
+    LoggingCountingStrategy(std::unique_ptr<CountingStrategy> inner, EventBus& bus) : inner_(std::move(inner)), bus_(&bus) {}
 
     int getBetSize() override {
         const int bet = inner_->getBetSize();
@@ -52,6 +52,11 @@ public:
     void updateDeckSize(int num_cards_left) override {
         inner_->updateDeckSize(num_cards_left);
         emit("Deck size updated: " + std::to_string(num_cards_left) +" decks left= " + toStr(inner_->getDecksLeft()));
+    }
+
+    void reset(int deckSize) override {
+        inner_->reset(deckSize);
+        emit("Count reset for deck size: " + std::to_string(deckSize));
     }
 
     float getTrueCount() const override { return inner_->getTrueCount(); }
@@ -98,6 +103,10 @@ public:
         Action action = inner_->getSplitAction(playerSplitRank, dealerUpcard, trueCount);
         emit("Logged action: getSplitAction");
         return action;
+    }
+
+    std::string getName() override {
+        return inner_->getName();
     }
 
     ~LoggingCountingStrategy() override = default;

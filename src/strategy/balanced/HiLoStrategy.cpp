@@ -31,7 +31,7 @@ int HiLoStrategy::getBetSize() {
         return 2000;
     }
 
-    //xav bet spread
+    // //xav bet spread
     // if (true_count < 1){
     //     return 5;
     // }
@@ -119,9 +119,9 @@ Action HiLoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, f
             if (dealerValue == 10 && trueCount > 0) {
                 return Action::Stand;
             }
-            if (dealerValue == 9 && trueCount >= 5) {
-                return Action::Stand;
-            }
+            // if (dealerValue == 9 && trueCount >= 5) {
+            //     return Action::Stand;
+            // }
             break;
             
         case 15: 
@@ -131,12 +131,12 @@ Action HiLoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, f
             break;
             
         case 13:
-            if (dealerValue == 2 && trueCount <= -1) { 
-                return Action::Stand;
-            }
-            if (dealerValue == 3 && trueCount <= -2) { 
-                return Action::Stand;
-            }
+            // if (dealerValue == 2 && trueCount <= -1) { 
+            //     return Action::Stand;
+            // }
+            // if (dealerValue == 3 && trueCount <= -2) { 
+            //     return Action::Stand;
+            // }
             break;
 
         case 12:
@@ -146,34 +146,29 @@ Action HiLoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, f
             if (dealerValue == 2 && trueCount >= 3) {
                 return Action::Stand;
             }
-            if (dealerValue == 4 && trueCount < 0){
-                return Action::Hit;
-            }
-            if (dealerValue == 5 && trueCount <= -2){
-                return Action::Hit;
-            }
-            if (dealerValue == 6 && trueCount <= -1){
-                return Action::Hit;
-            }
-            break;
-        case 11:
-            if (dealerValue == 11 && trueCount >= 1){
-                return Action::Double;
-            }
+            // if (dealerValue == 4 && trueCount < 0){
+            //     return Action::Hit;
+            // }
+            // if (dealerValue == 5 && trueCount <= -2){
+            //     return Action::Hit;
+            // }
+            // if (dealerValue == 6 && trueCount <= -1){
+            //     return Action::Hit;
+            // }
             break;
         case 10:
-            if (dealerValue == 10 && trueCount >=4){
+            if (dealerValue == 10 && trueCount >= 4){
                 return Action::Double;
             }
-            if (dealerValue == 11 && trueCount >= 4){
+            if (dealerValue == 11 && trueCount >= 3.5){
                 return Action::Double;
             }
             break;
         case 9:
-            if (dealerValue == 2  && trueCount >= 1){
+            if (dealerValue == 2  && trueCount >= -0.5){
                 return Action::Double;
             }
-            if (dealerValue == 7  && trueCount >= 3){
+            if (dealerValue == 7  && trueCount >= 2.5){
                 return Action::Double;
             }
             break;
@@ -293,4 +288,15 @@ Action HiLoStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, flo
     else{
         return BasicStrategy::splitTable[pairIdx][dealerIdx];
     }
+}
+
+void HiLoStrategy::reset(int deckSize){
+    running_count = 0;
+    true_count = 0;
+    num_decks_left = deckSize;
+    return;
+}
+
+std::string HiLoStrategy::getName() {
+    return "HiLoStrategy";
 }

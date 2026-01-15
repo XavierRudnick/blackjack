@@ -21,21 +21,24 @@ EngineBuilder& EngineBuilder::withEventBus(EventBus* bus) {
     return *this;
 }
 
-EngineBuilder& EngineBuilder::setInitialWallet(double money) {
+EngineBuilder& EngineBuilder::setInitialWallet(double money = 1000) {
     gameConfig.wallet = money;
     return *this;
 }
 
-EngineBuilder& EngineBuilder::setPenetrationThreshold(float threshold){
+EngineBuilder& EngineBuilder::setPenetrationThreshold(float threshold = 0.75){
     gameConfig.penetrationThreshold = threshold;
     return *this;
 }
-EngineBuilder& EngineBuilder::enableEvents(bool enable) {
+EngineBuilder& EngineBuilder::enableEvents(bool enable = false) {
     gameConfig.emitEvents = enable;
     return *this;
 }
 
-EngineBuilder& EngineBuilder::with3To2Payout() {
+EngineBuilder& EngineBuilder::with3To2Payout(bool enable = true) {
+    if (!enable) {
+        return with6To5Payout();
+    }
     gameConfig.blackjackPayoutMultiplier = 1.5;
     return *this;
 }
@@ -44,7 +47,10 @@ EngineBuilder& EngineBuilder::with6To5Payout() {
     return *this;
 }
 
-EngineBuilder& EngineBuilder::withH17Rules() {
+EngineBuilder& EngineBuilder::withH17Rules(bool enable = true) {
+    if (!enable) {
+        return withS17Rules();
+    }
     gameConfig.dealerHitsSoft17 = true;
     return *this;
 }
@@ -54,7 +60,10 @@ EngineBuilder& EngineBuilder::withS17Rules() {
     return *this;
 }
 
-EngineBuilder& EngineBuilder::allowDoubleAfterSplit() {
+EngineBuilder& EngineBuilder::allowDoubleAfterSplit(bool enable = true) {
+    if (!enable) {
+        return noDoubleAfterSplit();
+    }
     gameConfig.doubleAfterSplitAllowed = true;
     return *this;
 }
@@ -64,7 +73,10 @@ EngineBuilder& EngineBuilder::noDoubleAfterSplit() {
     return *this;
 }
 
-EngineBuilder& EngineBuilder::allowReSplitAces() {
+EngineBuilder& EngineBuilder::allowReSplitAces(bool enable = true) {
+    if (!enable) {
+        return noReSplitAces();
+    }
     gameConfig.allowReSplitAces = true;
     return *this;
 }
@@ -74,7 +86,10 @@ EngineBuilder& EngineBuilder::noReSplitAces() {
     return *this;
 }
 
-EngineBuilder& EngineBuilder::allowSurrender() {
+EngineBuilder& EngineBuilder::allowSurrender(bool enable = true) {
+    if (!enable) {
+        return noSurrender();
+    }
     gameConfig.allowSurrender = true;
     return *this;
 }
@@ -84,7 +99,35 @@ EngineBuilder& EngineBuilder::noSurrender() {
     return *this;
 }
 
-Engine EngineBuilder::build(std::unique_ptr<Player> player) {
-    Engine engine(gameConfig, *deck, std::move(player), eventBus);
+EngineBuilder& EngineBuilder::enableMontiCarlo(bool enable = false) {
+    if (!enable) {
+        return noMontiCarlo();
+    }
+    gameConfig.enabelMontiCarlo = true;
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::noMontiCarlo() {
+    gameConfig.enabelMontiCarlo = false;
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::setUserHandValue(int value) {
+    gameConfig.userHandValue = value;
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::setDealerUpcardValue(int value) {
+    gameConfig.dealerUpcardValue = value;
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::setActions(std::vector<Action> actions) {
+    gameConfig.monteCarloActions = actions;
+    return *this;
+}
+
+Engine EngineBuilder::build(Player* player) {
+    Engine engine(gameConfig, *deck, player, eventBus);
     return engine;
 }

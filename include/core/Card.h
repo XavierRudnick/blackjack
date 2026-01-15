@@ -10,10 +10,11 @@ class Card{
         Suit suit_;
     public:
         Card(Rank rank, Suit suit);
-        Rank getRank();
-        Suit getSuit();
+        Rank getRank() const;
+        Suit getSuit() const ;
         bool isWorthTen();
         bool isAce();
+        int getValue() const;
 };
 
 #endif

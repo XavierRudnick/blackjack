@@ -60,8 +60,7 @@ int RAPCStrategy::getBetSize() {
 }
 
 void RAPCStrategy::updateCount(Card card) {
-    Rank rank = card.getRank();
-    int score = static_cast<int>(rank) + INDEX_OFFSET;
+    int score = card.getValue();
 
     switch (score)
     {
@@ -108,6 +107,11 @@ void RAPCStrategy::updateCount(Card card) {
 void RAPCStrategy::updateDeckSize(int num_cards_left){
     float decks_left_unrounded = num_cards_left / Deck::NUM_CARDS_IN_DECK; 
     num_decks_left = std::round(decks_left_unrounded * 2.0) / 2.0;//convert to only count float .5 segments
+
+    if (num_decks_left > 0) {
+        float raw = running_count / num_decks_left;
+        true_count = std::round(raw * 2.0) / 2.0; // keep 0.5 increments
+    }
     return;
 }
 
@@ -136,19 +140,28 @@ Action RAPCStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, f
 
     switch (playerTotal) {
         case 16:
-            if (dealerValue == 10 && trueCount > 0) {
+            if (dealerValue == 10 && trueCount > 1.5) {
                 return Action::Stand;
             }
 
             break;
             
         case 15: 
-            if (dealerValue == 10 && trueCount >= 4) {
+            if (dealerValue == 10 && trueCount > 14) {
                 return Action::Stand;
             }
             break;
             
         default: return Action::Skip;
+
+        case 12:
+            if (dealerValue == 3 && trueCount > 11) {
+                return Action::Stand;
+            }
+            if (dealerValue == 2 && trueCount >= 11) {
+                return Action::Stand;
+            }
+            break;
     }
     return Action::Skip;
 }
@@ -256,4 +269,14 @@ Action RAPCStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, flo
     else{
         return BasicStrategy::splitTable[pairIdx][dealerIdx];
     }
+}
+
+void RAPCStrategy::reset(int deckSize){
+    running_count = 0;
+    true_count = 0;
+    num_decks_left = deckSize;
+}
+
+std::string RAPCStrategy::getName() {
+    return "RAPCStrategy";
 }

@@ -244,3 +244,13 @@ Action UZenIIStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard
 Action UZenIIStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
     return Action::Skip;
 }
+
+void UZenIIStrategy::reset(int deckSize){
+    num_decks_left = deckSize;
+    deckStartSize = deckSize;
+    true_count = deckSize * -4;
+}
+
+std::string UZenIIStrategy::getName() {
+    return "UZenIIStrategy";
+}

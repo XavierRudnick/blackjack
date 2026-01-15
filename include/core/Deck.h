@@ -8,7 +8,11 @@
 class Deck{
     private:
         std::vector<Card> deck;
-        std::mt19937 rand;
+
+        static std::mt19937& getGlobalRng() {
+            static std::mt19937 rand(std::random_device{}());
+            return rand;
+        }
 
     public:
         static const int NUM_RANK = 13;
@@ -20,6 +24,10 @@ class Deck{
         std::pair<Card,Card> deal();
         Card hit();
         int getSize();
+        Deck clone() const;
+        void reset();
+
+        void shuffle();
 };
 
 #endif

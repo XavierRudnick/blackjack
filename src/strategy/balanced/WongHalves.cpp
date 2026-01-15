@@ -265,3 +265,13 @@ Action WongHalvesStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcar
         return BasicStrategy::splitTable[pairIdx][dealerIdx];
     }
 }
+
+void WongHalvesStrategy::reset(int deckSize){
+    running_count = 0;
+    true_count = 0;
+    num_decks_left = deckSize;
+}
+
+std::string WongHalvesStrategy::getName() {
+    return "WongHalvesStrategy";
+}

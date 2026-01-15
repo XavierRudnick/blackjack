@@ -217,3 +217,13 @@ Action KISSIIIStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcar
 Action KISSIIIStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
     return Action::Skip;
 }
+
+void KISSIIIStrategy::reset(int deckSize){
+    num_decks_left = deckSize;
+    deckStartSize = deckSize;
+    true_count = deckSize * -2;
+}
+
+std::string KISSIIIStrategy::getName() {
+    return "KISSIIIStrategy";
+}

@@ -4,24 +4,32 @@
 Engine::Engine(
     const GameConfig& gameConfig,
     Deck deck,
-    std::unique_ptr<Player> player,
+    Player* player,
     EventBus* eventBus
 )
     : bankroll(gameConfig.wallet), 
     config(gameConfig), 
     deck(std::move(deck)), 
-    player(std::move(player)) 
+    player(player) 
     
 {
-    reporter = std::make_unique<GameReporter>(eventBus, config.emitEvents);
+    reporter = new GameReporter(eventBus, config.emitEvents);
     config.penetrationThreshold = (1-config.penetrationThreshold) * config.numDecks * Deck::NUM_CARDS_IN_DECK;
+    fixedEngine = FixedEngine(config.monteCarloActions, gameConfig);
 }
 
 std::pair<double, double> Engine::runner(){  
     while (deck->getSize() > config.penetrationThreshold ){
         playHand();
-    }    
+    }  
     return {bankroll.getBalance(), bankroll.getTotalMoneyBet()};
+}
+
+FixedEngine Engine::runnerMonte(){  
+    while (deck->getSize() > config.penetrationThreshold ){
+        playHand();
+    }  
+    return {fixedEngine};
 }
 
 void Engine::playHand(){
@@ -38,7 +46,7 @@ void Engine::playHand(){
     // Count visible cards
     player->updateCount(dealer.getCards()[0]);
 
-    for (Card card : user.getCards()) {
+    for (const Card& card : user.getCards()) {
         player->updateCount(card);
     }
 
@@ -148,6 +156,10 @@ void Engine::play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool 
     bool game_over = false;
     const std::string handLabel = has_split_aces ? "Player (split aces)" : "Player";
     reporter->reportHand(user, handLabel); 
+    
+    if (config.enabelMontiCarlo && user.getScore() == config.userHandValue && config.dealerUpcardValue == dealer.getCards().front().getValue() && !dealer.dealerHiddenAce() && !user.isHandSoft()){
+        fixedEngine.calculateEV(*player, *deck, dealer, user, player->getTrueCount());
+    }
 
     while(!game_over){
         Action action = player->getAction(user, dealer, player->getTrueCount());

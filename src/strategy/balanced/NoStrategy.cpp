@@ -84,3 +84,11 @@ Action NoStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, fl
 Action NoStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
     return Action::Skip;
 }
+
+void NoStrategy::reset(int deckSize){
+    num_decks_left = deckSize;
+}
+
+std::string NoStrategy::getName() {
+    return "NoStrategy";
+}

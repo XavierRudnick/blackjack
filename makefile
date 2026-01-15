@@ -1,5 +1,6 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -g
+#CXXFLAGS = -std=c++17 -Wall -Wextra -g 
+CXXFLAGS= -std=c++17 -O3 -march=native -DNDEBUG
 CPPFLAGS = -Iinclude -Iinclude/core -Iinclude/strategy -Iinclude/strategy/balanced -Iinclude/strategy/unbalanced -Iinclude/players -Iinclude/observers
 OBJDIR = build
 
@@ -13,7 +14,8 @@ CORE_SOURCES = \
     src/core/Engine.cpp \
     src/core/EngineBuilder.cpp \
     src/core/GameReporter.cpp \
-    src/core/Bankroll.cpp
+    src/core/Bankroll.cpp \
+    src/core/FixedEngine.cpp
 
 STRATEGY_SOURCES = \
     $(wildcard src/strategy/*.cpp src/strategy/balanced/*.cpp src/strategy/unbalanced/*.cpp)
@@ -35,7 +37,10 @@ BLACKJACK_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(BLACKJACK_SOURCES))
 TEST_SOURCES = src/test.cpp
 TEST_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(TEST_SOURCES))
 
-all: blackjack test
+TEST_FIXED_ENGINE_SOURCES = src/testFixedEngine.cpp
+TEST_FIXED_ENGINE_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(TEST_FIXED_ENGINE_SOURCES))
+
+all: blackjack test test_fixed_engine
 
 blackjack: $(BLACKJACK_OBJECTS) $(COMMON_OBJECTS)
 	$(CXX) $(CXXFLAGS) -o blackjack $(BLACKJACK_OBJECTS) $(COMMON_OBJECTS)
@@ -43,10 +48,13 @@ blackjack: $(BLACKJACK_OBJECTS) $(COMMON_OBJECTS)
 test: $(TEST_OBJECTS) $(COMMON_OBJECTS)
 	$(CXX) $(CXXFLAGS) -o run_tests $(TEST_OBJECTS) $(COMMON_OBJECTS)
 
+test_fixed_engine: $(TEST_FIXED_ENGINE_OBJECTS) $(COMMON_OBJECTS)
+	$(CXX) $(CXXFLAGS) -o run_fixed_engine_tests $(TEST_FIXED_ENGINE_OBJECTS) $(COMMON_OBJECTS)
+
 $(OBJDIR)/%.o: src/%.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
 clean:
-	rm -rf blackjack run_tests $(OBJDIR)
-	rm -f *.o src/*.o src/*/*.o
+	rm -rf blackjack run_tests run_fixed_engine_tests $(OBJDIR)
+	find . -name "*.o" -delete

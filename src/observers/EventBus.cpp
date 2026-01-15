@@ -3,15 +3,6 @@
 
 #include "EventBus.h"
 
-EventBus* EventBus::instance = nullptr;
-
-EventBus* EventBus::getInstance() {
-    if (!instance) {
-        instance = new EventBus();
-    }
-    return instance;
-}
-
 void EventBus::registerObserver(EventObserver* observer) {
     registerObserver(observer, EventType::All);
 }

@@ -32,6 +32,10 @@ class WongHalvesStrategy : public CountingStrategy { //in docs note deck size is
         Action getSoftHandAction(int playerTotal, Rank dealerUpcard) override;
         Action getSplitAction(Rank playerSplitRank, Rank dealerUpcard,float true_count) override;
 
+        void reset(int deckSize) override;
+
+        std::string getName() override;
+
         ~WongHalvesStrategy() override = default;
 };
 

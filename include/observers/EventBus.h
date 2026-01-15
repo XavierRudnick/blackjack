@@ -20,7 +20,10 @@ private:
     static EventBus* instance;
 
 public:
-    static EventBus* getInstance();
+    static EventBus& getInstance() {
+        static EventBus instance; 
+        return instance;
+    }
 
     void registerObserver(EventObserver* observer) override;
     void registerObserver(EventObserver* observer, EventType event) override;

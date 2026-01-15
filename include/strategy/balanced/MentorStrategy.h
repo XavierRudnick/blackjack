@@ -32,6 +32,10 @@ class MentorStrategy : public CountingStrategy { //in docs note deck size is cou
         Action getSoftHandAction(int playerTotal, Rank dealerUpcard) override;
         Action getSplitAction(Rank playerSplitRank, Rank dealerUpcard,float true_count) override;
 
+        void reset(int deckSize) override;
+
+        std::string getName() override;
+
         ~MentorStrategy() override = default;
 };
 

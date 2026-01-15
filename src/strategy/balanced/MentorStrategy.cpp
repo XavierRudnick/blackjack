@@ -263,3 +263,13 @@ Action MentorStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard, f
         return BasicStrategy::splitTable[pairIdx][dealerIdx];
     }
 }
+
+void MentorStrategy::reset(int deckSize){
+    running_count = 0;
+    true_count = 0;
+    num_decks_left = deckSize;
+}
+
+std::string MentorStrategy::getName() {
+    return "MentorStrategy";
+}

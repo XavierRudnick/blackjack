@@ -239,3 +239,13 @@ Action UstonSSStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcar
 Action UstonSSStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
     return Action::Skip;
 }
+
+void UstonSSStrategy::reset(int deckSize){
+    num_decks_left = deckSize;
+    deckStartSize = deckSize;
+    true_count = deckSize * -4;
+}
+
+std::string UstonSSStrategy::getName() {
+    return "UstonSSStrategy";
+}

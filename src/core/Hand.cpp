@@ -26,6 +26,7 @@ Card Hand::getLastCard(){
 
 void Hand::popLastCard(){
     hand.pop_back();
+    invalidateCache();
     return;
 }
 
@@ -51,6 +52,7 @@ bool Hand::dealerHiddenAce(){
 
 void Hand::addCard(Card card){
     hand.emplace_back(card);
+    invalidateCache();
 }
 
 bool Hand::checkOver(){
@@ -73,10 +75,14 @@ bool Hand::isDealerOver(){
 }
 
 int Hand::getScore(){
+    if (scoreValid) {
+        return cachedScore;
+    }
+
     int score = 0;
     int soft_aces = 0;
 
-    for (Card val : hand){
+    for (const Card& val : hand){
         Rank rank = val.getRank();
 
         if (rank == Rank::Ace){
@@ -97,6 +103,10 @@ int Hand::getScore(){
         soft_aces -= 1;
     }
 
+    cachedScore = score;
+    cachedIsSoft = (score <= 21) && (soft_aces > 0);
+    scoreValid = true;
+
     return score;
 }
 
@@ -112,10 +122,13 @@ int Hand::getFinalScore(){
 }
 
 bool Hand::isHandSoft() {
+    if (scoreValid) {
+        return cachedIsSoft;
+    }
     int score = 0;
     int soft_aces = 0;
 
-   for (Card val : hand){
+   for (const Card& val : hand){
         Rank rank = val.getRank();
 
         if (rank == Rank::Ace){
@@ -136,7 +149,10 @@ bool Hand::isHandSoft() {
         soft_aces -= 1;
     }
 
-    return (score <= 21) && (soft_aces > 0);
+    cachedScore = score;
+    cachedIsSoft = (score <= 21) && (soft_aces > 0);
+    scoreValid = true;
+    return cachedIsSoft;
 }
 
 bool Hand::checkCanSplit(){
@@ -160,7 +176,7 @@ bool Hand::checkShouldStand(){
     return false;
 }
 
-std::vector<Card> Hand::getCards() const{
+const std::vector<Card>& Hand::getCards() const{
     return hand;
 }
 

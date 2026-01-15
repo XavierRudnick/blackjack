@@ -60,40 +60,39 @@ int ZenCountStrategy::getBetSize() {
 }
 
 void ZenCountStrategy::updateCount(Card card) {
-    Rank rank = card.getRank();
-    int score = static_cast<int>(rank) + INDEX_OFFSET;
+    int score = card.getValue();
 
     switch (score)
     {
     case 2:
-        true_count += 1;
+        running_count += 1;
         break;
     case 3:
-        true_count += 1;
+        running_count += 1;
         break;
     case 4:
-        true_count += 2;
+        running_count += 2;
         break;
     case 5:
-        true_count += 2;
+        running_count += 2;
         break;
     case 6: 
-        true_count += 2;
+        running_count += 2;
         break;
     case 7:
-        true_count += 1;
+        running_count += 1;
         break;
     case 8:
-        true_count += 0;
+        running_count += 0;
         break;
     case 9:         
-        true_count += 0;
+        running_count += 0;
         break;
     case 10:
-        true_count -= 2;
+        running_count -= 2;
         break;
     case 11: //Ace
-        true_count -= 1;
+        running_count -= 1;
         break;
     
     default:
@@ -141,17 +140,35 @@ Action ZenCountStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcar
             }
             
         case 15: 
-            if (dealerValue == 10 && trueCount >= 4) {
+            if (dealerValue == 10 && trueCount >= 8) {
                 return Action::Stand;
             }
             break;
 
         case 12:
-            if (dealerValue == 3 && trueCount >= 2) {
+            if (dealerValue == 3 && trueCount >= 5) {
                 return Action::Stand;
             }
             if (dealerValue == 2 && trueCount >= 3) {
                 return Action::Stand;
+            }
+            break;
+
+        case 10:
+            if (dealerValue == 10 && trueCount >= 12.5) {
+                return Action::Double;
+            }
+            if (dealerValue == 11 && trueCount > 10) {
+                return Action::Double;
+            }
+            break;
+            
+        case 9:
+            if (dealerValue == 2  && trueCount > 0) {
+                return Action::Double;
+            }
+            if (dealerValue == 7  && trueCount > 2) {
+                return Action::Double;
             }
             break;
 
@@ -263,4 +280,14 @@ Action ZenCountStrategy::getSplitAction(Rank playerSplitRank, Rank dealerUpcard,
     else{
         return BasicStrategy::splitTable[pairIdx][dealerIdx];
     }
+}
+
+void ZenCountStrategy::reset(int deckSize){
+    running_count = 0;
+    true_count = 0;
+    num_decks_left = deckSize;
+}
+
+std::string ZenCountStrategy::getName() {
+    return "ZenCountStrategy";
 }

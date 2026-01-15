@@ -11,7 +11,7 @@ const Action BasicStrategy::hardTotalTable[16][10] = {
     /* 8  */ {Action::Hit,   Action::Hit,  Action::Hit,    Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
     /* 9  */ {Action::Hit,   Action::Double, Action::Double, Action::Double, Action::Double, Action::Hit, Action::Hit, Action::Hit, Action::Hit, Action::Hit},
     /* 10 */ {Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Hit, Action::Hit},
-    /* 11 */ {Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Hit},
+    /* 11 */ {Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double, Action::Double},
     /* 12 */ {Action::Hit,   Action::Hit,   Action::Stand, Action::Stand, Action::Stand, Action::Hit,   Action::Hit,   Action::Hit,   Action::Hit,   Action::Hit},
     /* 13 */ {Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Hit,   Action::Hit,   Action::Hit,   Action::Hit,   Action::Hit},
     /* 14 */ {Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Stand, Action::Hit,   Action::Hit,   Action::Hit,   Action::Hit,   Action::Hit},

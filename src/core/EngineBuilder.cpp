@@ -112,18 +112,23 @@ EngineBuilder& EngineBuilder::noMontiCarlo() {
     return *this;
 }
 
-EngineBuilder& EngineBuilder::setUserHandValue(int value) {
-    gameConfig.userHandValue = value;
-    return *this;
-}
-
-EngineBuilder& EngineBuilder::setDealerUpcardValue(int value) {
-    gameConfig.dealerUpcardValue = value;
+EngineBuilder& EngineBuilder::setActionValues(std::set<std::pair<int, int>> values) {
+    gameConfig.actionValues = values;
     return *this;
 }
 
 EngineBuilder& EngineBuilder::setActions(std::vector<Action> actions) {
     gameConfig.monteCarloActions = actions;
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::allowSoftHandsInMonteCarlo(bool enable = false) {
+    gameConfig.allowSoftHandsInMonteCarlo = enable;
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::requirePairForMonteCarlo(bool enable = false) {
+    gameConfig.requirePairForMonteCarlo = enable;
     return *this;
 }
 

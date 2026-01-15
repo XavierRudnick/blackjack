@@ -73,19 +73,19 @@ void HiLoStrategy::updateCount(Card card) {
         running_count -= 1;
     }
 
-    float raw = running_count / num_decks_left; 
-    true_count = std::round(raw * 2.0) / 2.0;//convert to only count int .5 segments
+    float raw = running_count / num_decks_left;
+    true_count = raw;
     return;
 }
 
 void HiLoStrategy::updateDeckSize(int num_cards_left){
-    float decks_left_unrounded = num_cards_left / 52.0; //if you do 52 instead, converts to int
-    num_decks_left = std::round(decks_left_unrounded * 2.0) / 2.0;//convert to only count float .5 segments
+    float decks_left_unrounded = num_cards_left / 52.0;
+    num_decks_left = decks_left_unrounded;
 
-        // Recompute true count whenever deck size changes so future bets/decisions use latest shoe depth
+    // Recompute true count whenever deck size changes so future bets/decisions use latest shoe depth
     if (num_decks_left > 0) {
         float raw = running_count / num_decks_left;
-        true_count = std::round(raw * 2.0) / 2.0; // keep 0.5 increments
+        true_count = raw;
     }
 
     return;

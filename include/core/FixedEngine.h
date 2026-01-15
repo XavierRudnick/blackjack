@@ -42,21 +42,23 @@ public:
         ActionStats standStats;
         ActionStats doubleStats;
         ActionStats splitStats;
+        ActionStats surrenderStats;
+        ActionStats insuranceAcceptStats;
+        ActionStats insuranceDeclineStats;
     };
 
-    std::map<float, DecisionPoint> EVresults;
+    std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults;
     
     FixedEngine();
     FixedEngine(std::vector<Action> monteCarloActions, const GameConfig& gameConfig = GameConfig());
-    void calculateEV(Player& player,Deck& deck,Hand& dealer, Hand& user, float trueCount);
-    void printResults();
+    void calculateEV(Player& player,Deck& deck,Hand& dealer, Hand& user, float trueCount, std::pair<int,int> cardValues);
     void savetoCSVResults(const std::string& filename = "fixed_engine_results.csv") const;
-    const std::map<float, DecisionPoint>& getResults() const;
+    const std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& getResults() const;
     void merge(const FixedEngine& other);
 private:
     std::vector<Action> monteCarloActions;
     GameConfig config;
-    void evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount, Action forcedAction);
+    void evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount, Action forcedAction,std::pair<int,int> cardValues);
     void dealer_draw(Deck& deck, Hand& dealer);
 
     // bool handleInsurancePhase(Hand& dealer, Hand& user);
@@ -70,10 +72,10 @@ private:
     bool standHandler(Hand& user, std::vector<Hand>& hands);
     bool hitHandler(Deck& deck, Hand& user, std::vector<Hand>& hands);
     bool doubleHandler(Deck& deck, Hand& user, std::vector<Hand>& hands, bool has_split);
-    bool splitHandler(Player& player, Deck& deck, Hand& user, Hand& dealer, std::vector<Hand>& hands, bool has_split, bool is_split_aces);
+    bool splitHandler(Player& player, Deck& deck, Hand& user, Hand& dealer, std::vector<Hand>& hands, bool has_split, bool is_split_aces, float trueCount);
     bool surrenderHandler(Hand& user, std::vector<Hand>& hands);
-
-    void playForcedHand(Player& player, Deck& deck, Hand& dealer, Hand& user, std::vector<Hand>& hands, Action forcedAction,bool has_split_aces, bool has_split);
+    bool InsuranceHandler(Player& player, Deck& deck, Hand& user, Hand& dealer, std::vector<Hand>& hands, float trueCount);
+    void playForcedHand(Player& player, Deck& deck, Hand& dealer, Hand& user, std::vector<Hand>& hands, Action forcedAction,bool has_split_aces, bool has_split,float trueCount);
  
 
 };

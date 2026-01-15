@@ -17,6 +17,23 @@ bool approxEqual(double a, double b, double epsilon = 0.0001) {
     return std::abs(a - b) < epsilon;
 }
 
+using CardValues = std::pair<int, int>;
+
+CardValues makeCardValues(Hand& user, Hand& dealer) {
+    const int dealerUp = dealer.getCards().empty() ? 0 : dealer.getCards().front().getValue();
+    return {user.getScore(), dealerUp};
+}
+
+const std::map<float, FixedEngine::DecisionPoint>& getResultsFor(const FixedEngine& engine, const CardValues& cardValues) {
+    static const std::map<float, FixedEngine::DecisionPoint> empty;
+    const auto& allResults = engine.getResults();
+    auto it = allResults.find(cardValues);
+    if (it == allResults.end()) {
+        return empty;
+    }
+    return it->second;
+}
+
 // Test 1: Constructor and initialization
 void testFixedEngineConstruction() {
     std::cout << "Running testFixedEngineConstruction... ";
@@ -92,9 +109,10 @@ void testCalculateEVStandOnTwenty() {
     FixedEngine engine(actions);
     
     float trueCount = 0.0f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     assert(results.count(trueCount) == 1);
     
     const auto& decisionPoint = results.at(trueCount);
@@ -140,9 +158,10 @@ void testCalculateEVHitAndBust() {
     FixedEngine engine(actions);
     
     float trueCount = 0.0f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(trueCount);
     
     assert(decisionPoint.hitStats.handsPlayed == 1);
@@ -185,16 +204,17 @@ void testCalculateEVDouble() {
     FixedEngine engine(actions);
     
     float trueCount = 0.0f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(trueCount);
     
     assert(decisionPoint.doubleStats.handsPlayed == 1);
     // Debug: print actual EV
-    if (!approxEqual(decisionPoint.doubleStats.getEV(), 2.0)) {
-        std::cout << "FAILED - Expected 2.0, got " << decisionPoint.doubleStats.getEV() << std::endl;
-    }
+    // if (!approxEqual(decisionPoint.doubleStats.getEV(), 2.0)) {
+    //     std::cout << "FAILED - Expected 2.0, got " << decisionPoint.doubleStats.getEV() << std::endl;
+    // }
     // Double down win = +2 (doubled bet)
     assert(approxEqual(decisionPoint.doubleStats.getEV(), 2.0));
     
@@ -226,7 +246,8 @@ void testMultipleTrueCounts() {
     player1.updateCount(Card(Rank::Ten, Suit::Spades));
     player1.updateCount(Card(Rank::Ten, Suit::Hearts));
     
-    engine.calculateEV(player1, deck1, dealer1, user1, 0.0f);
+    auto cardValues1 = makeCardValues(user1, dealer1);
+    engine.calculateEV(player1, deck1, dealer1, user1, 0.0f, cardValues1);
     
     auto strategy2 = std::make_unique<NoStrategy>(0);
     BotPlayer player2(false, std::move(strategy2));
@@ -245,9 +266,10 @@ void testMultipleTrueCounts() {
     player2.updateCount(Card(Rank::Ten, Suit::Spades));
     player2.updateCount(Card(Rank::Ten, Suit::Hearts));
     
-    engine.calculateEV(player2, deck2, dealer2, user2, 2.0f);
+    auto cardValues2 = makeCardValues(user2, dealer2);
+    engine.calculateEV(player2, deck2, dealer2, user2, 2.0f, cardValues2);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues1);
     assert(results.count(0.0f) == 1);
     assert(results.count(2.0f) == 1);
     assert(results.size() == 2);
@@ -262,22 +284,24 @@ void testMergeEngines() {
     FixedEngine engine1({Action::Hit, Action::Stand});
     FixedEngine engine2({Action::Hit, Action::Stand});
     
+    const CardValues cardKey{0, 0};
+
     // Manually populate engine1 results
-    engine1.EVresults[0.0f].hitStats.addResult(1.0);
-    engine1.EVresults[0.0f].hitStats.addResult(-1.0);
-    engine1.EVresults[0.0f].standStats.addResult(0.5);
-    
+    engine1.EVresults[cardKey][0.0f].hitStats.addResult(1.0);
+    engine1.EVresults[cardKey][0.0f].hitStats.addResult(-1.0);
+    engine1.EVresults[cardKey][0.0f].standStats.addResult(0.5);
+
     // Manually populate engine2 results with same true count
-    engine2.EVresults[0.0f].hitStats.addResult(1.0);
-    engine2.EVresults[0.0f].standStats.addResult(0.5);
-    engine2.EVresults[0.0f].standStats.addResult(-0.5);
-    
+    engine2.EVresults[cardKey][0.0f].hitStats.addResult(1.0);
+    engine2.EVresults[cardKey][0.0f].standStats.addResult(0.5);
+    engine2.EVresults[cardKey][0.0f].standStats.addResult(-0.5);
+
     // Manually populate engine2 with different true count
-    engine2.EVresults[1.0f].hitStats.addResult(2.0);
+    engine2.EVresults[cardKey][1.0f].hitStats.addResult(2.0);
     
     engine1.merge(engine2);
     
-    const auto& results = engine1.getResults();
+    const auto& results = getResultsFor(engine1, cardKey);
     
     // Check true count 0.0
     const auto& point0 = results.at(0.0f);
@@ -319,9 +343,10 @@ void testBlackjackPayout() {
     FixedEngine engine(actions);
     
     float trueCount = 0.0f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(trueCount);
     
     // Blackjack pays 1.5x
@@ -354,9 +379,10 @@ void testPushScenario() {
     FixedEngine engine(actions);
     
     float trueCount = 0.0f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(trueCount);
     
     // Push = 0
@@ -391,9 +417,10 @@ void testDealerBusts() {
     FixedEngine engine(actions);
     
     float trueCount = 0.0f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(trueCount);
     
     // Dealer busts, player wins
@@ -428,9 +455,10 @@ void testMultipleHitsBeforeStand() {
     FixedEngine engine(actions);
     
     float trueCount = 2.0f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(trueCount);
     
     assert(decisionPoint.hitStats.handsPlayed == 1);
@@ -450,6 +478,8 @@ void testAccumulatingResults() {
     FixedEngine engine({Action::Stand});
     
     float trueCount = 0.0f;
+    CardValues cardValues{0, 0};
+    bool cardValuesSet = false;
     
     // Run multiple simulations with same true count
     for (int i = 0; i < 5; i++) {
@@ -469,10 +499,15 @@ void testAccumulatingResults() {
         player.updateCount(Card(Rank::Ten, Suit::Spades));
         player.updateCount(Card(Rank::Ten, Suit::Hearts));
         
-        engine.calculateEV(player, deck, dealer, user, trueCount);
+        auto currentCardValues = makeCardValues(user, dealer);
+        if (!cardValuesSet) {
+            cardValues = currentCardValues;
+            cardValuesSet = true;
+        }
+        engine.calculateEV(player, deck, dealer, user, trueCount, currentCardValues);
     }
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(trueCount);
     
     assert(decisionPoint.standStats.handsPlayed == 5);
@@ -506,9 +541,10 @@ void testBothBlackjacks() {
     FixedEngine engine(actions);
     
     float trueCount = 0.0f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(trueCount);
     
     // Both blackjacks = push = 0
@@ -550,9 +586,10 @@ void testDoubleDownLoss() {
     FixedEngine engine(actions);
     
     float trueCount = 0.0f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(trueCount);
     
     assert(decisionPoint.doubleStats.handsPlayed == 1);
@@ -586,9 +623,10 @@ void testNegativeTrueCount() {
     player.updateCount(Card(Rank::Ten, Suit::Hearts));
     
     float trueCount = -2.5f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     assert(results.count(-2.5f) == 1);
     
     const auto& decisionPoint = results.at(-2.5f);
@@ -616,9 +654,10 @@ void testSoftHand() {
     std::vector<Action> actions = {Action::Stand};
     FixedEngine engine(actions);
     
-    engine.calculateEV(player, deck, dealer, user, 0.0f);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(0.0f);
     
     // Player has 18, dealer has 17 -> player wins
@@ -648,9 +687,10 @@ void testSoftHandBecomesHard() {
     std::vector<Action> actions = {Action::Hit};
     FixedEngine engine(actions);
     
-    engine.calculateEV(player, deck, dealer, user, 0.0f);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(0.0f);
     
     // Both have 17 -> push
@@ -678,9 +718,10 @@ void testDealerSoft17() {
     std::vector<Action> actions = {Action::Stand};
     FixedEngine engine(actions);
     
-    engine.calculateEV(player, deck, dealer, user, 0.0f);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(0.0f);
     
     // Player 18 beats dealer soft 17
@@ -710,9 +751,10 @@ void testThreeCard21() {
     std::vector<Action> actions = {Action::Hit};
     FixedEngine engine(actions);
     
-    engine.calculateEV(player, deck, dealer, user, 0.0f);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(0.0f);
     
     // Player 21 beats dealer 19
@@ -742,9 +784,10 @@ void testDealerDrawsTo21() {
     std::vector<Action> actions = {Action::Stand};
     FixedEngine engine(actions);
     
-    engine.calculateEV(player, deck, dealer, user, 0.0f);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(0.0f);
     
     // Dealer 21 beats player 20
@@ -775,9 +818,10 @@ void testDoubleSoftHand() {
     std::vector<Action> actions = {Action::Double};
     FixedEngine engine(actions);
     
-    engine.calculateEV(player, deck, dealer, user, 0.0f);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(0.0f);
     
     // Player 21 beats dealer bust on double (+2)
@@ -807,9 +851,10 @@ void testStiffHand() {
     std::vector<Action> actions = {Action::Stand};
     FixedEngine engine(actions);
     
-    engine.calculateEV(player, deck, dealer, user, 0.0f);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(0.0f);
     
     // Dealer 21 beats player 12
@@ -840,9 +885,10 @@ void testMultipleActionsPerTrueCount() {
     dealer.addCard(Card(Rank::Six, Suit::Diamonds));
     Hand user(std::make_pair(Card(Rank::Eight, Suit::Spades), Card(Rank::Eight, Suit::Hearts)), 1);
     
-    engine.calculateEV(player, deck, dealer, user, 0.0f);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(0.0f);
     
     // Both actions should have been simulated
@@ -882,9 +928,10 @@ void testSplitTwoHandsWin() {
     FixedEngine engine(actions);
 
     float trueCount = 0.0f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
 
-    const auto& decisionPoint = engine.getResults().at(trueCount);
+    const auto& decisionPoint = getResultsFor(engine, cardValues).at(trueCount);
 
     assert(decisionPoint.splitStats.handsPlayed == 2);
     assert(approxEqual(decisionPoint.splitStats.getEV(), 1.0));
@@ -923,9 +970,10 @@ void testSplitDoubleAfterSplitallowed() {
     FixedEngine engine(actions, cfg);
 
     float trueCount = 0.0f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
 
-    const auto& decisionPoint = engine.getResults().at(trueCount);
+    const auto& decisionPoint = getResultsFor(engine, cardValues).at(trueCount);
 
     assert(decisionPoint.splitStats.handsPlayed == 2);
     assert(approxEqual(decisionPoint.splitStats.getEV(), 2.0));
@@ -942,7 +990,7 @@ void testSplitDoubleAfterSplitDisallowed() {
     // 1) First split hand gets 7 -> 11 (would double)
     // 2) Second split hand gets 7 -> 11 (would double)
     // 3) First hand forced hit (no DAS) gets 9 -> 20
-    // 4) Second hand forced hit (no DAS) gets 8 -> 19
+    // 4) Second hand forced hit (no DAS) gets 8 -testCalculateEVDouble...testCalculateEVDouble...> 19
     // 5) Dealer draws 1 and busts (16 -> 26)
     std::vector<Card> stack = {
         Card(Rank::Ten, Suit::Hearts),
@@ -966,9 +1014,10 @@ void testSplitDoubleAfterSplitDisallowed() {
     FixedEngine engine(actions, cfg);
 
     float trueCount = 0.0f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
 
-    const auto& decisionPoint = engine.getResults().at(trueCount);
+    const auto& decisionPoint = getResultsFor(engine, cardValues).at(trueCount);
 
     assert(decisionPoint.splitStats.handsPlayed == 2);
     assert(approxEqual(decisionPoint.splitStats.getEV(), 1.0));
@@ -996,12 +1045,12 @@ void testVeryHighTrueCount() {
     Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
     
     float trueCount = 1.5f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     assert(results.count(1.5f) == 1);
 
-    const auto& decisionPoint = engine.getResults().at(trueCount);
     //std::cout << "Stand EV: " << decisionPoint.standStats << std::endl;
     std::cout << "PASSED" << std::endl;
 }
@@ -1025,9 +1074,10 @@ void testDealerAceUpcard() {
     std::vector<Action> actions = {Action::Stand};
     FixedEngine engine(actions);
     
-    engine.calculateEV(player, deck, dealer, user, 0.0f);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(0.0f);
     
     // Player 18 beats dealer soft 17
@@ -1058,9 +1108,10 @@ void testDoubleOn1() {
     std::vector<Action> actions = {Action::Double};
     FixedEngine engine(actions);
     
-    engine.calculateEV(player, deck, dealer, user, 0.0f);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(0.0f);
     
     // Player 21 beats dealer 19 on double (+2)
@@ -1090,9 +1141,10 @@ void testPairOfFives() {
     std::vector<Action> actions = {Action::Stand};
     FixedEngine engine(actions);
     
-    engine.calculateEV(player, deck, dealer, user, 0.0f);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(0.0f);
     
     // Player loses with 1 vs dealer bust... wait dealer should bust
@@ -1123,9 +1175,10 @@ void testDealerMultipleDraws() {
     std::vector<Action> actions = {Action::Stand};
     FixedEngine engine(actions);
     
-    engine.calculateEV(player, deck, dealer, user, 0.0f);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
     
-    const auto& results = engine.getResults();
+    const auto& results = getResultsFor(engine, cardValues);
     const auto& decisionPoint = results.at(0.0f);
     
     // Player 18 beats dealer 17
@@ -1163,9 +1216,10 @@ void testReSplitAcesAllowed() {
     FixedEngine engine(actions, cfg);
 
     float trueCount = 0.0f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
 
-    const auto& decisionPoint = engine.getResults().at(trueCount);
+    const auto& decisionPoint = getResultsFor(engine, cardValues).at(trueCount);
 
     // Should have 3 hands: initial split creates 2, re-split creates 1 more
     assert(decisionPoint.splitStats.handsPlayed == 3);
@@ -1199,13 +1253,206 @@ void testReSplitAcesDisallowed() {
     FixedEngine engine(actions, cfg);
 
     float trueCount = 0.0f;
-    engine.calculateEV(player, deck, dealer, user, trueCount);
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
 
-    const auto& decisionPoint = engine.getResults().at(trueCount);
+    const auto& decisionPoint = getResultsFor(engine, cardValues).at(trueCount);
 
     // Should have 2 hands: initial split creates 2, no re-split
     assert(decisionPoint.splitStats.handsPlayed == 2);
 
+    std::cout << "PASSED" << std::endl;
+}
+
+// Test: Surrender returns -0.5 EV regardless of hand outcome
+void testSurrenderEV() {
+    std::cout << "Running testSurrenderEV... ";
+    
+    // Player has 16 vs dealer 10 (classic surrender scenario)
+    std::vector<Card> stack = {};
+    
+    Deck deck = Deck::createTestDeck(stack);
+    
+    auto strategy = std::make_unique<NoStrategy>(0);
+    BotPlayer player(false, std::move(strategy));
+    
+    Hand dealer(Card(Rank::Ten, Suit::Clubs), 1);
+    dealer.addCard(Card(Rank::Seven, Suit::Diamonds));
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Six, Suit::Hearts)), 1);
+    
+    std::vector<Action> actions = {Action::Surrender};
+    FixedEngine engine(actions);
+    
+    float trueCount = 0.0f;
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
+    
+    const auto& decisionPoint = getResultsFor(engine, cardValues).at(trueCount);
+    
+    // Surrender always returns -0.5 (half bet lost)
+    assert(decisionPoint.surrenderStats.handsPlayed == 1);
+    assert(approxEqual(decisionPoint.surrenderStats.getEV(), -0.5));
+    
+    std::cout << "PASSED" << std::endl;
+}
+
+// Test: Insurance Accept when dealer has blackjack, player doesn't
+void testInsuranceAcceptDealerBlackjack() {
+    std::cout << "Running testInsuranceAcceptDealerBlackjack... ";
+    
+    // Dealer has A+10 (blackjack), player has 20
+    std::vector<Card> stack = {};
+    
+    Deck deck = Deck::createTestDeck(stack);
+    
+    auto strategy = std::make_unique<NoStrategy>(0);
+    BotPlayer player(false, std::move(strategy));
+    
+    Hand dealer(Card(Rank::Ace, Suit::Clubs), 1);
+    dealer.addCard(Card(Rank::Ten, Suit::Diamonds));
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
+    
+    std::vector<Action> actions = {Action::InsuranceAccept};
+    FixedEngine engine(actions);
+    
+    float trueCount = 0.0f;
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
+    
+    const auto& decisionPoint = getResultsFor(engine, cardValues).at(trueCount);
+    
+    // Insurance accept: lose main bet (-1), win insurance 2:1 on 0.5 bet (+1) = net 0
+    assert(decisionPoint.insuranceAcceptStats.handsPlayed == 1);
+    assert(approxEqual(decisionPoint.insuranceAcceptStats.getEV(), 0.0));
+    
+    std::cout << "PASSED" << std::endl;
+}
+
+// Test: Insurance Accept when both have blackjack
+void testInsuranceAcceptBothBlackjack() {
+    std::cout << "Running testInsuranceAcceptBothBlackjack... ";
+    
+    // Dealer has A+10 (blackjack), player also has blackjack
+    std::vector<Card> stack = {};
+    
+    Deck deck = Deck::createTestDeck(stack);
+    
+    auto strategy = std::make_unique<NoStrategy>(0);
+    BotPlayer player(false, std::move(strategy));
+    
+    Hand dealer(Card(Rank::Ace, Suit::Clubs), 1);
+    dealer.addCard(Card(Rank::Ten, Suit::Diamonds));
+    Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::King, Suit::Hearts)), 1);
+    
+    std::vector<Action> actions = {Action::InsuranceAccept};
+    FixedEngine engine(actions);
+    
+    float trueCount = 0.0f;
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
+    
+    const auto& decisionPoint = getResultsFor(engine, cardValues).at(trueCount);
+    
+    // Both blackjack: main bet pushes (0), win insurance 2:1 on 0.5 bet (+1) = net +1
+    assert(decisionPoint.insuranceAcceptStats.handsPlayed == 1);
+    assert(approxEqual(decisionPoint.insuranceAcceptStats.getEV(), 1.0));
+    
+    std::cout << "PASSED" << std::endl;
+}
+
+// Test: Insurance Accept when dealer doesn't have blackjack
+void testInsuranceAcceptNoDealerBlackjack() {
+    std::cout << "Running testInsuranceAcceptNoDealerBlackjack... ";
+    
+    // Dealer has A+6 (soft 17), player has 20
+    std::vector<Card> stack = {};
+    
+    Deck deck = Deck::createTestDeck(stack);
+    
+    auto strategy = std::make_unique<NoStrategy>(0);
+    BotPlayer player(false, std::move(strategy));
+    
+    Hand dealer(Card(Rank::Ace, Suit::Clubs), 1);
+    dealer.addCard(Card(Rank::Six, Suit::Diamonds));
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
+    
+    std::vector<Action> actions = {Action::InsuranceAccept};
+    FixedEngine engine(actions);
+    
+    float trueCount = 0.0f;
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
+    
+    const auto& decisionPoint = getResultsFor(engine, cardValues).at(trueCount);
+    
+    // No dealer blackjack: lose insurance (-0.5), win main bet (+1) = net +0.5
+    assert(decisionPoint.insuranceAcceptStats.handsPlayed == 1);
+    assert(approxEqual(decisionPoint.insuranceAcceptStats.getEV(), 0.5));
+    
+    std::cout << "PASSED" << std::endl;
+}
+
+// Test: Insurance Decline when dealer has blackjack
+void testInsuranceDeclineDealerBlackjack() {
+    std::cout << "Running testInsuranceDeclineDealerBlackjack... ";
+    
+    // Dealer has A+10 (blackjack), player has 20
+    std::vector<Card> stack = {};
+    
+    Deck deck = Deck::createTestDeck(stack);
+    
+    auto strategy = std::make_unique<NoStrategy>(0);
+    BotPlayer player(false, std::move(strategy));
+    
+    Hand dealer(Card(Rank::Ace, Suit::Clubs), 1);
+    dealer.addCard(Card(Rank::Ten, Suit::Diamonds));
+    Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
+    
+    std::vector<Action> actions = {Action::InsuranceDecline};
+    FixedEngine engine(actions);
+    
+    float trueCount = 0.0f;
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
+    
+    const auto& decisionPoint = getResultsFor(engine, cardValues).at(trueCount);
+    
+    // Decline insurance: lose main bet to dealer blackjack = -1
+    assert(decisionPoint.insuranceDeclineStats.handsPlayed == 1);
+    assert(approxEqual(decisionPoint.insuranceDeclineStats.getEV(), -1.0));
+    
+    std::cout << "PASSED" << std::endl;
+}
+
+// Test: Insurance Decline when player has blackjack and dealer doesn't
+void testInsuranceDeclinePlayerBlackjack() {
+    std::cout << "Running testInsuranceDeclinePlayerBlackjack... ";
+    
+    // Dealer has A+6 (soft 17), player has blackjack
+    std::vector<Card> stack = {};
+    
+    Deck deck = Deck::createTestDeck(stack);
+    
+    auto strategy = std::make_unique<NoStrategy>(0);
+    BotPlayer player(false, std::move(strategy));
+    
+    Hand dealer(Card(Rank::Ace, Suit::Clubs), 1);
+    dealer.addCard(Card(Rank::Six, Suit::Diamonds));
+    Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::King, Suit::Hearts)), 1);
+    
+    std::vector<Action> actions = {Action::InsuranceDecline};
+    FixedEngine engine(actions);
+    
+    float trueCount = 0.0f;
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
+    
+    const auto& decisionPoint = getResultsFor(engine, cardValues).at(trueCount);
+    
+    // Decline insurance with player blackjack = +1.5 (natural blackjack payout)
+    assert(decisionPoint.insuranceDeclineStats.handsPlayed == 1);
+    assert(approxEqual(decisionPoint.insuranceDeclineStats.getEV(), 1.5));
+    
     std::cout << "PASSED" << std::endl;
 }
 
@@ -1256,6 +1503,14 @@ int main() {
     testDealerMultipleDraws();
     testReSplitAcesAllowed();
     testReSplitAcesDisallowed();
+    
+    // Surrender and Insurance tests
+    testSurrenderEV();
+    testInsuranceAcceptDealerBlackjack();
+    testInsuranceAcceptBothBlackjack();
+    testInsuranceAcceptNoDealerBlackjack();
+    testInsuranceDeclineDealerBlackjack();
+    testInsuranceDeclinePlayerBlackjack();
     
     std::cout << "\nAll FixedEngine tests passed successfully!" << std::endl;
     return 0;

@@ -106,8 +106,8 @@ void KoStrategy::updateCount(Card card) {
 }
 
 void KoStrategy::updateDeckSize(int num_cards_left){
-    float decks_left_unrounded = num_cards_left / Deck::NUM_CARDS_IN_DECK; 
-    num_decks_left = std::round(decks_left_unrounded * 2.0) / 2.0;//convert to only count float .5 segments
+    float decks_left_unrounded = num_cards_left / Deck::NUM_CARDS_IN_DECK;
+    num_decks_left = decks_left_unrounded;
     return;
 }
 

@@ -66,48 +66,55 @@ void OmegaIIStrategy::updateCount(Card card) {
     switch (score)
     {
     case 2:
-        true_count += 1;
+        running_count += 1;
         break;
     case 3:
-        true_count += 1;
+        running_count += 1;
         break;
     case 4:
-        true_count += 2;
+        running_count += 2;
         break;
     case 5:
-        true_count += 2;
+        running_count += 2;
         break;
     case 6: 
-        true_count += 2;
+        running_count += 2;
         break;
     case 7:
-        true_count += 1;
+        running_count += 1;
         break;
     case 8:
-        true_count += 0;
+        running_count += 0;
         break;
     case 9:         
-        true_count -= 1;
+        running_count -= 1;
         break;
     case 10:
-        true_count -= 2;
+        running_count -= 2;
         break;
     case 11: //Ace
-        true_count += 0;
+        running_count += 0;
         break;
     
     default:
         break;
     }
 
-    float raw = running_count / num_decks_left; 
-    true_count = std::round(raw * 2.0) / 2.0;//convert to only count int .5 segments
+    float raw = running_count / num_decks_left;
+    true_count = raw;
     return;
 }
 
 void OmegaIIStrategy::updateDeckSize(int num_cards_left){
-    float decks_left_unrounded = num_cards_left / Deck::NUM_CARDS_IN_DECK; 
-    num_decks_left = std::round(decks_left_unrounded * 2.0) / 2.0;//convert to only count float .5 segments
+     float decks_left_unrounded = num_cards_left / 52.0;
+     num_decks_left = decks_left_unrounded;
+
+        // Recompute true count whenever deck size changes so future bets/decisions use latest shoe depth
+    if (num_decks_left > 0) {
+        float raw = running_count / num_decks_left;
+        true_count = raw;
+    }
+
     return;
 }
 

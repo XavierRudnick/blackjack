@@ -41,7 +41,7 @@ private:
 
     std::optional<Deck> deck;
     Player* player;
-    GameReporter* reporter;
+    GameReporter reporter;
 
     FixedEngine fixedEngine;
 

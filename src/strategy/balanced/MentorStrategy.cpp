@@ -100,14 +100,14 @@ void MentorStrategy::updateCount(Card card) {
         break;
     }
 
-    float raw = running_count / num_decks_left; 
-    true_count = std::round(raw * 2.0) / 2.0;//convert to only count int .5 segments
+    float raw = running_count / num_decks_left;
+    true_count = raw;
     return;
 }
 
 void MentorStrategy::updateDeckSize(int num_cards_left){
-    float decks_left_unrounded = num_cards_left / Deck::NUM_CARDS_IN_DECK; 
-    num_decks_left = std::round(decks_left_unrounded * 2.0) / 2.0;//convert to only count float .5 segments
+    float decks_left_unrounded = num_cards_left / Deck::NUM_CARDS_IN_DECK;
+    num_decks_left = decks_left_unrounded;
     return;
 }
 

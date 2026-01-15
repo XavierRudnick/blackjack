@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <action.h>
+#include <set>
 
 struct GameConfig{
         int numDecks = 2;
@@ -15,8 +16,9 @@ struct GameConfig{
         bool allowSurrender = false;
         bool emitEvents = false;
         bool enabelMontiCarlo = false;
-        int userHandValue = 0;
-        int dealerUpcardValue = 0;
+        std::set<std::pair<int, int>> actionValues;
+        bool allowSoftHandsInMonteCarlo = false;
+        bool requirePairForMonteCarlo = false;  // For split scenarios, only trigger if hand is a splittable pair
         std::vector<Action> monteCarloActions;
 };
 

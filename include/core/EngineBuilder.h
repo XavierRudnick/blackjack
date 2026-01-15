@@ -38,10 +38,13 @@ class EngineBuilder {
         EngineBuilder& enableMontiCarlo(bool enable);
         EngineBuilder& noMontiCarlo();
 
-        EngineBuilder& setUserHandValue(int value);
-        EngineBuilder& setDealerUpcardValue(int value);
+        EngineBuilder& setActionValues(std::set<std::pair<int, int>> values);
 
         EngineBuilder& setActions(std::vector<Action> actions);
+
+        EngineBuilder& allowSoftHandsInMonteCarlo(bool enable);
+
+        EngineBuilder& requirePairForMonteCarlo(bool enable);
 
         Engine build(Player* player);
 };

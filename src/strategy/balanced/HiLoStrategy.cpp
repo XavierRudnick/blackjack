@@ -79,8 +79,8 @@ void HiLoStrategy::updateCount(Card card) {
 }
 
 void HiLoStrategy::updateDeckSize(int num_cards_left){
-    float decks_left_unrounded = num_cards_left / 52.0;
-    num_decks_left = decks_left_unrounded;
+    float decks_left_unrounded = num_cards_left / 52.0f;
+    num_decks_left = round(decks_left_unrounded * 2.0f) / 2.0f;
 
     // Recompute true count whenever deck size changes so future bets/decisions use latest shoe depth
     if (num_decks_left > 0) {

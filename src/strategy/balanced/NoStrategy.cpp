@@ -16,6 +16,8 @@ void NoStrategy::updateCount(Card card) {
 }
 
 void NoStrategy::updateDeckSize(int num_cards_left){
+    float decks_left_unrounded = num_cards_left / 52.0f;
+    num_decks_left = round(decks_left_unrounded * 2.0f) / 2.0f;
     return;
 }
 

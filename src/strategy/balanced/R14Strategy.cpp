@@ -106,8 +106,8 @@ void R14Strategy::updateCount(Card card) {
 }
 
 void R14Strategy::updateDeckSize(int num_cards_left){
-    float decks_left_unrounded = num_cards_left / Deck::NUM_CARDS_IN_DECK;
-    num_decks_left = decks_left_unrounded;
+    float decks_left_unrounded = num_cards_left / 52.0f;
+    num_decks_left = round(decks_left_unrounded * 2.0f) / 2.0f;
 
     if (num_decks_left > 0) {
         float raw = running_count / num_decks_left;

@@ -185,11 +185,11 @@ void Engine::play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool 
         shouldRunMonteCarlo = false;
     }
     
-    if (shouldRunMonteCarlo && !dealer.dealerHiddenAce() && !config.allowSoftHandsInMonteCarlo){
-        fixedEngine.calculateEV(*player, *deck, dealer, user, player->getTrueCount(), cardValues);
-    }
-    else if (shouldRunMonteCarlo && 11 == dealer.getCards().front().getValue() && config.allowSoftHandsInMonteCarlo){
-        fixedEngine.calculateEV(*player, *deck, dealer, user, player->getTrueCount(), cardValues);
+    if (shouldRunMonteCarlo) {
+        const bool isSoftHand = user.isHandSoft();
+        if (config.allowSoftHandsInMonteCarlo || !isSoftHand) {
+            fixedEngine.calculateEV(*player, *deck, dealer, user, player->getTrueCount(), cardValues);
+        }
     }
 
     while(!game_over){

@@ -158,9 +158,9 @@ void runMontesims(int numDecksUsed, int iterations, float deckPenetration,
             std::cout  << "  Completed " << i << " / " << iterations << " iterations." << std::endl;
         }
     }
-    
+    std::string H17Str = dealerHits17 ? "H17" : "S17";
     std::ostringstream filename;
-    filename << "stats/" << strategyName << "_" << actionSetName << ".csv";
+    filename << "stats/" << strategyName << "_" << actionSetName << "_" << H17Str << ".csv";
     fixedEngineTotal.savetoCSVResults(filename.str());
     
     auto end_time = std::chrono::high_resolution_clock::now();
@@ -168,14 +168,11 @@ void runMontesims(int numDecksUsed, int iterations, float deckPenetration,
     std::cout << "  Saved results to " << filename.str() << " (" << duration.count() << "s)" << std::endl;
 }
 
-int main(){
-    int numDecksUsed = 6;
-    float deckPenetration = 0.80;
+void setUpSimsH17(int numDecksUsed,float deckPenetration,int iterations){
     bool blackJackPayout3to2 = true; 
-    bool dealerHits17 = false;
+    bool dealerHits17 = true;
     bool allowDoubleAfterSplit = true;
     bool allowReSplitAces = true;
-    int iterations = 10000000;
 
     // Action sets for comparison
     std::vector<Action> InsuranceChoices = {Action::InsuranceAccept, Action::InsuranceDecline};
@@ -211,15 +208,15 @@ int main(){
     // Helper lambda to create all strategies
     auto createStrategies = [numDecksUsed]() {
         std::vector<std::unique_ptr<CountingStrategy>> strategies;
-        strategies.push_back(std::make_unique<HiLoStrategy>(numDecksUsed));
-        strategies.push_back(std::make_unique<NoStrategy>(numDecksUsed));
-        strategies.push_back(std::make_unique<MentorStrategy>(numDecksUsed));
-        strategies.push_back(std::make_unique<RPCStrategy>(numDecksUsed));
-        strategies.push_back(std::make_unique<RAPCStrategy>(numDecksUsed));
-        strategies.push_back(std::make_unique<ZenCountStrategy>(numDecksUsed));
-        strategies.push_back(std::make_unique<R14Strategy>(numDecksUsed));
-        strategies.push_back(std::make_unique<OmegaIIStrategy>(numDecksUsed));
-        strategies.push_back(std::make_unique<WongHalvesStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<HiLoStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<NoStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<MentorStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<RPCStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<RAPCStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<ZenCountStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<R14Strategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<OmegaIIStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<WongHalvesStrategy>(numDecksUsed));
         return strategies;
     };
 
@@ -283,7 +280,129 @@ int main(){
     }
 
     std::cout << "\n=== ALL SIMULATIONS COMPLETE ===" << std::endl;
-    
+}
+
+void setUpSimsS17(int numDecksUsed,float deckPenetration,int iterations){
+    bool blackJackPayout3to2 = true; 
+    bool dealerHits17 = false;
+    bool allowDoubleAfterSplit = true;
+    bool allowReSplitAces = true;
+
+    // Action sets for comparison
+    std::vector<Action> InsuranceChoices = {Action::InsuranceAccept, Action::InsuranceDecline};
+    std::vector<Action> HitvStandActions = {Action::Hit, Action::Stand};
+    std::vector<Action> HitvDoubleActions = {Action::Hit, Action::Double};
+    std::vector<Action> SplitvStandActions = {Action::Split, Action::Stand};
+    std::vector<Action> SurrendervHitActions = {Action::Surrender, Action::Hit};  // Surrender vs basic strategy (Hit)
+
+    // Card value sets for each action comparison
+    std::set<std::pair<int, int>> InsuranceValues = {
+        {21,11}, {20,11}, {19,11}, {18,11}, {17,11}, {16,11}, {15,11},
+        {14,11}, {13,11}, {12,11}, {11,11}, {10,11}, {9,11}, {8,11},
+        {7,11}, {6,11}, {5,11}, {4,11}, {3,11}, {2,11}
+    };
+
+    std::set<std::pair<int, int>> HitvStandValues = {
+        {16, 10}, {15, 10}, {12, 3}, {12, 2}, {13, 2}, {13, 3}
+    };
+
+    std::set<std::pair<int, int>> SplitvStandValues = {
+        {20, 5},  // Pair of 10s vs 5
+        {20, 6},  // Pair of 10s vs 6
+    };
+
+    std::set<std::pair<int, int>> HitvDoubleValues = {
+        {10, 10}, {10, 11}, {11, 11}, {9, 2}, {9, 7}
+    };
+
+    std::set<std::pair<int, int>> SurrendervHitValues = {
+        {15, 9}, {15, 10}, {14, 10}, {15, 11}, {16, 9}, {16, 10}, {16, 11}
+    };
+
+    // Helper lambda to create all strategies
+    auto createStrategies = [numDecksUsed]() {
+        std::vector<std::unique_ptr<CountingStrategy>> strategies;
+         strategies.push_back(std::make_unique<HiLoStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<NoStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<MentorStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<RPCStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<RAPCStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<ZenCountStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<R14Strategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<OmegaIIStrategy>(numDecksUsed));
+         strategies.push_back(std::make_unique<WongHalvesStrategy>(numDecksUsed));
+        return strategies;
+    };
+
+    std::cout << "\n=== BLACKJACK MONTE CARLO SIMULATIONS ===" << std::endl;
+    std::cout << "Decks: " << numDecksUsed << ", Penetration: " << deckPenetration 
+              << ", Iterations per strategy: " << iterations << std::endl << std::endl;
+
+    // Run Insurance simulations (dealer shows Ace)
+    std::cout << "\n--- Insurance Accept vs Decline ---" << std::endl;
+    for (auto& strategy : createStrategies()) {
+        runMontesims(numDecksUsed, iterations, deckPenetration,
+            InsuranceChoices, std::move(strategy), InsuranceValues,
+            blackJackPayout3to2, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
+            true,   // allowSoftHandsInMonteCarlo (dealer shows Ace)
+            false,  // requirePairForMonteCarlo
+            "InsuranceAccept_vs_Decline");
+    }
+
+    // Run Hit vs Stand simulations
+    std::cout << "\n--- Hit vs Stand ---" << std::endl;
+    for (auto& strategy : createStrategies()) {
+        runMontesims(numDecksUsed, iterations, deckPenetration,
+            HitvStandActions, std::move(strategy), HitvStandValues,
+            blackJackPayout3to2, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
+            false,  // allowSoftHandsInMonteCarlo
+            false,  // requirePairForMonteCarlo
+            "Hit_vs_Stand");
+    }
+
+    // Run Split vs Stand simulations (requires pair of 10s)
+    std::cout << "\n--- Split vs Stand (Pair of 10s) ---" << std::endl;
+    for (auto& strategy : createStrategies()) {
+        runMontesims(numDecksUsed, iterations, deckPenetration,
+            SplitvStandActions, std::move(strategy), SplitvStandValues,
+            blackJackPayout3to2, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
+            false,  // allowSoftHandsInMonteCarlo
+            true,   // requirePairForMonteCarlo - only trigger when hand is a splittable pair
+            "Split_vs_Stand_Pair10s");
+    }
+
+    // Run Hit vs Double simulations
+    std::cout << "\n--- Hit vs Double ---" << std::endl;
+    for (auto& strategy : createStrategies()) {
+        runMontesims(numDecksUsed, iterations, deckPenetration,
+            HitvDoubleActions, std::move(strategy), HitvDoubleValues,
+            blackJackPayout3to2, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
+            false,  // allowSoftHandsInMonteCarlo
+            false,  // requirePairForMonteCarlo
+            "Hit_vs_Double");
+    }
+
+    // Run Surrender vs Hit simulations
+    std::cout << "\n--- Surrender vs Hit ---" << std::endl;
+    for (auto& strategy : createStrategies()) {
+        runMontesims(numDecksUsed, iterations, deckPenetration,
+            SurrendervHitActions, std::move(strategy), SurrendervHitValues,
+            blackJackPayout3to2, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
+            false,  // allowSoftHandsInMonteCarlo
+            false,  // requirePairForMonteCarlo
+            "Surrender_vs_Hit");
+    }
+
+    std::cout << "\n=== ALL SIMULATIONS COMPLETE ===" << std::endl;
+}
+
+
+int main(){
+    int numDecksUsed = 2;
+    float deckPenetration = 0.65;
+    int iterations = 25000000;
+    setUpSimsH17(numDecksUsed, deckPenetration, iterations);
+    setUpSimsS17(numDecksUsed, deckPenetration, iterations);
     return 0;
 }
 

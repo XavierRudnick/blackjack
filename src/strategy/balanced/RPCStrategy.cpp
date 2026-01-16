@@ -60,17 +60,43 @@ int RPCStrategy::getBetSize() {
 }
 
 void RPCStrategy::updateCount(Card card) {
-    Rank rank = card.getRank();
-    int score = static_cast<int>(rank) + INDEX_OFFSET;
+    int score = card.getValue();
 
-    constexpr int lowerCard = 6;
-    constexpr int upperCard = 10;
-
-    if (score <= lowerCard){
+    switch (score)
+    {
+    case 2:
         running_count += 1;
-    }
-    else if (score >= upperCard){
-        running_count -= 1;
+        break;
+    case 3:
+        running_count += 2;
+        break;
+    case 4:
+        running_count += 2;
+        break;
+    case 5:
+        running_count += 2;
+        break;
+    case 6: 
+        running_count += 2;
+        break;
+    case 7:
+        running_count += 1;
+        break;
+    case 8:
+        running_count += 0;
+        break;
+    case 9:         
+        running_count += 0;
+        break;
+    case 10:
+        running_count -= 2;
+        break;
+    case 11: //Ace
+        running_count -= 2;
+        break;
+    
+    default:
+        break;
     }
 
     float raw = running_count / num_decks_left;
@@ -79,8 +105,8 @@ void RPCStrategy::updateCount(Card card) {
 }
 
 void RPCStrategy::updateDeckSize(int num_cards_left){
-    float decks_left_unrounded = num_cards_left / Deck::NUM_CARDS_IN_DECK;
-    num_decks_left = decks_left_unrounded;
+    float decks_left_unrounded = num_cards_left / 52.0f;
+    num_decks_left = round(decks_left_unrounded * 2.0f) / 2.0f;
 
     if (num_decks_left > 0) {
         float raw = running_count / num_decks_left;

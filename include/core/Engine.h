@@ -27,7 +27,8 @@ public:
         const GameConfig& gameConfig, //pass by reference to avoid copy
         Deck deck,
         Player* player,
-        EventBus* eventBus // not owned can be nullptr
+        EventBus* eventBus, // not owned can be nullptr
+        std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& EVresults
     );
 
     std::pair<double, double> runner();

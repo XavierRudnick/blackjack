@@ -1,4 +1,4 @@
-UserValue,DealerValue,TrueCount,Hit EV,Stand EV,Double EV,Split EV,Surrender EV,Insurance Accept EV,Insurance Decline EV,Hands Played
+UserValue,DealerValue,TrueCount,Hit EV,Hit Variance,Stand EV,Stand Variance,Double EV,Double Variance,Split EV,Split Variance,Surrender EV,Surrender Variance,Insurance Accept EV,Insurance Accept Variance,Insurance Decline EV,Insurance Decline Variance,Hands Played
 20,5,-5.5,0.000000,1.000000,0.000000,25.000000,0.000000,0.000000,0.000000,1
 20,5,-4.5,0.000000,0.250000,0.000000,-9.375000,0.000000,0.000000,0.000000,4
 20,5,-4,0.000000,0.700000,0.000000,10.000000,0.000000,0.000000,0.000000,10

@@ -7,17 +7,17 @@ Engine::Engine(
     const GameConfig& gameConfig,
     Deck deck,
     Player* player,
-    EventBus* eventBus
+    EventBus* eventBus,
+    std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& EVresults
 )
     : bankroll(gameConfig.wallet), 
     config(gameConfig), 
     deck(std::move(deck)), 
     player(player),
-    reporter(eventBus, gameConfig.emitEvents)
-    
+    reporter(eventBus, gameConfig.emitEvents),
+    fixedEngine(config.monteCarloActions,EVresults,gameConfig)
 {
     config.penetrationThreshold = (1-config.penetrationThreshold) * config.numDecks * Deck::NUM_CARDS_IN_DECK;
-    fixedEngine = FixedEngine(config.monteCarloActions, gameConfig);
 }
 
 static bool isInsuranceMonteCarloActionSet(const GameConfig& config) {
@@ -58,9 +58,7 @@ void Engine::playHand(){
     }
 
     // Monte Carlo for insurance decisions must run BEFORE the insurance phase.
-    // If we run it after handleInsurancePhase(), dealer-blackjack hands are filtered out,
-    // which incorrectly forces "Decline" to dominate by exactly 0.5.
-    if (config.enabelMontiCarlo && isInsuranceMonteCarloActionSet(config) && dealer.getCards().front().getValue() == 11) {
+    if (config.enabelMontiCarlo && isInsuranceMonteCarloActionSet(config) && dealer.getCards().front().getRank() == Rank::Ace) {
         const std::pair<int, int> cardValues{user.getScore(), dealer.getCards().front().getValue()};
         if (config.actionValues.count(cardValues)) {
             fixedEngine.calculateEV(*player, *deck, dealer, user, player->getTrueCount(), cardValues);

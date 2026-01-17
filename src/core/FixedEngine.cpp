@@ -1,6 +1,7 @@
 #include "FixedEngine.h"
 #include "Deck.h"
 #include "Engine.h"
+#include "ActionStats.h"
 
 #include <fstream>
 #include <iomanip>
@@ -9,7 +10,7 @@
 #include <cmath>
 
 FixedEngine::FixedEngine() {}
-FixedEngine::FixedEngine(std::vector<Action> monteCarloActions, const GameConfig& gameConfig) : monteCarloActions(monteCarloActions), config(gameConfig) {}
+FixedEngine::FixedEngine(std::vector<Action> monteCarloActions,std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults, const GameConfig& gameConfig) : monteCarloActions(monteCarloActions), EVresults(EVresults), config(gameConfig) {}
 
 void FixedEngine::calculateEV(Player& player, Deck& deck, Hand& dealer, Hand& user, float trueCount,std::pair<int,int> cardValues) {
     for (Action forcedAction : monteCarloActions) {
@@ -34,7 +35,7 @@ void FixedEngine::playForcedHand(Player& player, Deck& deck, Hand& dealer, Hand&
             action = forcedAction;
         }
         else{
-            action = player.getAction(user, dealer, player.getTrueCount());
+            action = player.getAction(user, dealer, trueCount);
         }
 
         switch(action)
@@ -87,7 +88,7 @@ bool FixedEngine::surrenderHandler(Hand& user,std::vector<Hand>& hands){
     return true;
 }
 
-bool FixedEngine::InsuranceHandler(Player& player, Deck& deck, Hand& user, Hand& dealer, std::vector<Hand>& hands, float trueCount){
+bool FixedEngine::InsuranceHandler(Player& /*player*/, Deck& /*deck*/, Hand& user, Hand& dealer, std::vector<Hand>& hands, float /*trueCount*/){
     bool dealerHasBlackjack = dealer.dealerHiddenTen();
 
     if (dealerHasBlackjack) {  
@@ -116,7 +117,7 @@ bool FixedEngine::doubleHandler(Deck& deck, Hand& user,std::vector<Hand>& hands,
     return true;
 }
 
-bool FixedEngine::splitHandler(Player& player, Deck& deck, Hand& user,Hand& dealer, std::vector<Hand>& hands,bool has_split, bool has_split_aces, float trueCount){
+bool FixedEngine::splitHandler(Player& player, Deck& deck, Hand& user,Hand& dealer, std::vector<Hand>& hands,bool /*has_split*/, bool has_split_aces, float trueCount){
          // Check if we're splitting Aces
     bool splitting_aces = (user.peekFrontCard() == Rank::Ace);
 
@@ -276,7 +277,7 @@ void FixedEngine::savetoCSVResults(const std::string& filename) const {
     }
 
     out << "UserValue,DealerValue,TrueCount,"
-        << "Hit EV,Stand EV,Double EV,Split EV,Surrender EV,Insurance Accept EV,Insurance Decline EV,Hands Played" << '\n';
+        << "Hit EV,Hit Variance,Stand EV,Stand Variance,Double EV,Double Variance,Split EV,Split Variance,Surrender EV,Surrender Variance,Insurance Accept EV,Insurance Accept Variance,Insurance Decline EV,Insurance Decline Variance,Hands Played" << '\n';
 
     for (const auto& [cardValues, tcMap] : EVresults) {
         for (const auto& [trueCount, decisionPoint] : tcMap) {
@@ -295,12 +296,19 @@ void FixedEngine::savetoCSVResults(const std::string& filename) const {
                 << trueCount << ','
                 << std::fixed << std::setprecision(6)
                 << decisionPoint.hitStats.getEV() << ','
+                << decisionPoint.hitStats.getVariance() << ','
                 << decisionPoint.standStats.getEV() << ','
+                << decisionPoint.standStats.getVariance() << ','
                 << decisionPoint.doubleStats.getEV() << ','
+                << decisionPoint.doubleStats.getVariance() << ','
                 << decisionPoint.splitStats.getEV() << ','
+                << decisionPoint.splitStats.getVariance() << ','
                 << decisionPoint.surrenderStats.getEV() << ','
+                << decisionPoint.surrenderStats.getVariance() << ','
                 << decisionPoint.insuranceAcceptStats.getEV() << ','
+                << decisionPoint.insuranceAcceptStats.getVariance() << ','
                 << decisionPoint.insuranceDeclineStats.getEV() << ','
+                << decisionPoint.insuranceDeclineStats.getVariance() << ','
                 << handsPlayed
                 << '\n';
         }
@@ -313,11 +321,21 @@ void FixedEngine::merge(const FixedEngine& other){
         for (const auto& [trueCount, decisionPoint] : tcMapOther) {
             DecisionPoint& currentPoint = currentTcMap[trueCount];
 
+            // Properly merge ActionStats using Welford's parallel algorithm
             auto accumulate = [](ActionStats& dst, const ActionStats& src) {
+                if (src.handsPlayed == 0) return;
+                
+                int totalCount = dst.handsPlayed + src.handsPlayed;
+                double delta = src.mean - dst.mean;
+                
+                // Combine totals
                 dst.totalPayout += src.totalPayout;
-                dst.handsPlayed += src.handsPlayed;
-                dst.mean = src.mean;
-                dst.M2 = src.M2; 
+                
+                // Combine means and M2 using parallel Welford's algorithm
+                dst.mean = (dst.handsPlayed * dst.mean + src.handsPlayed * src.mean) / totalCount;
+                dst.M2 = dst.M2 + src.M2 + delta * delta * dst.handsPlayed * src.handsPlayed / totalCount;
+                
+                dst.handsPlayed = totalCount;
             };
 
             accumulate(currentPoint.hitStats, decisionPoint.hitStats);
@@ -327,11 +345,12 @@ void FixedEngine::merge(const FixedEngine& other){
             accumulate(currentPoint.surrenderStats, decisionPoint.surrenderStats);
             accumulate(currentPoint.insuranceAcceptStats, decisionPoint.insuranceAcceptStats);
             accumulate(currentPoint.insuranceDeclineStats, decisionPoint.insuranceDeclineStats);
+
         }
     }
 }
 
-const std::map<std::pair<int, int>, std::map<float, FixedEngine::DecisionPoint>>& FixedEngine::getResults() const 
+const std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& FixedEngine::getResults() const 
 { 
     return EVresults; 
 }

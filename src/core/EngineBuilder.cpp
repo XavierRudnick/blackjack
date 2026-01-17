@@ -132,7 +132,12 @@ EngineBuilder& EngineBuilder::requirePairForMonteCarlo(bool enable = false) {
     return *this;
 }
 
+EngineBuilder& EngineBuilder::setEVActions(std::map<std::pair<int, int>, std::map<float, DecisionPoint>> values) {
+    EVresults = values;
+    return *this;
+}   
+
 Engine EngineBuilder::build(Player* player) {
-    Engine engine(gameConfig, *deck, player, eventBus);
+    Engine engine(gameConfig, *deck, player, eventBus, EVresults);
     return engine;
 }

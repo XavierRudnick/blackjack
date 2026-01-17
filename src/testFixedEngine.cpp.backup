@@ -108,7 +108,7 @@ void testCalculateEVStandOnTwenty() {
     player.updateCount(Card(Rank::Ten, Suit::Hearts));  // User card 2
     
     std::vector<Action> actions = {Action::Stand};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -157,7 +157,7 @@ void testCalculateEVHitAndBust() {
     player.updateCount(Card(Rank::Ten, Suit::Hearts));
     
     std::vector<Action> actions = {Action::Hit};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -203,7 +203,7 @@ void testCalculateEVDouble() {
     player.updateCount(Card(Rank::Five, Suit::Hearts)); // User card 2
     
     std::vector<Action> actions = {Action::Double};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -227,7 +227,7 @@ void testCalculateEVDouble() {
 void testMultipleTrueCounts() {
     std::cout << "Running testMultipleTrueCounts... ";
     
-    FixedEngine engine({Action::Hit, Action::Stand}, {});
+    FixedEngine engine({Action::Hit, Action::Stand});
     
     auto strategy1 = std::make_unique<NoStrategy>(0);
     BotPlayer player1(false, std::move(strategy1));
@@ -283,24 +283,23 @@ void testMultipleTrueCounts() {
 void testMergeEngines() {
     std::cout << "Running testMergeEngines... ";
     
+    FixedEngine engine1({Action::Hit, Action::Stand});
+    FixedEngine engine2({Action::Hit, Action::Stand});
+    
     const CardValues cardKey{0, 0};
 
-    // Prepare EVresults for engine1
-    std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults1;
-    EVresults1[cardKey][0.0f].hitStats.addResult(1.0);
-    EVresults1[cardKey][0.0f].hitStats.addResult(-1.0);
-    EVresults1[cardKey][0.0f].standStats.addResult(0.5);
-    
-    FixedEngine engine1({Action::Hit, Action::Stand}, EVresults1);
+    // Manually populate engine1 results
+    engine1.EVresults[cardKey][0.0f].hitStats.addResult(1.0);
+    engine1.EVresults[cardKey][0.0f].hitStats.addResult(-1.0);
+    engine1.EVresults[cardKey][0.0f].standStats.addResult(0.5);
 
-    // Prepare EVresults for engine2
-    std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults2;
-    EVresults2[cardKey][0.0f].hitStats.addResult(1.0);
-    EVresults2[cardKey][0.0f].standStats.addResult(0.5);
-    EVresults2[cardKey][0.0f].standStats.addResult(-0.5);
-    EVresults2[cardKey][1.0f].hitStats.addResult(2.0);
-    
-    FixedEngine engine2({Action::Hit, Action::Stand}, EVresults2);
+    // Manually populate engine2 results with same true count
+    engine2.EVresults[cardKey][0.0f].hitStats.addResult(1.0);
+    engine2.EVresults[cardKey][0.0f].standStats.addResult(0.5);
+    engine2.EVresults[cardKey][0.0f].standStats.addResult(-0.5);
+
+    // Manually populate engine2 with different true count
+    engine2.EVresults[cardKey][1.0f].hitStats.addResult(2.0);
     
     engine1.merge(engine2);
     
@@ -343,7 +342,7 @@ void testBlackjackPayout() {
     player.updateCount(Card(Rank::Ace, Suit::Hearts));
     
     std::vector<Action> actions = {Action::Stand};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -379,7 +378,7 @@ void testPushScenario() {
     player.updateCount(Card(Rank::Ten, Suit::Hearts));
     
     std::vector<Action> actions = {Action::Stand};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -417,7 +416,7 @@ void testDealerBusts() {
     player.updateCount(Card(Rank::Nine, Suit::Hearts));
     
     std::vector<Action> actions = {Action::Stand};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -455,7 +454,7 @@ void testMultipleHitsBeforeStand() {
     
     // Force first action to be Hit, subsequent actions follow player strategy
     std::vector<Action> actions = {Action::Hit};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 2.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -478,7 +477,7 @@ void testMultipleHitsBeforeStand() {
 void testAccumulatingResults() {
     std::cout << "Running testAccumulatingResults... ";
     
-    FixedEngine engine({Action::Stand}, {});
+    FixedEngine engine({Action::Stand});
     
     float trueCount = 0.0f;
     CardValues cardValues{0, 0};
@@ -541,7 +540,7 @@ void testBothBlackjacks() {
     player.updateCount(Card(Rank::Ace, Suit::Hearts));
     
     std::vector<Action> actions = {Action::Stand};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -586,7 +585,7 @@ void testDoubleDownLoss() {
     player.updateCount(Card(Rank::Five, Suit::Hearts));
     
     std::vector<Action> actions = {Action::Double};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -606,7 +605,7 @@ void testDoubleDownLoss() {
 void testNegativeTrueCount() {
     std::cout << "Running testNegativeTrueCount... ";
     
-    FixedEngine engine({Action::Stand}, {});
+    FixedEngine engine({Action::Stand});
     
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
@@ -655,7 +654,7 @@ void testSoftHand() {
     Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::Seven, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Stand};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     auto cardValues = makeCardValues(user, dealer);
     engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
@@ -688,7 +687,7 @@ void testSoftHandBecomesHard() {
     Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::Six, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Hit};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     auto cardValues = makeCardValues(user, dealer);
     engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
@@ -719,7 +718,7 @@ void testDealerSoft17() {
     Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Eight, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Stand};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     auto cardValues = makeCardValues(user, dealer);
     engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
@@ -752,7 +751,7 @@ void testThreeCard21() {
     Hand user(std::make_pair(Card(Rank::Seven, Suit::Spades), Card(Rank::Seven, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Hit};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     auto cardValues = makeCardValues(user, dealer);
     engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
@@ -785,7 +784,7 @@ void testDealerDrawsTo21() {
     Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Stand};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     auto cardValues = makeCardValues(user, dealer);
     engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
@@ -819,7 +818,7 @@ void testDoubleSoftHand() {
     Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::Six, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Double};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     auto cardValues = makeCardValues(user, dealer);
     engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
@@ -852,7 +851,7 @@ void testStiffHand() {
     Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Two, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Stand};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     auto cardValues = makeCardValues(user, dealer);
     engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
@@ -870,7 +869,7 @@ void testStiffHand() {
 void testMultipleActionsPerTrueCount() {
     std::cout << "Running testMultipleActionsPerTrueCount... ";
     
-    FixedEngine engine({Action::Hit, Action::Split}, {});
+    FixedEngine engine({Action::Hit, Action::Split});
     
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
@@ -928,7 +927,7 @@ void testSplitTwoHandsWin() {
     Hand user(std::make_pair(Card(Rank::Eight, Suit::Spades), Card(Rank::Eight, Suit::Hearts)), 1);
 
     std::vector<Action> actions = {Action::Split};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
 
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -970,7 +969,7 @@ void testSplitDoubleAfterSplitallowed() {
     GameConfig cfg;
     cfg.doubleAfterSplitAllowed = true;
     std::vector<Action> actions = {Action::Split};
-    FixedEngine engine(actions, {}, cfg);
+    FixedEngine engine(actions, cfg);
 
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -1014,7 +1013,7 @@ void testSplitDoubleAfterSplitNormalizedBet() {
     GameConfig cfg;
     cfg.doubleAfterSplitAllowed = true;
     std::vector<Action> actions = {Action::Split};
-    FixedEngine engine(actions, {}, cfg);
+    FixedEngine engine(actions, cfg);
 
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -1058,7 +1057,7 @@ void testSplitDoubleAfterSplitDisallowed() {
     GameConfig cfg;
     cfg.doubleAfterSplitAllowed = false;
     std::vector<Action> actions = {Action::Split};
-    FixedEngine engine(actions, {}, cfg);
+    FixedEngine engine(actions, cfg);
 
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -1077,7 +1076,7 @@ void testSplitDoubleAfterSplitDisallowed() {
 void testVeryHighTrueCount() {
     std::cout << "Running testVeryHighTrueCount... ";
     
-    FixedEngine engine({Action::Stand}, {});
+    FixedEngine engine({Action::Stand});
     
     auto strategy = std::make_unique<NoStrategy>(0);
     BotPlayer player(false, std::move(strategy));
@@ -1119,7 +1118,7 @@ void testDealerAceUpcard() {
     Hand user(std::make_pair(Card(Rank::Nine, Suit::Spades), Card(Rank::Nine, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Stand};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     auto cardValues = makeCardValues(user, dealer);
     engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
@@ -1153,7 +1152,7 @@ void testDoubleOn1() {
     Hand user(std::make_pair(Card(Rank::Six, Suit::Spades), Card(Rank::Four, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Double};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     auto cardValues = makeCardValues(user, dealer);
     engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
@@ -1186,7 +1185,7 @@ void testPairOfFives() {
     Hand user(std::make_pair(Card(Rank::Five, Suit::Spades), Card(Rank::Five, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Stand};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     auto cardValues = makeCardValues(user, dealer);
     engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
@@ -1220,7 +1219,7 @@ void testDealerMultipleDraws() {
     Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Eight, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Stand};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     auto cardValues = makeCardValues(user, dealer);
     engine.calculateEV(player, deck, dealer, user, 0.0f, cardValues);
@@ -1260,7 +1259,7 @@ void testReSplitAcesAllowed() {
     GameConfig cfg;
     cfg.allowReSplitAces = true;
     std::vector<Action> actions = {Action::Split};
-    FixedEngine engine(actions, {}, cfg);
+    FixedEngine engine(actions, cfg);
 
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -1297,7 +1296,7 @@ void testReSplitAcesDisallowed() {
     GameConfig cfg;
     cfg.allowReSplitAces = false;
     std::vector<Action> actions = {Action::Split};
-    FixedEngine engine(actions, {}, cfg);
+    FixedEngine engine(actions, cfg);
 
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -1328,7 +1327,7 @@ void testSurrenderEV() {
     Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Six, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::Surrender};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -1360,7 +1359,7 @@ void testInsuranceAcceptDealerBlackjack() {
     Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::InsuranceAccept};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -1392,7 +1391,7 @@ void testInsuranceAcceptBothBlackjack() {
     Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::King, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::InsuranceAccept};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -1424,7 +1423,7 @@ void testInsuranceAcceptNoDealerBlackjack() {
     Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::InsuranceAccept};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -1456,7 +1455,7 @@ void testInsuranceDeclineDealerBlackjack() {
     Hand user(std::make_pair(Card(Rank::Ten, Suit::Spades), Card(Rank::Ten, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::InsuranceDecline};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);
@@ -1488,7 +1487,7 @@ void testInsuranceDeclinePlayerBlackjack() {
     Hand user(std::make_pair(Card(Rank::Ace, Suit::Spades), Card(Rank::King, Suit::Hearts)), 1);
     
     std::vector<Action> actions = {Action::InsuranceDecline};
-    FixedEngine engine(actions, {});
+    FixedEngine engine(actions);
     
     float trueCount = 0.0f;
     auto cardValues = makeCardValues(user, dealer);

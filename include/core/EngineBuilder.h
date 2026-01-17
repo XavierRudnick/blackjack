@@ -8,6 +8,7 @@ class EngineBuilder {
         GameConfig gameConfig;
         std::optional<Deck> deck;
         EventBus* eventBus = nullptr;
+        std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults;
 
     public:
         EngineBuilder& setDeckSize(int deck_size);
@@ -45,6 +46,8 @@ class EngineBuilder {
         EngineBuilder& allowSoftHandsInMonteCarlo(bool enable);
 
         EngineBuilder& requirePairForMonteCarlo(bool enable);
+
+        EngineBuilder& setEVActions(std::map<std::pair<int, int>, std::map<float, DecisionPoint>> values);
 
         Engine build(Player* player);
 };

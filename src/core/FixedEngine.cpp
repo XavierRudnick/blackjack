@@ -20,7 +20,7 @@ void FixedEngine::calculateEV(Player& player, Deck& deck, Hand& dealer, Hand& us
 
         playForcedHand(player, simDeck, simDealer, simUser, hands, forcedAction, false, false,trueCount);
         Hand evalDealer = simDealer;
-        evaluateHand(simDeck, evalDealer, hands, trueCount, forcedAction,cardValues);
+        evaluateHand(simDeck, evalDealer, hands, trueCount, forcedAction,cardValues, simUser.getBetSize());
 
     }
 }
@@ -49,7 +49,7 @@ void FixedEngine::playForcedHand(Player& player, Deck& deck, Hand& dealer, Hand&
                 game_over = doubleHandler(deck,user,hands,has_split);
                 break;
             case Action::Split: 
-                game_over = splitHandler(player, deck, user, dealer, hands, has_split_aces, has_split, trueCount);
+                game_over = splitHandler(player, deck, user, dealer, hands, has_split, has_split_aces, trueCount);
                 break;
             case Action::InsuranceAccept:
                 game_over = InsuranceHandler(player, deck, user, dealer, hands, trueCount);
@@ -162,7 +162,7 @@ bool FixedEngine::splitHandler(Player& player, Deck& deck, Hand& user,Hand& deal
     
 }
 
-void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount, Action forcedAction, std::pair<int,int> cardValues){
+void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount, Action forcedAction, std::pair<int,int> cardValues, int baseBet) {
     float bucketedTrueCount = std::round(trueCount * 2.0f) / 2.0f;
     DecisionPoint& decisionPoint = EVresults[cardValues][bucketedTrueCount];
     for (Hand& hand : hands) {
@@ -170,14 +170,14 @@ void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hand
 
         if(hand.isBlackjack() && !dealer.isBlackjack() && hands.size() == 1){
             if (forcedAction == Action::InsuranceAccept){
-                decisionPoint.insuranceAcceptStats.addResult(1);
+                decisionPoint.insuranceAcceptStats.addResult(1.0f);
                 return;
             }
             else if (forcedAction == Action::InsuranceDecline){
-                decisionPoint.insuranceDeclineStats.addResult(1.5);
+                decisionPoint.insuranceDeclineStats.addResult(1.5f);
                 return;
             }
-            decisionPoint.standStats.addResult(1.5);
+            decisionPoint.standStats.addResult(1.5f);
             return;
         }
 
@@ -189,16 +189,16 @@ void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hand
         float result = 1.0f;
 
         if (dealerScore > userScore){
-            result *= -1;
+            result *= -1.0f;
         }
         else if (dealerScore < userScore){
-            result *= 1;
+            result *= 1.0f;
         }
         else if (dealerScore == 0 && userScore == 0){
-            result *= -1;
+            result *= -1.0f;
         }
         else {
-            result *= 0;
+            result *= 0.0f;
         }
 
         if (forcedAction == Action::Hit) {
@@ -207,23 +207,27 @@ void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hand
             decisionPoint.standStats.addResult(result);
         }
         else if (forcedAction == Action::Double){
-            decisionPoint.doubleStats.addResult(result * 2);
+            decisionPoint.doubleStats.addResult(result * 2.0f);
         } else if (forcedAction == Action::Split){
-            // Multiply by bet size to account for doubles after split
-            decisionPoint.splitStats.addResult(result * hand.getBetSize());
+           // Normalize by base bet while still accounting for doubles after split
+            double betMultiplier = 1.0;
+            if (baseBet > 0) {
+                betMultiplier = static_cast<double>(hand.getBetSize()) / static_cast<double>(baseBet);
+            }
+            decisionPoint.splitStats.addResult(result * betMultiplier);
         }
         else if (forcedAction == Action::Surrender){
-            decisionPoint.surrenderStats.addResult(-0.5);
+            decisionPoint.surrenderStats.addResult(-0.5f);
         }
         else if (forcedAction == Action::InsuranceAccept){
             if (dealer.isBlackjack() && hand.isBlackjack() && hands.size() == 1){
-                decisionPoint.insuranceAcceptStats.addResult(1);
+                decisionPoint.insuranceAcceptStats.addResult(1.0f);
             }
             else if (dealer.isBlackjack() && !hand.isBlackjack()){
-                decisionPoint.insuranceAcceptStats.addResult(0);
+                decisionPoint.insuranceAcceptStats.addResult(0.0f);
             }
             else{
-            decisionPoint.insuranceAcceptStats.addResult(result - 0.5);
+            decisionPoint.insuranceAcceptStats.addResult(result - 0.5f);
             }
         }
         else if (forcedAction == Action::InsuranceDecline){
@@ -312,7 +316,8 @@ void FixedEngine::merge(const FixedEngine& other){
             auto accumulate = [](ActionStats& dst, const ActionStats& src) {
                 dst.totalPayout += src.totalPayout;
                 dst.handsPlayed += src.handsPlayed;
-                dst.totalWinnigs += src.totalWinnigs;
+                dst.mean = src.mean;
+                dst.M2 = src.M2; 
             };
 
             accumulate(currentPoint.hitStats, decisionPoint.hitStats);

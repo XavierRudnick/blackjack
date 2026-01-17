@@ -982,6 +982,50 @@ void testSplitDoubleAfterSplitallowed() {
     std::cout << "PASSED" << std::endl;
 }
 
+// Test 25b: Split EV double-after-split with non-unit base bet
+void testSplitDoubleAfterSplitNormalizedBet() {
+    std::cout << "Running testSplitDoubleAfterSplitNormalizedBet... ";
+
+    // Draw order (back first):
+    // 1) First split hand gets 7 -> 11 (double)
+    // 2) Second split hand gets 7 -> 11 (double)
+    // 3) First hand double card 9 -> 20
+    // 4) Second hand double card 8 -> 19
+    // 5) Dealer draws 1 and busts (16 -> 26)
+    std::vector<Card> stack = {
+        Card(Rank::Ten, Suit::Hearts),
+        Card(Rank::Eight, Suit::Clubs),
+        Card(Rank::Nine, Suit::Diamonds),
+        Card(Rank::Seven, Suit::Spades),
+        Card(Rank::Seven, Suit::Hearts)
+    };
+
+    Deck deck = Deck::createTestDeck(stack);
+
+    auto strategy = std::make_unique<NoStrategy>(0);
+    BotPlayer player(false, std::move(strategy));
+
+    Hand dealer(std::make_pair(Card(Rank::Six, Suit::Clubs), Card(Rank::Ten, Suit::Diamonds)), 5);
+    Hand user(std::make_pair(Card(Rank::Four, Suit::Spades), Card(Rank::Four, Suit::Hearts)), 5);
+
+    GameConfig cfg;
+    cfg.doubleAfterSplitAllowed = true;
+    std::vector<Action> actions = {Action::Split};
+    FixedEngine engine(actions, cfg);
+
+    float trueCount = 0.0f;
+    auto cardValues = makeCardValues(user, dealer);
+    engine.calculateEV(player, deck, dealer, user, trueCount, cardValues);
+
+    const auto& decisionPoint = getResultsFor(engine, cardValues).at(trueCount);
+
+    assert(decisionPoint.splitStats.handsPlayed == 2);
+    // Per-unit EV should be 2.0 even with base bet 5
+    assert(approxEqual(decisionPoint.splitStats.getEV(), 2.0));
+
+    std::cout << "PASSED" << std::endl;
+}
+
 // Test 25: Split when double-after-split is disallowed
 void testSplitDoubleAfterSplitDisallowed() {
     std::cout << "Running testSplitDoubleAfterSplitDisallowed... ";
@@ -1497,6 +1541,7 @@ int main() {
     testSplitTwoHandsWin();
     testSplitDoubleAfterSplitDisallowed();
     testSplitDoubleAfterSplitallowed();
+    testSplitDoubleAfterSplitNormalizedBet();
     testDealerAceUpcard();
     testDoubleOn1();
     testPairOfFives();

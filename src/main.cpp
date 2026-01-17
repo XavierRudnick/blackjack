@@ -118,6 +118,7 @@ void runMontesims(int numDecksUsed, int iterations, float deckPenetration,
     bool allowSoftHandsInMonteCarlo, bool requirePairForMonteCarlo,
     const std::string& actionSetName) {
 
+
     EventBus& bus = EventBus::getInstance();
     Deck deck(numDecksUsed);
     
@@ -338,27 +339,27 @@ void setUpSimsS17(int numDecksUsed,float deckPenetration,int iterations){
     std::cout << "Decks: " << numDecksUsed << ", Penetration: " << deckPenetration 
               << ", Iterations per strategy: " << iterations << std::endl << std::endl;
 
-    // Run Insurance simulations (dealer shows Ace)
-    std::cout << "\n--- Insurance Accept vs Decline ---" << std::endl;
-    for (auto& strategy : createStrategies()) {
-        runMontesims(numDecksUsed, iterations, deckPenetration,
-            InsuranceChoices, std::move(strategy), InsuranceValues,
-            blackJackPayout3to2, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
-            true,   // allowSoftHandsInMonteCarlo (dealer shows Ace)
-            false,  // requirePairForMonteCarlo
-            "InsuranceAccept_vs_Decline");
-    }
+    // // Run Insurance simulations (dealer shows Ace)
+    // std::cout << "\n--- Insurance Accept vs Decline ---" << std::endl;
+    // for (auto& strategy : createStrategies()) {
+    //     runMontesims(numDecksUsed, iterations, deckPenetration,
+    //         InsuranceChoices, std::move(strategy), InsuranceValues,
+    //         blackJackPayout3to2, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
+    //         true,   // allowSoftHandsInMonteCarlo (dealer shows Ace)
+    //         false,  // requirePairForMonteCarlo
+    //         "InsuranceAccept_vs_Decline");
+    // }
 
-    // Run Hit vs Stand simulations
-    std::cout << "\n--- Hit vs Stand ---" << std::endl;
-    for (auto& strategy : createStrategies()) {
-        runMontesims(numDecksUsed, iterations, deckPenetration,
-            HitvStandActions, std::move(strategy), HitvStandValues,
-            blackJackPayout3to2, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
-            false,  // allowSoftHandsInMonteCarlo
-            false,  // requirePairForMonteCarlo
-            "Hit_vs_Stand");
-    }
+    // // Run Hit vs Stand simulations
+    // std::cout << "\n--- Hit vs Stand ---" << std::endl;
+    // for (auto& strategy : createStrategies()) {
+    //     runMontesims(numDecksUsed, iterations, deckPenetration,
+    //         HitvStandActions, std::move(strategy), HitvStandValues,
+    //         blackJackPayout3to2, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
+    //         false,  // allowSoftHandsInMonteCarlo
+    //         false,  // requirePairForMonteCarlo
+    //         "Hit_vs_Stand");
+    // }
 
     // Run Split vs Stand simulations (requires pair of 10s)
     std::cout << "\n--- Split vs Stand (Pair of 10s) ---" << std::endl;
@@ -371,27 +372,27 @@ void setUpSimsS17(int numDecksUsed,float deckPenetration,int iterations){
             "Split_vs_Stand_Pair10s");
     }
 
-    // Run Hit vs Double simulations
-    std::cout << "\n--- Hit vs Double ---" << std::endl;
-    for (auto& strategy : createStrategies()) {
-        runMontesims(numDecksUsed, iterations, deckPenetration,
-            HitvDoubleActions, std::move(strategy), HitvDoubleValues,
-            blackJackPayout3to2, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
-            false,  // allowSoftHandsInMonteCarlo
-            false,  // requirePairForMonteCarlo
-            "Hit_vs_Double");
-    }
+    // // Run Hit vs Double simulations
+    // std::cout << "\n--- Hit vs Double ---" << std::endl;
+    // for (auto& strategy : createStrategies()) {
+    //     runMontesims(numDecksUsed, iterations, deckPenetration,
+    //         HitvDoubleActions, std::move(strategy), HitvDoubleValues,
+    //         blackJackPayout3to2, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
+    //         false,  // allowSoftHandsInMonteCarlo
+    //         false,  // requirePairForMonteCarlo
+    //         "Hit_vs_Double");
+    // }
 
-    // Run Surrender vs Hit simulations
-    std::cout << "\n--- Surrender vs Hit ---" << std::endl;
-    for (auto& strategy : createStrategies()) {
-        runMontesims(numDecksUsed, iterations, deckPenetration,
-            SurrendervHitActions, std::move(strategy), SurrendervHitValues,
-            blackJackPayout3to2, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
-            false,  // allowSoftHandsInMonteCarlo
-            false,  // requirePairForMonteCarlo
-            "Surrender_vs_Hit");
-    }
+    // // Run Surrender vs Hit simulations
+    // std::cout << "\n--- Surrender vs Hit ---" << std::endl;
+    // for (auto& strategy : createStrategies()) {
+    //     runMontesims(numDecksUsed, iterations, deckPenetration,
+    //         SurrendervHitActions, std::move(strategy), SurrendervHitValues,
+    //         blackJackPayout3to2, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
+    //         false,  // allowSoftHandsInMonteCarlo
+    //         false,  // requirePairForMonteCarlo
+    //         "Surrender_vs_Hit");
+    // }
 
     std::cout << "\n=== ALL SIMULATIONS COMPLETE ===" << std::endl;
 }
@@ -401,7 +402,7 @@ int main(){
     int numDecksUsed = 2;
     float deckPenetration = 0.65;
     int iterations = 25000000;
-    setUpSimsH17(numDecksUsed, deckPenetration, iterations);
+    //setUpSimsH17(numDecksUsed, deckPenetration, iterations);
     setUpSimsS17(numDecksUsed, deckPenetration, iterations);
     return 0;
 }

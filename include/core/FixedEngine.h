@@ -22,20 +22,39 @@ class FixedEngine{
 
 public:
     struct ActionStats {
-        double totalPayout = 0.0; 
-        int handsPlayed = 0;
-        int totalWinnigs = 0;
+        int handsPlayed = 0;  // number of hands
+        double totalPayout = 0;  // total payout across all hands
+        double mean = 0.0;    // running EV
+        double M2 = 0.0;      // running squared deviation
 
-        void addResult(double payout) {
-            totalPayout += payout;
+        void addResult(double x) {
             handsPlayed++;
+            totalPayout += x;
+
+            double delta = x - mean;
+            mean += delta / handsPlayed;
+
+            double delta2 = x - mean;
+            M2 += delta * delta2;
         }
 
         double getEV() const {
-            if (handsPlayed == 0) return 0.0;
-            return totalPayout / handsPlayed;
+            return mean;
+        }
+
+        double getVariance() const {
+            return (handsPlayed > 1) ? (M2 / handsPlayed) : 0.0;   // population variance
+        }
+
+        double getStdDev() const {
+            return std::sqrt(getVariance());
+        }
+
+        double getStdError() const {
+            return getStdDev() / std::sqrt(handsPlayed);
         }
     };
+
 
     struct DecisionPoint {
         ActionStats hitStats;
@@ -46,8 +65,6 @@ public:
         ActionStats insuranceAcceptStats;
         ActionStats insuranceDeclineStats;
     };
-
-    std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults;
     
     FixedEngine();
     FixedEngine(std::vector<Action> monteCarloActions, const GameConfig& gameConfig = GameConfig());
@@ -58,7 +75,7 @@ public:
 private:
     std::vector<Action> monteCarloActions;
     GameConfig config;
-    void evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount, Action forcedAction,std::pair<int,int> cardValues);
+    void evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount, Action forcedAction,std::pair<int,int> cardValues, int baseBet);
     void dealer_draw(Deck& deck, Hand& dealer);
 
     // bool handleInsurancePhase(Hand& dealer, Hand& user);

@@ -67,20 +67,19 @@ void HiLoStrategy::updateCount(Card card) {
     constexpr int upperCard = 10;
 
     if (score <= lowerCard){
-        running_count += 1;
+        running_count += 1.0f;
     }
     else if (score >= upperCard){
-        running_count -= 1;
+        running_count -= 1.0f;
     }
 
     float raw = running_count / num_decks_left;
-    true_count = raw;
+    true_count = raw;// round when we go back to human level rtp sims
     return;
 }
 
 void HiLoStrategy::updateDeckSize(int num_cards_left){
-    float decks_left_unrounded = num_cards_left / 52.0f;
-    num_decks_left = round(decks_left_unrounded * 2.0f) / 2.0f;
+    num_decks_left = static_cast<float>(num_cards_left) / 52.0f;
 
     // Recompute true count whenever deck size changes so future bets/decisions use latest shoe depth
     if (num_decks_left > 0) {

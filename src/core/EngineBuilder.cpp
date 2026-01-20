@@ -2,6 +2,7 @@
 #include "observers/EventBus.h"
 #include <functional>
 #include "EngineBuilder.h"
+#include "MonteCarloScenario.h"
 #include <stdexcept>
 
 
@@ -135,7 +136,17 @@ EngineBuilder& EngineBuilder::requirePairForMonteCarlo(bool enable = false) {
 EngineBuilder& EngineBuilder::setEVActions(std::map<std::pair<int, int>, std::map<float, DecisionPoint>> values) {
     EVresults = values;
     return *this;
-}   
+}
+
+EngineBuilder& EngineBuilder::addMonteCarloScenario(const MonteCarloScenario& scenario) {
+    gameConfig.monteCarloScenarios.push_back(scenario);
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::setMonteCarloScenarios(const std::vector<MonteCarloScenario>& scenarios) {
+    gameConfig.monteCarloScenarios = scenarios;
+    return *this;
+}
 
 Engine EngineBuilder::build(Player* player) {
     Engine engine(gameConfig, *deck, player, eventBus, EVresults);

@@ -3,6 +3,8 @@
 
 #include "Engine.h"
 #include "GameConfig.h"
+#include "MonteCarloScenario.h"
+
 class EngineBuilder {
     private:
         GameConfig gameConfig;
@@ -39,15 +41,16 @@ class EngineBuilder {
         EngineBuilder& enableMontiCarlo(bool enable);
         EngineBuilder& noMontiCarlo();
 
+        // Legacy single-scenario methods (for backward compatibility)
         EngineBuilder& setActionValues(std::set<std::pair<int, int>> values);
-
         EngineBuilder& setActions(std::vector<Action> actions);
-
         EngineBuilder& allowSoftHandsInMonteCarlo(bool enable);
-
         EngineBuilder& requirePairForMonteCarlo(bool enable);
-
         EngineBuilder& setEVActions(std::map<std::pair<int, int>, std::map<float, DecisionPoint>> values);
+
+        // New multi-scenario method
+        EngineBuilder& addMonteCarloScenario(const MonteCarloScenario& scenario);
+        EngineBuilder& setMonteCarloScenarios(const std::vector<MonteCarloScenario>& scenarios);
 
         Engine build(Player* player);
 };

@@ -943,13 +943,13 @@ void testSplitTwoHandsWin() {
 }
 
 void testSplitDoubleAfterSplitallowed() {
-    std::cout << "Running testSplitDoubleAfterSplitDisallowed... ";
+    std::cout << "Running testSplitDoubleAfterSplitallowed... ";
 
     // Draw order (back first):
-    // 1) First split hand gets 7 -> 11 (would double)
-    // 2) Second split hand gets 7 -> 11 (would double)
-    // 3) First hand forced hit (no DAS) gets 9 -> 20
-    // 4) Second hand forced hit (no DAS) gets 8 -> 19
+    // 1) First split hand gets 7 -> 11 (double)
+    // 2) Second split hand gets 7 -> 11 (double)
+    // 3) First hand double card 9 -> 20
+    // 4) Second hand double card 8 -> 19
     // 5) Dealer draws 1 and busts (16 -> 26)
     std::vector<Card> stack = {
         Card(Rank::Ten, Suit::Hearts),

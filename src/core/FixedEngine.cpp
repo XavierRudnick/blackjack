@@ -2,6 +2,7 @@
 #include "Deck.h"
 #include "Engine.h"
 #include "ActionStats.h"
+#include "MonteCarloScenario.h"
 
 #include <fstream>
 #include <iomanip>
@@ -23,6 +24,20 @@ void FixedEngine::calculateEV(Player& player, Deck& deck, Hand& dealer, Hand& us
         Hand evalDealer = simDealer;
         evaluateHand(simDeck, evalDealer, hands, trueCount, forcedAction,cardValues, simUser.getBetSize());
 
+    }
+}
+
+void FixedEngine::calculateEVForScenario(Player& player, Deck& deck, Hand& dealer, Hand& user, float trueCount, 
+                                          std::pair<int,int> cardValues, const MonteCarloScenario& scenario) {
+    for (Action forcedAction : scenario.actions) {
+        Hand simDealer = dealer;
+        Hand simUser = user;
+        Deck simDeck = deck.clone();
+        std::vector<Hand> hands;
+
+        playForcedHand(player, simDeck, simDealer, simUser, hands, forcedAction, false, false, trueCount);
+        Hand evalDealer = simDealer;
+        evaluateHandForScenario(simDeck, evalDealer, hands, trueCount, forcedAction, cardValues, simUser.getBetSize(), scenario.name);
     }
 }
 
@@ -238,6 +253,82 @@ void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hand
 
 }
 
+void FixedEngine::evaluateHandForScenario(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount, 
+                                           Action forcedAction, std::pair<int,int> cardValues, int baseBet,
+                                           const std::string& scenarioName) {
+    float bucketedTrueCount = std::round(trueCount * 2.0f) / 2.0f;
+    DecisionPoint& decisionPoint = scenarioResults[scenarioName][cardValues][bucketedTrueCount];
+    
+    for (Hand& hand : hands) {
+        int userScore = hand.getFinalScore();
+
+        if(hand.isBlackjack() && !dealer.isBlackjack() && hands.size() == 1){
+            if (forcedAction == Action::InsuranceAccept){
+                decisionPoint.insuranceAcceptStats.addResult(1.0f);
+                return;
+            }
+            else if (forcedAction == Action::InsuranceDecline){
+                decisionPoint.insuranceDeclineStats.addResult(1.5f);
+                return;
+            }
+            decisionPoint.standStats.addResult(1.5f);
+            return;
+        }
+
+        if (userScore != 0){
+            dealer_draw(deck, dealer);
+        }
+        
+        int dealerScore = dealer.getFinalScore();
+        float result = 1.0f;
+
+        if (dealerScore > userScore){
+            result *= -1.0f;
+        }
+        else if (dealerScore < userScore){
+            result *= 1.0f;
+        }
+        else if (dealerScore == 0 && userScore == 0){
+            result *= -1.0f;
+        }
+        else {
+            result *= 0.0f;
+        }
+
+        if (forcedAction == Action::Hit) {
+            decisionPoint.hitStats.addResult(result);
+        } else if (forcedAction == Action::Stand) {
+            decisionPoint.standStats.addResult(result);
+        }
+        else if (forcedAction == Action::Double){
+            decisionPoint.doubleStats.addResult(result * 2.0f);
+        } else if (forcedAction == Action::Split){
+            double betMultiplier = 1.0;
+            if (baseBet > 0) {
+                betMultiplier = static_cast<double>(hand.getBetSize()) / static_cast<double>(baseBet);
+            }
+            decisionPoint.splitStats.addResult(result * betMultiplier);
+        }
+        else if (forcedAction == Action::Surrender){
+            decisionPoint.surrenderStats.addResult(-0.5f);
+        }
+        else if (forcedAction == Action::InsuranceAccept){
+            if (dealer.isBlackjack() && hand.isBlackjack() && hands.size() == 1){
+                decisionPoint.insuranceAcceptStats.addResult(1.0f);
+            }
+            else if (dealer.isBlackjack() && !hand.isBlackjack()){
+                decisionPoint.insuranceAcceptStats.addResult(0.0f);
+            }
+            else{
+                decisionPoint.insuranceAcceptStats.addResult(result - 0.5f);
+            }
+        }
+        else if (forcedAction == Action::InsuranceDecline){
+            decisionPoint.insuranceDeclineStats.addResult(result);
+        }
+    }
+}
+
 void FixedEngine::dealer_draw(Deck& deck,Hand& dealer){
     // Fix: Check for Hard 17 or > 17. If Soft 17, check rule.
     bool isSoft17 = dealer.isSoft17();
@@ -316,27 +407,28 @@ void FixedEngine::savetoCSVResults(const std::string& filename) const {
 }
 
 void FixedEngine::merge(const FixedEngine& other){
+    // Properly merge ActionStats using Welford's parallel algorithm
+    auto accumulate = [](ActionStats& dst, const ActionStats& src) {
+        if (src.handsPlayed == 0) return;
+        
+        int totalCount = dst.handsPlayed + src.handsPlayed;
+        double delta = src.mean - dst.mean;
+        
+        // Combine totals
+        dst.totalPayout += src.totalPayout;
+        
+        // Combine means and M2 using parallel Welford's algorithm
+        dst.mean = (dst.handsPlayed * dst.mean + src.handsPlayed * src.mean) / totalCount;
+        dst.M2 = dst.M2 + src.M2 + delta * delta * dst.handsPlayed * src.handsPlayed / totalCount;
+        
+        dst.handsPlayed = totalCount;
+    };
+
+    // Merge legacy EVresults
     for (const auto& [cardValues, tcMapOther] : other.EVresults) {
         auto& currentTcMap = EVresults[cardValues];
         for (const auto& [trueCount, decisionPoint] : tcMapOther) {
             DecisionPoint& currentPoint = currentTcMap[trueCount];
-
-            // Properly merge ActionStats using Welford's parallel algorithm
-            auto accumulate = [](ActionStats& dst, const ActionStats& src) {
-                if (src.handsPlayed == 0) return;
-                
-                int totalCount = dst.handsPlayed + src.handsPlayed;
-                double delta = src.mean - dst.mean;
-                
-                // Combine totals
-                dst.totalPayout += src.totalPayout;
-                
-                // Combine means and M2 using parallel Welford's algorithm
-                dst.mean = (dst.handsPlayed * dst.mean + src.handsPlayed * src.mean) / totalCount;
-                dst.M2 = dst.M2 + src.M2 + delta * delta * dst.handsPlayed * src.handsPlayed / totalCount;
-                
-                dst.handsPlayed = totalCount;
-            };
 
             accumulate(currentPoint.hitStats, decisionPoint.hitStats);
             accumulate(currentPoint.standStats, decisionPoint.standStats);
@@ -345,7 +437,25 @@ void FixedEngine::merge(const FixedEngine& other){
             accumulate(currentPoint.surrenderStats, decisionPoint.surrenderStats);
             accumulate(currentPoint.insuranceAcceptStats, decisionPoint.insuranceAcceptStats);
             accumulate(currentPoint.insuranceDeclineStats, decisionPoint.insuranceDeclineStats);
+        }
+    }
+    
+    // Merge multi-scenario results
+    for (const auto& [scenarioName, resultsMapOther] : other.scenarioResults) {
+        auto& currentScenarioMap = scenarioResults[scenarioName];
+        for (const auto& [cardValues, tcMapOther] : resultsMapOther) {
+            auto& currentTcMap = currentScenarioMap[cardValues];
+            for (const auto& [trueCount, decisionPoint] : tcMapOther) {
+                DecisionPoint& currentPoint = currentTcMap[trueCount];
 
+                accumulate(currentPoint.hitStats, decisionPoint.hitStats);
+                accumulate(currentPoint.standStats, decisionPoint.standStats);
+                accumulate(currentPoint.doubleStats, decisionPoint.doubleStats);
+                accumulate(currentPoint.splitStats, decisionPoint.splitStats);
+                accumulate(currentPoint.surrenderStats, decisionPoint.surrenderStats);
+                accumulate(currentPoint.insuranceAcceptStats, decisionPoint.insuranceAcceptStats);
+                accumulate(currentPoint.insuranceDeclineStats, decisionPoint.insuranceDeclineStats);
+            }
         }
     }
 }
@@ -353,4 +463,85 @@ void FixedEngine::merge(const FixedEngine& other){
 const std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& FixedEngine::getResults() const 
 { 
     return EVresults; 
+}
+
+const std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& FixedEngine::getScenarioResults(const std::string& scenarioName) const {
+    static const std::map<std::pair<int, int>, std::map<float, DecisionPoint>> empty;
+    auto it = scenarioResults.find(scenarioName);
+    if (it == scenarioResults.end()) {
+        return empty;
+    }
+    return it->second;
+}
+
+std::vector<std::string> FixedEngine::getScenarioNames() const {
+    std::vector<std::string> names;
+    names.reserve(scenarioResults.size());
+    for (const auto& [name, _] : scenarioResults) {
+        names.push_back(name);
+    }
+    return names;
+}
+
+void FixedEngine::saveScenarioResults(const std::string& scenarioName, const std::string& baseFilename) const {
+    auto it = scenarioResults.find(scenarioName);
+    if (it == scenarioResults.end()) {
+        std::cerr << "No results found for scenario: " << scenarioName << std::endl;
+        return;
+    }
+    
+    std::filesystem::path outPath(baseFilename);
+    if (outPath.has_parent_path()) {
+        std::error_code ec;
+        std::filesystem::create_directories(outPath.parent_path(), ec);
+        if (ec) {
+            std::cerr << "Failed to create directory " << outPath.parent_path().string()
+                      << ": " << ec.message() << std::endl;
+            return;
+        }
+    }
+
+    std::ofstream out(outPath, std::ios::out | std::ios::trunc);
+    if (!out.is_open()) {
+        std::cerr << "Failed to open " << outPath.string() << " for writing results." << std::endl;
+        return;
+    }
+
+    out << "UserValue,DealerValue,TrueCount,"
+        << "Hit EV,Hit Variance,Stand EV,Stand Variance,Double EV,Double Variance,Split EV,Split Variance,Surrender EV,Surrender Variance,Insurance Accept EV,Insurance Accept Variance,Insurance Decline EV,Insurance Decline Variance,Hands Played" << '\n';
+
+    const auto& resultsMap = it->second;
+    for (const auto& [cardValues, tcMap] : resultsMap) {
+        for (const auto& [trueCount, decisionPoint] : tcMap) {
+            int handsPlayed = decisionPoint.hitStats.handsPlayed;
+            if (handsPlayed == 0) handsPlayed = decisionPoint.standStats.handsPlayed;
+            if (handsPlayed == 0) handsPlayed = decisionPoint.doubleStats.handsPlayed;
+            if (handsPlayed == 0) handsPlayed = decisionPoint.splitStats.handsPlayed;
+            if (handsPlayed == 0) handsPlayed = decisionPoint.surrenderStats.handsPlayed;
+            if (handsPlayed == 0) handsPlayed = decisionPoint.insuranceAcceptStats.handsPlayed;
+            if (handsPlayed == 0) handsPlayed = decisionPoint.insuranceDeclineStats.handsPlayed;
+
+            out << cardValues.first << ','
+                << cardValues.second << ','
+                << std::setprecision(std::numeric_limits<float>::max_digits10) << std::defaultfloat
+                << trueCount << ','
+                << std::fixed << std::setprecision(6)
+                << decisionPoint.hitStats.getEV() << ','
+                << decisionPoint.hitStats.getVariance() << ','
+                << decisionPoint.standStats.getEV() << ','
+                << decisionPoint.standStats.getVariance() << ','
+                << decisionPoint.doubleStats.getEV() << ','
+                << decisionPoint.doubleStats.getVariance() << ','
+                << decisionPoint.splitStats.getEV() << ','
+                << decisionPoint.splitStats.getVariance() << ','
+                << decisionPoint.surrenderStats.getEV() << ','
+                << decisionPoint.surrenderStats.getVariance() << ','
+                << decisionPoint.insuranceAcceptStats.getEV() << ','
+                << decisionPoint.insuranceAcceptStats.getVariance() << ','
+                << decisionPoint.insuranceDeclineStats.getEV() << ','
+                << decisionPoint.insuranceDeclineStats.getVariance() << ','
+                << handsPlayed
+                << '\n';
+        }
+    }
 }

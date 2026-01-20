@@ -18,30 +18,55 @@
 #include "GameReporter.h"
 #include "GameConfig.h"
 #include "ActionStats.h"
+#include "MonteCarloScenario.h"
 
 class FixedEngine{
 
 public:    
     FixedEngine();
-    FixedEngine(std::vector<Action> monteCarloActions,std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults, const GameConfig& gameConfig = GameConfig());
-    void calculateEV(Player& player,Deck& deck,Hand& dealer, Hand& user, float trueCount, std::pair<int,int> cardValues);
+    // Legacy constructor for backward compatibility
+    FixedEngine(std::vector<Action> monteCarloActions, std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults, const GameConfig& gameConfig = GameConfig());
+    
+    // Legacy single-action calculateEV (for backward compatibility with tests)
+    void calculateEV(Player& player, Deck& deck, Hand& dealer, Hand& user, float trueCount, std::pair<int,int> cardValues);
+    
+    // New multi-scenario calculateEV - evaluates all matching scenarios
+    void calculateEVForScenario(Player& player, Deck& deck, Hand& dealer, Hand& user, float trueCount, 
+                                 std::pair<int,int> cardValues, const MonteCarloScenario& scenario);
+    
     void savetoCSVResults(const std::string& filename = "fixed_engine_results.csv") const;
+    
+    // Save results for a specific scenario
+    void saveScenarioResults(const std::string& scenarioName, const std::string& baseFilename) const;
+    
     const std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& getResults() const;
+    
+    // Get results for a specific scenario
+    const std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& getScenarioResults(const std::string& scenarioName) const;
+    
+    // Get all scenario names with results
+    std::vector<std::string> getScenarioNames() const;
+    
     void merge(const FixedEngine& other);
+    
 private:
+    // Legacy single-action support
     std::vector<Action> monteCarloActions;
     std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults;
+    
+    // Multi-scenario support: results keyed by scenario name
+    std::map<std::string, std::map<std::pair<int, int>, std::map<float, DecisionPoint>>> scenarioResults;
+    
     GameConfig config;
+    
     void evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount, Action forcedAction,std::pair<int,int> cardValues, int baseBet);
+    
+    // New evaluateHand for scenario-specific results
+    void evaluateHandForScenario(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount, 
+                                  Action forcedAction, std::pair<int,int> cardValues, int baseBet,
+                                  const std::string& scenarioName);
+    
     void dealer_draw(Deck& deck, Hand& dealer);
-
-    // bool handleInsurancePhase(Hand& dealer, Hand& user);
-    // bool canOfferInsurance(Hand& dealer);
-    // bool askInsurance();
-    // bool resolveInsurance(bool accepted, Hand& dealer, Hand& user);
-    // bool handleInsuranceAccepted(Hand& dealer, Hand& user);
-    // bool handleInsuranceDeclined(Hand& dealer, Hand& user);
-    // bool dealerRobberyHandler(Hand& dealer,Hand& user);
 
     bool standHandler(Hand& user, std::vector<Hand>& hands);
     bool hitHandler(Deck& deck, Hand& user, std::vector<Hand>& hands);

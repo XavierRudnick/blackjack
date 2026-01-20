@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include "Deck.h"
+#include "MonteCarloScenario.h"
 
 #include <algorithm>
 
@@ -23,6 +24,15 @@ Engine::Engine(
 static bool isInsuranceMonteCarloActionSet(const GameConfig& config) {
     return std::find(config.monteCarloActions.begin(), config.monteCarloActions.end(), Action::InsuranceAccept) != config.monteCarloActions.end() ||
            std::find(config.monteCarloActions.begin(), config.monteCarloActions.end(), Action::InsuranceDecline) != config.monteCarloActions.end();
+}
+
+static bool hasInsuranceScenarios(const GameConfig& config) {
+    for (const auto& scenario : config.monteCarloScenarios) {
+        if (scenario.isInsuranceScenario) {
+            return true;
+        }
+    }
+    return false;
 }
 
 std::pair<double, double> Engine::runner(){  
@@ -58,10 +68,24 @@ void Engine::playHand(){
     }
 
     // Monte Carlo for insurance decisions must run BEFORE the insurance phase.
+    // Handle legacy single-action mode
     if (config.enabelMontiCarlo && isInsuranceMonteCarloActionSet(config) && dealer.getCards().front().getRank() == Rank::Ace) {
         const std::pair<int, int> cardValues{user.getScore(), dealer.getCards().front().getValue()};
         if (config.actionValues.count(cardValues)) {
             fixedEngine.calculateEV(*player, *deck, dealer, user, player->getTrueCount(), cardValues);
+        }
+    }
+    
+    // Handle multi-scenario mode for insurance
+    if (config.enabelMontiCarlo && hasInsuranceScenarios(config) && dealer.getCards().front().getRank() == Rank::Ace) {
+        const std::pair<int, int> cardValues{user.getScore(), dealer.getCards().front().getValue()};
+        const bool isSoftHand = user.isHandSoft();
+        const bool canSplit = user.checkCanSplit();
+        
+        for (const auto& scenario : config.monteCarloScenarios) {
+            if (scenario.isInsuranceScenario && scenario.appliesTo(cardValues.first, cardValues.second, isSoftHand, canSplit)) {
+                fixedEngine.calculateEVForScenario(*player, *deck, dealer, user, player->getTrueCount(), cardValues, scenario);
+            }
         }
     }
 
@@ -174,7 +198,7 @@ void Engine::play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool 
 
     const std::pair<int,int> cardValues{user.getScore(), dealer.getCards().front().getValue()};
 
-    // Check if we should run monte carlo for this hand.
+    // Check if we should run monte carlo for this hand (legacy single-action mode).
     // Insurance MC is handled earlier in playHand() (before insurance resolution).
     bool shouldRunMonteCarlo = config.enabelMontiCarlo && config.actionValues.count(cardValues) && !isInsuranceMonteCarloActionSet(config);
     
@@ -187,6 +211,23 @@ void Engine::play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool 
         const bool isSoftHand = user.isHandSoft();
         if (config.allowSoftHandsInMonteCarlo || !isSoftHand) {
             fixedEngine.calculateEV(*player, *deck, dealer, user, player->getTrueCount(), cardValues);
+        }
+    }
+    
+    // Handle multi-scenario mode for non-insurance scenarios
+    if (config.enabelMontiCarlo && !config.monteCarloScenarios.empty()) {
+        const bool isSoftHand = user.isHandSoft();
+        const bool canSplit = user.checkCanSplit();
+        
+        for (const auto& scenario : config.monteCarloScenarios) {
+            // Skip insurance scenarios (handled in playHand before insurance phase)
+            if (scenario.isInsuranceScenario) {
+                continue;
+            }
+            
+            if (scenario.appliesTo(cardValues.first, cardValues.second, isSoftHand, canSplit)) {
+                fixedEngine.calculateEVForScenario(*player, *deck, dealer, user, player->getTrueCount(), cardValues, scenario);
+            }
         }
     }
 

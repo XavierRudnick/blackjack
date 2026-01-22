@@ -181,6 +181,46 @@ bool FixedEngine::splitHandler(Player& player, Deck& deck, Hand& user,Hand& deal
 void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount, Action forcedAction, std::pair<int,int> cardValues, int baseBet) {
     float bucketedTrueCount = std::round(trueCount * 2.0f) / 2.0f;
     DecisionPoint& decisionPoint = EVresults[cardValues][bucketedTrueCount];
+
+    if (forcedAction == Action::Split) {
+        //decisionPoint.splitStats.timesSplit();
+        double splitPayout = 0.0;
+
+        for (Hand& hand : hands) {
+            int userScore = hand.getFinalScore();
+
+            if (userScore != 0){
+                dealer_draw(deck, dealer);
+            }
+            
+            int dealerScore = dealer.getFinalScore();
+            float result = 1.0f;
+
+            if (dealerScore > userScore){
+                result *= -1.0f;
+            }
+            else if (dealerScore < userScore){
+                result *= 1.0f;
+            }
+            else if (dealerScore == 0 && userScore == 0){
+                result *= -1.0f;
+            }
+            else {
+                result *= 0.0f;
+            }
+
+            // Normalize by base bet while still accounting for doubles after split
+            double betMultiplier = 1.0;
+            if (baseBet > 0) {
+                betMultiplier = static_cast<double>(hand.getBetSize()) / static_cast<double>(baseBet);
+            }
+            splitPayout += result * betMultiplier;
+        }
+
+        decisionPoint.splitStats.addResult(splitPayout);
+        return;
+    }
+
     for (Hand& hand : hands) {
         int userScore = hand.getFinalScore();
 
@@ -224,13 +264,6 @@ void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hand
         }
         else if (forcedAction == Action::Double){
             decisionPoint.doubleStats.addResult(result * 2.0f);
-        } else if (forcedAction == Action::Split){
-           // Normalize by base bet while still accounting for doubles after split
-            double betMultiplier = 1.0;
-            if (baseBet > 0) {
-                betMultiplier = static_cast<double>(hand.getBetSize()) / static_cast<double>(baseBet);
-            }
-            decisionPoint.splitStats.addResult(result * betMultiplier);
         }
         else if (forcedAction == Action::Surrender){
             decisionPoint.surrenderStats.addResult(-0.5f);
@@ -258,6 +291,44 @@ void FixedEngine::evaluateHandForScenario(Deck& deck, Hand& dealer, std::vector<
                                            const std::string& scenarioName) {
     float bucketedTrueCount = std::round(trueCount * 2.0f) / 2.0f;
     DecisionPoint& decisionPoint = scenarioResults[scenarioName][cardValues][bucketedTrueCount];
+
+    if (forcedAction == Action::Split) {
+        //decisionPoint.splitStats.timesSplit();
+        double splitPayout = 0.0;
+
+        for (Hand& hand : hands) {
+            int userScore = hand.getFinalScore();
+
+            if (userScore != 0){
+                dealer_draw(deck, dealer);
+            }
+            
+            int dealerScore = dealer.getFinalScore();
+            float result = 1.0f;
+
+            if (dealerScore > userScore){
+                result *= -1.0f;
+            }
+            else if (dealerScore < userScore){
+                result *= 1.0f;
+            }
+            else if (dealerScore == 0 && userScore == 0){
+                result *= -1.0f;
+            }
+            else {
+                result *= 0.0f;
+            }
+
+            double betMultiplier = 1.0;
+            if (baseBet > 0) {
+                betMultiplier = static_cast<double>(hand.getBetSize()) / static_cast<double>(baseBet);
+            }
+            splitPayout += result * betMultiplier;
+        }
+
+        decisionPoint.splitStats.addResult(splitPayout);
+        return;
+    }
     
     for (Hand& hand : hands) {
         int userScore = hand.getFinalScore();
@@ -302,12 +373,6 @@ void FixedEngine::evaluateHandForScenario(Deck& deck, Hand& dealer, std::vector<
         }
         else if (forcedAction == Action::Double){
             decisionPoint.doubleStats.addResult(result * 2.0f);
-        } else if (forcedAction == Action::Split){
-            double betMultiplier = 1.0;
-            if (baseBet > 0) {
-                betMultiplier = static_cast<double>(hand.getBetSize()) / static_cast<double>(baseBet);
-            }
-            decisionPoint.splitStats.addResult(result * betMultiplier);
         }
         else if (forcedAction == Action::Surrender){
             decisionPoint.surrenderStats.addResult(-0.5f);
@@ -409,6 +474,9 @@ void FixedEngine::savetoCSVResults(const std::string& filename) const {
 void FixedEngine::merge(const FixedEngine& other){
     // Properly merge ActionStats using Welford's parallel algorithm
     auto accumulate = [](ActionStats& dst, const ActionStats& src) {
+        // Always accumulate splitsPlayed for split tracking
+        dst.splitsPlayed += src.splitsPlayed;
+        
         if (src.handsPlayed == 0) return;
         
         int totalCount = dst.handsPlayed + src.handsPlayed;

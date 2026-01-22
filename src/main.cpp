@@ -237,7 +237,7 @@ void runUnifiedMonteSims(int numDecksUsed, int iterations, float deckPenetration
 std::vector<MonteCarloScenario> createAllScenarios() {
     std::vector<MonteCarloScenario> scenarios;
     
-    // 1. Insurance Accept vs Decline - allows soft hands (dealer shows Ace)
+    //1. Insurance Accept vs Decline - allows soft hands (dealer shows Ace)
     MonteCarloScenario insuranceScenario;
     insuranceScenario.name = "InsuranceAccept_vs_Decline";
     insuranceScenario.actions = {Action::InsuranceAccept, Action::InsuranceDecline};
@@ -251,17 +251,17 @@ std::vector<MonteCarloScenario> createAllScenarios() {
     insuranceScenario.isInsuranceScenario = true;
     scenarios.push_back(insuranceScenario);
     
-    // 2. Hit vs Stand - hard hands only
-    MonteCarloScenario hitVsStandScenario;
-    hitVsStandScenario.name = "Hit_vs_Stand";
-    hitVsStandScenario.actions = {Action::Hit, Action::Stand};
-    hitVsStandScenario.cardValues = {
-        {16, 10}, {15, 10}, {12, 3}, {12, 2}, {13, 2}, {13, 3}
-    };
-    hitVsStandScenario.allowSoftHands = false;  // Hard hands only
-    hitVsStandScenario.requirePair = false;
-    hitVsStandScenario.isInsuranceScenario = false;
-    scenarios.push_back(hitVsStandScenario);
+    // // 2. Hit vs Stand - hard hands only
+    // MonteCarloScenario hitVsStandScenario;
+    // hitVsStandScenario.name = "Hit_vs_Stand";
+    // hitVsStandScenario.actions = {Action::Hit, Action::Stand};
+    // hitVsStandScenario.cardValues = {
+    //     {16, 10}, {15, 10}, {12, 3}, {12, 2}, {13, 2}, {13, 3}
+    // };
+    // hitVsStandScenario.allowSoftHands = false;  // Hard hands only
+    // hitVsStandScenario.requirePair = false;
+    // hitVsStandScenario.isInsuranceScenario = false;
+    // scenarios.push_back(hitVsStandScenario);
     
     // 3. Split vs Stand (Pair of 10s) - requires pair
     MonteCarloScenario splitVsStandScenario;
@@ -277,28 +277,28 @@ std::vector<MonteCarloScenario> createAllScenarios() {
     scenarios.push_back(splitVsStandScenario);
     
     // 4. Hit vs Double - hard hands only
-    MonteCarloScenario hitVsDoubleScenario;
-    hitVsDoubleScenario.name = "Hit_vs_Double";
-    hitVsDoubleScenario.actions = {Action::Hit, Action::Double};
-    hitVsDoubleScenario.cardValues = {
-        {10, 10}, {10, 11}, {11, 11}, {9, 2}, {9, 7}
-    };
-    hitVsDoubleScenario.allowSoftHands = false;
-    hitVsDoubleScenario.requirePair = false;
-    hitVsDoubleScenario.isInsuranceScenario = false;
-    scenarios.push_back(hitVsDoubleScenario);
+    // MonteCarloScenario hitVsDoubleScenario;
+    // hitVsDoubleScenario.name = "Hit_vs_Double";
+    // hitVsDoubleScenario.actions = {Action::Hit, Action::Double};
+    // hitVsDoubleScenario.cardValues = {
+    //     {10, 10}, {10, 11}, {11, 11}, {9, 2}, {9, 7}
+    // };
+    // hitVsDoubleScenario.allowSoftHands = false;
+    // hitVsDoubleScenario.requirePair = false;
+    // hitVsDoubleScenario.isInsuranceScenario = false;
+    // scenarios.push_back(hitVsDoubleScenario);
     
-    // 5. Surrender vs Hit - hard hands only
-    MonteCarloScenario surrenderVsHitScenario;
-    surrenderVsHitScenario.name = "Surrender_vs_Hit";
-    surrenderVsHitScenario.actions = {Action::Surrender, Action::Hit};
-    surrenderVsHitScenario.cardValues = {
-        {15, 9}, {15, 10}, {14, 10}, {15, 11}, {16, 9}, {16, 10}, {16, 11}
-    };
-    surrenderVsHitScenario.allowSoftHands = false;
-    surrenderVsHitScenario.requirePair = false;
-    surrenderVsHitScenario.isInsuranceScenario = false;
-    scenarios.push_back(surrenderVsHitScenario);
+    // // 5. Surrender vs Hit - hard hands only
+    // MonteCarloScenario surrenderVsHitScenario;
+    // surrenderVsHitScenario.name = "Surrender_vs_Hit";
+    // surrenderVsHitScenario.actions = {Action::Surrender, Action::Hit};
+    // surrenderVsHitScenario.cardValues = {
+    //     {15, 9}, {15, 10}, {14, 10}, {15, 11}, {16, 9}, {16, 10}, {16, 11}
+    // };
+    // surrenderVsHitScenario.allowSoftHands = false;
+    // surrenderVsHitScenario.requirePair = false;
+    // surrenderVsHitScenario.isInsuranceScenario = false;
+    // scenarios.push_back(surrenderVsHitScenario);
     
     return scenarios;
 }

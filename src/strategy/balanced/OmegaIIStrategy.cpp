@@ -130,7 +130,8 @@ float OmegaIIStrategy::getDecksLeft() const{
 }
 
 bool OmegaIIStrategy::shouldAcceptInsurance() const{
-    constexpr int insuranceThreshold = 3; //mathmatical point where insurance is profitable accoding to gemini
+    // 2-deck 65% pen H17 simulation: TC crossover = 42.9 (impractical, never take insurance)
+    constexpr float insuranceThreshold = 42.9f;
     if (true_count >= insuranceThreshold){
         return true;
     }
@@ -142,23 +143,47 @@ Action OmegaIIStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard
 
     switch (playerTotal) {
         case 16:
-            if (dealerValue == 10 && trueCount > 0) {
-                return Action::Stand;
-            }
+            // 2-deck 65% pen H17: 16v10 Stand TC >= 35.9 (impractical)
+            break;
             
         case 15: 
-            if (dealerValue == 10 && trueCount >= 4) {
+            // 2-deck 65% pen H17: 15v10 Stand TC >= 40.4 (impractical)
+            break;
+
+        case 13:
+            // 2-deck 65% pen H17: 13v2 Stand TC >= 1.0
+            // 2-deck 65% pen H17: 13v3 Stand TC >= -0.2 (always stand)
+            if (dealerValue == 2 && trueCount >= 1.0f) { 
+                return Action::Stand;
+            }
+            if (dealerValue == 3 && trueCount >= -0.2f) { 
                 return Action::Stand;
             }
             break;
 
         case 12:
-            if (dealerValue == 3 && trueCount >= 2) {
-                return Action::Stand;
+            // 2-deck 65% pen H17: 12v3 Stand TC >= 38.8 (impractical)
+            // 2-deck 65% pen H17: 12v2 Stand TC >= 44.3 (impractical)
+            break;
+
+        case 11:
+            // 2-deck 65% pen H17: 11v11 Double TC >= 16.8
+            if (dealerValue == 11 && trueCount >= 16.8f){
+                return Action::Double;
             }
-            if (dealerValue == 2 && trueCount >= 3) {
-                return Action::Stand;
+            break;
+
+        case 10:
+            // 2-deck 65% pen H17: 10v10 Double TC >= 42.8 (impractical)
+            // 2-deck 65% pen H17: 10v11 Double TC >= 40.3 (impractical)
+            break;
+
+        case 9:
+            // 2-deck 65% pen H17: 9v2 Double TC >= 1.5
+            if (dealerValue == 2 && trueCount >= 1.5f){
+                return Action::Double;
             }
+            // 2-deck 65% pen H17: 9v7 Double TC >= 39.9 (impractical)
             break;
 
         default: return Action::Skip;
@@ -166,59 +191,36 @@ Action OmegaIIStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard
     return Action::Skip;
 }
 
-Action OmegaIIStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float trueCount){
-    int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
-    int playerValue = BasicStrategy::getIndex(playerRank) + INDEX_OFFSET;
-    switch (playerValue) {
-        case 9:
-        // Commented out, very obvious counting cards when you split on tens    
-        // case 10: 
-        //     if (dealerValue == 5 && trueCount >= 5) {
-        //         return Action::Split;
-        //     }
-        //     if (dealerValue == 4 && trueCount >= 6) {
-        //         return Action::Split;
-        //     }
-        //     if (dealerValue == 6 && trueCount >= 4) {
-        //         return Action::Split;
-        //     }
-        //     break;
-        default: return Action::Skip; break;
-    }
+Action OmegaIIStrategy::shouldDeviatefromSplit(Rank /*playerRank*/, Rank /*dealerUpcard*/, float /*trueCount*/){
+    // 2-deck 65% pen H17: Split 10s v5 TC >= 44.4, Split 10s v6 TC >= 44.4 (impractical)
+    // Not implementing - TCs too high to ever occur
     return Action::Skip;
 }
 
 Action OmegaIIStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
     int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
     switch (playerTotal) {
-        case 17:
-            if (dealerValue == 11 && trueCount >= 0) {
-                return Action::Surrender;
-            }
-            break;
         case 16:
-            if (dealerValue == 10 && trueCount >= 0) {
+            // 2-deck 65% pen H17: 16v9 Surrender TC >= 27.3 (impractical)
+            // 2-deck 65% pen H17: 16v10 Surrender TC >= -0.5 (always surrender)
+            if (dealerValue == 10 && trueCount >= -0.5f) {
                 return Action::Surrender;
             }
-            if (dealerValue == 11 && trueCount >= 3) {
+            // 2-deck 65% pen H17: 16v11 Surrender TC >= -0.1 (always surrender)
+            if (dealerValue == 11 && trueCount >= -0.1f) {
                 return Action::Surrender;
             }
             break;
         case 15:
-            if (dealerValue == 10 && trueCount >= 0) {
+            // 2-deck 65% pen H17: 15v9 Surrender TC >= 38.8 (impractical)
+            // 2-deck 65% pen H17: 15v10 Surrender TC >= 16.8
+            if (dealerValue == 10 && trueCount >= 16.8f) {
                 return Action::Surrender;
             }
-            if (dealerValue == 11 && trueCount >= 1) {
-                return Action::Surrender;
-            }
-            if (dealerValue == 9 && trueCount >= 2) {
-                return Action::Surrender;
-            }
+            // 2-deck 65% pen H17: 15v11 Surrender TC >= 34.4 (impractical)
             break;
         case 14:
-            if (dealerValue == 11 && trueCount >= 3) {
-                return Action::Surrender;
-            }
+            // 2-deck 65% pen H17: 14v10 Surrender TC >= 39.9 (impractical)
             break;
         default: return Action::Skip; break;
     }

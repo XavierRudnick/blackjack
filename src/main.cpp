@@ -1,6 +1,9 @@
 #include <cstdlib>
 #include <iostream>
 #include <set>
+#include <fstream>
+#include <iomanip>
+#include <mutex>
 #include "Engine.h"
 #include "HiLoStrategy.h"
 #include "ZenCountStrategy.h"
@@ -318,6 +321,132 @@ auto createStrategies(int numDecksUsed) {
     return strategies;
 }
 
+// NEW: RTP simulation that stores results to file
+void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetration, 
+    std::unique_ptr<CountingStrategy> strategy, bool dealerHits17, 
+    std::ofstream& resultsFile, std::mutex& fileMutex) {
+
+    std::pair<double, double> gameStats = {0, 0};
+    EventBus& bus = EventBus::getInstance();
+    Deck deck(numDecksUsed);
+    BotPlayer robot(false, std::move(strategy)); 
+    std::string strategyName = robot.getStrategy()->getName();
+
+    auto start_time = std::chrono::high_resolution_clock::now();
+
+    for (int i = 0; i < iterations; i++){
+        deck.reset();
+        robot.resetCount(numDecksUsed);
+
+        std::pair<double, double> profit = {1000, 0};
+
+        Engine engine = EngineBuilder()
+                            .withEventBus(&bus)
+                            .setDeckSize(numDecksUsed)
+                            .setDeck(deck)
+                            .setPenetrationThreshold(deckPenetration)
+                            .setInitialWallet(1000)
+                            .enableEvents(false)
+                            .with3To2Payout(true)
+                            .withH17Rules(dealerHits17)
+                            .allowDoubleAfterSplit(true)
+                            .allowReSplitAces(true)
+                            .build(&robot);
+        profit = engine.runner();
+
+        if (i % 500000 == 0 && i != 0){
+            std::cout << strategyName << ": Completed " << i << " / " << iterations << " iterations." << std::endl;
+        }
+
+        gameStats.first += profit.first;
+        gameStats.second += profit.second;
+    } 
+
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
+
+    double average = gameStats.first / iterations;
+    double avgMoneyBet = gameStats.second / iterations;
+    double diff = average - 1000;
+    double normal = 1000.0 / avgMoneyBet;
+    double money_lost_per = diff * normal;
+    double rtp = (1000 + money_lost_per) / 1000;
+    double houseEdge = (1.0 - rtp) * 100; // percentage
+
+    std::string H17Str = dealerHits17 ? "H17" : "S17";
+
+    // Thread-safe file write
+    {
+        std::lock_guard<std::mutex> lock(fileMutex);
+        resultsFile << strategyName << "," 
+                    << numDecksUsed << "," 
+                    << deckPenetration << "," 
+                    << H17Str << ","
+                    << iterations << ","
+                    << std::fixed << std::setprecision(6) << rtp << ","
+                    << std::fixed << std::setprecision(4) << houseEdge << ","
+                    << std::fixed << std::setprecision(2) << average << ","
+                    << std::fixed << std::setprecision(2) << avgMoneyBet << ","
+                    << std::fixed << std::setprecision(2) << money_lost_per << ","
+                    << duration.count() << std::endl;
+    }
+
+    std::cout << "=== " << strategyName << " (" << H17Str << ") ===" << std::endl;
+    std::cout << "  RTP: " << std::fixed << std::setprecision(4) << (rtp * 100) << "%" << std::endl;
+    std::cout << "  House Edge: " << std::fixed << std::setprecision(4) << houseEdge << "%" << std::endl;
+    std::cout << "  Avg money bet per shoe: $" << std::fixed << std::setprecision(2) << avgMoneyBet << std::endl;
+    std::cout << "  Net gain/loss per $1000 wagered: $" << std::fixed << std::setprecision(2) << money_lost_per << std::endl;
+    std::cout << "  Duration: " << duration.count() << "s" << std::endl << std::endl;
+}
+
+// Run RTP simulations for all strategies and save to CSV
+void runAllRTPSimulations(int numDecksUsed, float deckPenetration, int iterations, bool dealerHits17) {
+    std::string H17Str = dealerHits17 ? "H17" : "S17";
+    std::string filename = "rtp_results_" + std::to_string(numDecksUsed) + "deck_" + 
+                           std::to_string(static_cast<int>(deckPenetration * 100)) + "pen_" + H17Str + ".csv";
+    
+    std::ofstream resultsFile(filename);
+    std::mutex fileMutex;
+    
+    // Write CSV header
+    resultsFile << "Strategy,Decks,Penetration,DealerRule,Iterations,RTP,HouseEdge%,AvgWallet,AvgMoneyBet,NetPer1000,Duration_s" << std::endl;
+    
+    std::cout << "\n=== RTP SIMULATIONS (" << H17Str << ") ===" << std::endl;
+    std::cout << "Decks: " << numDecksUsed << ", Penetration: " << deckPenetration 
+              << ", Iterations: " << iterations << std::endl;
+    std::cout << "Results will be saved to: " << filename << std::endl << std::endl;
+    
+    auto strategies = createStrategies(numDecksUsed);
+    const size_t num_threads = std::min(static_cast<size_t>(9), strategies.size());
+    
+    std::cout << "Running with " << num_threads << " thread(s)" << std::endl << std::endl;
+    
+    std::vector<std::thread> workers;
+    workers.reserve(num_threads);
+    
+    for (auto& strategy : strategies) {
+        workers.emplace_back([&, strat = std::move(strategy)]() mutable {
+            runRTPsimsWithResults(numDecksUsed, iterations, deckPenetration,
+                std::move(strat), dealerHits17, resultsFile, fileMutex);
+        });
+        
+        if (workers.size() >= num_threads) {
+            for (auto& t : workers) {
+                t.join();
+            }
+            workers.clear();
+        }
+    }
+    
+    for (auto& t : workers) {
+        t.join();
+    }
+    
+    resultsFile.close();
+    std::cout << "\n=== RTP SIMULATIONS COMPLETE (" << H17Str << ") ===" << std::endl;
+    std::cout << "Results saved to: " << filename << std::endl;
+}
+
 // NEW: Unified simulation setup - runs ALL scenarios in a single pass per strategy
 void setUpUnifiedSims(int numDecksUsed, float deckPenetration, int iterations, bool dealerHits17) {
     bool blackJackPayout3to2 = true;
@@ -370,19 +499,31 @@ void setUpUnifiedSims(int numDecksUsed, float deckPenetration, int iterations, b
 }
 
 int main(){
-    int numDecksUsed = 6;
-    float deckPenetration = 0.8;
-    int iterations = 600000000;  // 10x more iterations since we're doing all scenarios in one pass!
-    std::vector<std::thread> threads;
+    // Configuration for RTP simulations (using 2-deck with updated deviations)
+    int numDecksUsed = 2;
+    float deckPenetration = 0.65;
+    int rtpIterations = 10000000;  // 10 million iterations per strategy
     
-    // Use the new unified simulation that tracks ALL scenarios simultaneously
-    // This is 5x more efficient (5 scenario types * strategy count simulations -> 1 simulation per strategy)
-    setUpUnifiedSims(numDecksUsed, deckPenetration, iterations, true);   // H17
-    setUpUnifiedSims(numDecksUsed, deckPenetration, iterations, false);  // S17
+    // Run RTP simulations for all strategies with the updated deviations
+    std::cout << "\n========================================" << std::endl;
+    std::cout << "BLACKJACK RTP SIMULATION WITH UPDATED DEVIATIONS" << std::endl;
+    std::cout << "========================================" << std::endl;
+    std::cout << "Configuration: " << numDecksUsed << " deck(s), " 
+              << (deckPenetration * 100) << "% penetration" << std::endl;
+    std::cout << "Iterations per strategy: " << rtpIterations << std::endl;
+    std::cout << "========================================\n" << std::endl;
     
-    // Legacy separate simulation mode (commented out):
-    // setUpSimsH17(numDecksUsed, deckPenetration, iterations);
-    // setUpSimsS17(numDecksUsed, deckPenetration, iterations);
+    runAllRTPSimulations(numDecksUsed, deckPenetration, rtpIterations, true);   // H17
+    runAllRTPSimulations(numDecksUsed, deckPenetration, rtpIterations, false);  // S17
+    
+    std::cout << "\n========================================" << std::endl;
+    std::cout << "ALL RTP SIMULATIONS COMPLETE" << std::endl;
+    std::cout << "========================================" << std::endl;
+    
+    // Legacy Monte Carlo mode (commented out):
+    // int monteCarloIterations = 600000000;
+    // setUpUnifiedSims(numDecksUsed, deckPenetration, monteCarloIterations, true);   // H17
+    // setUpUnifiedSims(numDecksUsed, deckPenetration, monteCarloIterations, false);  // S17
     
     return 0;
 }

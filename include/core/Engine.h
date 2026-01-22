@@ -28,7 +28,8 @@ public:
         Deck deck,
         Player* player,
         EventBus* eventBus, // not owned can be nullptr
-        std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& EVresults
+        std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& EVresults,
+        std::map<float,ActionStats>& EVperTC
     );
 
     std::pair<double, double> runner();
@@ -45,6 +46,8 @@ private:
     GameReporter reporter;
 
     FixedEngine fixedEngine;
+
+    std::map<float,ActionStats>& EVperTC;
 
     //hand evaluation logic
     std::vector<int> getPlayerScores(std::vector<Hand>& hands);

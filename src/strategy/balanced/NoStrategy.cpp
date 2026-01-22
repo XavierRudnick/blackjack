@@ -6,9 +6,12 @@ NoStrategy::NoStrategy(float deck_size){
     return;
 }
 
+int NoStrategy::getEvenBet() const {
+    return 1;
+}
+
 int NoStrategy::getBetSize() {
-    constexpr int defaultBetSize = 5;
-    return defaultBetSize;
+    return getEvenBet();
 }
 
 void NoStrategy::updateCount(Card card) {

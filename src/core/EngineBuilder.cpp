@@ -148,7 +148,12 @@ EngineBuilder& EngineBuilder::setMonteCarloScenarios(const std::vector<MonteCarl
     return *this;
 }
 
+EngineBuilder& EngineBuilder::setEVperTC(std::map<float,ActionStats>& values) {
+    EVperTC = values;
+    return *this;
+}
+
 Engine EngineBuilder::build(Player* player) {
-    Engine engine(gameConfig, *deck, player, eventBus, EVresults);
+    Engine engine(gameConfig, *deck, player, eventBus, EVresults, EVperTC);
     return engine;
 }

@@ -278,11 +278,11 @@ def find_crossover_tc(
             
             crossover = tc1 + t * (tc2 - tc1)
             
-            if np.isfinite(crossover):
+            if np.isfinite(tc1):
                 # Weight by total hands in both points
                 weight = data1.hands + data2.hands
-                crossovers.append((crossover, weight, 0.0))  # EV at crossover is 0 by definition
-    
+                crossovers.append((tc1, weight, 0.0))  # EV at crossover is 0 by definition
+
     if not crossovers:
         return None, None
     

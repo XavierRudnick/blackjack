@@ -9,6 +9,7 @@
 class NoStrategy : public CountingStrategy { //in docs note deck size is counted 100% accuratly in half size increments
     private:
         float num_decks_left = 0;
+        int getEvenBet() const;
     public:
         NoStrategy(float deck_size);
         int getBetSize() override;

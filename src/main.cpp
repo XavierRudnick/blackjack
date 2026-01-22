@@ -331,6 +331,7 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
     Deck deck(numDecksUsed);
     BotPlayer robot(false, std::move(strategy)); 
     std::string strategyName = robot.getStrategy()->getName();
+    std::map<float,ActionStats> EVperTC;
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
@@ -351,6 +352,7 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
                             .withH17Rules(dealerHits17)
                             .allowDoubleAfterSplit(true)
                             .allowReSplitAces(true)
+                            .setEVperTC(EVperTC)
                             .build(&robot);
         profit = engine.runner();
 

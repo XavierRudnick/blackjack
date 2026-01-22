@@ -1,62 +1,19 @@
 #include "HiLoStrategy.h"
 #include <cmath>
 
+namespace {
+    int getEvenBet() {
+        return 1;
+    }
+}
+
 HiLoStrategy::HiLoStrategy(float deck_size){
     num_decks_left = deck_size;
+    initial_decks = deck_size;
 }
 
 int HiLoStrategy::getBetSize() {
-    if (true_count < 1){
-        return 25;
-    }
-    else if (true_count <= 1.5) {
-        return 100;
-    } 
-    else if (true_count < 3.0) { 
-        return 300;
-    } 
-    else if (true_count < 4.0) {
-        return 500;
-    } 
-    else if (true_count < 5.0) {
-        return 1000;
-    } 
-    else if (true_count < 6.0) {
-        return 1600;
-    } 
-    else if (true_count < 7.0) {
-        return 2000;
-    } 
-    else {
-        return 2000;
-    }
-
-    // //xav bet spread
-    // if (true_count < 1){
-    //     return 5;
-    // }
-    // else if (true_count <= 1.5) {
-    //     return 20;
-    // } 
-    // else if (true_count < 3.0) { 
-    //     return 30;
-    // } 
-    // else if (true_count < 4.0) {
-    //     return 50;
-    // } 
-    // else if (true_count < 5.0) {
-    //     return 100;
-    // } 
-    // else if (true_count < 6.0) {
-    //     return 160;
-    // } 
-    // else if (true_count < 7.0) {
-    //     return 200;
-    // } 
-    // else {
-    //     return 200;
-    // }
-
+    return getEvenBet();
 }
 
 void HiLoStrategy::updateCount(Card card) {
@@ -103,8 +60,9 @@ float HiLoStrategy::getDecksLeft() const{
 }
 
 bool HiLoStrategy::shouldAcceptInsurance() const{
-    // 2-deck 65% pen H17 simulation: TC crossover = 2.5
-    constexpr float insuranceThreshold = 2.5f;
+    const bool useSixDeck = initial_decks >= 5.5f;
+    // 2-deck 65% pen: TC crossover = 2.5, 6-deck 80% pen: TC crossover = 3.0
+    const float insuranceThreshold = useSixDeck ? 3.0f : 2.5f;
     if (true_count >= insuranceThreshold){
         return true;
     }
@@ -113,65 +71,66 @@ bool HiLoStrategy::shouldAcceptInsurance() const{
 
 Action HiLoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float trueCount){
     int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
+    const bool useSixDeck = initial_decks >= 5.5f;
 
     switch (playerTotal) {
         case 16:
-            // 2-deck 65% pen H17: 16v10 Stand TC >= 0.9
-            if (dealerValue == 10 && trueCount >= 0.9f) {
+            // 2-deck 65% pen: 16v10 Stand TC >= 0.5, 6-deck 80% pen: TC >= 0.0
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? 0.0f : 0.5f)) {
                 return Action::Stand;
             }
             break;
             
         case 15: 
-            // 2-deck 65% pen H17: 15v10 Stand TC >= 3.2
-            if (dealerValue == 10 && trueCount >= 3.2f) {
+            // 2-deck 65% pen: 15v10 Stand TC >= 3.0, 6-deck 80% pen: TC >= 3.5
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? 3.5f : 3.0f)) {
                 return Action::Stand;
             }
             break;
             
         case 13:
-            // 2-deck 65% pen H17: 13v2 Stand TC >= -0.2 (always stand in basic already)
-            // 2-deck 65% pen H17: 13v3 Stand TC >= -1.6 (stand more often)
-            if (dealerValue == 2 && trueCount >= -0.2f) { 
+            // 2-deck 65% pen: 13v2 Stand TC >= -0.5, 6-deck 80% pen: TC >= -1.0
+            // 2-deck 65% pen: 13v3 Stand TC >= -2.0, 6-deck 80% pen: TC >= -2.5
+            if (dealerValue == 2 && trueCount >= (useSixDeck ? -1.0f : -0.5f)) { 
                 return Action::Stand;
             }
-            if (dealerValue == 3 && trueCount >= -1.6f) { 
+            if (dealerValue == 3 && trueCount >= (useSixDeck ? -2.5f : -2.0f)) { 
                 return Action::Stand;
             }
             break;
 
         case 12:
-            // 2-deck 65% pen H17: 12v3 Stand TC >= 2.2
-            if (dealerValue == 3 && trueCount >= 2.2f) {
+            // 2-deck 65% pen: 12v3 Stand TC >= 2.0, 6-deck 80% pen: TC >= 1.5
+            if (dealerValue == 3 && trueCount >= (useSixDeck ? 1.5f : 2.0f)) {
                 return Action::Stand;
             }
-            // 2-deck 65% pen H17: 12v2 Stand TC >= 3.8
-            if (dealerValue == 2 && trueCount >= 3.8f) {
+            // 2-deck 65% pen: 12v2 Stand TC >= 3.5, 6-deck 80% pen: TC >= 3.0
+            if (dealerValue == 2 && trueCount >= (useSixDeck ? 3.0f : 3.5f)) {
                 return Action::Stand;
             }
             break;
         case 11:
-            // 2-deck 65% pen H17: 11v11 Double TC >= -0.1 (always double)
-            if (dealerValue == 11 && trueCount >= -0.1f){
+            // 2-deck 65% pen: 11v11 Double TC >= -0.5, 6-deck 80% pen: TC >= 0.5
+            if (dealerValue == 11 && trueCount >= (useSixDeck ? 0.5f : -0.5f)){
                 return Action::Double;
             }
             break;
         case 10:
-            // 2-deck 65% pen H17: 10v10 Double TC >= 2.8
-            if (dealerValue == 10 && trueCount >= 2.8f){
+            // 2-deck 65% pen: 10v10 Double TC >= 2.5, 6-deck 80% pen: TC >= 3.0
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? 3.0f : 2.5f)){
                 return Action::Double;
             }
-            // 2-deck 65% pen H17: 10v11 Double TC >= 2.6
-            if (dealerValue == 11 && trueCount >= 2.6f){
+            // 2-deck 65% pen: 10v11 Double TC >= 2.5, 6-deck 80% pen: TC >= 3.0
+            if (dealerValue == 11 && trueCount >= (useSixDeck ? 3.0f : 2.5f)){
                 return Action::Double;
             }
             break;
         case 9:
-            // 2-deck 65% pen H17: 9v2 Double TC >= 0.7
-            if (dealerValue == 2 && trueCount >= 0.7f){
+            // 2-deck 65% pen: 9v2 Double TC >= 0.5, 6-deck 80% pen: TC >= 0.5
+            if (dealerValue == 2 && trueCount >= 0.5f){
                 return Action::Double;
             }
-            // 2-deck 65% pen H17: 9v7 Double TC >= 3.0
+            // 2-deck 65% pen: 9v7 Double TC >= 3.0, 6-deck 80% pen: TC >= 3.0
             if (dealerValue == 7 && trueCount >= 3.0f){
                 return Action::Double;
             }
@@ -184,13 +143,15 @@ Action HiLoStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, f
 Action HiLoStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float trueCount){
     int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
     int playerValue = BasicStrategy::getIndex(playerRank) + INDEX_OFFSET;
+    const bool useSixDeck = initial_decks >= 5.5f;
     switch (playerValue) {
-        // 2-deck 65% pen H17: Split 10s v5 TC >= 4.5, Split 10s v6 TC >= 4.3
+        // 2-deck 65% pen: Split 10s v5 TC >= 4.0, 6-deck 80% pen: TC >= 4.5
+        // 2-deck 65% pen: Split 10s v6 TC >= 4.0, 6-deck 80% pen: TC >= 4.0
         case 10: 
-            if (dealerValue == 5 && trueCount >= 4.5f) {
+            if (dealerValue == 5 && trueCount >= (useSixDeck ? 4.5f : 4.0f)) {
                 return Action::Split;
             }
-            if (dealerValue == 6 && trueCount >= 4.3f) {
+            if (dealerValue == 6 && trueCount >= 4.0f) {
                 return Action::Split;
             }
             break;
@@ -201,38 +162,39 @@ Action HiLoStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, 
 
 Action HiLoStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
     int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
+    const bool useSixDeck = initial_decks >= 5.5f;
     switch (playerTotal) {
         case 16:
-            // 2-deck 65% pen H17: 16v9 Surrender TC >= 0.4
-            if (dealerValue == 9 && trueCount >= 0.4f) {
+            // 2-deck 65% pen: 16v9 Surrender TC >= 0.0, 6-deck 80% pen: TC >= -0.5
+            if (dealerValue == 9 && trueCount >= (useSixDeck ? -0.5f : 0.0f)) {
                 return Action::Surrender;
             }
-            // 2-deck 65% pen H17: 16v10 Surrender TC >= -2.5 (always surrender)
-            if (dealerValue == 10 && trueCount >= -2.5f) {
+            // 2-deck 65% pen: 16v10 Surrender TC >= -3.0, 6-deck 80% pen: TC >= -3.5
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? -3.5f : -3.0f)) {
                 return Action::Surrender;
             }
-            // 2-deck 65% pen H17: 16v11 Surrender TC >= -1.7 (always surrender)
-            if (dealerValue == 11 && trueCount >= -1.7f) {
+            // 2-deck 65% pen: 16v11 Surrender TC >= -2.0, 6-deck 80% pen: TC >= -2.0
+            if (dealerValue == 11 && trueCount >= -2.0f) {
                 return Action::Surrender;
             }
             break;
         case 15:
-            // 2-deck 65% pen H17: 15v9 Surrender TC >= 2.2
-            if (dealerValue == 9 && trueCount >= 2.2f) {
+            // 2-deck 65% pen: 15v9 Surrender TC >= 2.0, 6-deck 80% pen: TC >= 2.0
+            if (dealerValue == 9 && trueCount >= 2.0f) {
                 return Action::Surrender;
             }
-            // 2-deck 65% pen H17: 15v10 Surrender TC >= -0.5 (always surrender)
+            // 2-deck 65% pen: 15v10 Surrender TC >= -0.5, 6-deck 80% pen: TC >= -0.5
             if (dealerValue == 10 && trueCount >= -0.5f) {
                 return Action::Surrender;
             }
-            // 2-deck 65% pen H17: 15v11 Surrender TC >= 0.8
-            if (dealerValue == 11 && trueCount >= 0.8f) {
+            // 2-deck 65% pen: 15v11 Surrender TC >= 0.5, 6-deck 80% pen: TC >= 1.0
+            if (dealerValue == 11 && trueCount >= (useSixDeck ? 1.0f : 0.5f)) {
                 return Action::Surrender;
             }
             break;
         case 14:
-            // 2-deck 65% pen H17: 14v10 Surrender TC >= 3.0
-            if (dealerValue == 10 && trueCount >= 3.0f) {
+            // 2-deck 65% pen: 14v10 Surrender TC >= 2.5, 6-deck 80% pen: TC >= 2.5
+            if (dealerValue == 10 && trueCount >= 2.5f) {
                 return Action::Surrender;
             }
             break;
@@ -291,6 +253,7 @@ void HiLoStrategy::reset(int deckSize){
     running_count = 0;
     true_count = 0;
     num_decks_left = deckSize;
+    initial_decks = deckSize;
     return;
 }
 

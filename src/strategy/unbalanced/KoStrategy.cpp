@@ -7,85 +7,12 @@ KoStrategy::KoStrategy(float deck_size){
     deckStartSize = deck_size;
 }
 
-int KoStrategy::getBetSize() {
-    if (deckStartSize == 2){
-        if (true_count < 1){
-            return 25;
-        }
-        else if (true_count < 2) {
-            return 100;
-        } 
-        else if (true_count < 3.0) { 
-            return 300;
-        } 
-        else if (true_count < 4.0) {
-            return 500;
-        } 
-        else if (true_count < 5.0) {
-            return 1000;
-        } 
-        else if (true_count < 6.0) {
-            return 1600;
-        } 
-        else if (true_count < 7.0) {
-            return 2000;
-        } 
-        else {
-            return 2000;
-        }
-    }
-    else if (deckStartSize == 6){
-        if (true_count < -5){
-            return 25;
-        }
-        else if (true_count < -4) {
-            return 100;
-        } 
-        else if (true_count < -3) { 
-            return 300;
-        } 
-        else if (true_count < -2) {
-            return 500;
-        } 
-        else if (true_count < -1) {
-            return 1000;
-        } 
-        else if (true_count < 0) {
-            return 1600;
-        } 
-        else if (true_count < 1) {
-            return 1800;
-        } 
-        else {
-            return 2000;
-        }
-    }
-    //xav bet spread
-    // if (true_count < 1){
-    //     return 5;
-    // }
-    // else if (true_count <= 1.5) {
-    //     return 20;
-    // } 
-    // else if (true_count < 3.0) { 
-    //     return 30;
-    // } 
-    // else if (true_count < 4.0) {
-    //     return 50;
-    // } 
-    // else if (true_count < 5.0) {
-    //     return 100;
-    // } 
-    // else if (true_count < 6.0) {
-    //     return 160;
-    // } 
-    // else if (true_count < 7.0) {
-    //     return 200;
-    // } 
-    // else {
-    //     return 200;
-    // }
+int KoStrategy::getEvenBet() const {
+    return 1;
+}
 
+int KoStrategy::getBetSize() {
+    return getEvenBet();
 }
 
 void KoStrategy::updateCount(Card card) {

@@ -12,7 +12,9 @@ class RAPCStrategy : public CountingStrategy { //in docs note deck size is count
         float true_count = 0;
         float running_count = 0;
         float num_decks_left = 0;
+        float initial_decks = 0;
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
+        int getEvenBet() const;
     public:
         RAPCStrategy(float deck_size);
         int getBetSize() override;

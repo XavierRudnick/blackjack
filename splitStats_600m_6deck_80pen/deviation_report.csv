@@ -1,55 +1,55 @@
 Strategy,Rules,Decision,Action A,Action B,Player Value,Dealer Upcard,Deviation TC,Total Hands,Notes
-HiLoStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,3.3,2139987375,Consolidated across all player hands
-HiLoStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,4.7,48504036,
-HiLoStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,4.3,48471626,
-HiLoStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,3.3,2147882825,Consolidated across all player hands
-HiLoStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,4.6,48685229,
-HiLoStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,4.3,48670869,
-MentorStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,127.2,2155198242,Consolidated across all player hands
-MentorStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,130.0,48841265,
-MentorStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,129.9,48815154,
-MentorStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,127.2,2163205058,Consolidated across all player hands
-MentorStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,132.2,49032089,
-MentorStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,131.1,49015205,
+HiLoStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,3.0,2139987375,Consolidated across all player hands
+HiLoStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,4.5,48504036,
+HiLoStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,4.0,48471626,
+HiLoStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,3.0,2147882825,Consolidated across all player hands
+HiLoStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,4.5,48685229,
+HiLoStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,4.0,48670869,
+MentorStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,127.0,2155198242,Consolidated across all player hands
+MentorStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,129.5,48841265,
+MentorStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,129.5,48815154,
+MentorStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,127.0,2163205058,Consolidated across all player hands
+MentorStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,132.0,49032089,
+MentorStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,131.0,49015205,
 NoStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,N/A,2134136451,Consolidated across all player hands
 NoStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,N/A,48362080,
 NoStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,N/A,48348426,
 NoStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,N/A,2141938510,Consolidated across all player hands
 NoStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,N/A,48554816,
 NoStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,N/A,48532870,
-OmegaIIStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,96.8,2154589240,Consolidated across all player hands
-OmegaIIStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,98.3,48822942,
-OmegaIIStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,96.9,48821339,
-OmegaIIStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,96.8,2162703504,Consolidated across all player hands
-OmegaIIStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,97.0,49003416,
-OmegaIIStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,97.9,49008009,
-R14Strategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,147.7,2152059764,Consolidated across all player hands
-R14Strategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,147.7,48765021,
-R14Strategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,145.0,48757546,
-R14Strategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,147.9,2160100519,Consolidated across all player hands
-R14Strategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,147.7,48953689,
-R14Strategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,145.0,48943045,
-RAPCStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,11.2,2138565680,Consolidated across all player hands
-RAPCStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,15.5,48467191,
-RAPCStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,14.1,48459585,
-RAPCStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,11.2,2146486979,Consolidated across all player hands
-RAPCStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,15.6,48655938,
-RAPCStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,13.9,48641700,
-RPCStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,6.2,2141284754,Consolidated across all player hands
-RPCStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,9.2,48506647,
-RPCStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,8.3,48514633,
-RPCStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,6.2,2149140975,Consolidated across all player hands
-RPCStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,8.9,48720366,
-RPCStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,8.6,48698939,
-WongHalvesStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,48.8,2152813987,Consolidated across all player hands
-WongHalvesStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,49.5,48788967,
-WongHalvesStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,49.1,48772062,
-WongHalvesStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,48.8,2160901334,Consolidated across all player hands
-WongHalvesStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,49.4,48969545,
-WongHalvesStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,49.1,48958211,
-ZenCountStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,5.4,2139590489,Consolidated across all player hands
-ZenCountStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,8.3,48485620,
-ZenCountStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,7.7,48474614,
-ZenCountStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,5.4,2147624655,Consolidated across all player hands
-ZenCountStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,8.2,48676820,
-ZenCountStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,7.8,48669242,
+OmegaIIStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,96.5,2154589240,Consolidated across all player hands
+OmegaIIStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,98.0,48822942,
+OmegaIIStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,96.5,48821339,
+OmegaIIStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,96.5,2162703504,Consolidated across all player hands
+OmegaIIStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,96.5,49003416,
+OmegaIIStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,97.5,49008009,
+R14Strategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,147.5,2152059764,Consolidated across all player hands
+R14Strategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,147.5,48765021,
+R14Strategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,144.5,48757546,
+R14Strategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,147.5,2160100519,Consolidated across all player hands
+R14Strategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,147.5,48953689,
+R14Strategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,144.5,48943045,
+RAPCStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,11.0,2138565680,Consolidated across all player hands
+RAPCStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,15.0,48467191,
+RAPCStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,14.0,48459585,
+RAPCStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,11.0,2146486979,Consolidated across all player hands
+RAPCStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,15.5,48655938,
+RAPCStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,13.5,48641700,
+RPCStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,6.0,2141284754,Consolidated across all player hands
+RPCStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,9.0,48506647,
+RPCStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,8.0,48514633,
+RPCStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,6.0,2149140975,Consolidated across all player hands
+RPCStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,8.5,48720366,
+RPCStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,8.5,48698939,
+WongHalvesStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,48.5,2152813987,Consolidated across all player hands
+WongHalvesStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,49.0,48788967,
+WongHalvesStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,49.0,48772062,
+WongHalvesStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,48.5,2160901334,Consolidated across all player hands
+WongHalvesStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,49.0,48969545,
+WongHalvesStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,49.0,48958211,
+ZenCountStrategy,H17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,5.0,2139590489,Consolidated across all player hands
+ZenCountStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,5,8.0,48485620,
+ZenCountStrategy,H17,Split_vs_Stand_Pair10s,Split,Stand,20,6,7.5,48474614,
+ZenCountStrategy,S17,InsuranceAccept_vs_Decline,Insurance,Decline,ALL,11,5.0,2147624655,Consolidated across all player hands
+ZenCountStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,5,8.0,48676820,
+ZenCountStrategy,S17,Split_vs_Stand_Pair10s,Split,Stand,20,6,7.5,48669242,

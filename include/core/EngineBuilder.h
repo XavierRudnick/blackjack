@@ -11,6 +11,7 @@ class EngineBuilder {
         std::optional<Deck> deck;
         EventBus* eventBus = nullptr;
         std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults;
+        std::map<float,ActionStats> EVperTC;
 
     public:
         EngineBuilder& setDeckSize(int deck_size);
@@ -51,6 +52,8 @@ class EngineBuilder {
         // New multi-scenario method
         EngineBuilder& addMonteCarloScenario(const MonteCarloScenario& scenario);
         EngineBuilder& setMonteCarloScenarios(const std::vector<MonteCarloScenario>& scenarios);
+
+        EngineBuilder& setEVperTC(std::map<float,ActionStats>& values);
 
         Engine build(Player* player);
 };

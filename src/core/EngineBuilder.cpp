@@ -149,7 +149,7 @@ EngineBuilder& EngineBuilder::setMonteCarloScenarios(const std::vector<MonteCarl
 }
 
 EngineBuilder& EngineBuilder::setEVperTC(std::map<float,ActionStats>& values) {
-    EVperTC = values;
+    EVperTC = &values;
     return *this;
 }
 

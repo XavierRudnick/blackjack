@@ -29,7 +29,7 @@ public:
         Player* player,
         EventBus* eventBus, // not owned can be nullptr
         std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& EVresults,
-        std::map<float,ActionStats>& EVperTC
+        std::map<float,ActionStats>* EVperTC
     );
 
     std::pair<double, double> runner();
@@ -47,7 +47,10 @@ private:
 
     FixedEngine fixedEngine;
 
-    std::map<float,ActionStats>& EVperTC;
+    std::map<float,ActionStats> EVperTCStorage;
+    std::map<float,ActionStats>* EVperTC;
+    float handTrueCount = 0.0f;
+    double currentHandBetTotal = 0.0;
 
     //hand evaluation logic
     std::vector<int> getPlayerScores(std::vector<Hand>& hands);
@@ -62,7 +65,7 @@ private:
 
     //card drawing logic
     Hand draw_cards(int betSize = 0);
-    void dealer_draw(Hand& dealer);
+    void dealer_draw(Hand& dealer, std::vector<Hand>& user);
 
     //game logic
     void playHand();

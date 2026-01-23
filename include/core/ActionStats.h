@@ -20,6 +20,13 @@ struct ActionStats {
         M2 += delta * delta2;
     }
 
+    void addInsuranceLose(double loss = .5){
+        totalPayout -= loss;
+         if (handsPlayed == 0) return;
+        double delta = mean - loss;
+        mean += delta / handsPlayed;
+    }
+
     void timesSplit() {
         splitsPlayed++;
     }

@@ -3,6 +3,11 @@
 #include "MonteCarloScenario.h"
 
 #include <algorithm>
+#include <cmath>
+
+static float roundTrueCount(float value) {
+    return std::round(value * 2.0f) / 2.0f;
+}
 
 Engine::Engine(
     const GameConfig& gameConfig,
@@ -10,13 +15,13 @@ Engine::Engine(
     Player* player,
     EventBus* eventBus,
     std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& EVresults,
-    std::map<float,ActionStats>& EVperTC
+    std::map<float,ActionStats>* EVperTC
 )
     : bankroll(gameConfig.wallet), 
     config(gameConfig), 
     deck(std::move(deck)), 
     player(player),
-    EVperTC(EVperTC),
+    EVperTC(EVperTC ? EVperTC : &EVperTCStorage),
     reporter(eventBus, gameConfig.emitEvents),
     fixedEngine(config.monteCarloActions,EVresults,gameConfig)
 {
@@ -55,9 +60,15 @@ void Engine::playHand(){
     player->updateDeckStrategySize(deck->getSize());
     std::vector<Hand> hands;
 
+    handTrueCount = roundTrueCount(player->getTrueCount());
+    currentHandBetTotal = 0.0;
+
+    try {
+
     int bet = player->getBetSize();
     bankroll.withdraw(bet);
     bankroll.addTotalBet(bet);
+    currentHandBetTotal += bet;
 
     Hand dealer = draw_cards();
     Hand user = draw_cards(bet);
@@ -102,6 +113,15 @@ void Engine::playHand(){
         hands = user_play(dealer,user);
         evaluateHands(dealer,hands);
     }
+    }
+    catch (const std::runtime_error& err) {
+        const std::string msg = err.what();
+        if (msg.find("Not enough cards") != std::string::npos || msg.find("Deck is empty") != std::string::npos) {
+            bankroll.deposit(currentHandBetTotal);
+            return;
+        }
+        throw;
+    }
 }
 
 std::vector<int> Engine::getPlayerScores(std::vector<Hand>& hands){
@@ -133,7 +153,7 @@ void Engine::NaturalBlackJackHandler(Hand& dealer, Hand& user){
     std::ostringstream roundSummary;
     roundSummary << "Natural Blackjack win! " << ". ";
     bankroll.deposit(user.getBetSize() + user.getBetSize() * config.blackjackPayoutMultiplier);
-    EVperTC[player->getTrueCount()].addResult(user.getBetSize() * config.blackjackPayoutMultiplier);
+    (*EVperTC)[handTrueCount].addResult(user.getBetSize() * config.blackjackPayoutMultiplier);
 
     std::string outcome = "Natural Blackjack win";
     roundSummary << "Hand " << (1) << ": " << outcome << " (score " << 21 << ", bet " << user.getBetSize() << "); ";
@@ -154,7 +174,7 @@ void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
     }
 
     if (!didHandsBust(scores)){
-        dealer_draw(dealer);
+        dealer_draw(dealer, hands);
     }
 
     int dealer_score = dealer.getFinalScore();
@@ -167,20 +187,20 @@ void Engine::evaluateHands(Hand& dealer, std::vector<Hand>& hands){
         std::string outcome = "Push";
 
         if (dealer_score > score){
-            EVperTC[player->getTrueCount()].addResult(player->getBetSize() * -1);
+            (*EVperTC)[handTrueCount].addResult(hand.getBetSize() * -1);
             outcome = "Dealer win";
         }
         else if (dealer_score < score){
-            EVperTC[player->getTrueCount()].addResult(player->getBetSize() * 1);
+            (*EVperTC)[handTrueCount].addResult(hand.getBetSize() * 1);
             bankroll.deposit(hand.getBetSize() * 2);
             outcome = "Player win";
         }
         else if (dealer_score == 0 && score ==0){
-            EVperTC[player->getTrueCount()].addResult(player->getBetSize() * -1);
+            (*EVperTC)[handTrueCount].addResult(hand.getBetSize() * -1);
             outcome = "Player bust";
         }
         else {
-            EVperTC[player->getTrueCount()].addResult(0);
+            (*EVperTC)[handTrueCount].addResult(0);
             bankroll.deposit(hand.getBetSize());
         }
 
@@ -269,7 +289,7 @@ Hand Engine::draw_cards(int betSize){
     return hand;
 }
 
-void Engine::dealer_draw(Hand& dealer){
+void Engine::dealer_draw(Hand& dealer, std::vector<Hand>& hands){
     reporter.reportHand(dealer, "Dealer");
     // Fix: Check for Hard 17 or > 17. If Soft 17, check rule.
     bool isSoft17 = dealer.isSoft17();
@@ -333,11 +353,11 @@ bool Engine::handleInsuranceAccepted(Hand& dealer, Hand& user) {
         
         if (playerHasBlackjack) {
             bankroll.deposit(user.getBetSize() * 2.5);
-            EVperTC[player->getTrueCount()].addResult(user.getBetSize() * config.blackjackPayoutMultiplier);
+            (*EVperTC)[handTrueCount].addResult(user.getBetSize() * config.blackjackPayoutMultiplier);
             reporter.reportInsuranceResult("Insurance wins: dealer blackjack vs player blackjack");
         } else {
             bankroll.deposit(user.getBetSize() * 1.5);
-            EVperTC[player->getTrueCount()].addResult(.5);
+            (*EVperTC)[handTrueCount].addResult(user.getBetSize() * INSURANCEBETCOST);
             reporter.reportInsuranceResult("Insurance wins: dealer blackjack");
         }
         reporter.reportStats(bankroll, *player->getStrategy());
@@ -345,8 +365,9 @@ bool Engine::handleInsuranceAccepted(Hand& dealer, Hand& user) {
     } else {
         reporter.reportMessage(EventType::ActionTaken, "Insurance accepted automatically: dealer lacked blackjack");
         bankroll.withdraw(user.getBetSize() * INSURANCEBETCOST);
-        // what happens when game doesn't end EVperTC[player->getTrueCount()].addResult(user.getBetSize() * config.blackjackPayoutMultiplier);
+        (*EVperTC)[handTrueCount].addInsuranceLose(user.getBetSize() * INSURANCEBETCOST);
         bankroll.addTotalBet(user.getBetSize() * INSURANCEBETCOST);
+        currentHandBetTotal += user.getBetSize() * INSURANCEBETCOST;
         return false; // Round continues
     }
 }
@@ -360,11 +381,11 @@ bool Engine::handleInsuranceDeclined(Hand& dealer, Hand& user) {
         if (playerHasBlackjack) {
 
             bankroll.deposit(user.getBetSize());
-            EVperTC[player->getTrueCount()].addResult(0);
+            (*EVperTC)[handTrueCount].addResult(0);
             reporter.reportRoundResult("Dealer blackjack pushes player blackjack (no insurance)");
             reporter.reportStats(bankroll, *player->getStrategy());
         } else {
-            EVperTC[player->getTrueCount()].addResult(player->getBetSize() * -1);
+            (*EVperTC)[handTrueCount].addResult(user.getBetSize() * -1);
             reporter.reportRoundResult("Dealer blackjack; player loses without insurance");
             reporter.reportStats(bankroll, *player->getStrategy());
         }
@@ -381,10 +402,10 @@ bool Engine::dealerRobberyHandler(Hand& dealer,Hand& user){
         player->updateCount(dealer.getCards()[1]); // Reveal hole card
         if (!user.isBlackjack()){
             // Lose. Do nothing.
-            EVperTC[player->getTrueCount()].addResult(player->getBetSize() * -1);
+            (*EVperTC)[handTrueCount].addResult(user.getBetSize() * -1);
         } else {
              bankroll.deposit(user.getBetSize());
-             EVperTC[player->getTrueCount()].addResult(0);
+             (*EVperTC)[handTrueCount].addResult(0);
         }
         reporter.reportDealerFlip(dealer);
         reporter.reportStats(bankroll, *player->getStrategy());
@@ -429,6 +450,7 @@ bool Engine::doubleHandler(Hand& user, std::vector<Hand>& hands, std::string han
     // Deduct additional bet
     bankroll.withdraw(user.getBetSize());
     bankroll.addTotalBet(user.getBetSize());
+    currentHandBetTotal += user.getBetSize();
 
     user.doubleBet();
     Card card = deck->hit();
@@ -456,6 +478,7 @@ bool Engine::splitHandler(Hand& user, Hand& dealer, std::vector<Hand>& hands, st
     // Deduct bet for new hand
     bankroll.withdraw(user2.getBetSize());
     bankroll.addTotalBet(user2.getBetSize());
+    currentHandBetTotal += user2.getBetSize();
 
     Card card1 = deck->hit();
     player->updateCount(card1);
@@ -491,6 +514,7 @@ bool Engine::splitHandler(Hand& user, Hand& dealer, std::vector<Hand>& hands, st
 bool Engine::surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel){
 
     bankroll.deposit(static_cast<double>(user.getBetSize()) * SURRENDERMULTIPLIER);
+    (*EVperTC)[handTrueCount].addResult(user.getBetSize() * (SURRENDERMULTIPLIER - 1.0));
     reporter.reportAction(Action::Surrender, user, handLabel);
     reporter.reportStats(bankroll, *player->getStrategy());
     return true;

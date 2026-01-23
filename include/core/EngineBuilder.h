@@ -11,7 +11,7 @@ class EngineBuilder {
         std::optional<Deck> deck;
         EventBus* eventBus = nullptr;
         std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults;
-        std::map<float,ActionStats> EVperTC;
+        std::map<float,ActionStats>* EVperTC = nullptr;
 
     public:
         EngineBuilder& setDeckSize(int deck_size);

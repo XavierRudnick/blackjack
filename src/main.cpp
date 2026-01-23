@@ -28,6 +28,9 @@
 #include "RPCStrategy.h"
 #include "MonteCarloScenario.h"
 #include <thread>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 void playManualGame(int numDecksUsed){
     ConsoleObserver consoleObserver;
@@ -323,7 +326,8 @@ auto createStrategies(int numDecksUsed) {
 
 // NEW: RTP simulation that stores results to file
 void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetration, 
-    std::unique_ptr<CountingStrategy> strategy, bool dealerHits17, 
+    std::unique_ptr<CountingStrategy> strategy, bool dealerHits17,
+    bool allowDoubleAfterSplit, bool allowReSplitAces, bool surrender, bool blackJackPayout3to2,
     std::ofstream& resultsFile, std::mutex& fileMutex) {
 
     std::pair<double, double> gameStats = {0, 0};
@@ -348,10 +352,11 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
                             .setPenetrationThreshold(deckPenetration)
                             .setInitialWallet(1000)
                             .enableEvents(false)
-                            .with3To2Payout(true)
+                            .with3To2Payout(blackJackPayout3to2)
                             .withH17Rules(dealerHits17)
-                            .allowDoubleAfterSplit(true)
-                            .allowReSplitAces(true)
+                            .allowDoubleAfterSplit(allowDoubleAfterSplit)
+                            .allowReSplitAces(allowReSplitAces)
+                            .allowSurrender(surrender)
                             .setEVperTC(EVperTC)
                             .build(&robot);
         profit = engine.runner();
@@ -381,16 +386,20 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
     {
         std::lock_guard<std::mutex> lock(fileMutex);
         resultsFile << strategyName << "," 
-                    << numDecksUsed << "," 
-                    << deckPenetration << "," 
-                    << H17Str << ","
-                    << iterations << ","
-                    << std::fixed << std::setprecision(6) << rtp << ","
-                    << std::fixed << std::setprecision(4) << houseEdge << ","
-                    << std::fixed << std::setprecision(2) << average << ","
-                    << std::fixed << std::setprecision(2) << avgMoneyBet << ","
-                    << std::fixed << std::setprecision(2) << money_lost_per << ","
-                    << duration.count() << std::endl;
+                << numDecksUsed << "," 
+                << deckPenetration << "," 
+                << H17Str << ","
+                << (allowDoubleAfterSplit ? "DAS" : "NoDAS") << ","
+                << (allowReSplitAces ? "RAS" : "NoRAS") << ","
+                << (surrender ? "Surrender" : "NoSurrender") << ","
+                << (blackJackPayout3to2 ? "3to2" : "6to5") << ","
+                << iterations << ","
+                << std::fixed << std::setprecision(6) << rtp << ","
+                << std::fixed << std::setprecision(4) << houseEdge << ","
+                << std::fixed << std::setprecision(2) << average << ","
+                << std::fixed << std::setprecision(2) << avgMoneyBet << ","
+                << std::fixed << std::setprecision(2) << money_lost_per << ","
+                << duration.count() << std::endl;
     }
 
     std::cout << "=== " << strategyName << " (" << H17Str << ") ===" << std::endl;
@@ -399,21 +408,51 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
     std::cout << "  Avg money bet per shoe: $" << std::fixed << std::setprecision(2) << avgMoneyBet << std::endl;
     std::cout << "  Net gain/loss per $1000 wagered: $" << std::fixed << std::setprecision(2) << money_lost_per << std::endl;
     std::cout << "  Duration: " << duration.count() << "s" << std::endl << std::endl;
+
+    std::string evDir = "stats/evPerTC/" + strategyName;
+    fs::create_directories(evDir);
+
+    std::ostringstream evFilename;
+    evFilename << evDir << "/ev_per_tc_" << strategyName << "_" << numDecksUsed << "deck_"
+               << static_cast<int>(deckPenetration * 100) << "pen_" << H17Str << "_"
+               << (allowDoubleAfterSplit ? "DAS" : "NoDAS") << "_"
+               << (allowReSplitAces ? "RAS" : "NoRAS") << "_"
+               << (surrender ? "Surrender" : "NoSurrender") << "_"
+               << (blackJackPayout3to2 ? "3to2" : "6to5") << ".csv";
+
+    std::ofstream evFile(evFilename.str());
+    evFile << "TrueCount,HandsPlayed,TotalPayout,EV,StdError" << std::endl;
+    for (const auto& entry : EVperTC) {
+        const float trueCount = entry.first;
+        const ActionStats& stats = entry.second;
+        evFile << std::fixed << std::setprecision(1) << trueCount << ","
+               << stats.handsPlayed << ","
+               << std::fixed << std::setprecision(6) << stats.totalPayout << ","
+               << std::fixed << std::setprecision(6) << stats.getEV() << ","
+               << std::fixed << std::setprecision(6) << stats.getStdError()
+               << std::endl;
+    }
 }
 
 // Run RTP simulations for all strategies and save to CSV
-void runAllRTPSimulations(int numDecksUsed, float deckPenetration, int iterations, bool dealerHits17) {
+void runAllRTPSimulations(int numDecksUsed, float deckPenetration, int iterations, bool dealerHits17, bool allowDoubleAfterSplit, bool allowReSplitAces, bool surrender, bool blackJackPayout3to2) {
     std::string H17Str = dealerHits17 ? "H17" : "S17";
-    std::string filename = "rtp_results_" + std::to_string(numDecksUsed) + "deck_" + 
-                           std::to_string(static_cast<int>(deckPenetration * 100)) + "pen_" + H17Str + ".csv";
+    std::string dasD = allowDoubleAfterSplit ? "DAS" : "NoDAS";
+    std::string rasD = allowReSplitAces ? "RAS" : "NoRAS";
+    std::string surr = surrender ? "Surrender" : "NoSurrender";
+    std::string blackJack3to2 = blackJackPayout3to2 ? "3to2" : "6to5";
+    std::string rtpDir = "stats/rtp_results";
+    fs::create_directories(rtpDir);
+    std::string filename = rtpDir + "/rtp_results_" + std::to_string(numDecksUsed) + "deck_" + 
+                           std::to_string(static_cast<int>(deckPenetration * 100)) + "pen_" + H17Str + "_" + dasD + "_" + rasD + "_" + surr + "_" + blackJack3to2 + ".csv";
     
     std::ofstream resultsFile(filename);
     std::mutex fileMutex;
     
     // Write CSV header
-    resultsFile << "Strategy,Decks,Penetration,DealerRule,Iterations,RTP,HouseEdge%,AvgWallet,AvgMoneyBet,NetPer1000,Duration_s" << std::endl;
+    resultsFile << "Strategy,Decks,Penetration,DealerRule,DAS,RAS,Surrender,BlackjackPayout,Iterations,RTP,HouseEdge%,AvgWallet,AvgMoneyBet,NetPer1000,Duration_s" << std::endl;
     
-    std::cout << "\n=== RTP SIMULATIONS (" << H17Str << ") ===" << std::endl;
+    std::cout << "\n=== RTP SIMULATIONS (" << H17Str << " " << dasD << " " << rasD << " " << surr << " " << blackJack3to2 << ") ===" << std::endl;
     std::cout << "Decks: " << numDecksUsed << ", Penetration: " << deckPenetration 
               << ", Iterations: " << iterations << std::endl;
     std::cout << "Results will be saved to: " << filename << std::endl << std::endl;
@@ -429,7 +468,8 @@ void runAllRTPSimulations(int numDecksUsed, float deckPenetration, int iteration
     for (auto& strategy : strategies) {
         workers.emplace_back([&, strat = std::move(strategy)]() mutable {
             runRTPsimsWithResults(numDecksUsed, iterations, deckPenetration,
-                std::move(strat), dealerHits17, resultsFile, fileMutex);
+                std::move(strat), dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
+                surrender, blackJackPayout3to2, resultsFile, fileMutex);
         });
         
         if (workers.size() >= num_threads) {
@@ -445,7 +485,7 @@ void runAllRTPSimulations(int numDecksUsed, float deckPenetration, int iteration
     }
     
     resultsFile.close();
-    std::cout << "\n=== RTP SIMULATIONS COMPLETE (" << H17Str << ") ===" << std::endl;
+    std::cout << "\n=== RTP SIMULATIONS COMPLETE (" << H17Str << " " << dasD << " " << rasD << " " << surr << " " << blackJack3to2 << ") ===" << std::endl;
     std::cout << "Results saved to: " << filename << std::endl;
 }
 
@@ -504,7 +544,7 @@ int main(){
     // Configuration for RTP simulations (using 2-deck with updated deviations)
     int numDecksUsed = 2;
     float deckPenetration = 0.65;
-    int rtpIterations = 10000000;  // 10 million iterations per strategy
+    int rtpIterations = 50000000;  // 10 million iterations per strategy
     
     // Run RTP simulations for all strategies with the updated deviations
     std::cout << "\n========================================" << std::endl;
@@ -514,9 +554,38 @@ int main(){
               << (deckPenetration * 100) << "% penetration" << std::endl;
     std::cout << "Iterations per strategy: " << rtpIterations << std::endl;
     std::cout << "========================================\n" << std::endl;
-    
-    runAllRTPSimulations(numDecksUsed, deckPenetration, rtpIterations, true);   // H17
-    runAllRTPSimulations(numDecksUsed, deckPenetration, rtpIterations, false);  // S17
+    bool dealerHits17[] = {false};
+    bool DAS[] = {true};
+    bool RAS[] = {false};
+    bool SurrenderAllowed[] = {false};
+    bool blackJackPayout3to2[] = {true};
+    int deckSize[] = {2,6,8};
+    float penetrations[] = {0.3f,0.35f,0.4f, 0.45f, 0.5f, 0.55f, 0.60f,0.65f,0.7f, 0.75f,0.80f}; //0.7f, 0.75f,0.80f
+    for (bool dh17 : dealerHits17) {
+        for (bool dasD : DAS){
+            for (bool rasD : RAS){
+                for (bool blackJack3to2 : blackJackPayout3to2){
+                    for (bool surr : SurrenderAllowed){
+                        for (int ds : deckSize){
+                            for (float pen : penetrations){
+                                numDecksUsed = ds;
+                                deckPenetration = pen;
+                                std::cout << "\n----------------------------------------" << std::endl;
+                                std::cout << "Settings: " << numDecksUsed << " deck(s), " 
+                                        << (deckPenetration * 100) << "% penetration, "
+                                        << (dasD ? "DAS allowed, " : "DAS not allowed, ")
+                                        << (rasD ? "RAS allowed, " : "RAS not allowed, ")
+                                        << (surr ? "Surrender allowed" : "Surrender not allowed") 
+                                        << std::endl;
+                                std::cout << "----------------------------------------" << std::endl;
+                                runAllRTPSimulations(numDecksUsed, deckPenetration, rtpIterations, dh17, dasD, rasD, surr, blackJack3to2);
+                            }
+                        }
+                    }
+                }
+            }   
+        }
+    }
     
     std::cout << "\n========================================" << std::endl;
     std::cout << "ALL RTP SIMULATIONS COMPLETE" << std::endl;

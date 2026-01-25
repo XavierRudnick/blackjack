@@ -361,7 +361,7 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
                             .build(&robot);
         profit = engine.runner();
 
-        if (i % 500000 == 0 && i != 0){
+        if (i % 50000000 == 0 && i != 0){
             std::cout << strategyName << ": Completed " << i << " / " << iterations << " iterations." << std::endl;
         }
 
@@ -544,7 +544,7 @@ int main(){
     // Configuration for RTP simulations (using 2-deck with updated deviations)
     int numDecksUsed = 2;
     float deckPenetration = 0.65;
-    int rtpIterations = 50000000;  // 10 million iterations per strategy
+    //int rtpIterations = 150000000;  // 10 million iterations per strategy
     
     // Run RTP simulations for all strategies with the updated deviations
     std::cout << "\n========================================" << std::endl;
@@ -552,7 +552,6 @@ int main(){
     std::cout << "========================================" << std::endl;
     std::cout << "Configuration: " << numDecksUsed << " deck(s), " 
               << (deckPenetration * 100) << "% penetration" << std::endl;
-    std::cout << "Iterations per strategy: " << rtpIterations << std::endl;
     std::cout << "========================================\n" << std::endl;
     bool dealerHits17[] = {false};
     bool DAS[] = {true};
@@ -560,6 +559,7 @@ int main(){
     bool SurrenderAllowed[] = {false};
     bool blackJackPayout3to2[] = {true};
     int deckSize[] = {2,6,8};
+    int rtpIterations[] = {150000000, 50000000, 38000000};
     float penetrations[] = {0.3f,0.35f,0.4f, 0.45f, 0.5f, 0.55f, 0.60f,0.65f,0.7f, 0.75f,0.80f}; //0.7f, 0.75f,0.80f
     for (bool dh17 : dealerHits17) {
         for (bool dasD : DAS){
@@ -567,6 +567,7 @@ int main(){
                 for (bool blackJack3to2 : blackJackPayout3to2){
                     for (bool surr : SurrenderAllowed){
                         for (int ds : deckSize){
+                            int i = 0;
                             for (float pen : penetrations){
                                 numDecksUsed = ds;
                                 deckPenetration = pen;
@@ -578,8 +579,9 @@ int main(){
                                         << (surr ? "Surrender allowed" : "Surrender not allowed") 
                                         << std::endl;
                                 std::cout << "----------------------------------------" << std::endl;
-                                runAllRTPSimulations(numDecksUsed, deckPenetration, rtpIterations, dh17, dasD, rasD, surr, blackJack3to2);
+                                runAllRTPSimulations(numDecksUsed, deckPenetration, rtpIterations[i], dh17, dasD, rasD, surr, blackJack3to2);
                             }
+                            i++;
                         }
                     }
                 }

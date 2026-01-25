@@ -118,6 +118,9 @@ void Engine::playHand(){
         const std::string msg = err.what();
         if (msg.find("Not enough cards") != std::string::npos || msg.find("Deck is empty") != std::string::npos) {
             bankroll.deposit(currentHandBetTotal);
+            bankroll.addTotalBet(-currentHandBetTotal);
+            *deck = Deck(config.numDecks);
+            player->getStrategy()->reset(config.numDecks);
             return;
         }
         throw;

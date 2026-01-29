@@ -7,85 +7,12 @@ KISSIIIStrategy::KISSIIIStrategy(float deck_size){
     deckStartSize = deck_size;
 }
 
-int KISSIIIStrategy::getBetSize() {
-    if (deckStartSize == 2){
-        if (true_count < 0){
-            return 25;
-        }
-        else if (true_count < 4) {
-            return 100;
-        } 
-        else if (true_count < 8) { 
-            return 300;
-        } 
-        else if (true_count < 12) {
-            return 500;
-        } 
-        else if (true_count < 16) {
-            return 1000;
-        } 
-        else if (true_count < 20) {
-            return 1600;
-        } 
-        else if (true_count < 24) {
-            return 2000;
-        } 
-        else {
-            return 2000;
-        }
-    }
-    else if (deckStartSize == 6){
-         if (true_count < -4){
-            return 25;
-        }
-        else if (true_count < 0) {
-            return 100;
-        } 
-        else if (true_count < 4) { 
-            return 300;
-        } 
-        else if (true_count < 8) {
-            return 500;
-        } 
-        else if (true_count < 12) {
-            return 1000;
-        } 
-        else if (true_count < 16) {
-            return 1600;
-        } 
-        else if (true_count < 20) {
-            return 2000;
-        } 
-        else {
-            return 2000;
-        }
-    }
-    //xav bet spread
-    // if (true_count < 1){
-    //     return 5;
-    // }
-    // else if (true_count <= 1.5) {
-    //     return 20;
-    // } 
-    // else if (true_count < 3.0) { 
-    //     return 30;
-    // } 
-    // else if (true_count < 4.0) {
-    //     return 50;
-    // } 
-    // else if (true_count < 5.0) {
-    //     return 100;
-    // } 
-    // else if (true_count < 6.0) {
-    //     return 160;
-    // } 
-    // else if (true_count < 7.0) {
-    //     return 200;
-    // } 
-    // else {
-    //     return 200;
-    // }
+int KISSIIIStrategy::getEvenBet() const {
+    return 1;
+}
 
+int KISSIIIStrategy::getBetSize() {
+    return getEvenBet();
 }
 
 void KISSIIIStrategy::updateCount(Card card) {
@@ -112,8 +39,13 @@ void KISSIIIStrategy::updateCount(Card card) {
 }
 
 void KISSIIIStrategy::updateDeckSize(int num_cards_left){
-    float decks_left_unrounded = num_cards_left / Deck::NUM_CARDS_IN_DECK; 
-    num_decks_left = std::round(decks_left_unrounded * 2.0) / 2.0;//convert to only count float .5 segments
+    num_decks_left = static_cast<float>(num_cards_left) / 52.0f;
+
+    if (num_decks_left > 0) {
+        float raw = true_count / num_decks_left;
+        true_count = raw;
+    }
+
     return;
 }
 

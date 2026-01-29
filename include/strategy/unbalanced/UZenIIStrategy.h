@@ -12,6 +12,7 @@ class UZenIIStrategy : public CountingStrategy { //in docs note deck size is cou
         float true_count = 0; //initial running count for KO system
         float deckStartSize = 0;
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
+        int getEvenBet() const;
     public:
         UZenIIStrategy(float deck_size);
         int getBetSize() override;

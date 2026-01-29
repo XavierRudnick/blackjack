@@ -21,6 +21,7 @@ public:
     
     void updateDeckStrategySize(int num_cards_left) override;
     int getBetSize() override ;
+    void setUnitSize(float kellyFraction) override;
     void updateCount(Card card) override;
     float getTrueCount() override;
     bool shouldAcceptInsurance() override;

@@ -12,6 +12,7 @@ class Red7Strategy : public CountingStrategy { //in docs note deck size is count
         float true_count = 0; //initial running count for KO system
         float deckStartSize = 0;
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
+        int getEvenBet() const;
     public:
         Red7Strategy(float deck_size);
         int getBetSize() override;

@@ -1,7 +1,10 @@
 #include "Bankroll.h"
 
-Bankroll::Bankroll(double initialBalance) {
-    balance = initialBalance;
+double Bankroll::initialBalance = 0.0;
+
+Bankroll::Bankroll(double startBalance) {
+    balance = startBalance;
+    initialBalance = startBalance;
     totalMoneyBet = 0;
 }
 
@@ -23,4 +26,8 @@ double Bankroll::getTotalMoneyBet() const {
 
 void Bankroll::addTotalBet(double amount) {
     totalMoneyBet += amount;
+}
+
+double Bankroll::getInitialBalance() {
+    return initialBalance;
 }

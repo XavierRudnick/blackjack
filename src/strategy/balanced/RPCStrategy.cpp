@@ -1,86 +1,85 @@
 #include "RPCStrategy.h"
+#include "Bankroll.h"
 #include <cmath>
 
 RPCStrategy::RPCStrategy(float deck_size){
     num_decks_left = deck_size;
+    initial_decks = deck_size;
+}
+
+int RPCStrategy::getEvenBet() const {
+    return 1;
 }
 
 int RPCStrategy::getBetSize() {
-    if (true_count < 1){
-        return 25;
-    }
-    else if (true_count <= 1.5) {
-        return 100;
-    } 
-    else if (true_count < 3.0) { 
-        return 300;
-    } 
-    else if (true_count < 4.0) {
-        return 500;
-    } 
-    else if (true_count < 5.0) {
-        return 1000;
-    } 
-    else if (true_count < 6.0) {
-        return 1600;
-    } 
-    else if (true_count < 7.0) {
-        return 2000;
-    } 
-    else {
-        return 2000;
+    float effectiveTC = true_count - PROFITABLE_PLAY_TC_THRESHOLD;
+    if (effectiveTC <= 0){
+        return MIN_BET;
     }
 
-    // //xav bet spread
-    // if (true_count < 1){
-    //     return 5;
-    // }
-    // else if (true_count <= 1.5) {
-    //     return 20;
-    // } 
-    // else if (true_count < 3.0) { 
-    //     return 30;
-    // } 
-    // else if (true_count < 4.0) {
-    //     return 50;
-    // } 
-    // else if (true_count < 5.0) {
-    //     return 100;
-    // } 
-    // else if (true_count < 6.0) {
-    //     return 160;
-    // } 
-    // else if (true_count < 7.0) {
-    //     return 200;
-    // } 
-    // else {
-    //     return 200;
-    // }
+    int bet = std::round((unitSize * effectiveTC) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
+    return std::max(MIN_BET, bet);
+}
 
+void RPCStrategy::setUnitSize(float inputKellyFraction) {
+    kellyFraction = inputKellyFraction;
+    unitSize = (Bankroll::getInitialBalance() * kellyFraction * evPerTC) / avgVolatility;
+    if (unitSize < 1.0f) unitSize = 1.0f;
+    return;
 }
 
 void RPCStrategy::updateCount(Card card) {
-    Rank rank = card.getRank();
-    int score = static_cast<int>(rank) + INDEX_OFFSET;
+    int score = card.getValue();
 
-    constexpr int lowerCard = 6;
-    constexpr int upperCard = 10;
-
-    if (score <= lowerCard){
+    switch (score)
+    {
+    case 2:
         running_count += 1;
-    }
-    else if (score >= upperCard){
-        running_count -= 1;
+        break;
+    case 3:
+        running_count += 2;
+        break;
+    case 4:
+        running_count += 2;
+        break;
+    case 5:
+        running_count += 2;
+        break;
+    case 6: 
+        running_count += 2;
+        break;
+    case 7:
+        running_count += 1;
+        break;
+    case 8:
+        running_count += 0;
+        break;
+    case 9:         
+        running_count += 0;
+        break;
+    case 10:
+        running_count -= 2;
+        break;
+    case 11: //Ace
+        running_count -= 2;
+        break;
+    
+    default:
+        break;
     }
 
-    float raw = running_count / num_decks_left; 
-    true_count = std::round(raw * 2.0) / 2.0;//convert to only count int .5 segments
+    float raw = running_count / num_decks_left;
+    true_count = raw;
     return;
 }
 
 void RPCStrategy::updateDeckSize(int num_cards_left){
-    float decks_left_unrounded = num_cards_left / Deck::NUM_CARDS_IN_DECK; 
-    num_decks_left = std::round(decks_left_unrounded * 2.0) / 2.0;//convert to only count float .5 segments
+    num_decks_left = static_cast<float>(num_cards_left) / 52.0f;
+
+    if (num_decks_left > 0) {
+        float raw = running_count / num_decks_left;
+        true_count = raw;
+    }
     return;
 }
 
@@ -97,7 +96,9 @@ float RPCStrategy::getDecksLeft() const{
 }
 
 bool RPCStrategy::shouldAcceptInsurance() const{
-    constexpr int insuranceThreshold = 3; //mathmatical point where insurance is profitable accoding to gemini
+    const bool useSixDeck = initial_decks >= 5.5f;
+    // 2-deck 65% pen: TC crossover = 4.5, 6-deck 80% pen: TC crossover = 6.0
+    const float insuranceThreshold = useSixDeck ? 6.0f : 4.5f;
     if (true_count >= insuranceThreshold){
         return true;
     }
@@ -106,33 +107,70 @@ bool RPCStrategy::shouldAcceptInsurance() const{
 
 Action RPCStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, float trueCount){
     int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
+    const bool useSixDeck = initial_decks >= 5.5f;
 
     switch (playerTotal) {
         case 16:
-            if (dealerValue == 10 && trueCount > 0) {
+            // 2-deck 65% pen: 16v10 Stand TC >= 1.5, 6-deck 80% pen: TC >= 0.5
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? 0.5f : 1.5f)) {
                 return Action::Stand;
             }
             break;
             
         case 15: 
-            if (dealerValue == 10 && trueCount >= 4) {
+            // 2-deck 65% pen: 15v10 Stand TC >= 5.5, 6-deck 80% pen: TC >= 6.5
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? 6.5f : 5.5f)) {
                 return Action::Stand;
             }
             break;
 
+        case 13:
+            // 2-deck 65% pen: 13v2 Stand TC >= -1.0, 6-deck 80% pen: TC >= -1.5
+            // 2-deck 65% pen: 13v3 Stand TC >= -3.0, 6-deck 80% pen: TC >= -4.0
+            if (dealerValue == 2 && trueCount >= (useSixDeck ? -1.5f : -1.0f)) { 
+                return Action::Stand;
+            }
+            if (dealerValue == 3 && trueCount >= (useSixDeck ? -4.0f : -3.0f)) { 
+                return Action::Stand;
+            }
+            break;
 
         case 12:
-            if (dealerValue == 3 && trueCount >= 2) {
+            // 2-deck 65% pen: 12v3 Stand TC >= 3.5, 6-deck 80% pen: TC >= 2.5
+            if (dealerValue == 3 && trueCount >= (useSixDeck ? 2.5f : 3.5f)) {
                 return Action::Stand;
             }
-            if (dealerValue == 2 && trueCount >= 3) {
+            // 2-deck 65% pen: 12v2 Stand TC >= 6.0, 6-deck 80% pen: TC >= 5.5
+            if (dealerValue == 2 && trueCount >= (useSixDeck ? 5.5f : 6.0f)) {
                 return Action::Stand;
             }
+            break;
 
+        case 11:
+            // 2-deck 65% pen: 11v11 Double TC >= -0.5, 6-deck 80% pen: TC >= 1.5
+            if (dealerValue == 11 && trueCount >= (useSixDeck ? 1.5f : -0.5f)){
+                return Action::Double;
+            }
             break;
 
         case 10:
-            if (dealerValue == 11 && trueCount >= 4){
+            // 2-deck 65% pen: 10v10 Double TC >= 5.0, 6-deck 80% pen: TC >= 5.5
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? 5.5f : 5.0f)){
+                return Action::Double;
+            }
+            // 2-deck 65% pen: 10v11 Double TC >= 4.5, 6-deck 80% pen: TC >= 6.0
+            if (dealerValue == 11 && trueCount >= (useSixDeck ? 6.0f : 4.5f)){
+                return Action::Double;
+            }
+            break;
+
+        case 9:
+            // 2-deck 65% pen: 9v2 Double TC >= 1.0, 6-deck 80% pen: TC >= 1.5
+            if (dealerValue == 2 && trueCount >= (useSixDeck ? 1.5f : 1.0f)){
+                return Action::Double;
+            }
+            // 2-deck 65% pen: 9v7 Double TC >= 6.0, 6-deck 80% pen: TC >= 6.5
+            if (dealerValue == 7 && trueCount >= (useSixDeck ? 6.5f : 6.0f)){
                 return Action::Double;
             }
             break;
@@ -145,20 +183,18 @@ Action RPCStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard, fl
 Action RPCStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, float trueCount){
     int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
     int playerValue = BasicStrategy::getIndex(playerRank) + INDEX_OFFSET;
+    const bool useSixDeck = initial_decks >= 5.5f;
     switch (playerValue) {
-        
-        // Commented out, very obvious counting cards when you split on tens    
-        // case 10: 
-        //     if (dealerValue == 5 && trueCount >= 5) {
-        //         return Action::Split;
-        //     }
-        //     if (dealerValue == 4 && trueCount >= 6) {
-        //         return Action::Split;
-        //     }
-        //     if (dealerValue == 6 && trueCount >= 4) {
-        //         return Action::Split;
-        //     }
-        //     break;
+        // 2-deck 65% pen: Split 10s v5 TC >= 8.5, 6-deck 80% pen: TC >= 8.5
+        // 2-deck 65% pen: Split 10s v6 TC >= 8.5, 6-deck 80% pen: TC >= 8.5
+        case 10: 
+            if (dealerValue == 5 && trueCount >= (useSixDeck ? 8.5f : 8.5f)) {
+                return Action::Split;
+            }
+            if (dealerValue == 6 && trueCount >= (useSixDeck ? 8.5f : 8.5f)) {
+                return Action::Split;
+            }
+            break;
         default: return Action::Skip; break;
     }
     return Action::Skip;
@@ -166,33 +202,39 @@ Action RPCStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard, f
 
 Action RPCStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float trueCount){
     int dealerValue = BasicStrategy::getIndex(dealerUpcard) + INDEX_OFFSET;
+    const bool useSixDeck = initial_decks >= 5.5f;
     switch (playerTotal) {
-        case 17:
-            if (dealerValue == 11 && trueCount >= 0) {
-                return Action::Surrender;
-            }
-            break;
         case 16:
-            if (dealerValue == 10 && trueCount >= 0) {
+            // 2-deck 65% pen: 16v9 Surrender TC >= 1.0, 6-deck 80% pen: TC >= -1.0
+            if (dealerValue == 9 && trueCount >= (useSixDeck ? -1.0f : 1.0f)) {
                 return Action::Surrender;
             }
-            if (dealerValue == 11 && trueCount >= 3) {
+            // 2-deck 65% pen: 16v10 Surrender TC >= -5.5, 6-deck 80% pen: TC >= -6.5
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? -6.5f : -5.5f)) {
+                return Action::Surrender;
+            }
+            // 2-deck 65% pen: 16v11 Surrender TC >= -3.5, 6-deck 80% pen: TC >= -4.0
+            if (dealerValue == 11 && trueCount >= (useSixDeck ? -4.0f : -3.5f)) {
                 return Action::Surrender;
             }
             break;
         case 15:
-            if (dealerValue == 10 && trueCount >= 0) {
+            // 2-deck 65% pen: 15v9 Surrender TC >= 4.0, 6-deck 80% pen: TC >= 4.0
+            if (dealerValue == 9 && trueCount >= 4.0f) {
                 return Action::Surrender;
             }
-            if (dealerValue == 11 && trueCount >= 1) {
+            // 2-deck 65% pen: 15v10 Surrender TC >= -0.5, 6-deck 80% pen: TC >= -1.0
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? -1.0f : -0.5f)) {
                 return Action::Surrender;
             }
-            if (dealerValue == 9 && trueCount >= 2) {
+            // 2-deck 65% pen: 15v11 Surrender TC >= 1.5, 6-deck 80% pen: TC >= 2.5
+            if (dealerValue == 11 && trueCount >= (useSixDeck ? 2.5f : 1.5f)) {
                 return Action::Surrender;
             }
             break;
         case 14:
-            if (dealerValue == 11 && trueCount >= 3) {
+            // 2-deck 65% pen: 14v10 Surrender TC >= 4.5, 6-deck 80% pen: TC >= 4.5
+            if (dealerValue == 10 && trueCount >= 4.5f) {
                 return Action::Surrender;
             }
             break;
@@ -251,6 +293,7 @@ void RPCStrategy::reset(int deckSize){
     running_count = 0;
     true_count = 0;
     num_decks_left = deckSize;
+    initial_decks = deckSize;
 }
 
 std::string RPCStrategy::getName() {

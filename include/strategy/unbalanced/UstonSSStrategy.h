@@ -12,6 +12,7 @@ class UstonSSStrategy : public CountingStrategy { //in docs note deck size is co
         float true_count = 0; 
         float deckStartSize = 0;
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
+        int getEvenBet() const;
     public:
         UstonSSStrategy(float deck_size);
         int getBetSize() override;

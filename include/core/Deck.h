@@ -10,7 +10,7 @@ class Deck{
         std::vector<Card> deck;
 
         static std::mt19937& getGlobalRng() {
-            static std::mt19937 rand(std::random_device{}());
+            static thread_local std::mt19937 rand(std::random_device{}());
             return rand;
         }
 

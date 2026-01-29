@@ -2,6 +2,7 @@
 #include "observers/EventBus.h"
 #include <functional>
 #include "EngineBuilder.h"
+#include "MonteCarloScenario.h"
 #include <stdexcept>
 
 
@@ -23,6 +24,11 @@ EngineBuilder& EngineBuilder::withEventBus(EventBus* bus) {
 
 EngineBuilder& EngineBuilder::setInitialWallet(double money = 1000) {
     gameConfig.wallet = money;
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::setKellyRisk(float kellyFraction = 1.0f) {
+    gameConfig.kellyFraction = kellyFraction; 
     return *this;
 }
 
@@ -112,13 +118,8 @@ EngineBuilder& EngineBuilder::noMontiCarlo() {
     return *this;
 }
 
-EngineBuilder& EngineBuilder::setUserHandValue(int value) {
-    gameConfig.userHandValue = value;
-    return *this;
-}
-
-EngineBuilder& EngineBuilder::setDealerUpcardValue(int value) {
-    gameConfig.dealerUpcardValue = value;
+EngineBuilder& EngineBuilder::setActionValues(std::set<std::pair<int, int>> values) {
+    gameConfig.actionValues = values;
     return *this;
 }
 
@@ -127,7 +128,37 @@ EngineBuilder& EngineBuilder::setActions(std::vector<Action> actions) {
     return *this;
 }
 
+EngineBuilder& EngineBuilder::allowSoftHandsInMonteCarlo(bool enable = false) {
+    gameConfig.allowSoftHandsInMonteCarlo = enable;
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::requirePairForMonteCarlo(bool enable = false) {
+    gameConfig.requirePairForMonteCarlo = enable;
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::setEVActions(std::map<std::pair<int, int>, std::map<float, DecisionPoint>> values) {
+    EVresults = values;
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::addMonteCarloScenario(const MonteCarloScenario& scenario) {
+    gameConfig.monteCarloScenarios.push_back(scenario);
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::setMonteCarloScenarios(const std::vector<MonteCarloScenario>& scenarios) {
+    gameConfig.monteCarloScenarios = scenarios;
+    return *this;
+}
+
+EngineBuilder& EngineBuilder::setEVperTC(std::map<float,ActionStats>& values) {
+    EVperTC = &values;
+    return *this;
+}
+
 Engine EngineBuilder::build(Player* player) {
-    Engine engine(gameConfig, *deck, player, eventBus);
+    Engine engine(gameConfig, *deck, player, eventBus, EVresults, EVperTC);
     return engine;
 }

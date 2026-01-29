@@ -10,7 +10,9 @@ enum class Action : int {
     Double,
     Split,
     Skip,
-    Surrender
+    Surrender,
+    InsuranceAccept,
+    InsuranceDecline
 };
 
 std::ostream& operator<<(std::ostream& os, const Action action);

@@ -6,9 +6,18 @@ NoStrategy::NoStrategy(float deck_size){
     return;
 }
 
+int NoStrategy::getEvenBet() const {
+    return 1;
+}
+
 int NoStrategy::getBetSize() {
-    constexpr int defaultBetSize = 5;
-    return defaultBetSize;
+    return getEvenBet();
+}
+
+void NoStrategy::setUnitSize(float kellyFraction) {
+    // NoStrategy doesn't use Kelly betting
+    (void)kellyFraction;
+    return;
 }
 
 void NoStrategy::updateCount(Card card) {
@@ -16,6 +25,7 @@ void NoStrategy::updateCount(Card card) {
 }
 
 void NoStrategy::updateDeckSize(int num_cards_left){
+    num_decks_left = static_cast<float>(num_cards_left) / 52.0f;
     return;
 }
 

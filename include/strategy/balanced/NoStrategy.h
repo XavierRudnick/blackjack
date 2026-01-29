@@ -13,6 +13,7 @@ class NoStrategy : public CountingStrategy { //in docs note deck size is counted
     public:
         NoStrategy(float deck_size);
         int getBetSize() override;
+        void setUnitSize(float kellyFraction) override;
         void updateCount(Card card) override;
         void updateDeckSize(int num_cards_left) override;
         

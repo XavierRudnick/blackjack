@@ -27,6 +27,11 @@ EngineBuilder& EngineBuilder::setInitialWallet(double money = 1000) {
     return *this;
 }
 
+EngineBuilder& EngineBuilder::setKellyRisk(float kellyFraction = 1.0f) {
+    gameConfig.kellyFraction = kellyFraction; 
+    return *this;
+}
+
 EngineBuilder& EngineBuilder::setPenetrationThreshold(float threshold = 0.75){
     gameConfig.penetrationThreshold = threshold;
     return *this;

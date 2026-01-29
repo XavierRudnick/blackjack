@@ -1,4 +1,5 @@
 #include "RPCStrategy.h"
+#include "Bankroll.h"
 #include <cmath>
 
 RPCStrategy::RPCStrategy(float deck_size){
@@ -11,7 +12,20 @@ int RPCStrategy::getEvenBet() const {
 }
 
 int RPCStrategy::getBetSize() {
-    return getEvenBet();
+    float effectiveTC = true_count - PROFITABLE_PLAY_TC_THRESHOLD;
+    if (effectiveTC <= 0){
+        return MIN_BET;
+    }
+
+    int bet = std::round((unitSize * effectiveTC) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
+    return std::max(MIN_BET, bet);
+}
+
+void RPCStrategy::setUnitSize(float inputKellyFraction) {
+    kellyFraction = inputKellyFraction;
+    unitSize = (Bankroll::getInitialBalance() * kellyFraction * evPerTC) / avgVolatility;
+    if (unitSize < 1.0f) unitSize = 1.0f;
+    return;
 }
 
 void RPCStrategy::updateCount(Card card) {

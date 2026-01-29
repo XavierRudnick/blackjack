@@ -20,6 +20,7 @@ class EngineBuilder {
         EngineBuilder& withEventBus(EventBus* bus);
 
         EngineBuilder& setInitialWallet(double wallet);
+        EngineBuilder& setKellyRisk(float kellyFraction);
         EngineBuilder& enableEvents(bool enable);
 
         EngineBuilder& setPenetrationThreshold(float threshold);

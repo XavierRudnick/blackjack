@@ -32,32 +32,32 @@
 
 namespace fs = std::filesystem;
 
-void playManualGame(int numDecksUsed){
-    ConsoleObserver consoleObserver;
-    EventBus& bus = EventBus::getInstance();
-    bus.detachAll();
-    bus.registerObserver(&consoleObserver, {EventType::CardsDealt, EventType::ActionTaken, EventType::RoundEnded, EventType::GameStats});
+// void playManualGame(int numDecksUsed){
+//     ConsoleObserver consoleObserver;
+//     EventBus& bus = EventBus::getInstance();
+//     bus.detachAll();
+//     bus.registerObserver(&consoleObserver, {EventType::CardsDealt, EventType::ActionTaken, EventType::RoundEnded, EventType::GameStats});
 
 
-    Deck deck(numDecksUsed);
+//     Deck deck(numDecksUsed);
 
-    auto hilo = std::make_unique<HiLoStrategy>(numDecksUsed);
-    HumanPlayer human(false, std::move(hilo)); 
+//     auto hilo = std::make_unique<HiLoStrategy>(numDecksUsed);
+//     //HumanPlayer human(false, std::move(hilo)); 
 
-    Engine hiLoEngine = EngineBuilder()
-                        .withEventBus(&bus)
-                        .setDeckSize(numDecksUsed)
-                        .setDeck(deck)
-                        .setPenetrationThreshold(.75)
-                        .setInitialWallet(1000)
-                        .enableEvents(true)
-                        .with3To2Payout(true)
-                        .withH17Rules(true)
-                        .allowDoubleAfterSplit(true)
-                        .build(&human);
+//     Engine hiLoEngine = EngineBuilder()
+//                         .withEventBus(&bus)
+//                         .setDeckSize(numDecksUsed)
+//                         .setDeck(deck)
+//                         .setPenetrationThreshold(.75)
+//                         .setInitialWallet(1000)
+//                         .enableEvents(true)
+//                         .with3To2Payout(true)
+//                         .withH17Rules(true)
+//                         .allowDoubleAfterSplit(true)
+//                         .build(&human);
 
-    hiLoEngine.runner();
-}
+//     hiLoEngine.runner();
+// }
 
 void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::unique_ptr<CountingStrategy> strategy){
 
@@ -328,7 +328,7 @@ auto createStrategies(int numDecksUsed) {
 void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetration, 
     std::unique_ptr<CountingStrategy> strategy, bool dealerHits17,
     bool allowDoubleAfterSplit, bool allowReSplitAces, bool surrender, bool blackJackPayout3to2,
-    std::ofstream& resultsFile, std::mutex& fileMutex) {
+    float kellyFraction, std::ofstream& resultsFile, std::mutex& fileMutex) {
 
     std::pair<double, double> gameStats = {0, 0};
     EventBus& bus = EventBus::getInstance();
@@ -343,14 +343,15 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
         deck.reset();
         robot.resetCount(numDecksUsed);
 
-        std::pair<double, double> profit = {1000, 0};
+        std::pair<double, double> profit = {50000, 0};
 
         Engine engine = EngineBuilder()
                             .withEventBus(&bus)
                             .setDeckSize(numDecksUsed)
                             .setDeck(deck)
                             .setPenetrationThreshold(deckPenetration)
-                            .setInitialWallet(1000)
+                            .setInitialWallet(50000)
+                            .setKellyRisk(kellyFraction)
                             .enableEvents(false)
                             .with3To2Payout(blackJackPayout3to2)
                             .withH17Rules(dealerHits17)
@@ -361,7 +362,7 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
                             .build(&robot);
         profit = engine.runner();
 
-        if (i % 50000000 == 0 && i != 0){
+        if (i % 5000000 == 0 && i != 0){
             std::cout << strategyName << ": Completed " << i << " / " << iterations << " iterations." << std::endl;
         }
 
@@ -374,10 +375,10 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
 
     double average = gameStats.first / iterations;
     double avgMoneyBet = gameStats.second / iterations;
-    double diff = average - 1000;
-    double normal = 1000.0 / avgMoneyBet;
+    double diff = average - 50000;
+    double normal = 50000.0 / avgMoneyBet;
     double money_lost_per = diff * normal;
-    double rtp = (1000 + money_lost_per) / 1000;
+    double rtp = (50000 + money_lost_per) / 50000;
     double houseEdge = (1.0 - rtp) * 100; // percentage
 
     std::string H17Str = dealerHits17 ? "H17" : "S17";
@@ -435,16 +436,17 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
 }
 
 // Run RTP simulations for all strategies and save to CSV
-void runAllRTPSimulations(int numDecksUsed, float deckPenetration, int iterations, bool dealerHits17, bool allowDoubleAfterSplit, bool allowReSplitAces, bool surrender, bool blackJackPayout3to2) {
+void runAllRTPSimulations(int numDecksUsed, float deckPenetration, int iterations, bool dealerHits17, bool allowDoubleAfterSplit, bool allowReSplitAces, bool surrender, bool blackJackPayout3to2, float kellyFraction) {
     std::string H17Str = dealerHits17 ? "H17" : "S17";
     std::string dasD = allowDoubleAfterSplit ? "DAS" : "NoDAS";
     std::string rasD = allowReSplitAces ? "RAS" : "NoRAS";
     std::string surr = surrender ? "Surrender" : "NoSurrender";
     std::string blackJack3to2 = blackJackPayout3to2 ? "3to2" : "6to5";
+    std::string kellyStr = "kelly" + std::to_string(static_cast<int>(kellyFraction * 100));
     std::string rtpDir = "stats/rtp_results";
     fs::create_directories(rtpDir);
     std::string filename = rtpDir + "/rtp_results_" + std::to_string(numDecksUsed) + "deck_" + 
-                           std::to_string(static_cast<int>(deckPenetration * 100)) + "pen_" + H17Str + "_" + dasD + "_" + rasD + "_" + surr + "_" + blackJack3to2 + ".csv";
+                           std::to_string(static_cast<int>(deckPenetration * 100)) + "pen_" + H17Str + "_" + dasD + "_" + rasD + "_" + surr + "_" + blackJack3to2 + "_" + kellyStr + ".csv";
     
     std::ofstream resultsFile(filename);
     std::mutex fileMutex;
@@ -466,10 +468,10 @@ void runAllRTPSimulations(int numDecksUsed, float deckPenetration, int iteration
     workers.reserve(num_threads);
     
     for (auto& strategy : strategies) {
-        workers.emplace_back([&, strat = std::move(strategy)]() mutable {
+        workers.emplace_back([&, strat = std::move(strategy), kellyFraction]() mutable {
             runRTPsimsWithResults(numDecksUsed, iterations, deckPenetration,
                 std::move(strat), dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
-                surrender, blackJackPayout3to2, resultsFile, fileMutex);
+                surrender, blackJackPayout3to2, kellyFraction, resultsFile, fileMutex);
         });
         
         if (workers.size() >= num_threads) {
@@ -553,14 +555,17 @@ int main(){
     std::cout << "Configuration: " << numDecksUsed << " deck(s), " 
               << (deckPenetration * 100) << "% penetration" << std::endl;
     std::cout << "========================================\n" << std::endl;
-    bool dealerHits17[] = {false};
+    bool dealerHits17[] = {true, false};
     bool DAS[] = {true};
     bool RAS[] = {false};
     bool SurrenderAllowed[] = {false};
     bool blackJackPayout3to2[] = {true};
-    int deckSize[] = {2,6,8};
-    int rtpIterations[] = {150000000, 50000000, 38000000};
+    int deckSize[] = {6,8};
+    int rtpIterations[] = {17000000, 12500000};
     float penetrations[] = {0.3f,0.35f,0.4f, 0.45f, 0.5f, 0.55f, 0.60f,0.65f,0.7f, 0.75f,0.80f}; //0.7f, 0.75f,0.80f
+    float kellyFractions[] = {0.125f,0.25f,0.5f,.75f};
+    int i = 0;
+
     for (bool dh17 : dealerHits17) {
         for (bool dasD : DAS){
             for (bool rasD : RAS){
@@ -568,21 +573,24 @@ int main(){
                     for (bool surr : SurrenderAllowed){
                         for (int ds : deckSize){
                             int i = 0;
-                            for (float pen : penetrations){
-                                numDecksUsed = ds;
-                                deckPenetration = pen;
-                                std::cout << "\n----------------------------------------" << std::endl;
-                                std::cout << "Settings: " << numDecksUsed << " deck(s), " 
-                                        << (deckPenetration * 100) << "% penetration, "
-                                        << (dasD ? "DAS allowed, " : "DAS not allowed, ")
-                                        << (rasD ? "RAS allowed, " : "RAS not allowed, ")
-                                        << (surr ? "Surrender allowed" : "Surrender not allowed") 
-                                        << std::endl;
-                                std::cout << "----------------------------------------" << std::endl;
-                                runAllRTPSimulations(numDecksUsed, deckPenetration, rtpIterations[i], dh17, dasD, rasD, surr, blackJack3to2);
+                            for (float kellyFraction : kellyFractions){
+                                for (float pen : penetrations){
+                                    numDecksUsed = ds;
+                                    deckPenetration = pen;
+                                    std::cout << "\n----------------------------------------" << std::endl;
+                                    std::cout << "Settings: " << numDecksUsed << " deck(s), " 
+                                            << (deckPenetration * 100) << "% penetration, "
+                                            << (dasD ? "DAS allowed, " : "DAS not allowed, ")
+                                            << (rasD ? "RAS allowed, " : "RAS not allowed, ")
+                                            << (surr ? "Surrender allowed" : "Surrender not allowed") 
+                                            << std::endl;
+                                    std::cout << "----------------------------------------" << std::endl;
+                                    runAllRTPSimulations(numDecksUsed, deckPenetration, rtpIterations[i], dh17, dasD, rasD, surr, blackJack3to2, kellyFraction);
+                                }
+                                
                             }
-                            i++;
                         }
+                        i++;
                     }
                 }
             }   

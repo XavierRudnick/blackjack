@@ -59,6 +59,11 @@ public:
         emit("Count reset for deck size: " + std::to_string(deckSize));
     }
 
+    void setUnitSize(float kellyFraction) override {
+        inner_->setUnitSize(kellyFraction);
+        emit("Unit size set with kelly fraction: " + toStr(kellyFraction));
+    }
+
     float getTrueCount() const override { return inner_->getTrueCount(); }
     float getDecksLeft() const override { return inner_->getDecksLeft(); }
     float getRunningCount() const override { return inner_->getRunningCount(); }

@@ -9,6 +9,7 @@
 struct GameConfig{
         int numDecks = 2;
         double wallet = 1000.0;
+        float kellyFraction = 0.5f;
         float penetrationThreshold = .75;
         double blackjackPayoutMultiplier = 1.5; 
         bool dealerHitsSoft17 = true;

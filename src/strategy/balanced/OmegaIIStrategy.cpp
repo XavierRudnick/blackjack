@@ -1,4 +1,5 @@
 #include "OmegaIIStrategy.h"
+#include "Bankroll.h"
 #include <cmath>
 
 OmegaIIStrategy::OmegaIIStrategy(float deck_size){
@@ -11,7 +12,20 @@ int OmegaIIStrategy::getEvenBet() const {
 }
 
 int OmegaIIStrategy::getBetSize() {
-    return getEvenBet();
+    float effectiveTC = true_count - PROFITABLE_PLAY_TC_THRESHOLD;
+    if (effectiveTC <= 0){
+        return MIN_BET;
+    }
+
+    int bet = std::round((unitSize * effectiveTC) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
+    return std::max(MIN_BET, bet);
+}
+
+void OmegaIIStrategy::setUnitSize(float inputKellyFraction) {
+    kellyFraction = inputKellyFraction;
+    unitSize = (Bankroll::getInitialBalance() * kellyFraction * evPerTC) / avgVolatility;
+    if (unitSize < 1.0f) unitSize = 1.0f;
+    return;
 }
 
 void OmegaIIStrategy::updateCount(Card card) {

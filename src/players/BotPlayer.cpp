@@ -21,6 +21,11 @@ void BotPlayer::updateCount(Card card) {
     return;
 }
 
+void BotPlayer::setUnitSize(float kellyFraction) {
+    strategy->setUnitSize(kellyFraction);
+    return;
+}
+
 float BotPlayer::getTrueCount() {
     return strategy->getTrueCount();
 }

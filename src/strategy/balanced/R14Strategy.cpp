@@ -1,4 +1,5 @@
 #include "R14Strategy.h"
+#include "Bankroll.h"
 #include <cmath>
 
 R14Strategy::R14Strategy(float deck_size){
@@ -11,7 +12,20 @@ int R14Strategy::getEvenBet() const {
 }
 
 int R14Strategy::getBetSize() {
-    return getEvenBet();
+    float effectiveTC = true_count - PROFITABLE_PLAY_TC_THRESHOLD;
+    if (effectiveTC <= 0){
+        return MIN_BET;
+    }
+
+    int bet = std::round((unitSize * effectiveTC) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
+    return std::max(MIN_BET, bet);
+}
+
+void R14Strategy::setUnitSize(float inputKellyFraction) {
+    kellyFraction = inputKellyFraction;
+    unitSize = (Bankroll::getInitialBalance() * kellyFraction * evPerTC) / avgVolatility;
+    if (unitSize < 1.0f) unitSize = 1.0f;
+    return;
 }
 
 void R14Strategy::updateCount(Card card) {

@@ -26,6 +26,7 @@ Engine::Engine(
     fixedEngine(config.monteCarloActions,EVresults,gameConfig)
 {
     config.penetrationThreshold = (1-config.penetrationThreshold) * config.numDecks * Deck::NUM_CARDS_IN_DECK;
+    player->setUnitSize(config.kellyFraction);
 }
 
 static bool isInsuranceMonteCarloActionSet(const GameConfig& config) {

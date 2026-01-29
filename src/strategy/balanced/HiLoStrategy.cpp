@@ -1,4 +1,5 @@
 #include "HiLoStrategy.h"
+#include "Bankroll.h"
 #include <cmath>
 
 namespace {
@@ -12,8 +13,23 @@ HiLoStrategy::HiLoStrategy(float deck_size){
     initial_decks = deck_size;
 }
 
+
+//TODO fix betting, also deck rounding for human perfect sims
 int HiLoStrategy::getBetSize() {
-    return getEvenBet();
+    float effectiveTC = true_count - PROFITABLE_PLAY_TC_THRESHOLD;
+    if (effectiveTC <= 0){
+        return MIN_BET;
+    }
+
+    int bet = std::round((unitSize * effectiveTC) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
+    return std::max(MIN_BET, bet);
+}
+
+void HiLoStrategy::setUnitSize(float inputKellyFraction) {
+    kellyFraction = inputKellyFraction;
+    unitSize = (Bankroll::getInitialBalance() * kellyFraction * evPerTC) / avgVolatility;
+    if (unitSize < 1.0f) unitSize = 1.0f;
+    return;
 }
 
 void HiLoStrategy::updateCount(Card card) {

@@ -14,6 +14,12 @@ int NoStrategy::getBetSize() {
     return getEvenBet();
 }
 
+void NoStrategy::setUnitSize(float kellyFraction) {
+    // NoStrategy doesn't use Kelly betting
+    (void)kellyFraction;
+    return;
+}
+
 void NoStrategy::updateCount(Card card) {
     return;
 }

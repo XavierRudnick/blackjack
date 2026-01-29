@@ -18,6 +18,11 @@ int HumanPlayer::getBetSize() {
     return strategy->getBetSize();
 }
 
+void HumanPlayer::setUnitSize(float kellyFraction) {
+    strategy->setUnitSize(kellyFraction);
+    return;
+}
+
 void HumanPlayer::updateCount(Card card) {
     strategy->updateCount(card);
     return;

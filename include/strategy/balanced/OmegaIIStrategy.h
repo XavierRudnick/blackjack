@@ -13,11 +13,19 @@ class OmegaIIStrategy : public CountingStrategy { //in docs note deck size is co
         float running_count = 0;
         float num_decks_left = 0;
         float initial_decks = 0;
+        float unitSize = 25;
+        float kellyFraction = 0.5f;
+        
+        static constexpr int MIN_BET = 25;
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
+        static constexpr float evPerTC = .000230f; // 0.023% per TC from 2deck 75pen data
+        static constexpr float avgVolatility = 1.32f;
+        static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 34.5f; // OmegaII profitable at TC >= 34.5
         int getEvenBet() const;
     public:
         OmegaIIStrategy(float deck_size);
         int getBetSize() override;
+        void setUnitSize(float kellyFraction) override;
         void updateCount(Card card) override;       
         void updateDeckSize(int num_cards_left) override;
         

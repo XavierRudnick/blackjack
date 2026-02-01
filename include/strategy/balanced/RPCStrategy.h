@@ -18,9 +18,9 @@ class RPCStrategy : public CountingStrategy { //in docs note deck size is counte
         
         static constexpr int MIN_BET = 25;
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
-        static constexpr float evPerTC = .00333f; // 0.333% per TC from 2deck 75pen data
+        static constexpr float evPerTC = .002523f; // 0.252% per TC from 2deck 75pen data
         static constexpr float avgVolatility = 1.32f;
-        static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 1.0f; // RPC profitable at TC >= 1.0
+        static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 1.0f; // RPC profitable at TC >= 0.74 (2deck 75pen)
         int getEvenBet() const;
     public:
         RPCStrategy(float deck_size);

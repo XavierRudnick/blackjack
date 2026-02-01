@@ -27,6 +27,11 @@ class CountingStrategy {
         virtual void reset(int deckSize) = 0;
         virtual std::string getName() = 0;
 
+        // Global default max bet (can be shadowed or overridden per-strategy)
+        static constexpr int MAX_BET = 2000;
+        // Runtime getter to allow per-strategy overrides when needed
+        virtual int getMaxBet() const { return MAX_BET; }
+
         virtual ~CountingStrategy() = default;
 
 };

@@ -16,13 +16,15 @@ HiLoStrategy::HiLoStrategy(float deck_size){
 
 //TODO fix betting, also deck rounding for human perfect sims
 int HiLoStrategy::getBetSize() {
+
     float effectiveTC = true_count - PROFITABLE_PLAY_TC_THRESHOLD;
     if (effectiveTC <= 0){
         return MIN_BET;
     }
 
     int bet = std::round((unitSize * effectiveTC) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
-    return std::max(MIN_BET, bet);
+    bet = std::max(MIN_BET, bet);
+    return std::min(getMaxBet(), bet);
 }
 
 void HiLoStrategy::setUnitSize(float inputKellyFraction) {

@@ -18,7 +18,8 @@ int RAPCStrategy::getBetSize() {
     }
 
     int bet = std::round((unitSize * effectiveTC) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
-    return std::max(MIN_BET, bet);
+    bet = std::max(MIN_BET, bet);
+    return std::min(getMaxBet(), bet);
 }
 
 void RAPCStrategy::setUnitSize(float inputKellyFraction) {

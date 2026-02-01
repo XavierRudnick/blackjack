@@ -18,8 +18,9 @@ int MentorStrategy::getBetSize() {
     }
 
     int bet = std::round((unitSize * effectiveTC) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
-    return std::max(MIN_BET, bet);
-}
+    bet = std::max(MIN_BET, bet);
+    return std::min(getMaxBet(), bet);
+} 
 
 void MentorStrategy::setUnitSize(float inputKellyFraction) {
     kellyFraction = inputKellyFraction;
@@ -29,8 +30,7 @@ void MentorStrategy::setUnitSize(float inputKellyFraction) {
 }
 
 void MentorStrategy::updateCount(Card card) {
-    Rank rank = card.getRank();
-    int score = static_cast<int>(rank) + INDEX_OFFSET;
+    int score = card.getValue();
 
     switch (score)
     {
@@ -56,7 +56,7 @@ void MentorStrategy::updateCount(Card card) {
         running_count += 0;
         break;
     case 9:         
-        running_count -= -1;
+        running_count -= 1;
         break;
     case 10:
         running_count -= 2;
@@ -93,8 +93,8 @@ float MentorStrategy::getDecksLeft() const{
 
 bool MentorStrategy::shouldAcceptInsurance() const{
     const bool useSixDeck = initial_decks >= 5.5f;
-    // 2-deck 65% pen: TC crossover = 47.0, 6-deck 80% pen: TC crossover = 127.0
-    const float insuranceThreshold = useSixDeck ? 127.0f : 47.0f;
+    // 2-deck 65% pen: TC crossover = 5.0, 6-deck 80% pen: TC crossover = 6.0
+    const float insuranceThreshold = useSixDeck ? 6.0f : 5.0f;
     if (true_count >= insuranceThreshold){
         return true;
     }
@@ -107,66 +107,66 @@ Action MentorStrategy::shouldDeviatefromHard(int playerTotal, Rank dealerUpcard,
 
     switch (playerTotal) {
         case 16:
-            // 2-deck 65% pen: 16v10 Stand TC >= 47.0, 6-deck 80% pen: TC >= 64.5
-            if (dealerValue == 10 && trueCount >= (useSixDeck ? 64.5f : 47.0f)) {
+            // 2-deck 65% pen: 16v10 Stand TC >= 1.0, 6-deck 80% pen: TC >= 0.5
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? 0.5f : 1.0f)) {
                 return Action::Stand;
             }
             break;
             
         case 15: 
-            // 2-deck 65% pen: 15v10 Stand TC >= 47.0, 6-deck 80% pen: TC >= 127.0
-            if (dealerValue == 10 && trueCount >= (useSixDeck ? 127.0f : 47.0f)) {
+            // 2-deck 65% pen: 15v10 Stand TC >= 4.5, 6-deck 80% pen: TC >= 5.5
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? 5.5f : 4.5f)) {
                 return Action::Stand;
             }
             break;
 
         case 13:
-            // 2-deck 65% pen: 13v2 Stand TC >= 1.0, 6-deck 80% pen: TC >= -0.5
-            // 2-deck 65% pen: 13v3 Stand TC >= 0.5, 6-deck 80% pen: TC >= 102.5
-            if (dealerValue == 2 && trueCount >= (useSixDeck ? -0.5f : 1.0f)) { 
+            // 2-deck 65% pen: 13v2 Stand TC >= -1.0, 6-deck 80% pen: TC >= -1.5
+            // 2-deck 65% pen: 13v3 Stand TC >= -2.0, 6-deck 80% pen: TC >= -3.5
+            if (dealerValue == 2 && trueCount >= (useSixDeck ? -1.5f : -1.0f)) { 
                 return Action::Stand;
             }
-            if (dealerValue == 3 && trueCount >= (useSixDeck ? 102.5f : 0.5f)) { 
+            if (dealerValue == 3 && trueCount >= (useSixDeck ? -3.5f : -2.0f)) { 
                 return Action::Stand;
             }
             break;
 
         case 12:
-            // 2-deck 65% pen: 12v3 Stand TC >= 38.5, 6-deck 80% pen: TC >= 101.0
-            if (dealerValue == 3 && trueCount >= (useSixDeck ? 101.0f : 38.5f)) {
+            // 2-deck 65% pen: 12v3 Stand TC >= 3.5, 6-deck 80% pen: TC >= 2.5
+            if (dealerValue == 3 && trueCount >= (useSixDeck ? 2.5f : 3.5f)) {
                 return Action::Stand;
             }
-            // 2-deck 65% pen: 12v2 Stand TC >= 48.5, 6-deck 80% pen: TC >= 125.5
-            if (dealerValue == 2 && trueCount >= (useSixDeck ? 125.5f : 48.5f)) {
+            // 2-deck 65% pen: 12v2 Stand TC >= 6.0, 6-deck 80% pen: TC >= 5.5
+            if (dealerValue == 2 && trueCount >= (useSixDeck ? 5.5f : 6.0f)) {
                 return Action::Stand;
             }
             break;
 
         case 11:
-            // 2-deck 65% pen: 11v11 Double TC >= 15.0, 6-deck 80% pen: TC >= 99.5
-            if (dealerValue == 11 && trueCount >= (useSixDeck ? 99.5f : 15.0f)){
+            // 2-deck 65% pen: 11v11 Double TC >= -0.5, 6-deck 80% pen: TC >= 1.5
+            if (dealerValue == 11 && trueCount >= (useSixDeck ? 1.5f : -0.5f)){
                 return Action::Double;
             }
             break;
 
         case 10:
-            // 2-deck 65% pen: 10v10 Double TC >= 47.0, 6-deck 80% pen: TC >= 125.5
-            if (dealerValue == 10 && trueCount >= (useSixDeck ? 125.5f : 47.0f)) {
+            // 2-deck 65% pen: 10v10 Double TC >= 4.5, 6-deck 80% pen: TC >= 5.5
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? 5.5f : 4.5f)) {
                 return Action::Double;
             }
-            // 2-deck 65% pen: 10v11 Double TC >= 47.0, 6-deck 80% pen: TC >= 127.0
-            if (dealerValue == 11 && trueCount >= (useSixDeck ? 127.0f : 47.0f)) {
+            // 2-deck 65% pen: 10v11 Double TC >= 5.0, 6-deck 80% pen: TC >= 6.0
+            if (dealerValue == 11 && trueCount >= (useSixDeck ? 6.0f : 5.0f)) {
                 return Action::Double;
             }
             break;
 
         case 9:
-            // 2-deck 65% pen: 9v2 Double TC >= 1.0, 6-deck 80% pen: TC >= 30.5
-            if (dealerValue == 2 && trueCount >= (useSixDeck ? 30.5f : 1.0f)){
+            // 2-deck 65% pen: 9v2 Double TC >= 1.0, 6-deck 80% pen: TC >= 1.5
+            if (dealerValue == 2 && trueCount >= (useSixDeck ? 1.5f : 1.0f)){
                 return Action::Double;
             }
-            // 2-deck 65% pen: 9v7 Double TC >= 48.5, 6-deck 80% pen: TC >= -1.0
-            if (dealerValue == 7 && trueCount >= (useSixDeck ? -1.0f : 48.5f)) {
+            // 2-deck 65% pen: 9v7 Double TC >= 5.5, 6-deck 80% pen: TC >= 6.0
+            if (dealerValue == 7 && trueCount >= (useSixDeck ? 6.0f : 5.5f)) {
                 return Action::Double;
             }
             break;
@@ -181,13 +181,13 @@ Action MentorStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUpcard
     int playerValue = BasicStrategy::getIndex(playerRank) + INDEX_OFFSET;
     const bool useSixDeck = initial_decks >= 5.5f;
     switch (playerValue) {
-        // 2-deck 65% pen: Split 10s v5 TC >= 49.5, 6-deck 80% pen: TC >= 132.0
-        // 2-deck 65% pen: Split 10s v6 TC >= 49.5, 6-deck 80% pen: TC >= 131.0
+        // 2-deck 65% pen: Split 10s v5 TC >= 7.5, 6-deck 80% pen: TC >= 8.5
+        // 2-deck 65% pen: Split 10s v6 TC >= 7.5, 6-deck 80% pen: TC >= 7.5
         case 10:
-            if (dealerValue == 5 && trueCount >= (useSixDeck ? 132.0f : 49.5f)) {
+            if (dealerValue == 5 && trueCount >= (useSixDeck ? 8.5f : 7.5f)) {
                 return Action::Split;
             }
-            if (dealerValue == 6 && trueCount >= (useSixDeck ? 131.0f : 49.5f)) {
+            if (dealerValue == 6 && trueCount >= 7.5f) {
                 return Action::Split;
             }
             break;
@@ -201,36 +201,36 @@ Action MentorStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, float
     const bool useSixDeck = initial_decks >= 5.5f;
     switch (playerTotal) {
         case 16:
-            // 2-deck 65% pen: 16v9 Surrender TC >= 35.0, 6-deck 80% pen: TC >= -0.5
-            if (dealerValue == 9 && trueCount >= (useSixDeck ? -0.5f : 35.0f)) {
+            // 2-deck 65% pen: 16v9 Surrender TC >= 0.0, 6-deck 80% pen: TC >= -1.0
+            if (dealerValue == 9 && trueCount >= (useSixDeck ? -1.0f : 0.0f)) {
                 return Action::Surrender;
             }
-            // 2-deck 65% pen: 16v10 Surrender TC >= -1.5, 6-deck 80% pen: TC >= 102.5
-            if (dealerValue == 10 && trueCount >= (useSixDeck ? 102.5f : -1.5f)) {
+            // 2-deck 65% pen: 16v10 Surrender TC >= -5.0, 6-deck 80% pen: TC >= -6.0
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? -6.0f : -5.0f)) {
                 return Action::Surrender;
             }
-            // 2-deck 65% pen: 16v11 Surrender TC >= -0.5, 6-deck 80% pen: TC >= 102.5
-            if (dealerValue == 11 && trueCount >= (useSixDeck ? 102.5f : -0.5f)) {
+            // 2-deck 65% pen: 16v11 Surrender TC >= -3.0, 6-deck 80% pen: TC >= -3.5
+            if (dealerValue == 11 && trueCount >= (useSixDeck ? -3.5f : -3.0f)) {
                 return Action::Surrender;
             }
             break;
         case 15:
-            // 2-deck 65% pen: 15v9 Surrender TC >= 47.0, 6-deck 80% pen: TC >= 101.0
-            if (dealerValue == 9 && trueCount >= (useSixDeck ? 101.0f : 47.0f)) {
+            // 2-deck 65% pen: 15v9 Surrender TC >= 3.5, 6-deck 80% pen: TC >= 3.5
+            if (dealerValue == 9 && trueCount >= 3.5f) {
                 return Action::Surrender;
             }
-            // 2-deck 65% pen: 15v10 Surrender TC >= 18.0, 6-deck 80% pen: TC >= 0.0
-            if (dealerValue == 10 && trueCount >= (useSixDeck ? 0.0f : 18.0f)) {
+            // 2-deck 65% pen: 15v10 Surrender TC >= -1.5, 6-deck 80% pen: TC >= -1.0
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? -1.0f : -1.5f)) {
                 return Action::Surrender;
             }
-            // 2-deck 65% pen: 15v11 Surrender TC >= 47.0, 6-deck 80% pen: TC >= -1.5
-            if (dealerValue == 11 && trueCount >= (useSixDeck ? -1.5f : 47.0f)) {
+            // 2-deck 65% pen: 15v11 Surrender TC >= 1.5, 6-deck 80% pen: TC >= 2.5
+            if (dealerValue == 11 && trueCount >= (useSixDeck ? 2.5f : 1.5f)) {
                 return Action::Surrender;
             }
             break;
         case 14:
-            // 2-deck 65% pen: 14v10 Surrender TC >= 47.0, 6-deck 80% pen: TC >= 124.5
-            if (dealerValue == 10 && trueCount >= (useSixDeck ? 124.5f : 47.0f)) {
+            // 2-deck 65% pen: 14v10 Surrender TC >= 3.5, 6-deck 80% pen: TC >= 4.0
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? 4.0f : 3.5f)) {
                 return Action::Surrender;
             }
             break;

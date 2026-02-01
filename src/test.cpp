@@ -9,6 +9,7 @@
 #include "NoStrategy.h"
 #include "BasicStrategy.h"
 #include "LoggingCountingStrategy.h"
+#include "CountingStrategy.h"
 #include "observers/ConsoleObserver.h"
 #include "observers/EventBus.h"
 #include "observers/EventObserver.h"
@@ -46,6 +47,69 @@ Engine setupEngine(std::vector<Card> stack, double initialWallet = 1000) {
             .setPenetrationThreshold(.5)
             .setInitialWallet(initialWallet)
             .enableEvents(true)
+            .with3To2Payout(true)
+            .withH17Rules(true)
+            .allowDoubleAfterSplit(true)
+            .build(player.get());
+}
+
+class InsuranceAcceptStrategy : public CountingStrategy {
+public:
+    int getBetSize() override { return 5; }
+    void updateCount(Card) override {}
+    void updateDeckSize(int num_cards_left) override {
+        decksLeft = num_cards_left > 0 ? 1.0f : 0.0f;
+    }
+    void setUnitSize(float) override {}
+
+    float getTrueCount() const override { return 0.0f; }
+    float getDecksLeft() const override { return decksLeft; }
+    float getRunningCount() const override { return 0.0f; }
+
+    bool shouldAcceptInsurance() const override { return true; }
+    Action shouldDeviatefromHard(int, Rank, float) override { return Action::Skip; }
+    Action shouldDeviatefromSplit(Rank, Rank, float) override { return Action::Skip; }
+    Action shouldSurrender(int, Rank, float) override { return Action::Skip; }
+
+    Action getHardHandAction(int, Rank, float) override { return Action::Stand; }
+    Action getSoftHandAction(int, Rank) override { return Action::Stand; }
+    Action getSplitAction(Rank, Rank, float) override { return Action::Stand; }
+
+    void reset(int) override {}
+    std::string getName() override { return "InsuranceAcceptStrategy"; }
+
+private:
+    float decksLeft = 1.0f;
+};
+
+Engine setupEngineWithStrategy(std::vector<Card> stack, std::unique_ptr<CountingStrategy> strategy, double initialWallet = 1000) {
+    const bool visualize = false;
+
+    static ConsoleObserver consoleObserver;
+    EventBus& bus = EventBus::getInstance();
+    bus.detachAll();
+
+    if (visualize) {
+        bus.registerObserver(&consoleObserver, {
+            EventType::CardsDealt,
+            EventType::ActionTaken,
+            EventType::RoundEnded,
+            EventType::GameStats
+        });
+    }
+
+    static std::unique_ptr<BotPlayer> player;
+    player = std::make_unique<BotPlayer>(false, std::move(strategy));
+
+    Deck riggedDeck = Deck::createTestDeck(stack);
+
+    return EngineBuilder()
+            .withEventBus(&bus)
+            .setDeckSize(0)
+            .setDeck(riggedDeck)
+            .setPenetrationThreshold(.5)
+            .setInitialWallet(initialWallet)
+            .enableEvents(visualize)
             .with3To2Payout(true)
             .withH17Rules(true)
             .allowDoubleAfterSplit(true)
@@ -310,6 +374,102 @@ void testInsuranceDeclinedMutualBlackjacksPush() {
     // Push: bet returned only.
     std::cout << "Final: " << result.first << std::endl;
     assert(result.first == 1000);
+    std::cout << "PASSED" << std::endl;
+}
+
+// ----------------------------------------------------------------
+// TEST 6D: Insurance Accepted, Dealer Blackjack, Player No BJ
+// Dealer shows Ace, player accepts insurance; dealer has blackjack.
+// Main bet lost, insurance wins -> net 0.
+// ----------------------------------------------------------------
+void testInsuranceAcceptedDealerBlackjackPlayerNoBJ() {
+    std::cout << "\n--- Running testInsuranceAcceptedDealerBlackjackPlayerNoBJ ---" << std::endl;
+
+    std::vector<Card> stack = {
+        Card(Rank::Seven, Suit::Diamonds),  // Player 2 (Total 16)
+        Card(Rank::Nine, Suit::Clubs),      // Player 1
+        Card(Rank::Ten, Suit::Hearts),      // Dealer Hole (Blackjack)
+        Card(Rank::Ace, Suit::Spades)       // Dealer Up (Insurance offered)
+    };
+
+    Engine engine = setupEngineWithStrategy(stack, std::make_unique<InsuranceAcceptStrategy>());
+    auto result = engine.runner();
+
+    // Bet 5 + insurance 2.5, insurance wins, main loses => wallet unchanged.
+    std::cout << "Final: " << result.first << std::endl;
+    assert(result.first == 1000);
+    std::cout << "PASSED" << std::endl;
+}
+
+// ----------------------------------------------------------------
+// TEST 6E: Insurance Accepted, Dealer Blackjack, Player Blackjack
+// Dealer shows Ace, player accepts insurance; both have blackjack.
+// Main bet pushes, insurance wins -> net +5.
+// ----------------------------------------------------------------
+void testInsuranceAcceptedDealerBlackjackPlayerBlackjack() {
+    std::cout << "\n--- Running testInsuranceAcceptedDealerBlackjackPlayerBlackjack ---" << std::endl;
+
+    std::vector<Card> stack = {
+        Card(Rank::King, Suit::Hearts),  // Player 2 (Blackjack)
+        Card(Rank::Ace, Suit::Hearts),   // Player 1
+        Card(Rank::Ten, Suit::Clubs),    // Dealer Hole (Blackjack)
+        Card(Rank::Ace, Suit::Clubs)     // Dealer Up (Insurance offered)
+    };
+
+    Engine engine = setupEngineWithStrategy(stack, std::make_unique<InsuranceAcceptStrategy>());
+    auto result = engine.runner();
+
+    // Bet 5 + insurance 2.5, insurance wins (+5), main pushes => wallet +5.
+    std::cout << "Final: " << result.first << std::endl;
+    assert(result.first == 1005);
+    std::cout << "PASSED" << std::endl;
+}
+
+// ----------------------------------------------------------------
+// TEST 6F: Insurance Accepted, Dealer No BJ, Player Blackjack
+// Dealer shows Ace, player accepts insurance; dealer does NOT have blackjack.
+// Insurance loses, main blackjack pays 3:2.
+// ----------------------------------------------------------------
+void testInsuranceAcceptedDealerNoBJPlayerBlackjack() {
+    std::cout << "\n--- Running testInsuranceAcceptedDealerNoBJPlayerBlackjack ---" << std::endl;
+
+    std::vector<Card> stack = {
+        Card(Rank::King, Suit::Diamonds), // Player 2 (Blackjack)
+        Card(Rank::Ace, Suit::Diamonds),  // Player 1
+        Card(Rank::Nine, Suit::Clubs),    // Dealer Hole (No blackjack)
+        Card(Rank::Ace, Suit::Spades)     // Dealer Up (Insurance offered)
+    };
+
+    Engine engine = setupEngineWithStrategy(stack, std::make_unique<InsuranceAcceptStrategy>());
+    auto result = engine.runner();
+
+    // Bet 5 + insurance 2.5, insurance loses, BJ pays 7.5 => wallet +5.
+    std::cout << "Final: " << result.first << std::endl;
+    assert(result.first == 1005);
+    std::cout << "PASSED" << std::endl;
+}
+
+// ----------------------------------------------------------------
+// TEST 6G: Insurance Accepted, Dealer No BJ, Player No BJ (Player Wins)
+// Dealer shows Ace, player accepts insurance; dealer does NOT have blackjack.
+// Insurance loses, player wins normally.
+// ----------------------------------------------------------------
+void testInsuranceAcceptedDealerNoBJPlayerNoBJWin() {
+    std::cout << "\n--- Running testInsuranceAcceptedDealerNoBJPlayerNoBJWin ---" << std::endl;
+
+    std::vector<Card> stack = {
+        Card(Rank::Ten, Suit::Diamonds), // Player 2 (Total 20)
+        Card(Rank::Ten, Suit::Clubs),    // Player 1
+        Card(Rank::Eight, Suit::Clubs),  // Dealer Hole (Soft 19)
+        Card(Rank::Ace, Suit::Hearts)    // Dealer Up (Insurance offered)
+    };
+
+    Engine engine = setupEngineWithStrategy(stack, std::make_unique<InsuranceAcceptStrategy>());
+    auto result = engine.runner();
+
+    // Bet 5 + insurance 2.5, insurance loses, player wins +5 => wallet 1002.5.
+    std::cout << "Final: " << result.first << std::endl;
+    assert(result.first == 1002.5);
     std::cout << "PASSED" << std::endl;
 }
 
@@ -1459,6 +1619,10 @@ int main() {
     testBlackjackPush();
     testInsuranceDeclinedDealerBlackjackLoss();
     testInsuranceDeclinedMutualBlackjacksPush();
+    testInsuranceAcceptedDealerBlackjackPlayerNoBJ();
+    testInsuranceAcceptedDealerBlackjackPlayerBlackjack();
+    testInsuranceAcceptedDealerNoBJPlayerBlackjack();
+    testInsuranceAcceptedDealerNoBJPlayerNoBJWin();
     testSplitAcesTwiceLogic();
     testDealerShowsTenHiddenAceBlackjack();
 

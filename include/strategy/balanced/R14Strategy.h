@@ -18,9 +18,9 @@ class R14Strategy : public CountingStrategy { //in docs note deck size is counte
         
         static constexpr int MIN_BET = 25;
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
-        static constexpr float evPerTC = .000225f; // 0.0225% per TC from 2deck 75pen data
+        static constexpr float evPerTC = .001692f; // 0.169% per TC from 2deck 75pen data
         static constexpr float avgVolatility = 1.32f;
-        static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 39.0f; // R14 profitable at TC >= 39.0
+        static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 1.0f; // R14 profitable at TC >= 0.89 (2deck 75pen)
         int getEvenBet() const;
     public:
         R14Strategy(float deck_size);

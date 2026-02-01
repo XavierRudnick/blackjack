@@ -5,26 +5,34 @@
 struct ActionStats {
     int handsPlayed = 0;  // number of hands
     int splitsPlayed = 0; // number of times split occurred
-    double totalPayout = 0;  // total payout across all hands
-    double mean = 0.0;    // running EV
-    double M2 = 0.0;      // running squared deviation
+    double totalPayout = 0.0;       // total net payout across all hands
+    double totalMoneyWagered = 0.0; // total dollars wagered across all hands
+    double mean = 0.0;              // running EV per dollar wagered
+    double M2 = 0.0;                // running squared deviation (per dollar)
 
-    void addResult(double x) {
+    void addResult(double net, double wagered) {
+        if (wagered <= 0.0) {
+            return;
+        }
+
         handsPlayed++;
-        totalPayout += x;
+        totalPayout += net;
+        totalMoneyWagered += wagered;
 
-        double delta = x - mean;
-        mean += delta / handsPlayed;
+        // Weighted Welford update using wagered as frequency weight
+        const double value = net / wagered;
+        const double prevMean = mean;
+        const double totalWeight = totalMoneyWagered;
+        mean = prevMean + (wagered / totalWeight) * (value - prevMean);
+        M2 += wagered * (value - prevMean) * (value - mean);
+    }
 
-        double delta2 = x - mean;
-        M2 += delta * delta2;
+    void addResult(double net) {
+        addResult(net, 1.0);
     }
 
     void addInsuranceLose(double loss = .5){
-        totalPayout -= loss;
-         if (handsPlayed == 0) return;
-        double delta = mean - loss;
-        mean += delta / handsPlayed;
+        addResult(-loss, loss);
     }
 
     void timesSplit() {
@@ -41,7 +49,7 @@ struct ActionStats {
     // }
 
     double getVariance() const {
-        return (handsPlayed > 1) ? (M2 / handsPlayed) : 0.0;   // population variance
+        return (totalMoneyWagered > 0.0) ? (M2 / totalMoneyWagered) : 0.0;   // population variance per dollar
     }
 
     double getStdDev() const {
@@ -49,7 +57,7 @@ struct ActionStats {
     }
 
     double getStdError() const {
-        return getStdDev() / std::sqrt(handsPlayed);
+        return (totalMoneyWagered > 0.0) ? (getStdDev() / std::sqrt(totalMoneyWagered)) : 0.0;
     }
 };
 

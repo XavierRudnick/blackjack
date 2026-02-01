@@ -18,9 +18,9 @@ class ZenCountStrategy : public CountingStrategy { //in docs note deck size is c
         
         static constexpr int MIN_BET = 25;
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
-        static constexpr float evPerTC = .00375f; // 0.375% per TC from 2deck 75pen data
+        static constexpr float evPerTC = .002748f; // 0.275% per TC from 2deck 75pen data
         static constexpr float avgVolatility = 1.32f;
-        static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 1.0f; // ZenCount profitable at TC >= 1.0
+        static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 1.0f; // ZenCount profitable at TC >= 0.61 (2deck 75pen)
         int getEvenBet() const;
     public:
         ZenCountStrategy(float deck_size);

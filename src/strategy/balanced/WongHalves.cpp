@@ -18,8 +18,9 @@ int WongHalvesStrategy::getBetSize() {
     }
 
     int bet = std::round((unitSize * effectiveTC) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
-    return std::max(MIN_BET, bet);
-}
+    bet = std::max(MIN_BET, bet);
+    return std::min(getMaxBet(), bet);
+} 
 
 void WongHalvesStrategy::setUnitSize(float inputKellyFraction) {
     kellyFraction = inputKellyFraction;
@@ -29,8 +30,7 @@ void WongHalvesStrategy::setUnitSize(float inputKellyFraction) {
 }
 
 void WongHalvesStrategy::updateCount(Card card) {
-    Rank rank = card.getRank();
-    int score = static_cast<int>(rank) + INDEX_OFFSET;
+    int score = card.getValue();
 
     switch (score)
     {
@@ -98,8 +98,8 @@ float WongHalvesStrategy::getDecksLeft() const{
 
 bool WongHalvesStrategy::shouldAcceptInsurance() const{
     const bool useSixDeck = initial_decks >= 5.5f;
-    // 2-deck 65% pen: TC crossover = 21.0, 6-deck 80% pen: TC crossover = 48.5
-    const float insuranceThreshold = useSixDeck ? 48.5f : 21.0f;
+    // 2-deck 65% pen: TC crossover = 2.5, 6-deck 80% pen: TC crossover = 3.5
+    const float insuranceThreshold = useSixDeck ? 3.5f : 2.5f;
     if (true_count >= insuranceThreshold){
         return true;
     }
@@ -186,13 +186,13 @@ Action WongHalvesStrategy::shouldDeviatefromSplit(Rank playerRank, Rank dealerUp
     int playerValue = BasicStrategy::getIndex(playerRank) + INDEX_OFFSET;
     const bool useSixDeck = initial_decks >= 5.5f;
     switch (playerValue) {
-        // 2-deck 65% pen: Split 10s v5 TC >= 24.5, 6-deck 80% pen: TC >= 49.0
-        // 2-deck 65% pen: Split 10s v6 TC >= 22.5, 6-deck 80% pen: TC >= 49.0
-        case 10: 
-            if (dealerValue == 5 && trueCount >= (useSixDeck ? 49.0f : 24.5f)) {
+        // 2-deck 65% pen: Split 10s v5 TC >= 4.0, 6-deck 80% pen: TC >= 4.5
+        // 2-deck 65% pen: Split 10s v6 TC >= 4.0, 6-deck 80% pen: TC >= 4.0
+        case 10:
+            if (dealerValue == 5 && trueCount >= (useSixDeck ? 4.5f : 4.0f)) {
                 return Action::Split;
             }
-            if (dealerValue == 6 && trueCount >= (useSixDeck ? 49.0f : 22.5f)) {
+            if (dealerValue == 6 && trueCount >= 4.0f) {
                 return Action::Split;
             }
             break;
@@ -206,12 +206,12 @@ Action WongHalvesStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, f
     const bool useSixDeck = initial_decks >= 5.5f;
     switch (playerTotal) {
         case 16:
-            // 2-deck 65% pen: 16v9 Surrender TC >= 12.5, 6-deck 80% pen: TC >= 0.0
-            if (dealerValue == 9 && trueCount >= (useSixDeck ? 0.0f : 12.5f)) {
+            // 2-deck 65% pen: 16v9 Surrender TC >= 0.0, 6-deck 80% pen: TC >= -0.5
+            if (dealerValue == 9 && trueCount >= (useSixDeck ? -0.5f : 0.0f)) {
                 return Action::Surrender;
             }
-            // 2-deck 65% pen: 16v10 Surrender TC >= -1.0, 6-deck 80% pen: TC >= -1.5
-            if (dealerValue == 10 && trueCount >= (useSixDeck ? -1.5f : -1.0f)) {
+            // 2-deck 65% pen: 16v10 Surrender TC >= -2.0, 6-deck 80% pen: TC >= -2.5
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? -2.5f : -2.0f)) {
                 return Action::Surrender;
             }
             // 2-deck 65% pen: 16v11 Surrender TC >= -0.5, 6-deck 80% pen: TC >= -1.0
@@ -220,22 +220,22 @@ Action WongHalvesStrategy::shouldSurrender(int playerTotal, Rank dealerUpcard, f
             }
             break;
         case 15:
-            // 2-deck 65% pen: 15v9 Surrender TC >= 19.0, 6-deck 80% pen: TC >= 45.0
-            if (dealerValue == 9 && trueCount >= (useSixDeck ? 45.0f : 19.0f)) {
+            // 2-deck 65% pen: 15v9 Surrender TC >= 1.5, 6-deck 80% pen: TC >= 2.0
+            if (dealerValue == 9 && trueCount >= (useSixDeck ? 2.0f : 1.5f)) {
                 return Action::Surrender;
             }
-            // 2-deck 65% pen: 15v10 Surrender TC >= 11.0, 6-deck 80% pen: TC >= -2.0
-            if (dealerValue == 10 && trueCount >= (useSixDeck ? -2.0f : 11.0f)) {
+            // 2-deck 65% pen: 15v10 Surrender TC >= -0.5, 6-deck 80% pen: TC >= 0.0
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? 0.0f : -0.5f)) {
                 return Action::Surrender;
             }
-            // 2-deck 65% pen: 15v11 Surrender TC >= 12.5, 6-deck 80% pen: TC >= 42.5
-            if (dealerValue == 11 && trueCount >= (useSixDeck ? 42.5f : 12.5f)) {
+            // 2-deck 65% pen: 15v11 Surrender TC >= 1.0, 6-deck 80% pen: TC >= 2.0
+            if (dealerValue == 11 && trueCount >= (useSixDeck ? 2.0f : 1.0f)) {
                 return Action::Surrender;
             }
             break;
         case 14:
-            // 2-deck 65% pen: 14v10 Surrender TC >= 19.5, 6-deck 80% pen: TC >= 46.0
-            if (dealerValue == 10 && trueCount >= (useSixDeck ? 46.0f : 19.5f)) {
+            // 2-deck 65% pen: 14v10 Surrender TC >= 2.0, 6-deck 80% pen: TC >= 2.5
+            if (dealerValue == 10 && trueCount >= (useSixDeck ? 2.5f : 2.0f)) {
                 return Action::Surrender;
             }
             break;

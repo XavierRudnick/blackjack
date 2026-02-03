@@ -16,7 +16,7 @@ class R14Strategy : public CountingStrategy { //in docs note deck size is counte
         float unitSize = 25;
         float kellyFraction = 0.5f;
         
-        static constexpr int MIN_BET = 25;
+
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
         static constexpr float evPerTC = .001692f; // 0.169% per TC from 2deck 75pen data
         static constexpr float avgVolatility = 1.32f;

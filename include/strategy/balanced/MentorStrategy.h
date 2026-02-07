@@ -19,7 +19,8 @@ class MentorStrategy : public CountingStrategy { //in docs note deck size is cou
         
 
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
-        static constexpr float evPerTC = .002894f; // 0.289% per TC from 2deck 75pen data
+        static constexpr float evPerTC = 0.002745999501f; // Avg slope (2/4/6/8 deck) from 75pen data
+        static constexpr float evIntercept = -0.004014569844f; // Avg intercept from 75pen data
         static constexpr float avgVolatility = 1.32f;
         static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 1.0f; // Mentor profitable at TC >= 0.55 (2deck 75pen)
         int getEvenBet() const;

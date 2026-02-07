@@ -18,7 +18,8 @@ class WongHalvesStrategy : public CountingStrategy { //in docs note deck size is
         
 
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
-        static constexpr float evPerTC = .004524f; // 0.452% per TC from 2deck 75pen data
+        static constexpr float evPerTC = 0.004570227352f; // Avg slope (2/4/6/8 deck) from 75pen data
+        static constexpr float evIntercept = -0.004963212652f; // Avg intercept from 75pen data
         static constexpr float avgVolatility = 1.32f;
         static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 1.0f; // WongHalves profitable at TC >= 0.60 (2deck 75pen)
         int getEvenBet() const;

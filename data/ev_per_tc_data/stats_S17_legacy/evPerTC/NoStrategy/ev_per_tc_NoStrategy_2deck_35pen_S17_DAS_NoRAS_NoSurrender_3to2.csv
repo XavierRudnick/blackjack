@@ -1,2 +1,2 @@
-TrueCount,HandsPlayed,TotalPayout,EV,StdError
-0.0,368156494,-914871.500000,-0.002485,0.000059
+TrueCount,HandsPlayed,TotalPayout,EV,StdError,HandsPlayedPct
+0.0,368156494,-914871.5,-0.002485,5.9e-05,100.0

@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """
-Calculate linear regression EV per TC for 75pen H17 stats files.
+Calculate linear regression EV per TC for evPerTC stats files.
 
 Outputs CSV matching the format of ev_per_tc_linear_formulas_75pen.csv:
-Strategy,Decks,Slope,Slope_Pct,Intercept,Intercept_Pct,Breakeven_TC,R_Squared
+Strategy,Decks,Penetration,Slope,Slope_Pct,Intercept,Intercept_Pct,Breakeven_TC,R_Squared
 """
 
 import os
 import glob
 import re
+import argparse
 import numpy as np
 import pandas as pd
 from pathlib import Path
@@ -73,37 +74,87 @@ def parse_filename(filepath: str) -> dict:
     return {'strategy': 'Unknown', 'decks': 'Unknown', 'pen': 'Unknown'}
 
 
-def find_75pen_h17_files(base_dir: str) -> list:
-    """Find all 75pen H17 CSV files in evPerTC directories."""
-    pattern = os.path.join(base_dir, '**', '*75pen*H17*.csv')
-    files = glob.glob(pattern, recursive=True)
-    return sorted(files)
+def normalize_pen(pen: str) -> str:
+    """Normalize penetration input to '{N}pen' format."""
+    pen = str(pen).lower().replace('pen', '').strip()
+    return f"{int(float(pen))}pen"
 
 
-def find_70pen_h17_4_6deck_files(base_dir: str) -> list:
-    """Find 4deck and 6deck 70pen H17 CSV files in evPerTC directories."""
-    pattern = os.path.join(base_dir, '**', '*70pen*H17*.csv')
+def find_files_by_pen_rule(base_dir: str, pen: str, rule: str) -> list:
+    """Find CSV files matching penetration and rule in evPerTC directories."""
+    pen = normalize_pen(pen)
+    rule = rule.upper()
+    pattern = os.path.join(base_dir, '**', f'*{pen}*{rule}*.csv')
     files = glob.glob(pattern, recursive=True)
-    # Filter to only 4deck and 6deck
-    files = [f for f in files if '4deck' in f or '6deck' in f]
     return sorted(files)
 
 
 def main():
-    # Configuration
-    base_dir = 'stats_evpertc_accurate/evPerTC'
-    output_file = 'ev_per_tc_linear_formulas_75pen_H17_accurate.csv'
-    
-    min_hands = 1000
-    tc_range = (-15, 20)
-    
-    # Find all matching files - 75pen H17 + 4/6deck 70pen H17
-    files = find_75pen_h17_files(base_dir)
-    files_70pen = find_70pen_h17_4_6deck_files(base_dir)
-    files = files + files_70pen
+    parser = argparse.ArgumentParser(
+        description='Calculate EV-per-TC linear fits for a penetration and rule'
+    )
+    parser.add_argument(
+        '--dir', '-d',
+        default='stats_evpertc_accurate/evPerTC',
+        help='Base directory containing strategy subdirectories with CSV files'
+    )
+    parser.add_argument(
+        '--pen', '-p',
+        default='75',
+        help='Penetration (e.g., 75 or 75pen)'
+    )
+    parser.add_argument(
+        '--rule', '-r',
+        default='H17',
+        choices=['H17', 'S17'],
+        help='Dealer rule to match in filenames'
+    )
+    parser.add_argument(
+        '--output', '-o',
+        default=None,
+        help='Output CSV path (default uses pen/rule naming)'
+    )
+    parser.add_argument(
+        '--min-hands', '-m',
+        type=int,
+        default=1000,
+        help='Minimum hands played to include data point'
+    )
+    parser.add_argument(
+        '--tc-min',
+        type=float,
+        default=-15,
+        help='Minimum true count to consider'
+    )
+    parser.add_argument(
+        '--tc-max',
+        type=float,
+        default=20,
+        help='Maximum true count to consider'
+    )
+    parser.add_argument(
+        '--suffix',
+        default='accurate',
+        help='Suffix for auto-generated output filename'
+    )
+
+    args = parser.parse_args()
+
+    base_dir = args.dir
+    pen = normalize_pen(args.pen)
+    rule = args.rule.upper()
+    min_hands = args.min_hands
+    tc_range = (args.tc_min, args.tc_max)
+
+    output_file = args.output
+    if output_file is None:
+        output_file = f"ev_per_tc_linear_formulas_{pen}_{rule}_{args.suffix}.csv"
+
+    # Find all matching files
+    files = find_files_by_pen_rule(base_dir, pen, rule)
     
     if not files:
-        print(f"No 75pen H17 files found in {base_dir}")
+        print(f"No {pen} {rule} files found in {base_dir}")
         return
     
     print(f"Found {len(files)} files to analyze:")
@@ -127,7 +178,13 @@ def main():
             
             # Get arrays for fitting
             tc = df['TrueCount'].values
-            ev = df['EVPerDollar'].values
+            if 'EVPerDollar' in df.columns:
+                ev = df['EVPerDollar'].values
+            elif 'EV' in df.columns:
+                ev = df['EV'].values
+            else:
+                print(f"  Skipping {filepath}: missing EV column")
+                continue
             weights = df['HandsPlayed'].values.astype(float)
             
             # Perform weighted linear regression
@@ -155,6 +212,10 @@ def main():
             print(f"  Error processing {filepath}: {e}")
     
     # Create DataFrame and sort by Strategy, then Decks, then Penetration
+    if not results:
+        print("No results to write after processing files.")
+        return
+
     df_results = pd.DataFrame(results)
     df_results = df_results.sort_values(['Strategy', 'Decks', 'Penetration']).reset_index(drop=True)
     

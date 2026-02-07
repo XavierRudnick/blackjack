@@ -1,2 +1,2 @@
-TrueCount,HandsPlayed,TotalMoneyWagered,TotalPayout,EVPerDollar,StdErrorPerDollar
-0.0,1240764461,1371418974.000000,-5421739.000000,-0.003953,0.000027
+TrueCount,HandsPlayed,TotalMoneyWagered,TotalPayout,EVPerDollar,StdErrorPerDollar,HandsPlayedPct
+0.0,1240764461,1371418974.0,-5421739.0,-0.003953,2.7e-05,100.0

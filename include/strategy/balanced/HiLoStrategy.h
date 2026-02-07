@@ -16,7 +16,8 @@ class HiLoStrategy : public CountingStrategy { //in docs note deck size is count
         float kellyFraction = 0.5f; 
         
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
-        static constexpr float evPerTC = .004910f; // 0.491% per TC from 2deck 75pen data
+        static constexpr float evPerTC = 0.004854187311f; // Avg slope (2/4/6/8 deck) from 75pen data
+        static constexpr float evIntercept = -0.004198997334f; // Avg intercept from 75pen data
         static constexpr float avgVolatility = 1.32f; // Average bet unit per 1 true count for Kelly cal
         static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 0.5f; // HiLo profitable at TC >= 0.42 (2deck 75pen)
     public:

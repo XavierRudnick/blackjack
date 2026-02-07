@@ -1,8 +1,10 @@
 CXX = g++
 #CXXFLAGS = -std=c++17 -Wall -Wextra -g 
 CXXFLAGS= -std=c++17 -O3 -march=native -flto=auto -DNDEBUG
+TEST_CXXFLAGS = $(filter-out -DNDEBUG,$(CXXFLAGS))
 CPPFLAGS = -Iinclude -Iinclude/core -Iinclude/strategy -Iinclude/strategy/balanced -Iinclude/strategy/unbalanced -Iinclude/players -Iinclude/observers
 OBJDIR = build
+TEST_OBJDIR = $(OBJDIR)/test
 
 CORE_SOURCES = \
     src/core/rank.cpp \
@@ -30,30 +32,35 @@ OBSERVER_SOURCES = \
 
 COMMON_SOURCES = $(CORE_SOURCES) $(STRATEGY_SOURCES) $(PLAYER_SOURCES) $(OBSERVER_SOURCES)
 COMMON_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(COMMON_SOURCES))
+COMMON_TEST_OBJECTS = $(patsubst src/%.cpp,$(TEST_OBJDIR)/%.o,$(COMMON_SOURCES))
 
 BLACKJACK_SOURCES = src/main.cpp
 BLACKJACK_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(BLACKJACK_SOURCES))
 
 TEST_SOURCES = src/test.cpp
-TEST_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(TEST_SOURCES))
+TEST_OBJECTS = $(patsubst src/%.cpp,$(TEST_OBJDIR)/%.o,$(TEST_SOURCES))
 
 TEST_FIXED_ENGINE_SOURCES = src/testFixedEngine.cpp
-TEST_FIXED_ENGINE_OBJECTS = $(patsubst src/%.cpp,$(OBJDIR)/%.o,$(TEST_FIXED_ENGINE_SOURCES))
+TEST_FIXED_ENGINE_OBJECTS = $(patsubst src/%.cpp,$(TEST_OBJDIR)/%.o,$(TEST_FIXED_ENGINE_SOURCES))
 
 all: blackjack test test_fixed_engine
 
 blackjack: $(BLACKJACK_OBJECTS) $(COMMON_OBJECTS)
 	$(CXX) $(CXXFLAGS) -o blackjack $(BLACKJACK_OBJECTS) $(COMMON_OBJECTS)
 
-test: $(TEST_OBJECTS) $(COMMON_OBJECTS)
-	$(CXX) $(CXXFLAGS) -o run_tests $(TEST_OBJECTS) $(COMMON_OBJECTS)
+test: $(TEST_OBJECTS) $(COMMON_TEST_OBJECTS)
+	$(CXX) $(TEST_CXXFLAGS) -o run_tests $(TEST_OBJECTS) $(COMMON_TEST_OBJECTS)
 
-test_fixed_engine: $(TEST_FIXED_ENGINE_OBJECTS) $(COMMON_OBJECTS)
-	$(CXX) $(CXXFLAGS) -o run_fixed_engine_tests $(TEST_FIXED_ENGINE_OBJECTS) $(COMMON_OBJECTS)
+test_fixed_engine: $(TEST_FIXED_ENGINE_OBJECTS) $(COMMON_TEST_OBJECTS)
+	$(CXX) $(TEST_CXXFLAGS) -o run_fixed_engine_tests $(TEST_FIXED_ENGINE_OBJECTS) $(COMMON_TEST_OBJECTS)
 
 $(OBJDIR)/%.o: src/%.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+
+$(TEST_OBJDIR)/%.o: src/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(TEST_CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
 clean:
 	rm -rf blackjack run_tests run_fixed_engine_tests $(OBJDIR)

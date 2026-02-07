@@ -1,6 +1,7 @@
 #ifndef DECK_H
 #define DECK_H
 
+#include <cstdint>
 #include <random>
 #include <vector>
 #include "Card.h"
@@ -9,10 +10,7 @@ class Deck{
     private:
         std::vector<Card> deck;
 
-        static std::mt19937& getGlobalRng() {
-            static thread_local std::mt19937 rand(std::random_device{}());
-            return rand;
-        }
+        static std::mt19937& getGlobalRng();
 
     public:
         static const int NUM_RANK = 13;
@@ -26,6 +24,11 @@ class Deck{
         int getSize();
         Deck clone() const;
         void reset();
+
+        // Set a deterministic RNG seed for reproducible shuffles.
+        static void setSeed(std::uint32_t seed);
+        // Restore non-deterministic RNG seeding.
+        static void clearSeed();
 
         void shuffle();
 };

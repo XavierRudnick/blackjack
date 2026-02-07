@@ -544,6 +544,20 @@ void setUpUnifiedSims(int numDecksUsed, float deckPenetration, int iterations, b
 }
 
 int main(){
+    if (const char* seedEnv = std::getenv("BLACKJACK_SEED")) {
+        try {
+            const auto parsed = std::stoul(seedEnv);
+            Deck::setSeed(static_cast<std::uint32_t>(parsed));
+            std::cout << "Using deterministic deck seed: " << parsed << std::endl;
+        } catch (const std::exception&) {
+            std::cerr << "Invalid BLACKJACK_SEED value '" << seedEnv
+                      << "'. Falling back to non-deterministic RNG." << std::endl;
+            Deck::clearSeed();
+        }
+    } else {
+        Deck::clearSeed();
+    }
+
     // Re-run unified Monte Carlo deviations for previously broken strategies
     // int deckSize[] = {2,6};
     // int rtpIterations[] = {2000000000, 600000000};

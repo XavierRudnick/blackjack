@@ -13,14 +13,16 @@ class MentorStrategy : public CountingStrategy { //in docs note deck size is cou
         float running_count = 0;
         float num_decks_left = 0;
         float initial_decks = 0;
+
         float unitSize = 25;
-        float kellyFraction = 0.5f;
+        float kellyFraction;
         
-        static constexpr int MIN_BET = 25;
+
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
-        static constexpr float evPerTC = .000137f; // 0.0137% per TC from 2deck 75pen data
+        static constexpr float evPerTC = 0.002745999501f; // Avg slope (2/4/6/8 deck) from 75pen data
+        static constexpr float evIntercept = -0.004014569844f; // Avg intercept from 75pen data
         static constexpr float avgVolatility = 1.32f;
-        static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 39.0f; // Mentor profitable at TC >= 39.0
+        static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 1.0f; // Mentor profitable at TC >= 0.55 (2deck 75pen)
         int getEvenBet() const;
     public:
         MentorStrategy(float deck_size);

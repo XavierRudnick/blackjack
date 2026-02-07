@@ -17,8 +17,10 @@ int RAPCStrategy::getBetSize() {
         return MIN_BET;
     }
 
-    int bet = std::round((unitSize * effectiveTC) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
-    return std::max(MIN_BET, bet);
+    float interceptUnit = (Bankroll::getInitialBalance() * kellyFraction * evIntercept) / avgVolatility;
+    int bet = std::round((unitSize * effectiveTC + interceptUnit) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
+    bet = std::max(MIN_BET, bet);
+    return std::min(getMaxBet(), bet);
 }
 
 void RAPCStrategy::setUnitSize(float inputKellyFraction) {

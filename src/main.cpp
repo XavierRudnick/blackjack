@@ -229,7 +229,7 @@ void runUnifiedMonteSims(int numDecksUsed, int iterations, float deckPenetration
     // Save results for each scenario to separate CSV files
     for (const auto& scenario : scenarios) {
         std::ostringstream filename;
-        filename << "stats/" << strategyName << "_" << scenario.name << "_" << H17Str << ".csv";
+        filename << "stats/" << strategyName << "_" << scenario.name << "_" << numDecksUsed << "_" << H17Str << ".csv";
         fixedEngineTotal.saveScenarioResults(scenario.name, filename.str());
         std::cout << "  Saved " << scenario.name << " to " << filename.str() << std::endl;
     }
@@ -257,17 +257,17 @@ std::vector<MonteCarloScenario> createAllScenarios() {
     insuranceScenario.isInsuranceScenario = true;
     scenarios.push_back(insuranceScenario);
     
-    // // 2. Hit vs Stand - hard hands only
-    // MonteCarloScenario hitVsStandScenario;
-    // hitVsStandScenario.name = "Hit_vs_Stand";
-    // hitVsStandScenario.actions = {Action::Hit, Action::Stand};
-    // hitVsStandScenario.cardValues = {
-    //     {16, 10}, {15, 10}, {12, 3}, {12, 2}, {13, 2}, {13, 3}
-    // };
-    // hitVsStandScenario.allowSoftHands = false;  // Hard hands only
-    // hitVsStandScenario.requirePair = false;
-    // hitVsStandScenario.isInsuranceScenario = false;
-    // scenarios.push_back(hitVsStandScenario);
+    // 2. Hit vs Stand - hard hands only
+    MonteCarloScenario hitVsStandScenario;
+    hitVsStandScenario.name = "Hit_vs_Stand";
+    hitVsStandScenario.actions = {Action::Hit, Action::Stand};
+    hitVsStandScenario.cardValues = {
+        {16, 10}, {15, 10}, {12, 3}, {12, 2}, {13, 2}, {13, 3}
+    };
+    hitVsStandScenario.allowSoftHands = false;  // Hard hands only
+    hitVsStandScenario.requirePair = false;
+    hitVsStandScenario.isInsuranceScenario = false;
+    scenarios.push_back(hitVsStandScenario);
     
     // 3. Split vs Stand (Pair of 10s) - requires pair
     MonteCarloScenario splitVsStandScenario;
@@ -282,29 +282,29 @@ std::vector<MonteCarloScenario> createAllScenarios() {
     splitVsStandScenario.isInsuranceScenario = false;
     scenarios.push_back(splitVsStandScenario);
     
-    // 4. Hit vs Double - hard hands only
-    // MonteCarloScenario hitVsDoubleScenario;
-    // hitVsDoubleScenario.name = "Hit_vs_Double";
-    // hitVsDoubleScenario.actions = {Action::Hit, Action::Double};
-    // hitVsDoubleScenario.cardValues = {
-    //     {10, 10}, {10, 11}, {11, 11}, {9, 2}, {9, 7}
-    // };
-    // hitVsDoubleScenario.allowSoftHands = false;
-    // hitVsDoubleScenario.requirePair = false;
-    // hitVsDoubleScenario.isInsuranceScenario = false;
-    // scenarios.push_back(hitVsDoubleScenario);
+    //4. Hit vs Double - hard hands only
+    MonteCarloScenario hitVsDoubleScenario;
+    hitVsDoubleScenario.name = "Hit_vs_Double";
+    hitVsDoubleScenario.actions = {Action::Hit, Action::Double};
+    hitVsDoubleScenario.cardValues = {
+        {10, 10}, {10, 11}, {11, 11}, {9, 2}, {9, 7}
+    };
+    hitVsDoubleScenario.allowSoftHands = false;
+    hitVsDoubleScenario.requirePair = false;
+    hitVsDoubleScenario.isInsuranceScenario = false;
+    scenarios.push_back(hitVsDoubleScenario);
     
-    // // 5. Surrender vs Hit - hard hands only
-    // MonteCarloScenario surrenderVsHitScenario;
-    // surrenderVsHitScenario.name = "Surrender_vs_Hit";
-    // surrenderVsHitScenario.actions = {Action::Surrender, Action::Hit};
-    // surrenderVsHitScenario.cardValues = {
-    //     {15, 9}, {15, 10}, {14, 10}, {15, 11}, {16, 9}, {16, 10}, {16, 11}
-    // };
-    // surrenderVsHitScenario.allowSoftHands = false;
-    // surrenderVsHitScenario.requirePair = false;
-    // surrenderVsHitScenario.isInsuranceScenario = false;
-    // scenarios.push_back(surrenderVsHitScenario);
+    // 5. Surrender vs Hit - hard hands only
+    MonteCarloScenario surrenderVsHitScenario;
+    surrenderVsHitScenario.name = "Surrender_vs_Hit";
+    surrenderVsHitScenario.actions = {Action::Surrender, Action::Hit};
+    surrenderVsHitScenario.cardValues = {
+        {15, 9}, {15, 10}, {14, 10}, {15, 11}, {16, 9}, {16, 10}, {16, 11}
+    };
+    surrenderVsHitScenario.allowSoftHands = false;
+    surrenderVsHitScenario.requirePair = false;
+    surrenderVsHitScenario.isInsuranceScenario = false;
+    scenarios.push_back(surrenderVsHitScenario);
     
     return scenarios;
 }
@@ -313,7 +313,7 @@ std::vector<MonteCarloScenario> createAllScenarios() {
 auto createStrategies(int numDecksUsed) {
     std::vector<std::unique_ptr<CountingStrategy>> strategies;
     strategies.push_back(std::make_unique<HiLoStrategy>(numDecksUsed));
-    strategies.push_back(std::make_unique<NoStrategy>(numDecksUsed));
+    //strategies.push_back(std::make_unique<NoStrategy>(numDecksUsed));
     strategies.push_back(std::make_unique<MentorStrategy>(numDecksUsed));
     strategies.push_back(std::make_unique<RPCStrategy>(numDecksUsed));
     strategies.push_back(std::make_unique<RAPCStrategy>(numDecksUsed));
@@ -422,12 +422,13 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
                << (blackJackPayout3to2 ? "3to2" : "6to5") << ".csv";
 
     std::ofstream evFile(evFilename.str());
-    evFile << "TrueCount,HandsPlayed,TotalPayout,EV,StdError" << std::endl;
+    evFile << "TrueCount,HandsPlayed,TotalMoneyWagered,TotalPayout,EVPerDollar,StdErrorPerDollar" << std::endl;
     for (const auto& entry : EVperTC) {
         const float trueCount = entry.first;
         const ActionStats& stats = entry.second;
         evFile << std::fixed << std::setprecision(1) << trueCount << ","
                << stats.handsPlayed << ","
+               << std::fixed << std::setprecision(6) << stats.totalMoneyWagered << ","
                << std::fixed << std::setprecision(6) << stats.totalPayout << ","
                << std::fixed << std::setprecision(6) << stats.getEV() << ","
                << std::fixed << std::setprecision(6) << stats.getStdError()
@@ -460,7 +461,7 @@ void runAllRTPSimulations(int numDecksUsed, float deckPenetration, int iteration
     std::cout << "Results will be saved to: " << filename << std::endl << std::endl;
     
     auto strategies = createStrategies(numDecksUsed);
-    const size_t num_threads = std::min(static_cast<size_t>(9), strategies.size());
+    const size_t num_threads = std::min(static_cast<size_t>(4), strategies.size());
     
     std::cout << "Running with " << num_threads << " thread(s)" << std::endl << std::endl;
     
@@ -513,7 +514,7 @@ void setUpUnifiedSims(int numDecksUsed, float deckPenetration, int iterations, b
     // const unsigned int hwThreads = std::max(1u, std::thread::hardware_concurrency());
     // const size_t maxParallel = std::min(strategies.size(), static_cast<size_t>(hwThreads));
      
-    const size_t num_threads = 9;
+    const size_t num_threads = 4;
 
     std::cout << "Using up to " << num_threads << " thread(s)" << std::endl;
 
@@ -543,6 +544,82 @@ void setUpUnifiedSims(int numDecksUsed, float deckPenetration, int iterations, b
 }
 
 int main(){
+    if (const char* seedEnv = std::getenv("BLACKJACK_SEED")) {
+        try {
+            const auto parsed = std::stoul(seedEnv);
+            Deck::setSeed(static_cast<std::uint32_t>(parsed));
+            std::cout << "Using deterministic deck seed: " << parsed << std::endl;
+        } catch (const std::exception&) {
+            std::cerr << "Invalid BLACKJACK_SEED value '" << seedEnv
+                      << "'. Falling back to non-deterministic RNG." << std::endl;
+            Deck::clearSeed();
+        }
+    } else {
+        Deck::clearSeed();
+    }
+
+    // Re-run unified Monte Carlo deviations for previously broken strategies
+    // int deckSize[] = {2,6};
+    // int rtpIterations[] = {2000000000, 600000000};
+    // float deckPenetration[] = {0.65f,0.80f};
+    // int monteCarloIterations = 600000000;
+    // bool blackJackPayout3to2 = true;
+    // bool allowDoubleAfterSplit = true;
+    // bool allowReSplitAces = true;
+    // std::vector<MonteCarloScenario> scenarios = createAllScenarios();
+
+    // std::cout << "\n=== DEVIATION MONTE CARLO (BROKEN STRATEGIES) ===" << std::endl;
+    // std::cout << "Decks: " << "2" << ", Penetration: " << deckPenetration[0]
+    //           << ", Iterations: " << monteCarloIterations << std::endl;
+    
+    // for (int i = 0; i < sizeof(deckSize)/sizeof(deckSize[0]); ++i) {
+    //     int numDecksUsed = deckSize[i];
+    //     std::cout << "\n--- Running simulations for " << numDecksUsed << " decks ---" << std::endl;
+    //     std::vector<std::unique_ptr<CountingStrategy>> strategiesH17;
+    //     strategiesH17.push_back(std::make_unique<MentorStrategy>(numDecksUsed));
+    //     strategiesH17.push_back(std::make_unique<OmegaIIStrategy>(numDecksUsed));
+    //     strategiesH17.push_back(std::make_unique<R14Strategy>(numDecksUsed));
+    //     strategiesH17.push_back(std::make_unique<WongHalvesStrategy>(numDecksUsed));
+
+    //     std::vector<std::unique_ptr<CountingStrategy>> strategiesS17;
+    //     strategiesS17.push_back(std::make_unique<MentorStrategy>(numDecksUsed));
+    //     strategiesS17.push_back(std::make_unique<OmegaIIStrategy>(numDecksUsed));
+    //     strategiesS17.push_back(std::make_unique<R14Strategy>(numDecksUsed));
+    //     strategiesS17.push_back(std::make_unique<WongHalvesStrategy>(numDecksUsed));
+
+    //     const size_t num_threads = 8;
+    //     std::vector<std::thread> workers;
+    //     workers.reserve(num_threads);
+
+    //     bool H17 = true;
+    //     bool S17 = false;
+
+    //     for (auto& strategy : strategiesH17) {
+    //         workers.emplace_back([&, strat = std::move(strategy), H17]() mutable {
+    //             runUnifiedMonteSims(numDecksUsed, rtpIterations[i], deckPenetration[i],
+    //                 std::move(strat), scenarios,
+    //                 blackJackPayout3to2, H17, allowDoubleAfterSplit, allowReSplitAces);
+    //         });
+
+    //         workers.emplace_back([&, strat = std::move(strategiesS17.back()), S17]() mutable {
+    //             runUnifiedMonteSims(numDecksUsed, rtpIterations[i], deckPenetration[i],
+    //                 std::move(strat), scenarios,
+    //                 blackJackPayout3to2, S17, allowDoubleAfterSplit, allowReSplitAces);
+    //         });
+    //         strategiesS17.pop_back();
+    //     }
+
+    //     for (auto& t : workers) {
+    //         t.join();
+    //     }
+
+    //     workers.clear();
+
+    //     // Recreate strategies for the next ruleset run
+    //     strategiesH17.clear();
+    //     strategiesS17.clear();
+    // }
+
     // Configuration for RTP simulations (using 2-deck with updated deviations)
     int numDecksUsed = 2;
     float deckPenetration = 0.65;
@@ -560,19 +637,18 @@ int main(){
     bool RAS[] = {false};
     bool SurrenderAllowed[] = {false};
     bool blackJackPayout3to2[] = {true};
-    int deckSize[] = {6,8};
-    int rtpIterations[] = {17000000, 12500000};
-    float penetrations[] = {0.3f,0.35f,0.4f, 0.45f, 0.5f, 0.55f, 0.60f,0.65f,0.7f, 0.75f,0.80f}; //0.7f, 0.75f,0.80f
-    float kellyFractions[] = {0.125f,0.25f,0.5f,.75f};
-    int i = 0;
+    int deckSize[] = {2,4,6,8};
+    int rtpIterations[] = {50000000,25000000,17000000,12500000};
+    float penetrations[] = {0.3f,0.4f,0.5f,0.60f,0.7f,0.80f}; //0.7f, 0.75f,0.80f
+    float kellyFractions[] = {0.125f,0.25f,0.5f,0.75f};
 
     for (bool dh17 : dealerHits17) {
         for (bool dasD : DAS){
             for (bool rasD : RAS){
                 for (bool blackJack3to2 : blackJackPayout3to2){
                     for (bool surr : SurrenderAllowed){
+                        int i = 0;  // Reset i for each dealer rule iteration
                         for (int ds : deckSize){
-                            int i = 0;
                             for (float kellyFraction : kellyFractions){
                                 for (float pen : penetrations){
                                     numDecksUsed = ds;
@@ -589,8 +665,9 @@ int main(){
                                 }
                                 
                             }
+                            i++;
                         }
-                        i++;
+                        
                     }
                 }
             }   

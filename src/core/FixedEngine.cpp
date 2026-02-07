@@ -399,10 +399,10 @@ void FixedEngine::dealer_draw(Deck& deck,Hand& dealer){
     bool isSoft17 = dealer.isSoft17();
     int score = dealer.getScore();
     
-    if (score > 17 || (score == 17 && !isSoft17)) {
+    if (score > 17 || (score == 17 && !isSoft17) || (isSoft17 && !config.dealerHitsSoft17)) {
         return;
     }
-    while (!dealer.isDealerOver()){
+    while (!dealer.isDealerOver() || (dealer.isSoft17() && config.dealerHitsSoft17)){
         if (deck.getSize() < 1) {
             throw std::runtime_error("Not enough cards to draw initial hand 271");
         }
@@ -472,24 +472,32 @@ void FixedEngine::savetoCSVResults(const std::string& filename) const {
 }
 
 void FixedEngine::merge(const FixedEngine& other){
-    // Properly merge ActionStats using Welford's parallel algorithm
+    // Merge weighted ActionStats (weights are totalMoneyWagered)
     auto accumulate = [](ActionStats& dst, const ActionStats& src) {
-        // Always accumulate splitsPlayed for split tracking
         dst.splitsPlayed += src.splitsPlayed;
-        
-        if (src.handsPlayed == 0) return;
-        
-        int totalCount = dst.handsPlayed + src.handsPlayed;
-        double delta = src.mean - dst.mean;
-        
-        // Combine totals
         dst.totalPayout += src.totalPayout;
-        
-        // Combine means and M2 using parallel Welford's algorithm
-        dst.mean = (dst.handsPlayed * dst.mean + src.handsPlayed * src.mean) / totalCount;
-        dst.M2 = dst.M2 + src.M2 + delta * delta * dst.handsPlayed * src.handsPlayed / totalCount;
-        
-        dst.handsPlayed = totalCount;
+        dst.handsPlayed += src.handsPlayed;
+
+        const double dstWeight = dst.totalMoneyWagered;
+        const double srcWeight = src.totalMoneyWagered;
+
+        if (srcWeight <= 0.0) {
+            return;
+        }
+
+        if (dstWeight <= 0.0) {
+            dst.totalMoneyWagered = srcWeight;
+            dst.mean = src.mean;
+            dst.M2 = src.M2;
+            return;
+        }
+
+        const double totalWeight = dstWeight + srcWeight;
+        const double delta = src.mean - dst.mean;
+
+        dst.mean = (dstWeight * dst.mean + srcWeight * src.mean) / totalWeight;
+        dst.M2 = dst.M2 + src.M2 + delta * delta * dstWeight * srcWeight / totalWeight;
+        dst.totalMoneyWagered = totalWeight;
     };
 
     // Merge legacy EVresults

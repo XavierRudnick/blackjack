@@ -16,11 +16,12 @@ class RAPCStrategy : public CountingStrategy { //in docs note deck size is count
         float unitSize = 25;
         float kellyFraction = 0.5f;
         
-        static constexpr int MIN_BET = 25;
+
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
-        static constexpr float evPerTC = .00177f; // 0.177% per TC from 2deck 75pen data
+        static constexpr float evPerTC = 0.001504607744f; // Avg slope (2/4/6/8 deck) from 75pen data
+        static constexpr float evIntercept = -0.004158493573f; // Avg intercept from 75pen data
         static constexpr float avgVolatility = 1.32f;
-        static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 2.0f; // RAPC profitable at TC >= 2.0
+        static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 2.0f; // RAPC profitable at TC >= 1.36 (2deck 75pen)
         int getEvenBet() const;
     public:
         RAPCStrategy(float deck_size);

@@ -76,23 +76,24 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
         deck.reset();
         robot.resetCount(numDecksUsed);
 
-        std::pair<double, double> profit = {1000, 0};
+        std::pair<double, double> profit = {50000, 0};
 
         Engine hiLoEngine = EngineBuilder()
                                     .withEventBus(&bus)
                                     .setDeckSize(numDecksUsed)
                                     .setDeck(deck)
                                     .setPenetrationThreshold(deckPenetration)
-                                    .setInitialWallet(1000)
+                                    .setInitialWallet(50000)
+                                    .setKellyRisk(0.75f)
                                     .enableEvents(false)
                                     .with3To2Payout(true)
-                                    .withH17Rules(false)
+                                    .withH17Rules(true)
                                     .allowDoubleAfterSplit(true)
-                                    .allowReSplitAces(true)
+                                    .allowReSplitAces(false)
                                     .build(&robot);
         profit = hiLoEngine.runner();
 
-        if (i % 100000 == 0 && i != 0){
+        if (i % 10000000 == 0 && i != 0){
             std::cout  << "Completed " << i << " / " << iterations << " iterations." <<std::endl;
         }
 
@@ -106,10 +107,10 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
 
     double average = gameStats.first / iterations;
     double avgMoneyBet = gameStats.second / iterations;
-    double diff = average-1000;
-    double normal =  1000.0 / avgMoneyBet;
+    double diff = average-50000;
+    double normal =  50000.0 / avgMoneyBet;
     double money_lost_per = diff * normal;
-    double rtp = (1000+money_lost_per) /1000;
+    double rtp = (50000+money_lost_per) /50000;
 
     std::cout << "Average after " << iterations << " rounds: " << average << std::endl;
     std::cout << "Average money bet: " << avgMoneyBet << std::endl;
@@ -558,6 +559,8 @@ int main(){
         Deck::clearSeed();
     }
 
+    runRTPsims(2, 50000000, 0.80f, std::make_unique<HiLoStrategy>(2));
+    return 0;
     // Re-run unified Monte Carlo deviations for previously broken strategies
     // int deckSize[] = {2,6};
     // int rtpIterations[] = {2000000000, 600000000};

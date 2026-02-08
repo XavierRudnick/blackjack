@@ -15,7 +15,6 @@ HiLoStrategy::HiLoStrategy(float deck_size){
 
 
 int HiLoStrategy::getBetSize() {
-
     float effectiveTC = true_count - PROFITABLE_PLAY_TC_THRESHOLD;
     if (effectiveTC <= 0){
         return MIN_BET;

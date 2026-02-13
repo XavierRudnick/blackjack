@@ -19,7 +19,6 @@ struct ActionStats {
         totalPayout += net;
         totalMoneyWagered += wagered;
 
-        // Weighted Welford update using wagered as frequency weight
         const double value = net / wagered;
         const double prevMean = mean;
         const double totalWeight = totalMoneyWagered;
@@ -31,9 +30,9 @@ struct ActionStats {
         addResult(net, 1.0);
     }
 
-    void addInsuranceLose(double loss = .5){
-        addResult(-loss, loss);
-    }
+    // void addInsuranceLose(double loss = .5){
+    //     addResult(-loss, loss);
+    // }
 
     void timesSplit() {
         splitsPlayed++;

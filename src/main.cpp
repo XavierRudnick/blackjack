@@ -119,67 +119,67 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
     std::cout << "RTP " << rtp << std::endl;
 }
 
-// Legacy single-action simulation (kept for backward compatibility)
-void runMontesims(int numDecksUsed, int iterations, float deckPenetration, 
-    const std::vector<Action>& monteCarloActions, 
-    std::unique_ptr<CountingStrategy> strategy, 
-    const std::set<std::pair<int,int>>& dealerVplayerValues, 
-    bool blackJackPayout3to2, bool dealerHits17, bool allowDoubleAfterSplit, bool allowReSplitAces,
-    bool allowSoftHandsInMonteCarlo, bool requirePairForMonteCarlo,
-    const std::string& actionSetName) {
+// // Legacy single-action simulation (kept for backward compatibility)
+// void runMontesims(int numDecksUsed, int iterations, float deckPenetration, 
+//     const std::vector<Action>& monteCarloActions, 
+//     std::unique_ptr<CountingStrategy> strategy, 
+//     const std::set<std::pair<int,int>>& dealerVplayerValues, 
+//     bool blackJackPayout3to2, bool dealerHits17, bool allowDoubleAfterSplit, bool allowReSplitAces,
+//     bool allowSoftHandsInMonteCarlo, bool requirePairForMonteCarlo,
+//     const std::string& actionSetName) {
 
-    EventBus& bus = EventBus::getInstance();
-    Deck deck(numDecksUsed);
-    std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults;
-    std::string strategyName = strategy->getName();
-    std::cout << "Running " << actionSetName << " simulations for strategy " << strategyName << std::endl;
+//     EventBus& bus = EventBus::getInstance();
+//     Deck deck(numDecksUsed);
+//     std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults;
+//     std::string strategyName = strategy->getName();
+//     std::cout << "Running " << actionSetName << " simulations for strategy " << strategyName << std::endl;
     
-    BotPlayer robot(false, std::move(strategy)); 
-    FixedEngine fixedEngineTotal;
+//     BotPlayer robot(false, std::move(strategy)); 
+//     FixedEngine fixedEngineTotal;
 
-    auto start_time = std::chrono::high_resolution_clock::now();
+//     auto start_time = std::chrono::high_resolution_clock::now();
 
-    for (int i = 0; i < iterations; i++){
-        deck.reset();
-        robot.resetCount(numDecksUsed);
+//     for (int i = 0; i < iterations; i++){
+//         deck.reset();
+//         robot.resetCount(numDecksUsed);
 
-        Engine engine = EngineBuilder()
-                            .withEventBus(&bus)
-                            .setDeckSize(numDecksUsed)
-                            .setDeck(deck)
-                            .setPenetrationThreshold(deckPenetration)
-                            .setInitialWallet(1000)
-                            .enableEvents(false)
-                            .with3To2Payout(blackJackPayout3to2)
-                            .withH17Rules(dealerHits17)
-                            .allowDoubleAfterSplit(allowDoubleAfterSplit)
-                            .allowReSplitAces(allowReSplitAces)
-                            .enableMontiCarlo(true)
-                            .setActionValues(dealerVplayerValues)
-                            .allowSoftHandsInMonteCarlo(allowSoftHandsInMonteCarlo)
-                            .requirePairForMonteCarlo(requirePairForMonteCarlo)
-                            .setActions(monteCarloActions)
-                            .setEVActions(EVresults)
-                            .build(&robot);
+//         Engine engine = EngineBuilder()
+//                             .withEventBus(&bus)
+//                             .setDeckSize(numDecksUsed)
+//                             .setDeck(deck)
+//                             .setPenetrationThreshold(deckPenetration)
+//                             .setInitialWallet(1000)
+//                             .enableEvents(false)
+//                             .with3To2Payout(blackJackPayout3to2)
+//                             .withH17Rules(dealerHits17)
+//                             .allowDoubleAfterSplit(allowDoubleAfterSplit)
+//                             .allowReSplitAces(allowReSplitAces)
+//                             .enableMontiCarlo(true)
+//                             .setActionValues(dealerVplayerValues)
+//                             .allowSoftHandsInMonteCarlo(allowSoftHandsInMonteCarlo)
+//                             .requirePairForMonteCarlo(requirePairForMonteCarlo)
+//                             .setActions(monteCarloActions)
+//                             .setEVActions(EVresults)
+//                             .build(&robot);
 
-        FixedEngine fixedEngine = engine.runnerMonte();
-        fixedEngineTotal.merge(fixedEngine);
+//         FixedEngine fixedEngine = engine.runnerMonte();
+//         fixedEngineTotal.merge(fixedEngine);
 
-        if (i % 500000 == 0 && i != 0){
-            std::cout  << "  Completed " << i << " / " << iterations << " iterations." << std::endl;
-        }
-    }
-    std::string H17Str = dealerHits17 ? "H17" : "S17";
-    std::ostringstream filename;
-    filename << "stats/" << strategyName << "_" << actionSetName << "_" << H17Str << ".csv";
-    fixedEngineTotal.savetoCSVResults(filename.str());
+//         if (i % 500000 == 0 && i != 0){
+//             std::cout  << "  Completed " << i << " / " << iterations << " iterations." << std::endl;
+//         }
+//     }
+//     std::string H17Str = dealerHits17 ? "H17" : "S17";
+//     std::ostringstream filename;
+//     filename << "stats/" << strategyName << "_" << actionSetName << "_" << H17Str << ".csv";
+//     fixedEngineTotal.savetoCSVResults(filename.str());
     
-    auto end_time = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
-    std::cout << "  Saved results to " << filename.str() << " (" << duration.count() << "s)" << std::endl;
-}
+//     auto end_time = std::chrono::high_resolution_clock::now();
+//     auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
+//     std::cout << "  Saved results to " << filename.str() << " (" << duration.count() << "s)" << std::endl;
+// }
 
-// NEW: Unified multi-scenario simulation - tracks ALL action comparisons in a single simulation pass
+// Unified multi-scenario simulation - tracks ALL action comparisons in a single simulation pass
 void runUnifiedMonteSims(int numDecksUsed, int iterations, float deckPenetration,
     std::unique_ptr<CountingStrategy> strategy,
     const std::vector<MonteCarloScenario>& scenarios,

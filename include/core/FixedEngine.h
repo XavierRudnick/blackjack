@@ -35,16 +35,9 @@ public:
                                  std::pair<int,int> cardValues, const MonteCarloScenario& scenario);
     
     void savetoCSVResults(const std::string& filename = "fixed_engine_results.csv") const;
-    
-    // Save results for a specific scenario
     void saveScenarioResults(const std::string& scenarioName, const std::string& baseFilename) const;
-    
     const std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& getResults() const;
-    
-    // Get results for a specific scenario
     const std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& getScenarioResults(const std::string& scenarioName) const;
-    
-    // Get all scenario names with results
     std::vector<std::string> getScenarioNames() const;
     
     void merge(const FixedEngine& other);

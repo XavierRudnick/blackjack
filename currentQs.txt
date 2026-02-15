@@ -1,0 +1,26 @@
+Think of TC as measuring:
+
+“How favorable is the average card in the shoe?”
+
+But EV-per-$ also depends on:
+
+“How many cards remain to undo that favorability before I bet them?”
+
+A more precise view: “persistence time” of favorable counts
+
+Define a favorable condition like:
+
+TC≥TC min
+	​
+
+The natural question is:
+
+starting from TC=2, what’s the probability TC stays ≥ 1 for the next N hands?
+
+That probability depends heavily on dr because dr determines N (how many hands you’ll play before shuffle).
+
+Deep penetration (small dr): N is small ⇒ high persistence probability
+
+Shallow penetration (large dr): N is large ⇒ eventually the count will wander down with high probability
+
+So the value of a given TC is higher when dr is low because you can actually exploit it during the remaining shoe.

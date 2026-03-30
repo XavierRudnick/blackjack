@@ -11,3 +11,4 @@ CMakeFiles/
 CMakeCache.txt
 # Build folders
 build/
+*.gitignore

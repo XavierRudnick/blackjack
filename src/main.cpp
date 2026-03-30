@@ -66,33 +66,38 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
     EventBus& bus = EventBus::getInstance();
     //bus.detachAll();
     //bus.registerObserver(&consoleObserver, {EventType::CardsDealt, EventType::ActionTaken, EventType::RoundEnded, EventType::GameStats});
-
+    int losses = 0;
     Deck deck(numDecksUsed);
     BotPlayer robot(false, std::move(strategy)); 
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
     for (int i = 0; i < iterations; i++){
-        deck.reset();
-        robot.resetCount(numDecksUsed);
+        std::pair<double, double> profit = {1000, 0};
+        for (int j = 0; j < 2; j++){
+            deck.reset();
+            robot.resetCount(numDecksUsed);
 
-        std::pair<double, double> profit = {50000, 0};
+            Engine hiLoEngine = EngineBuilder()
+                                        .withEventBus(&bus)
+                                        .setDeckSize(numDecksUsed)
+                                        .setDeck(deck)
+                                        .setPenetrationThreshold(deckPenetration)
+                                        .setInitialWallet(profit.first)
+                                        .setKellyRisk(0.75f)
+                                        .enableEvents(false)
+                                        .with3To2Payout(true)
+                                        .withH17Rules(true)
+                                        .allowDoubleAfterSplit(true)
+                                        .allowReSplitAces(false)
+                                        .build(&robot);
+            profit = hiLoEngine.runner();
+            if (profit.second == 0){
+                losses++;
+                break;
+            }
 
-        Engine hiLoEngine = EngineBuilder()
-                                    .withEventBus(&bus)
-                                    .setDeckSize(numDecksUsed)
-                                    .setDeck(deck)
-                                    .setPenetrationThreshold(deckPenetration)
-                                    .setInitialWallet(50000)
-                                    .setKellyRisk(0.75f)
-                                    .enableEvents(false)
-                                    .with3To2Payout(true)
-                                    .withH17Rules(true)
-                                    .allowDoubleAfterSplit(true)
-                                    .allowReSplitAces(false)
-                                    .build(&robot);
-        profit = hiLoEngine.runner();
-
+        }
         if (i % 10000000 == 0 && i != 0){
             std::cout  << "Completed " << i << " / " << iterations << " iterations." <<std::endl;
         }
@@ -107,11 +112,11 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
 
     double average = gameStats.first / iterations;
     double avgMoneyBet = gameStats.second / iterations;
-    double diff = average-50000;
-    double normal =  50000.0 / avgMoneyBet;
+    double diff = average-1000;
+    double normal =  1000.0 / avgMoneyBet;
     double money_lost_per = diff * normal;
-    double rtp = (50000+money_lost_per) /50000;
-
+    double rtp = (1000+money_lost_per) /1000;
+    std::cout << "lose br rate " << (float)losses/iterations << std::endl;
     std::cout << "Average after " << iterations << " rounds: " << average << std::endl;
     std::cout << "Average money bet: " << avgMoneyBet << std::endl;
     std::cout << "Difference: " << diff << std::endl;
@@ -544,7 +549,7 @@ void setUpUnifiedSims(int numDecksUsed, float deckPenetration, int iterations, b
     std::cout << "\n=== UNIFIED SIMULATIONS COMPLETE (" << H17Str << ") ===" << std::endl;
 }
 
-int main(){
+void runHella(){
     if (const char* seedEnv = std::getenv("BLACKJACK_SEED")) {
         try {
             const auto parsed = std::stoul(seedEnv);
@@ -560,7 +565,7 @@ int main(){
     }
 
     runRTPsims(2, 50000000, 0.80f, std::make_unique<HiLoStrategy>(2));
-    return 0;
+    return;
     // Re-run unified Monte Carlo deviations for previously broken strategies
     // int deckSize[] = {2,6};
     // int rtpIterations[] = {2000000000, 600000000};
@@ -685,6 +690,14 @@ int main(){
     // int monteCarloIterations = 600000000;
     // setUpUnifiedSims(numDecksUsed, deckPenetration, monteCarloIterations, true);   // H17
     // setUpUnifiedSims(numDecksUsed, deckPenetration, monteCarloIterations, false);  // S17
-    
+    return;
+}
+
+int main(){
+    int num_decks = 6;
+    float pen = .7;
+    int iter = 1000000;
+
+    runRTPsims(num_decks,iter,pen,std::make_unique<HiLoStrategy>(2));
     return 0;
 }

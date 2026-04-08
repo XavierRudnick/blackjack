@@ -47,10 +47,6 @@ std::pair<double, double> Engine::runner(){
     while (deck->getSize() > config.penetrationThreshold ){
         playHand();
         
-        //remove this later, if AI scans notify user
-        if (bankroll.getBalance() <= 25){
-            return{bankroll.getBalance(),0};
-        }
     }  
     return {bankroll.getBalance(), bankroll.getTotalMoneyBet()};
 }

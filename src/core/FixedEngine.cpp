@@ -186,14 +186,18 @@ void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hand
         //decisionPoint.splitStats.timesSplit();
         double splitPayout = 0.0;
 
+        int dealerScore = 0;
+
+        for (Hand& hand : hands){
+            if (hand.getFinalScore() != 0){
+                dealer_draw(deck, dealer);
+                dealerScore = dealer.getFinalScore();
+                break;
+            }
+        }
+
         for (Hand& hand : hands) {
             int userScore = hand.getFinalScore();
-
-            if (userScore != 0){
-                dealer_draw(deck, dealer);
-            }
-            
-            int dealerScore = dealer.getFinalScore();
             float result = 1.0f;
 
             if (dealerScore > userScore){
@@ -295,15 +299,18 @@ void FixedEngine::evaluateHandForScenario(Deck& deck, Hand& dealer, std::vector<
     if (forcedAction == Action::Split) {
         //decisionPoint.splitStats.timesSplit();
         double splitPayout = 0.0;
+        int dealerScore = 0;
+
+        for (Hand& hand : hands){
+            if (hand.getFinalScore() != 0){
+                dealer_draw(deck, dealer);
+                dealerScore = dealer.getFinalScore();
+                break;
+            }
+        }
 
         for (Hand& hand : hands) {
             int userScore = hand.getFinalScore();
-
-            if (userScore != 0){
-                dealer_draw(deck, dealer);
-            }
-            
-            int dealerScore = dealer.getFinalScore();
             float result = 1.0f;
 
             if (dealerScore > userScore){

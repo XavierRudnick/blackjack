@@ -73,7 +73,7 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
     auto start_time = std::chrono::high_resolution_clock::now();
 
     for (int i = 0; i < iterations; i++){
-        std::pair<double, double> profit = {1000, 0};
+        std::pair<double, double> profit = {5000, 0};
         for (int j = 0; j < 2; j++){
             deck.reset();
             robot.resetCount(numDecksUsed);
@@ -564,8 +564,6 @@ void runHella(){
         Deck::clearSeed();
     }
 
-    runRTPsims(2, 50000000, 0.80f, std::make_unique<HiLoStrategy>(2));
-    return;
     // Re-run unified Monte Carlo deviations for previously broken strategies
     // int deckSize[] = {2,6};
     // int rtpIterations[] = {2000000000, 600000000};

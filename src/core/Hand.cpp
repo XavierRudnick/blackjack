@@ -1,15 +1,40 @@
 #include "Hand.h"
 #include <iostream>
 
+void Hand::tallyRank(Rank r) {
+    if (r == Rank::Ace) {
+        runningScore_ += 11;
+        softAces_++;
+    } else if (r == Rank::Jack || r == Rank::Queen || r == Rank::King) {
+        runningScore_ += 10;
+    } else {
+        runningScore_ += static_cast<int>(r) + INDEX_OFFSET;
+    }
+    while (runningScore_ > 21 && softAces_ > 0) {
+        runningScore_ -= 10;
+        softAces_--;
+    }
+}
+
+void Hand::recomputeFromHand() {
+    runningScore_ = 0;
+    softAces_ = 0;
+    for (const Card& c : hand) {
+        tallyRank(c.getRank());
+    }
+}
+
 Hand::Hand(std::pair<Card,Card> cards, int bet_size){
-    hand.emplace_back(cards.first);//adds variable to end of vec
+    hand.emplace_back(cards.first);
     hand.emplace_back(cards.second);
     bet_size_ = bet_size;
+    recomputeFromHand();
 }
 
 Hand::Hand(Card card, int bet_size){
     hand.emplace_back(card);
     bet_size_ = bet_size;
+    recomputeFromHand();
 }
 
 int Hand::getBetSize(){
@@ -26,8 +51,7 @@ Card Hand::getLastCard(){
 
 void Hand::popLastCard(){
     hand.pop_back();
-    invalidateCache();
-    return;
+    recomputeFromHand();
 }
 
 Rank Hand::peekFrontCard(){
@@ -52,7 +76,7 @@ bool Hand::dealerHiddenAce(){
 
 void Hand::addCard(Card card){
     hand.emplace_back(card);
-    invalidateCache();
+    tallyRank(card.getRank());
 }
 
 bool Hand::checkOver(){
@@ -75,39 +99,7 @@ bool Hand::isDealerOver(){
 }
 
 int Hand::getScore(){
-    if (scoreValid) {
-        return cachedScore;
-    }
-
-    int score = 0;
-    int soft_aces = 0;
-
-    for (const Card& val : hand){
-        Rank rank = val.getRank();
-
-        if (rank == Rank::Ace){
-            score += 11;
-            soft_aces += 1;
-            
-        }
-        else if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King){
-            score += 10;
-        }
-        else{
-            score += static_cast<int>(rank) + INDEX_OFFSET;
-        }
-    }
-
-    while(score > 21 && soft_aces > 0){
-        score -= 10;
-        soft_aces -= 1;
-    }
-
-    cachedScore = score;
-    cachedIsSoft = (score <= 21) && (soft_aces > 0);
-    scoreValid = true;
-
-    return score;
+    return runningScore_;
 }
 
 int Hand::getFinalScore(){
@@ -122,37 +114,7 @@ int Hand::getFinalScore(){
 }
 
 bool Hand::isHandSoft() {
-    if (scoreValid) {
-        return cachedIsSoft;
-    }
-    int score = 0;
-    int soft_aces = 0;
-
-   for (const Card& val : hand){
-        Rank rank = val.getRank();
-
-        if (rank == Rank::Ace){
-            score += 11;
-            soft_aces += 1;
-            
-        }
-        else if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King){
-            score += 10;
-        }
-        else{
-            score += static_cast<int>(rank) + INDEX_OFFSET;
-        }
-    }
-
-    while (score > 21 && soft_aces > 0) {
-        score -= 10;
-        soft_aces -= 1;
-    }
-
-    cachedScore = score;
-    cachedIsSoft = (score <= 21) && (soft_aces > 0);
-    scoreValid = true;
-    return cachedIsSoft;
+    return softAces_ > 0 && runningScore_ <= 21;
 }
 
 bool Hand::checkCanSplit(){

@@ -73,7 +73,7 @@ def _pick_hands_played(row: Dict[str, str]) -> int:
 
 
 def consolidate(in_path: str, out_path: str) -> None:
-    buckets: Dict[Tuple[int, float], Accum] = {}
+    buckets: Dict[Tuple[int, float, int], Accum] = {}
 
     with open(in_path, "r", newline="") as f:
         reader = csv.DictReader(f)
@@ -90,51 +90,57 @@ def consolidate(in_path: str, out_path: str) -> None:
                 + f"\nFound: {', '.join(reader.fieldnames)}"
             )
 
+        has_is_soft = "IsSoft" in reader.fieldnames
+
         for row in reader:
             try:
                 dealer_value = int(float(row["DealerValue"]))
                 true_count = float(row["TrueCount"])
                 accept_ev = float(row["Insurance Accept EV"])
                 decline_ev = float(row["Insurance Decline EV"])
+                soft_flag = int(float(row["IsSoft"])) if has_is_soft else 0
             except ValueError:
                 # Skip malformed rows
                 continue
 
             hands = _pick_hands_played(row)
-            key = (dealer_value, true_count)
+            key = (dealer_value, true_count, soft_flag)
             buckets.setdefault(key, Accum()).add(accept_ev, decline_ev, hands)
 
     # Write consolidated output
     with open(out_path, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(
-            [
-                "DealerValue",
-                "TrueCount",
-                "Insurance Accept EV",
-                "Insurance Decline EV",
-                "Hands Played",
-                "Best Action",
-                "EV Diff (Accept-Decline)",
-            ]
-        )
+        header = [
+            "DealerValue",
+            "TrueCount",
+            "Insurance Accept EV",
+            "Insurance Decline EV",
+            "Hands Played",
+            "Best Action",
+            "EV Diff (Accept-Decline)",
+        ]
+        if has_is_soft:
+            header.insert(1, "IsSoft")
+        writer.writerow(header)
 
-        for (dealer_value, true_count) in sorted(buckets.keys(), key=lambda k: (k[0], k[1])):
-            acc = buckets[(dealer_value, true_count)]
+        for key in sorted(buckets.keys(), key=lambda k: (k[0], k[2], k[1])):
+            dealer_value, true_count, soft_flag = key[0], key[1], key[2]
+            acc = buckets[key]
             accept = acc.accept_ev()
             decline = acc.decline_ev()
             best = "Accept" if accept > decline else "Decline" if decline > accept else "Tie"
-            writer.writerow(
-                [
-                    dealer_value,
-                    _format_true_count(true_count),
-                    f"{accept:.6f}",
-                    f"{decline:.6f}",
-                    acc.hands,
-                    best,
-                    f"{(accept - decline):.6f}",
-                ]
-            )
+            row_out = [
+                dealer_value,
+                _format_true_count(true_count),
+                f"{accept:.6f}",
+                f"{decline:.6f}",
+                acc.hands,
+                best,
+                f"{(accept - decline):.6f}",
+            ]
+            if has_is_soft:
+                row_out.insert(1, soft_flag)
+            writer.writerow(row_out)
 
 
 def _format_true_count(tc: float) -> str:

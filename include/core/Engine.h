@@ -28,7 +28,7 @@ public:
         Deck deck,
         Player* player,
         EventBus* eventBus, // not owned can be nullptr
-        std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& EVresults,
+        EVTable& EVresults,
         std::map<float,ActionStats>* EVperTC
     );
 

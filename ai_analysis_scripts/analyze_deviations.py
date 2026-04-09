@@ -226,8 +226,8 @@ def load_csv_to_dataframe(filepath: str) -> pd.DataFrame:
     df = df.rename(columns={k: v for k, v in column_mapping.items() if k in df.columns})
     
     # Ensure numeric types
-    numeric_cols = ['UserValue', 'DealerValue', 'TrueCount', 'Hit EV', 'Stand EV', 
-                    'Double EV', 'Split EV', 'Surrender EV', 
+    numeric_cols = ['UserValue', 'DealerValue', 'IsSoft', 'TrueCount', 'Hit EV', 'Stand EV',
+                    'Double EV', 'Split EV', 'Surrender EV',
                     'Insurance Accept EV', 'Insurance Decline EV', 'Hands Played']
     for col in numeric_cols:
         if col in df.columns:
@@ -244,7 +244,7 @@ def aggregate_by_hand_and_tc(
     df: pd.DataFrame, 
     decision_type: DecisionType,
     min_hands: int = 100
-) -> Dict[Tuple[int, int], Dict[float, AggregatedPoint]]:
+) -> Dict[Tuple[int, ...], Dict[float, AggregatedPoint]]:
     """
     Aggregate data by player hand, dealer upcard, and true count.
     
@@ -259,9 +259,16 @@ def aggregate_by_hand_and_tc(
     if ev_a_col not in df.columns or ev_b_col not in df.columns:
         return results
     
-    # Group by player value and dealer value
-    for (user_val, dealer_val), group in df.groupby(['UserValue', 'DealerValue']):
-        hand_key = (int(user_val), int(dealer_val))
+    group_cols = ['UserValue', 'DealerValue']
+    if 'IsSoft' in df.columns:
+        group_cols.append('IsSoft')
+
+    for key_vals, group in df.groupby(group_cols):
+        kv = key_vals if isinstance(key_vals, tuple) else (key_vals,)
+        if len(kv) == 3:
+            hand_key = (int(kv[0]), int(kv[1]), int(kv[2]))
+        else:
+            hand_key = (int(kv[0]), int(kv[1]))
         results[hand_key] = {}
         
         for _, row in group.iterrows():
@@ -441,11 +448,14 @@ def analyze_deviation(
     decision_type: DecisionType,
     player_hand: int,
     dealer_upcard: int,
-    min_hands_per_tc: int = 50
+    min_hands_per_tc: int = 50,
+    is_soft: Optional[int] = None,
 ) -> DeviationResult:
     """
     Analyze a single hand configuration for optimal deviation.
     """
+    player_label = f"{player_hand} (soft)" if is_soft else str(player_hand)
+
     # Get crossover point
     crossover, ci_low, ci_high = find_crossover_point(tc_data, min_hands_per_tc)
     
@@ -520,7 +530,7 @@ def analyze_deviation(
         game_config=game_config,
         strategy=strategy,
         decision_type=decision_type.name,
-        player_hand=str(player_hand),
+        player_hand=player_label,
         dealer_upcard=dealer_upcard,
         basic_strategy_action=basic_action,
         deviation_action=deviation_action,
@@ -572,16 +582,30 @@ def process_file(
     aggregated = aggregate_by_hand_and_tc(df, decision_type, min_hands=min_hands_per_tc)
     
     results = []
-    for (player_val, dealer_val), tc_data in aggregated.items():
-        result = analyze_deviation(
-            tc_data=tc_data,
-            game_config=game_config,
-            strategy=strategy,
-            decision_type=decision_type,
-            player_hand=player_val,
-            dealer_upcard=dealer_val,
-            min_hands_per_tc=min_hands_per_tc
-        )
+    for hand_key, tc_data in aggregated.items():
+        if len(hand_key) == 3:
+            player_val, dealer_val, soft_flag = hand_key[0], hand_key[1], hand_key[2]
+            result = analyze_deviation(
+                tc_data=tc_data,
+                game_config=game_config,
+                strategy=strategy,
+                decision_type=decision_type,
+                player_hand=player_val,
+                dealer_upcard=dealer_val,
+                min_hands_per_tc=min_hands_per_tc,
+                is_soft=soft_flag,
+            )
+        else:
+            player_val, dealer_val = hand_key[0], hand_key[1]
+            result = analyze_deviation(
+                tc_data=tc_data,
+                game_config=game_config,
+                strategy=strategy,
+                decision_type=decision_type,
+                player_hand=player_val,
+                dealer_upcard=dealer_val,
+                min_hands_per_tc=min_hands_per_tc,
+            )
         results.append(result)
     
     return results

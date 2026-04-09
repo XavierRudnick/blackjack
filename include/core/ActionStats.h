@@ -42,10 +42,10 @@ struct ActionStats {
         return mean;
     }
 
-    // double getSplitEV() const {
-    //     if (splitsPlayed == 0) return 0.0;
-    //     return totalPayout / splitsPlayed;
-    // }
+    double getSplitEV() const {
+        if (splitsPlayed == 0) return 0.0;
+        return totalPayout / splitsPlayed;
+    }
 
     double getVariance() const {
         return (totalMoneyWagered > 0.0) ? (M2 / totalMoneyWagered) : 0.0;   // population variance per dollar

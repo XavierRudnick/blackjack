@@ -1166,12 +1166,12 @@ void testBetSizing() {
     std::cout << "True count 1, bet size: " << strategy2.getBetSize() << std::endl;
     assert(strategy2.getBetSize() == 25);
     
-    // True count = 2 (add 2 low cards)
+    // True count = 2 (add 2 low cards; HiLo uses RC/decks for true count)
     HiLoStrategy strategy3(1.0);
     strategy3.updateCount(Card(Rank::Five, Suit::Hearts));
     strategy3.updateCount(Card(Rank::Five, Suit::Clubs));
     std::cout << "True count 2, bet size: " << strategy3.getBetSize() << std::endl;
-    assert(strategy3.getBetSize() == 25);
+    assert(strategy3.getBetSize() == 100);
     
     // True count = 3 (add 3 low cards)
     HiLoStrategy strategy4(1.0);
@@ -1179,7 +1179,7 @@ void testBetSizing() {
         strategy4.updateCount(Card(Rank::Five, Suit::Hearts));
     }
     std::cout << "True count 3, bet size: " << strategy4.getBetSize() << std::endl;
-    assert(strategy4.getBetSize() == 50);
+    assert(strategy4.getBetSize() == 200);
     
     // True count = 4 (add 4 low cards)
     HiLoStrategy strategy5(1.0);
@@ -1187,7 +1187,7 @@ void testBetSizing() {
         strategy5.updateCount(Card(Rank::Five, Suit::Hearts));
     }
     std::cout << "True count 4, bet size: " << strategy5.getBetSize() << std::endl;
-    assert(strategy5.getBetSize() == 75);
+    assert(strategy5.getBetSize() == 300);
     
     // True count = 5 (add 5 low cards)
     HiLoStrategy strategy6(1.0);
@@ -1195,15 +1195,15 @@ void testBetSizing() {
         strategy6.updateCount(Card(Rank::Five, Suit::Hearts));
     }
     std::cout << "True count 5, bet size: " << strategy6.getBetSize() << std::endl;
-    assert(strategy6.getBetSize() == 100);
+    assert(strategy6.getBetSize() == 400);
     
-    // True count = 7 (add 7 low cards) -> max bet
+    // True count = 7 (add 7 low cards) -> max bet tier
     HiLoStrategy strategy7(1.0);
     for (int i = 0; i < 7; i++) {
         strategy7.updateCount(Card(Rank::Five, Suit::Hearts));
     }
     std::cout << "True count 7, bet size: " << strategy7.getBetSize() << std::endl;
-    assert(strategy7.getBetSize() == 150);
+    assert(strategy7.getBetSize() == 500);
     
     std::cout << "PASSED" << std::endl;
 }

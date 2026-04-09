@@ -1,4 +1,6 @@
+#include <algorithm>
 #include <cstdlib>
+#include <memory>
 #include <iostream>
 #include <set>
 #include <fstream>
@@ -73,8 +75,8 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
     auto start_time = std::chrono::high_resolution_clock::now();
 
     for (int i = 0; i < iterations; i++){
-        std::pair<double, double> profit = {5000, 0};
-        for (int j = 0; j < 2; j++){
+        std::pair<double, double> profit = {10000, 0};
+
             deck.reset();
             robot.resetCount(numDecksUsed);
 
@@ -83,7 +85,7 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
                                         .setDeckSize(numDecksUsed)
                                         .setDeck(deck)
                                         .setPenetrationThreshold(deckPenetration)
-                                        .setInitialWallet(profit.first)
+                                        .setInitialWallet(10000)
                                         .setKellyRisk(0.75f)
                                         .enableEvents(false)
                                         .with3To2Payout(true)
@@ -92,12 +94,7 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
                                         .allowReSplitAces(false)
                                         .build(&robot);
             profit = hiLoEngine.runner();
-            if (profit.second == 0){
-                losses++;
-                break;
-            }
-
-        }
+             
         if (i % 10000000 == 0 && i != 0){
             std::cout  << "Completed " << i << " / " << iterations << " iterations." <<std::endl;
         }
@@ -112,10 +109,10 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
 
     double average = gameStats.first / iterations;
     double avgMoneyBet = gameStats.second / iterations;
-    double diff = average-1000;
-    double normal =  1000.0 / avgMoneyBet;
+    double diff = average-10000;
+    double normal =  10000.0 / avgMoneyBet;
     double money_lost_per = diff * normal;
-    double rtp = (1000+money_lost_per) /1000;
+    double rtp = (10000+money_lost_per) /10000;
     std::cout << "lose br rate " << (float)losses/iterations << std::endl;
     std::cout << "Average after " << iterations << " rounds: " << average << std::endl;
     std::cout << "Average money bet: " << avgMoneyBet << std::endl;
@@ -192,7 +189,7 @@ void runUnifiedMonteSims(int numDecksUsed, int iterations, float deckPenetration
 
     EventBus& bus = EventBus::getInstance();
     Deck deck(numDecksUsed);
-    std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults;
+    auto evScratch = std::make_unique<EVTable>();
     std::string strategyName = strategy->getName();
     std::string H17Str = dealerHits17 ? "H17" : "S17";
     
@@ -221,7 +218,7 @@ void runUnifiedMonteSims(int numDecksUsed, int iterations, float deckPenetration
                             .allowReSplitAces(allowReSplitAces)
                             .enableMontiCarlo(true)
                             .setMonteCarloScenarios(scenarios)
-                            .setEVActions(EVresults)
+                            .setEVActions(*evScratch)
                             .build(&robot);
 
         FixedEngine fixedEngine = engine.runnerMonte();
@@ -253,11 +250,9 @@ std::vector<MonteCarloScenario> createAllScenarios() {
     MonteCarloScenario insuranceScenario;
     insuranceScenario.name = "InsuranceAccept_vs_Decline";
     insuranceScenario.actions = {Action::InsuranceAccept, Action::InsuranceDecline};
-    insuranceScenario.cardValues = {
-        {21,11}, {20,11}, {19,11}, {18,11}, {17,11}, {16,11}, {15,11},
-        {14,11}, {13,11}, {12,11}, {11,11}, {10,11}, {9,11}, {8,11},
-        {7,11}, {6,11}, {5,11}, {4,11}, {3,11}, {2,11}
-    };
+    for (int ps = 21; ps >= 2; --ps) {
+        insuranceScenario.addCardValue(ps, 11);
+    }
     insuranceScenario.allowSoftHands = true;  // Insurance allows soft hands
     insuranceScenario.requirePair = false;
     insuranceScenario.isInsuranceScenario = true;
@@ -267,9 +262,12 @@ std::vector<MonteCarloScenario> createAllScenarios() {
     MonteCarloScenario hitVsStandScenario;
     hitVsStandScenario.name = "Hit_vs_Stand";
     hitVsStandScenario.actions = {Action::Hit, Action::Stand};
-    hitVsStandScenario.cardValues = {
-        {16, 10}, {15, 10}, {12, 3}, {12, 2}, {13, 2}, {13, 3}
-    };
+    hitVsStandScenario.addCardValue(16, 10);
+    hitVsStandScenario.addCardValue(15, 10);
+    hitVsStandScenario.addCardValue(12, 3);
+    hitVsStandScenario.addCardValue(12, 2);
+    hitVsStandScenario.addCardValue(13, 2);
+    hitVsStandScenario.addCardValue(13, 3);
     hitVsStandScenario.allowSoftHands = false;  // Hard hands only
     hitVsStandScenario.requirePair = false;
     hitVsStandScenario.isInsuranceScenario = false;
@@ -279,10 +277,8 @@ std::vector<MonteCarloScenario> createAllScenarios() {
     MonteCarloScenario splitVsStandScenario;
     splitVsStandScenario.name = "Split_vs_Stand_Pair10s";
     splitVsStandScenario.actions = {Action::Split, Action::Stand};
-    splitVsStandScenario.cardValues = {
-        {20, 5},  // Pair of 10s vs 5
-        {20, 6},  // Pair of 10s vs 6
-    };
+    splitVsStandScenario.addCardValue(20, 5);
+    splitVsStandScenario.addCardValue(20, 6);
     splitVsStandScenario.allowSoftHands = false;
     splitVsStandScenario.requirePair = true;  // Only trigger when hand is a splittable pair
     splitVsStandScenario.isInsuranceScenario = false;
@@ -292,9 +288,11 @@ std::vector<MonteCarloScenario> createAllScenarios() {
     MonteCarloScenario hitVsDoubleScenario;
     hitVsDoubleScenario.name = "Hit_vs_Double";
     hitVsDoubleScenario.actions = {Action::Hit, Action::Double};
-    hitVsDoubleScenario.cardValues = {
-        {10, 10}, {10, 11}, {11, 11}, {9, 2}, {9, 7}
-    };
+    hitVsDoubleScenario.addCardValue(10, 10);
+    hitVsDoubleScenario.addCardValue(10, 11);
+    hitVsDoubleScenario.addCardValue(11, 11);
+    hitVsDoubleScenario.addCardValue(9, 2);
+    hitVsDoubleScenario.addCardValue(9, 7);
     hitVsDoubleScenario.allowSoftHands = false;
     hitVsDoubleScenario.requirePair = false;
     hitVsDoubleScenario.isInsuranceScenario = false;
@@ -304,9 +302,13 @@ std::vector<MonteCarloScenario> createAllScenarios() {
     MonteCarloScenario surrenderVsHitScenario;
     surrenderVsHitScenario.name = "Surrender_vs_Hit";
     surrenderVsHitScenario.actions = {Action::Surrender, Action::Hit};
-    surrenderVsHitScenario.cardValues = {
-        {15, 9}, {15, 10}, {14, 10}, {15, 11}, {16, 9}, {16, 10}, {16, 11}
-    };
+    surrenderVsHitScenario.addCardValue(15, 9);
+    surrenderVsHitScenario.addCardValue(15, 10);
+    surrenderVsHitScenario.addCardValue(14, 10);
+    surrenderVsHitScenario.addCardValue(15, 11);
+    surrenderVsHitScenario.addCardValue(16, 9);
+    surrenderVsHitScenario.addCardValue(16, 10);
+    surrenderVsHitScenario.addCardValue(16, 11);
     surrenderVsHitScenario.allowSoftHands = false;
     surrenderVsHitScenario.requirePair = false;
     surrenderVsHitScenario.isInsuranceScenario = false;
@@ -467,8 +469,7 @@ void runAllRTPSimulations(int numDecksUsed, float deckPenetration, int iteration
     std::cout << "Results will be saved to: " << filename << std::endl << std::endl;
     
     auto strategies = createStrategies(numDecksUsed);
-    const size_t num_threads = std::min(static_cast<size_t>(4), strategies.size());
-    
+    const size_t num_threads = strategies.size();
     std::cout << "Running with " << num_threads << " thread(s)" << std::endl << std::endl;
     
     std::vector<std::thread> workers;
@@ -512,7 +513,7 @@ void setUpUnifiedSims(int numDecksUsed, float deckPenetration, int iterations, b
               << ", Iterations: " << iterations << std::endl;
     std::cout << "Tracking " << scenarios.size() << " scenarios per simulation:" << std::endl;
     for (const auto& scenario : scenarios) {
-        std::cout << "  - " << scenario.name << " (" << scenario.cardValues.size() << " card value pairs)" << std::endl;
+        std::cout << "  - " << scenario.name << " (" << scenario.activeCellCount() << " card value pairs)" << std::endl;
     }
     std::cout << std::endl;
     
@@ -692,10 +693,7 @@ void runHella(){
 }
 
 int main(){
-    int num_decks = 6;
-    float pen = .7;
-    int iter = 1000000;
-
-    runRTPsims(num_decks,iter,pen,std::make_unique<HiLoStrategy>(2));
+    runRTPsims(2, 10000, 0.75f, std::make_unique<HiLoStrategy>(2));
+    //runHella();
     return 0;
 }

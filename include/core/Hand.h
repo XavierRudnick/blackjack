@@ -9,11 +9,11 @@ class Hand{
         std::vector<Card> hand;
         int bet_size_;
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
-        mutable int cachedScore = -1;
-        mutable bool cachedIsSoft = false;
-        mutable bool scoreValid = false;
+        int runningScore_ = 0;
+        int softAces_ = 0;
 
-        void invalidateCache() { scoreValid = false; cachedIsSoft = false; cachedScore = -1;}
+        void tallyRank(Rank r);
+        void recomputeFromHand();
     
     public:
         Hand(std::pair<Card,Card> cards, int bet_size);

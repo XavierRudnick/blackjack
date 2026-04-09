@@ -1,6 +1,7 @@
 #ifndef ENGINEBUILDER_H
 #define ENGINEBUILDER_H
 
+#include <memory>
 #include "Engine.h"
 #include "GameConfig.h"
 #include "MonteCarloScenario.h"
@@ -10,7 +11,7 @@ class EngineBuilder {
         GameConfig gameConfig;
         std::optional<Deck> deck;
         EventBus* eventBus = nullptr;
-        std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults;
+        std::unique_ptr<EVTable> EVresults_ = std::make_unique<EVTable>();
         std::map<float,ActionStats>* EVperTC = nullptr;
 
     public:
@@ -48,7 +49,7 @@ class EngineBuilder {
         EngineBuilder& setActions(std::vector<Action> actions);
         EngineBuilder& allowSoftHandsInMonteCarlo(bool enable);
         EngineBuilder& requirePairForMonteCarlo(bool enable);
-        EngineBuilder& setEVActions(std::map<std::pair<int, int>, std::map<float, DecisionPoint>> values);
+        EngineBuilder& setEVActions(const EVTable& values);
 
         // New multi-scenario method
         EngineBuilder& addMonteCarloScenario(const MonteCarloScenario& scenario);

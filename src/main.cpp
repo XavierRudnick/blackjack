@@ -551,6 +551,9 @@ void setUpUnifiedSims(int numDecksUsed, float deckPenetration, int iterations, b
 }
 
 void runHella(){
+
+    auto start_time = std::chrono::high_resolution_clock::now();
+
     if (const char* seedEnv = std::getenv("BLACKJACK_SEED")) {
         try {
             const auto parsed = std::stoul(seedEnv);
@@ -645,7 +648,7 @@ void runHella(){
     bool SurrenderAllowed[] = {false};
     bool blackJackPayout3to2[] = {true};
     int deckSize[] = {2,4,6,8};
-    int rtpIterations[] = {50000000,25000000,17000000,12500000};
+    int rtpIterations[] = {50000,25000,17000,12500};
     float penetrations[] = {0.3f,0.4f,0.5f,0.60f,0.7f,0.80f}; //0.7f, 0.75f,0.80f
     float kellyFractions[] = {0.125f,0.25f,0.5f,0.75f};
 
@@ -680,6 +683,11 @@ void runHella(){
             }   
         }
     }
+
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
+    std::cout << "Simulation time for " << duration.count() / 1000000.0 << " seconds." << std::endl;
+
     
     std::cout << "\n========================================" << std::endl;
     std::cout << "ALL RTP SIMULATIONS COMPLETE" << std::endl;
@@ -693,7 +701,7 @@ void runHella(){
 }
 
 int main(){
-    runRTPsims(2, 1000000, 0.75f, std::make_unique<HiLoStrategy>(2));
-    //runHella();
+    //runRTPsims(2, 1000000, 0.75f, std::make_unique<HiLoStrategy>(2));
+    runHella();
     return 0;
 }

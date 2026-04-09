@@ -27,8 +27,8 @@ public:
         const GameConfig& gameConfig, //pass by reference to avoid copy
         Deck deck,
         Player* player,
-        EventBus* eventBus, // not owned can be nullptr
-        EVTable& EVresults,
+        EventBus* eventBus,
+        EVTable* evResults,
         std::map<float,ActionStats>* EVperTC
     );
 
@@ -45,7 +45,7 @@ private:
     Player* player;
     GameReporter reporter;
 
-    FixedEngine fixedEngine;
+    std::optional<FixedEngine> fixedEngine;
 
     std::map<float,ActionStats> EVperTCStorage;
     std::map<float,ActionStats>* EVperTC;

@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <stdexcept>
 #include <utility>
 
 static float roundTrueCount(float value) {
@@ -15,17 +16,22 @@ Engine::Engine(
     Deck deck,
     Player* player,
     EventBus* eventBus,
-    EVTable& EVresults,
+    EVTable* evResults,
     std::map<float,ActionStats>* EVperTC
 )
     : bankroll(gameConfig.wallet), 
-    config(gameConfig), 
-    deck(std::move(deck)), 
-    player(player),
-    EVperTC(EVperTC ? EVperTC : &EVperTCStorage),
-    reporter(eventBus, gameConfig.emitEvents),
-    fixedEngine(config.monteCarloActions,EVresults,gameConfig)
+      config(gameConfig), 
+      deck(std::move(deck)), 
+      player(player),
+      EVperTC(EVperTC ? EVperTC : &EVperTCStorage),
+      reporter(eventBus, gameConfig.emitEvents)
 {
+    if (config.enabelMontiCarlo) {
+        if (evResults == nullptr) {
+            throw std::logic_error("Monte Carlo enabled but EV table pointer is null");
+        }
+        fixedEngine.emplace(config.monteCarloActions, *evResults, gameConfig);
+    }
     config.penetrationThreshold = (1-config.penetrationThreshold) * config.numDecks * Deck::NUM_CARDS_IN_DECK;
     player->setUnitSize(config.kellyFraction);
 }
@@ -56,7 +62,10 @@ FixedEngine Engine::runnerMonte(){
     while (deck->getSize() > config.penetrationThreshold ){
         playHand();
     }  
-    return std::move(fixedEngine);
+    if (!fixedEngine.has_value()) {
+        throw std::logic_error("runnerMonte() requires Monte Carlo to be enabled on the Engine");
+    }
+    return std::move(*fixedEngine);
 }
 
 void Engine::playHand(){
@@ -88,7 +97,7 @@ void Engine::playHand(){
     if (config.enabelMontiCarlo && isInsuranceMonteCarloActionSet(config) && dealer.getCards().front().getRank() == Rank::Ace) {
         const std::pair<int, int> cardValues{user.getScore(), dealer.getCards().front().getValue()};
         if (config.actionValues.count(cardValues)) {
-            fixedEngine.calculateEV(*player, *deck, dealer, user, player->getTrueCount(), cardValues,
+            fixedEngine->calculateEV(*player, *deck, dealer, user, player->getTrueCount(), cardValues,
                                     user.isHandSoft());
         }
     }
@@ -101,7 +110,7 @@ void Engine::playHand(){
         
         for (const auto& scenario : config.monteCarloScenarios) {
             if (scenario.isInsuranceScenario && scenario.appliesTo(cardValues.first, cardValues.second, isSoftHand, canSplit)) {
-                fixedEngine.calculateEVForScenario(*player, *deck, dealer, user, player->getTrueCount(), cardValues,
+                fixedEngine->calculateEVForScenario(*player, *deck, dealer, user, player->getTrueCount(), cardValues,
                                                    isSoftHand, scenario);
             }
         }
@@ -245,7 +254,7 @@ void Engine::play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool 
     if (shouldRunMonteCarlo) {
         const bool isSoftHand = user.isHandSoft();
         if (config.allowSoftHandsInMonteCarlo || !isSoftHand) {
-            fixedEngine.calculateEV(*player, *deck, dealer, user, player->getTrueCount(), cardValues, isSoftHand);
+            fixedEngine->calculateEV(*player, *deck, dealer, user, player->getTrueCount(), cardValues, isSoftHand);
         }
     }
     
@@ -261,7 +270,7 @@ void Engine::play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool 
             }
             
             if (scenario.appliesTo(cardValues.first, cardValues.second, isSoftHand, canSplit)) {
-                fixedEngine.calculateEVForScenario(*player, *deck, dealer, user, player->getTrueCount(), cardValues,
+                fixedEngine->calculateEVForScenario(*player, *deck, dealer, user, player->getTrueCount(), cardValues,
                                                    isSoftHand, scenario);
             }
         }

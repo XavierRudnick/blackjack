@@ -11,7 +11,7 @@ class EngineBuilder {
         GameConfig gameConfig;
         std::optional<Deck> deck;
         EventBus* eventBus = nullptr;
-        std::unique_ptr<EVTable> EVresults_ = std::make_unique<EVTable>();
+        std::unique_ptr<EVTable> EVresults_;
         std::map<float,ActionStats>* EVperTC = nullptr;
 
     public:

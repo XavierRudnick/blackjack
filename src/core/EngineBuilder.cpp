@@ -139,6 +139,9 @@ EngineBuilder& EngineBuilder::requirePairForMonteCarlo(bool enable = false) {
 }
 
 EngineBuilder& EngineBuilder::setEVActions(const EVTable& values) {
+    if (!EVresults_) {
+        EVresults_ = std::make_unique<EVTable>();
+    }
     *EVresults_ = values;
     return *this;
 }
@@ -159,6 +162,13 @@ EngineBuilder& EngineBuilder::setEVperTC(std::map<float,ActionStats>& values) {
 }
 
 Engine EngineBuilder::build(Player* player) {
-    Engine engine(gameConfig, *deck, player, eventBus, *EVresults_, EVperTC);
+    EVTable* evPtr = nullptr;
+    if (gameConfig.enabelMontiCarlo) {
+        if (!EVresults_) {
+            EVresults_ = std::make_unique<EVTable>();
+        }
+        evPtr = EVresults_.get();
+    }
+    Engine engine(gameConfig, *deck, player, eventBus, evPtr, EVperTC);
     return engine;
 }

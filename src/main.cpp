@@ -693,7 +693,7 @@ void runHella(){
 }
 
 int main(){
-    runRTPsims(2, 10000, 0.75f, std::make_unique<HiLoStrategy>(2));
+    runRTPsims(2, 1000000, 0.75f, std::make_unique<HiLoStrategy>(2));
     //runHella();
     return 0;
 }

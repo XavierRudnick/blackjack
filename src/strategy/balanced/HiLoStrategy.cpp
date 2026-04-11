@@ -15,36 +15,39 @@ HiLoStrategy::HiLoStrategy(float deck_size){
 
 
 int HiLoStrategy::getBetSize() {
-    float effectiveTC = true_count - PROFITABLE_PLAY_TC_THRESHOLD;
-    if (effectiveTC <= 0){
-        return MIN_BET;
-    }
-
-    float interceptUnit = (Bankroll::getInitialBalance() * kellyFraction * evIntercept) / avgVolatility;
-    int bet = std::round((unitSize * effectiveTC + interceptUnit) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
-    bet = std::max(MIN_BET, bet);
-    return std::min(getMaxBet(), bet);
-    // if (true_count <= 0){
+    // float effectiveTC = true_count - PROFITABLE_PLAY_TC_THRESHOLD;
+    // if (effectiveTC <= 0){
     //     return MIN_BET;
     // }
-    // else if (true_count <= 1){
-    //     return 25;
-    // }
-    // else if (true_count <= 2){
-    //     return 100;
-    // }
-    // else if (true_count <= 3){
-    //     return 200;
-    // }
-    // else if (true_count <= 4){
-    //     return 300;
-    // }
-    // else if (true_count <= 5){
-    //     return 400;
-    // }
-    // else {
-    //     return 500;
-    // }
+
+    // float interceptUnit = (Bankroll::getInitialBalance() * kellyFraction * evIntercept) / avgVolatility;
+    // int bet = std::round((unitSize * effectiveTC + interceptUnit) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
+    // bet = std::max(MIN_BET, bet);
+    // return std::min(getMaxBet(), bet);
+    if (true_count <= 0){
+        return MIN_BET;
+    }
+    else if (true_count < 1){
+        return 25;
+    }
+    else if (true_count < 2){
+        return 50;
+    }
+    else if (true_count < 3){
+        return 100;
+    }
+    else if (true_count < 4){
+        return 200;
+    }
+    else if (true_count < 5){
+        return 300;
+    }
+    else if (true_count < 6){
+        return 400;
+    }
+    else {
+        return 500;
+    }
 }
 
 void HiLoStrategy::setUnitSize(float inputKellyFraction) {

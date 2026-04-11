@@ -27,6 +27,9 @@ struct GameConfig{
         
         // New multi-scenario support - allows tracking multiple action comparisons in one simulation
         std::vector<MonteCarloScenario> monteCarloScenarios;
+
+        // Shoe trace mode: override strategy bet sizing to 1 unit for portable base traces
+        bool useFixedUnitBet = false;
 };
 
 #endif

@@ -75,7 +75,8 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
     auto start_time = std::chrono::high_resolution_clock::now();
 
     for (int i = 0; i < iterations; i++){
-        std::pair<double, double> profit = {10000, 0};
+        std::pair<double, double> profit = {5000, 0};
+        for (int j = 0; j < 15; j++){
 
             deck.reset();
             robot.resetCount(numDecksUsed);
@@ -85,7 +86,7 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
                                         .setDeckSize(numDecksUsed)
                                         .setDeck(deck)
                                         .setPenetrationThreshold(deckPenetration)
-                                        .setInitialWallet(10000)
+                                        .setInitialWallet(profit.first)
                                         .setKellyRisk(0.75f)
                                         .enableEvents(false)
                                         .with3To2Payout(true)
@@ -93,12 +94,16 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
                                         .allowDoubleAfterSplit(true)
                                         .allowReSplitAces(false)
                                         .build(&robot);
-            profit = hiLoEngine.runner();
-             
+            auto end_profit = hiLoEngine.runner();
+            profit.second += end_profit.second;
+            profit.first = end_profit.first;
+        }
+
+
         if (i % 10000000 == 0 && i != 0){
             std::cout  << "Completed " << i << " / " << iterations << " iterations." <<std::endl;
         }
-
+            
         gameStats.first += profit.first;
         gameStats.second += profit.second;
     } 
@@ -109,10 +114,10 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
 
     double average = gameStats.first / iterations;
     double avgMoneyBet = gameStats.second / iterations;
-    double diff = average-10000;
-    double normal =  10000.0 / avgMoneyBet;
+    double diff = average-5000;
+    double normal =  5000.0 / avgMoneyBet;
     double money_lost_per = diff * normal;
-    double rtp = (10000+money_lost_per) /10000;
+    double rtp = (5000+money_lost_per) /5000;
     std::cout << "lose br rate " << (float)losses/iterations << std::endl;
     std::cout << "Average after " << iterations << " rounds: " << average << std::endl;
     std::cout << "Average money bet: " << avgMoneyBet << std::endl;
@@ -550,6 +555,108 @@ void setUpUnifiedSims(int numDecksUsed, float deckPenetration, int iterations, b
     std::cout << "\n=== UNIFIED SIMULATIONS COMPLETE (" << H17Str << ") ===" << std::endl;
 }
 
+static std::string buildRulesetId(int numDecks, float penetration, bool dealerHits17,
+    bool das, bool ras, bool surrender, bool bj3to2) {
+    std::ostringstream ss;
+    ss << numDecks << "deck_"
+       << static_cast<int>(penetration * 100) << "pen_"
+       << (dealerHits17 ? "H17" : "S17") << "_"
+       << (das ? "DAS" : "NoDAS") << "_"
+       << (ras ? "RAS" : "NoRAS") << "_"
+       << (surrender ? "Surrender" : "NoSurrender") << "_"
+       << (bj3to2 ? "3to2" : "6to5");
+    return ss.str();
+}
+
+void runShoeTraceSim(
+    int numDecks, int numShoes, float penetration,
+    std::unique_ptr<CountingStrategy> strategy,
+    bool bj3to2, bool dealerHits17, bool das, bool ras, bool surrender,
+    const std::string& outputDir,
+    bool compress = true)
+{
+    std::string strategyName = strategy->getName();
+    std::string rulesetId = buildRulesetId(numDecks, penetration, dealerHits17,
+                                            das, ras, surrender, bj3to2);
+
+    fs::create_directories(outputDir);
+    std::string traceFile = outputDir + "/hand_traces_" + strategyName
+                          + "_" + rulesetId + (compress ? ".csv.zst" : ".csv");
+
+    FILE* fp = nullptr;
+    if (compress) {
+        std::string cmd = "zstd -q -o " + traceFile;
+        fp = popen(cmd.c_str(), "w");
+    } else {
+        fp = fopen(traceFile.c_str(), "w");
+    }
+    if (!fp) {
+        std::cerr << "Failed to open output: " << traceFile << "\n";
+        return;
+    }
+
+    // outcome_code: 0=loss, 1=push, 2=win, 3=blackjack_win,
+    //               4=double_win, 5=double_loss, 6=split_net_win, 7=split_net_loss
+    fprintf(fp, "shoe_id,hand_number_in_shoe,shoe_progress_before_hand,"
+                "tc_bucket,total_money_committed,net_profit,outcome_code,"
+                "split_count,double_count,insurance_taken\n");
+
+    EventBus& bus = EventBus::getInstance();
+    Deck deck(numDecks);
+    BotPlayer robot(false, std::move(strategy));
+
+    auto start_time = std::chrono::high_resolution_clock::now();
+
+    for (int i = 0; i < numShoes; i++) {
+        deck.reset();
+        robot.resetCount(numDecks);
+
+        Engine engine = EngineBuilder()
+            .withEventBus(&bus)
+            .setDeckSize(numDecks)
+            .setDeck(deck)
+            .setPenetrationThreshold(penetration)
+            .setInitialWallet(1'000'000)
+            .enableEvents(false)
+            .with3To2Payout(bj3to2)
+            .withH17Rules(dealerHits17)
+            .allowDoubleAfterSplit(das)
+            .allowReSplitAces(ras)
+            .allowSurrender(surrender)
+            .useFixedUnitBet(true)
+            .build(&robot);
+
+        auto traces = engine.runnerShoeTrace(static_cast<uint64_t>(i), rulesetId, strategyName);
+
+        for (const auto& tr : traces) {
+            fprintf(fp, "%llu,%d,%.2f,%.1f,%.2f,%.2f,%d,%d,%d,%d\n",
+                (unsigned long long)tr.shoe_id,
+                tr.hand_number_in_shoe,
+                tr.shoe_progress_before_hand,
+                tr.true_count_bucket,
+                tr.total_money_committed,
+                tr.net_profit,
+                tr.outcome_code,
+                tr.split_count,
+                tr.double_count,
+                (tr.insurance_taken ? 1 : 0));
+        }
+
+        if (i % 10000 == 0 && i != 0) {
+            auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(
+                std::chrono::high_resolution_clock::now() - start_time).count();
+            std::cout << "  Shoe trace: " << i << "/" << numShoes
+                      << " shoes, " << elapsed << "s elapsed\n";
+        }
+    }
+
+    compress ? pclose(fp) : fclose(fp);
+    auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(
+        std::chrono::high_resolution_clock::now() - start_time).count();
+    std::cout << "Saved " << numShoes << " shoes → " << traceFile
+              << " (" << elapsed << "s)\n";
+}
+
 void runHella(){
 
     auto start_time = std::chrono::high_resolution_clock::now();
@@ -701,7 +808,19 @@ void runHella(){
 }
 
 int main(){
-    //runRTPsims(2, 1000000, 0.75f, std::make_unique<HiLoStrategy>(2));
-    runHella();
+    runRTPsims(2, 100000, 0.7f, std::make_unique<HiLoStrategy>(2));
+    return 0;
+    //runHella();
+
+    // Shoe trace library generation — fixed 1-unit bet, portable base traces
+    // Adjust numShoes for the size of the dataset you want.
+    // 6-deck, 75% pen, H17, DAS, no RAS, no surrender, 3:2
+    runShoeTraceSim(2, 1000000, 0.7f,
+        std::make_unique<HiLoStrategy>(2),
+        /*bj3to2=*/true, /*dealerHits17=*/true,
+        /*das=*/true, /*ras=*/false, /*surrender=*/false,
+        "stats/shoetraces",
+        /*compress=*/true);
+
     return 0;
 }

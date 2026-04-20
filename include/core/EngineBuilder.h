@@ -11,7 +11,7 @@ class EngineBuilder {
         GameConfig gameConfig;
         std::optional<Deck> deck;
         EventBus* eventBus = nullptr;
-        std::unique_ptr<EVTable> EVresults_;
+        std::map<std::pair<int, int>, std::map<float, DecisionPoint>> EVresults;
         std::map<float,ActionStats>* EVperTC = nullptr;
 
     public:
@@ -49,7 +49,7 @@ class EngineBuilder {
         EngineBuilder& setActions(std::vector<Action> actions);
         EngineBuilder& allowSoftHandsInMonteCarlo(bool enable);
         EngineBuilder& requirePairForMonteCarlo(bool enable);
-        EngineBuilder& setEVActions(const EVTable& values);
+        EngineBuilder& setEVActions(std::map<std::pair<int, int>, std::map<float, DecisionPoint>> values);
 
         // New multi-scenario method
         EngineBuilder& addMonteCarloScenario(const MonteCarloScenario& scenario);

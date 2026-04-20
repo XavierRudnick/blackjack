@@ -1,0 +1,56 @@
+#ifndef OMEGAIISTRATEGYACECOUNT_H
+#define OMEGAIISTRATEGYACECOUNT_H
+
+#include "Card.h"
+#include "Deck.h"
+#include "action.h"
+#include "CountingStrategy.h"
+#include "BasicStrategy.h"
+
+class OmegaIIStrategyAceCount : public CountingStrategy { //in docs note deck size is counted 100% accuratly in half size increments
+    private:
+        float true_count = 0;       // ace-adjusted TC — used only for getBetSize()
+        float raw_true_count = 0;   // raw TC (running_count / decks_left) — used for strategy decisions
+        float running_count = 0;
+        float num_decks_left = 0;
+        float initial_decks = 0;
+        int   ace_seen = 0;
+        float unitSize = 25;
+        float kellyFraction = 0.5f;
+        
+
+        static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2
+        static constexpr float evPerTC = 0.002660834324f; // Avg slope (2/4/6/8 deck) from 75pen data
+        static constexpr float evIntercept = -0.004705554836f; // Avg intercept from 75pen data
+        static constexpr float avgVolatility = 1.32f;
+        static constexpr float PROFITABLE_PLAY_TC_THRESHOLD = 1.0f; // OmegaII profitable at TC >= 0.60 (2deck 75pen)
+        int getEvenBet() const;
+        void recomputeTrueCountFromState();
+    public:
+        OmegaIIStrategyAceCount(float deck_size);
+        int getBetSize() override;
+        void setUnitSize(float kellyFraction) override;
+        void updateCount(Card card) override;       
+        void updateDeckSize(int num_cards_left) override;
+        
+        float getTrueCount() const override;
+        float getDecksLeft() const override;
+        float getRunningCount() const override;
+
+        bool shouldAcceptInsurance() const override;
+        Action shouldDeviatefromHard(int playerTotal, Rank dealerUpcard,float true_count) override;
+        Action shouldDeviatefromSplit(Rank playerSplitRank, Rank dealerUpcard,float true_count) override;
+        Action shouldSurrender(int playerTotal, Rank dealerUpcard,float true_count) override;
+
+        Action getHardHandAction(int playerTotal, Rank dealerUpcard,float true_count) override;
+        Action getSoftHandAction(int playerTotal, Rank dealerUpcard) override;
+        Action getSplitAction(Rank playerSplitRank, Rank dealerUpcard,float true_count) override;
+
+        void reset(int deckSize) override;
+
+        std::string getName() override;
+
+        ~OmegaIIStrategyAceCount() override = default;
+};
+
+#endif

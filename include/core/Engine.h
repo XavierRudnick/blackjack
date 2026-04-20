@@ -30,7 +30,7 @@ public:
         Deck deck,
         Player* player,
         EventBus* eventBus,
-        EVTable* evResults,
+        std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& EVresults,
         std::map<float,ActionStats>* EVperTC
     );
 
@@ -52,7 +52,7 @@ private:
     Player* player;
     GameReporter reporter;
 
-    std::optional<FixedEngine> fixedEngine;
+    FixedEngine fixedEngine;
 
     std::map<float,ActionStats> EVperTCStorage;
     std::map<float,ActionStats>* EVperTC;

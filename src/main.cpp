@@ -74,10 +74,11 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
     BotPlayer robot(false, std::move(strategy)); 
 
     auto start_time = std::chrono::high_resolution_clock::now();
+    int bankroll = 10000;
 
     for (int i = 0; i < iterations; i++){
-        std::pair<double, double> profit = {50000, 0};
-        for (int j = 0; j < 15; j++){
+        std::pair<double, double> profit = {bankroll, 0};
+        for (int j = 0; j < 10; j++){
 
             deck.reset();
             robot.resetCount(numDecksUsed);
@@ -119,10 +120,10 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
 
     double average = gameStats.first / iterations;
     double avgMoneyBet = gameStats.second / iterations;
-    double diff = average-50000;
-    double normal =  50000.0 / avgMoneyBet;
+    double diff = average-bankroll;
+    double normal =  bankroll / avgMoneyBet;
     double money_lost_per = diff * normal;
-    double rtp = (50000+money_lost_per) /50000;
+    double rtp = (bankroll+money_lost_per) /bankroll;
     std::cout << "lose br rate " << (float)losses/iterations << std::endl;
     std::cout << "Average after " << iterations << " rounds: " << average << std::endl;
     std::cout << "Average money bet: " << avgMoneyBet << std::endl;
@@ -518,17 +519,32 @@ void runEvenBetEvPerTcSims(int numDecksUsed, int iterations, float deckPenetrati
         std::chrono::high_resolution_clock::now() - start_time).count();
     std::cout << "  Even-bet EV/TC finished in " << duration << "s" << std::endl;
 
-    std::string evDir = evPerTcOutputRoot + "/" + strategyName;
-    fs::create_directories(evDir);
-    std::ostringstream evFilename;
-    evFilename << evDir << "/ev_per_tc_even1unit_" << strategyName << "_" << numDecksUsed << "deck_"
-               << static_cast<int>(deckPenetration * 100) << "pen_" << H17Str << "_"
-               << (allowDoubleAfterSplit ? "DAS" : "NoDAS") << "_"
-               << (allowReSplitAces ? "RAS" : "NoRAS") << "_"
-               << (surrender ? "Surrender" : "NoSurrender") << "_"
-               << (blackJackPayout3to2 ? "3to2" : "6to5") << ".csv";
+    // Root may be a directory (…/evPerTC → …/evPerTC/StrategyName/ev_per_tc_even1unit_*.csv)
+    // or a full output .csv path (create parent dirs only; write that file).
+    fs::path rootPath(evPerTcOutputRoot);
+    fs::path outCsvPath;
+    fs::path parentDir;
 
-    std::ofstream evFile(evFilename.str());
+    if (rootPath.extension() == ".csv") {
+        outCsvPath = rootPath;
+        parentDir = outCsvPath.parent_path();
+    } else {
+        std::string evDir = evPerTcOutputRoot + "/" + strategyName;
+        parentDir = fs::path(evDir);
+        std::ostringstream evFilename;
+        evFilename << evDir << "/ev_per_tc_even1unit_" << strategyName << "_" << numDecksUsed << "deck_"
+                   << static_cast<int>(deckPenetration * 100) << "pen_" << H17Str << "_"
+                   << (allowDoubleAfterSplit ? "DAS" : "NoDAS") << "_"
+                   << (allowReSplitAces ? "RAS" : "NoRAS") << "_"
+                   << (surrender ? "Surrender" : "NoSurrender") << "_"
+                   << (blackJackPayout3to2 ? "3to2" : "6to5") << ".csv";
+        outCsvPath = fs::path(evFilename.str());
+    }
+
+    if (!parentDir.empty()) {
+        fs::create_directories(parentDir);
+    }
+    std::ofstream evFile(outCsvPath.string());
     evFile << "TrueCount,HandsPlayed,TotalMoneyWagered,TotalPayout,EVPerDollar,StdErrorPerDollar" << std::endl;
     for (const auto& entry : EVperTC) {
         const float trueCount = entry.first;
@@ -541,7 +557,7 @@ void runEvenBetEvPerTcSims(int numDecksUsed, int iterations, float deckPenetrati
                << std::fixed << std::setprecision(6) << stats.getStdError()
                << std::endl;
     }
-    std::cout << "  Wrote even-bet EV per TC → " << evFilename.str() << std::endl;
+    std::cout << "  Wrote even-bet EV per TC → " << outCsvPath.string() << std::endl;
 }
 
 // Run RTP simulations for all strategies and save to CSV
@@ -926,7 +942,16 @@ void runHella(){
 }
 
 int main(){
-    runRTPsims(6, 1000000, 0.75f, std::make_unique<HiLoStrategy>(6));
+
+    
+    
+    
+    
+    runEvenBetEvPerTcSims(6, 10000000, 0.75f, std::make_unique<HiLoStrategy>(6), true, true, false, false, true,
+        "data/ev_per_tc_data/evPerTC/HiLoStrategy/ev_per_tc_HiLoStrategy_6deck_75pen_H17_DAS_NoRAS_NoSurrender_3to2.csv");
+    return 0;
+
+    runRTPsims(6, 200000, 0.75f, std::make_unique<HiLoStrategy>(6));
     return 0;
     //runHella();
 

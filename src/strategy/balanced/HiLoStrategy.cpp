@@ -15,52 +15,37 @@ HiLoStrategy::HiLoStrategy(float deck_size){
 
 
 int HiLoStrategy::getBetSize() {
-    float effectiveTC = true_count - PROFITABLE_PLAY_TC_THRESHOLD;
-    if (effectiveTC <= 0){
-        return MIN_BET;
-    }
+    // float effectiveTC = true_count - PROFITABLE_PLAY_TC_THRESHOLD;
+    // if (effectiveTC <= 0){
+    //     return MIN_BET;
+    // }
 
-    float interceptUnit = (Bankroll::getInitialBalance() * kellyFraction * evIntercept) / avgVolatility;
-    int bet = std::round((unitSize * effectiveTC + interceptUnit) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
-    bet = std::max(MIN_BET, bet);
-    return std::min(getMaxBet(), bet);
+    // float interceptUnit = (Bankroll::getInitialBalance() * kellyFraction * evIntercept) / avgVolatility;
+    // int bet = std::round((unitSize * effectiveTC + interceptUnit) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
+    // bet = std::max(MIN_BET, bet);
+    // return std::min(getMaxBet(), bet);
 
     float tc_bucketed = std::round(true_count * 2.0f) / 2.0f;  // match trace bucket
     int count = static_cast<int>(std::ceil(tc_bucketed));
-    // if (count <= 0){
-    //     return MIN_BET;
-    // }
-    // else if (count < 1){
-    //     return 25;
-    // }
-    // else if (count < 2){
-    //     return 50;
-    // }
-    // else if (count < 3){
-    //     return 100;
-    // }
-    // else if (count < 4){
-    //     return 200;
-    // }
-    // else if (count < 5){
-    //     return 300;
-    // }
-    // else if (count < 6){
-    //     return 400;
-    // }
-    // else {
-    //     return 500;
-    // }
-
-    if (count <= 1){
-        return 25;
+    if (count <= 0) {
+        return MIN_BET;
     }
-    else if (count <= 8){
-        return 25 * count;
+    if (count == 1) {
+        return 100;
     }
-    else {
+    if (count == 2) {
         return 200;
     }
+    if (count == 3) {
+        return 300;
+    }
+    if (count == 4) {
+        return 400;
+    }
+    if (count == 5) {
+        return 600;
+    }
+    return 1000;
 }
 
 void HiLoStrategy::setUnitSize(float inputKellyFraction) {

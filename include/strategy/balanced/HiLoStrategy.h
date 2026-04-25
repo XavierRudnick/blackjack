@@ -12,7 +12,7 @@ class HiLoStrategy : public CountingStrategy { //in docs note deck size is count
         float running_count = 0;
         float num_decks_left = 0;
         float initial_decks = 0;
-        float unitSize = 25;
+        float unitSize = 100;
         float kellyFraction = 0.5f; 
         
         static const int INDEX_OFFSET = 2; // Since dealer upcards start from 2

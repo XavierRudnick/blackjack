@@ -33,8 +33,8 @@ class CountingStrategy {
         virtual std::string getName() = 0;
 
         // Minimum and maximum bet constants (centralized defaults)
-        static constexpr int MIN_BET = 25;
-        static constexpr int MAX_BET = 2000;
+        static constexpr int MIN_BET = 100;
+        static constexpr int MAX_BET = 5000;
         // Runtime getter to allow per-strategy overrides when needed
         virtual int getMaxBet() const { return MAX_BET; }
 

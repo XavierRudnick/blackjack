@@ -314,14 +314,20 @@ def replay_once(
         np.cumsum(dollar_profits, out=cumulative[1:])
         path = B + cumulative
 
-        # Ruin check: bankroll BEFORE each hand < table_min (spec Step 3)
-        ruin_mask = path[:-1] < config.table_min
-        if ruin_mask.any():
-            k = int(np.argmax(ruin_mask))  # first hand player can't afford
-            # Stop without playing hand k; bankroll stays at path[k]
-            end_path = path[: k + 1]
-            hands_this = k
-            ruin = True
+        # Ruin check: bankroll BEFORE each hand < table_min (spec Step 3).
+        # Only stop mid-session when ruin_mode == "anytime"; in "end" mode we
+        # play every hand of every shoe so full-shoe counts stay efficient.
+        if config.ruin_mode == "anytime":
+            ruin_mask = path[:-1] < config.table_min
+            if ruin_mask.any():
+                k = int(np.argmax(ruin_mask))  # first hand player can't afford
+                # Stop without playing hand k; bankroll stays at path[k]
+                end_path = path[: k + 1]
+                hands_this = k
+                ruin = True
+            else:
+                end_path = path
+                hands_this = len(tc_arr)
         else:
             end_path = path
             hands_this = len(tc_arr)

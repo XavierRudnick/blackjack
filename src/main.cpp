@@ -72,13 +72,14 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
     int losses = 0;
     Deck deck(numDecksUsed);
     BotPlayer robot(false, std::move(strategy)); 
+    float lowest = 1000000;
 
     auto start_time = std::chrono::high_resolution_clock::now();
-    int bankroll = 10000;
+    int bankroll = 100000;
 
     for (int i = 0; i < iterations; i++){
         std::pair<double, double> profit = {bankroll, 0};
-        for (int j = 0; j < 10; j++){
+        for (int j = 0; j < 1000; j++){
 
             deck.reset();
             robot.resetCount(numDecksUsed);
@@ -89,7 +90,7 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
                                         .setDeck(deck)
                                         .setPenetrationThreshold(deckPenetration)
                                         .setInitialWallet(profit.first)
-                                        .setKellyRisk(0.5f)
+                                        .setKellyRisk(1.0f)
                                         .enableEvents(false)
                                         .with3To2Payout(true)
                                         .withH17Rules(true)
@@ -100,13 +101,18 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
             profit.second += end_profit.second;
             profit.first = end_profit.first;
 
-            if (profit.first < 25.0){
-                losses++;
-                break;        
-            }
+
+            // if (profit.first < 25.0){
+            //     losses++;
+            //     break;        
+            // }
+        }
+
+        if (profit.first < lowest){
+            lowest = profit.first;
         }
     
-        if (i % 10000000 == 0 && i != 0){
+        if (i % 1000 == 0 && i != 0){
             std::cout  << "Completed " << i << " / " << iterations << " iterations." <<std::endl;
         }
             
@@ -130,6 +136,7 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
     std::cout << "Difference: " << diff << std::endl;
     std::cout << "Money gained/lost per 1000$ " << money_lost_per << "$" << std::endl;
     std::cout << "RTP " << rtp << std::endl;
+    std::cout << "Lowest bankroll: " << lowest << std::endl;
 }
 
 // // Legacy single-action simulation (kept for backward compatibility)
@@ -947,11 +954,11 @@ int main(){
     
     
     
-    runEvenBetEvPerTcSims(6, 10000000, 0.75f, std::make_unique<HiLoStrategy>(6), true, true, false, false, true,
-        "data/ev_per_tc_data/evPerTC/HiLoStrategy/ev_per_tc_HiLoStrategy_6deck_75pen_H17_DAS_NoRAS_NoSurrender_3to2.csv");
-    return 0;
+    // runEvenBetEvPerTcSims(6, 10000000, 0.75f, std::make_unique<HiLoStrategy>(6), true, true, false, false, true,
+    //     "data/ev_per_tc_data/evPerTC/HiLoStrategy/ev_per_tc_HiLoStrategy_6deck_75pen_H17_DAS_NoRAS_NoSurrender_3to2.csv");
+    // return 0;
 
-    runRTPsims(6, 200000, 0.75f, std::make_unique<HiLoStrategy>(6));
+    runRTPsims(6, 5000, 0.75f, std::make_unique<HiLoStrategy>(6));
     return 0;
     //runHella();
 

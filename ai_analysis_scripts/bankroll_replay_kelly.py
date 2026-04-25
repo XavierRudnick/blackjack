@@ -24,15 +24,15 @@ Dependencies:
     pip install numpy pandas matplotlib
 
 Usage:
-    python3 ai_analysis_scripts/bankroll_replay_kelly.py \
-  --trace stats/shoetraces/hand_traces_HiLoStrategy_6deck_75pen_H17_DAS_NoRAS_NoSurrender_3to2.csv.zst \
-  --ev-csv data/ev_per_tc_data/evPerTC/HiLoStrategy/ev_per_tc_HiLoStrategy_6deck_70pen_H17_DAS_NoRAS_NoSurrender_3to2.csv \
-  --start-bankroll 10000 \
-  --table-min 25 --table-max 2000 \
-  --shoes 100 --replays 10000 \
-  --kelly-grid "0.25,0.5,0.75,1.0" \
-  --bankroll-thresholds "0.9,0.75,0.5" \
-  --output kelly_sweep_hilo_6d75pen_h17.png
+python3 ai_analysis_scripts/bankroll_replay_kelly.py \
+        --trace stats/shoetraces/hand_traces_HiLoStrategy_6deck_75pen_H17_DAS_NoRAS_NoSurrender_3to2.csv.zst \
+        --ev-csv data/ev_per_tc_data/evPerTC/HiLoStrategy/ev_per_tc_HiLoStrategy_6deck_75pen_H17_DAS_NoRAS_NoSurrender_3to2.csv \
+        --start-bankroll 100000 \
+        --table-min 100 --table-max 5000 \
+        --shoes 1000 --replays 10000 \
+        --kelly-grid "0.25,0.5,0.75,1.0,,1.5,2,2.5,3,4" \
+        --bankroll-thresholds "0.9,0.75,0.5,0.25,0.1" \
+        --output kelly_sweep_hilo_6d75pen_h17.png
 """
 
 from __future__ import annotations

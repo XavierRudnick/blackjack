@@ -30,6 +30,10 @@ float BotPlayer::getTrueCount() {
     return strategy->getTrueCount();
 }
 
+float BotPlayer::getBettingTrueCount() {
+    return strategy->getBettingTrueCount();
+}
+
 bool BotPlayer::shouldAcceptInsurance() {
     return strategy->shouldAcceptInsurance();
 }

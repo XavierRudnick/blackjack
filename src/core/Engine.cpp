@@ -131,13 +131,13 @@ bool Engine::playHandImpl(){
 void Engine::playHand(){
     player->updateDeckStrategySize(deck->getSize());
 
-    handTrueCount = roundTrueCount(player->getTrueCount());
+    handTrueCount = roundTrueCount(player->getBettingTrueCount());
     currentHandBetTotal = 0.0;
 
     // Capture pre-hand state for shoe tracing
     const bool doTrace = (traceBuffer != nullptr);
     const double bankrollBefore = bankroll.getBalance();
-    const float  rawTC   = player->getTrueCount();
+    const float  bettingTC = player->getBettingTrueCount();
     const int    deckNow = deck->getSize();
 
     if (doTrace) {
@@ -159,7 +159,7 @@ void Engine::playHand(){
         tr.shoe_progress_before_hand = roundShoeProgress(
             static_cast<float>(traceInitialDeckSize - deckNow)
             / static_cast<float>(traceInitialDeckSize));
-        tr.true_count_bucket     = bucketTC(rawTC);
+        tr.true_count_bucket     = bucketTC(bettingTC);
         tr.total_money_committed = currentHandBetTotal;
         tr.net_profit            = bankroll.getBalance() - bankrollBefore;
         tr.split_count     = traceHandSplitCount;

@@ -34,6 +34,7 @@ class OmegaIIStrategyAceCount : public CountingStrategy { //in docs note deck si
         void updateDeckSize(int num_cards_left) override;
         
         float getTrueCount() const override;
+        float getBettingTrueCount() const override;
         float getDecksLeft() const override;
         float getRunningCount() const override;
 

@@ -33,6 +33,10 @@ float HumanPlayer::getTrueCount() {
     return strategy->getTrueCount();
 }
 
+float HumanPlayer::getBettingTrueCount() {
+    return strategy->getBettingTrueCount();
+}
+
 bool HumanPlayer::shouldAcceptInsurance() {
     return strategy->shouldAcceptInsurance();
 }

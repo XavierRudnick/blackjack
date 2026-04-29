@@ -22,6 +22,7 @@
 #include <sstream>
 #include <functional>
 #include "LoggingCountingStrategy.h"
+#include "CSVKellyBetSizer.h"
 #include "FixedEngine.h"
 #include "MentorStrategy.h"
 #include "OmegaIIStrategy.h"
@@ -71,15 +72,30 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
     //bus.registerObserver(&consoleObserver, {EventType::CardsDealt, EventType::ActionTaken, EventType::RoundEnded, EventType::GameStats});
     int losses = 0;
     Deck deck(numDecksUsed);
-    BotPlayer robot(false, std::move(strategy)); 
     float lowest = 1000000;
 
     auto start_time = std::chrono::high_resolution_clock::now();
     int bankroll = 100000;
 
+    // Fixed-B0 μ/σ² Kelly sizing from the EV CSV (matches Python bankroll_replay_kelly.py).
+    const std::string evCsvPath = strategy->defaultEvCsvPath(numDecksUsed, deckPenetration,
+                                                             /*h17=*/true, /*das=*/true,
+                                                             /*ras=*/false, /*surrender=*/false,
+                                                             /*bj3to2=*/true);
+    auto sizer = std::make_unique<CSVKellyBetSizer>(std::move(strategy), evCsvPath,
+                                                    static_cast<double>(bankroll), 1.0f);
+    BotPlayer robot(false, std::move(sizer));
+
+    // Engine::runner halts a shoe early when its internal bankroll drops below
+    // $25 (src/core/Engine.cpp). To match the Python replay (which plays through
+    // negative bankrolls), give the engine a huge cushion and track the real
+    // bankroll as a delta. Bet sizes are unaffected: the Kelly sizer captured B0
+    // at construction and never reads engine balance.
+    const double cushion = 1'000'000'000.0;
+
     for (int i = 0; i < iterations; i++){
-        std::pair<double, double> profit = {bankroll, 0};
-        for (int j = 0; j < 1000; j++){
+        std::pair<double, double> profit = {static_cast<double>(bankroll), 0};
+        for (int j = 0; j < 100; j++){
 
             deck.reset();
             robot.resetCount(numDecksUsed);
@@ -89,7 +105,7 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
                                         .setDeckSize(numDecksUsed)
                                         .setDeck(deck)
                                         .setPenetrationThreshold(deckPenetration)
-                                        .setInitialWallet(profit.first)
+                                        .setInitialWallet(cushion + profit.first)
                                         .setKellyRisk(1.0f)
                                         .enableEvents(false)
                                         .with3To2Payout(true)
@@ -99,13 +115,7 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
                                         .build(&robot);
             auto end_profit = hiLoEngine.runner();
             profit.second += end_profit.second;
-            profit.first = end_profit.first;
-
-
-            // if (profit.first < 25.0){
-            //     losses++;
-            //     break;        
-            // }
+            profit.first = end_profit.first - cushion;
         }
 
         if (profit.first < lowest){
@@ -373,7 +383,15 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
     std::pair<double, double> gameStats = {0, 0};
     EventBus& bus = EventBus::getInstance();
     Deck deck(numDecksUsed);
-    BotPlayer robot(false, std::move(strategy)); 
+
+    // Fixed-B0 μ/σ² Kelly sizing from the EV CSV. B0 = initialWallet, k = kellyFraction.
+    const std::string evCsvPath = strategy->defaultEvCsvPath(numDecksUsed, deckPenetration,
+                                                             dealerHits17, allowDoubleAfterSplit,
+                                                             allowReSplitAces, surrender,
+                                                             blackJackPayout3to2);
+    auto sizer = std::make_unique<CSVKellyBetSizer>(std::move(strategy), evCsvPath,
+                                                    initialWallet, kellyFraction);
+    BotPlayer robot(false, std::move(sizer));
     std::string strategyName = robot.getStrategy()->getName();
     std::map<float,ActionStats> EVperTC;
 
@@ -951,22 +969,55 @@ void runHella(){
 int main(){
 
     
-    
-    
-    
-    // runEvenBetEvPerTcSims(6, 10000000, 0.75f, std::make_unique<HiLoStrategy>(6), true, true, false, false, true,
-    //     "data/ev_per_tc_data/evPerTC/HiLoStrategy/ev_per_tc_HiLoStrategy_6deck_75pen_H17_DAS_NoRAS_NoSurrender_3to2.csv");
+
+    // runEvenBetEvPerTcSims(6, 17500000, 0.55f, std::make_unique<OmegaIIStrategyAceCount>(6), true, true, false, false, true,
+    // "data/ev_per_tc_data/evPerTC/OmegaIIStrategyAceCount/ev_per_tc_OmegaIIStrategyAceCount_6deck_55pen_H17_DAS_NoRAS_NoSurrender_3to2.csv");
     // return 0;
 
-    runRTPsims(6, 5000, 0.75f, std::make_unique<HiLoStrategy>(6));
+    runRTPsims(6, 10000, 0.75f, std::make_unique<HiLoStrategy>(6));
     return 0;
     //runHella();
 
-    // // Shoe trace library generation — fixed 1-unit bet, portable base traces
+    // Shoe trace library generation — fixed 1-unit bet, portable base traces
     // // Adjust numShoes for the size of the dataset you want.
     // // 6-deck, 75% pen, H17, DAS, no RAS, no surrender, 3:2
+    // runShoeTraceSim(2, 2500000, 0.50f,
+    //     std::make_unique<ZenCountStrategy>(2),
+    //     /*bj3to2=*/true, /*dealerHits17=*/true,
+    //     /*das=*/true, /*ras=*/false, /*surrender=*/false,
+    //     "stats/shoetraces",
+    //     /*compress=*/true);
+
+    // runShoeTraceSim(2, 2500000, 0.60f,
+    //     std::make_unique<ZenCountStrategy>(2),
+    //     /*bj3to2=*/true, /*dealerHits17=*/true,
+    //     /*das=*/true, /*ras=*/false, /*surrender=*/false,
+    //     "stats/shoetraces",
+    //     /*compress=*/true);
+
+    // runShoeTraceSim(2, 2500000, 0.70f,
+    //     std::make_unique<ZenCountStrategy>(2),
+    //     /*bj3to2=*/true, /*dealerHits17=*/true,
+    //     /*das=*/true, /*ras=*/false, /*surrender=*/false,
+    //     "stats/shoetraces",
+    //     /*compress=*/true);
+
+    // runShoeTraceSim(6, 1000000, 0.55f,
+    //     std::make_unique<ZenCountStrategy>(6),
+    //     /*bj3to2=*/true, /*dealerHits17=*/true,
+    //     /*das=*/true, /*ras=*/false, /*surrender=*/false,
+    //     "stats/shoetraces",
+    //     /*compress=*/true);
+
+    // runShoeTraceSim(6, 1000000, 0.65f,
+    //     std::make_unique<ZenCountStrategy>(6),
+    //     /*bj3to2=*/true, /*dealerHits17=*/true,
+    //     /*das=*/true, /*ras=*/false, /*surrender=*/false,
+    //     "stats/shoetraces",
+    //     /*compress=*/true);
+
     // runShoeTraceSim(6, 1000000, 0.75f,
-    //     std::make_unique<OmegaIIStrategyAceCount>(6),
+    //     std::make_unique<ZenCountStrategy>(6),
     //     /*bj3to2=*/true, /*dealerHits17=*/true,
     //     /*das=*/true, /*ras=*/false, /*surrender=*/false,
     //     "stats/shoetraces",
@@ -974,24 +1025,24 @@ int main(){
 
     // return 0;
 
-    // Increase counts for tighter CSVs (millions of shoes is typical for deviation work).
-    int numDecks = 6;
-    float deckPenetration = 0.75f;
-    long long monteIterations = 60'000'000LL;
-    int evPerTcIterations = 10'000'000;
-    int rtpIterations = 3'000'000;
-    float kellyFraction = 0.75f;
-    bool dealerHits17 = true;
-    bool allowDoubleAfterSplit = true;
-    bool allowReSplitAces = false;
-    bool surrender = false;
-    bool blackJackPayout3to2 = true;
-    double initialBankroll = 50'000.0;
-    collectStrategyDeviationEvRtpDataset(numDecks, deckPenetration,
-        [numDecks]() { return std::make_unique<OmegaIIStrategyAceCount>(static_cast<float>(numDecks)); },
-        monteIterations, evPerTcIterations,
-        rtpIterations, kellyFraction, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
-        surrender, blackJackPayout3to2, initialBankroll);
+    // // Increase counts for tighter CSVs (millions of shoes is typical for deviation work).
+    // int numDecks = 6;
+    // float deckPenetration = 0.75f;
+    // long long monteIterations = 60'000'000LL;
+    // int evPerTcIterations = 10'000'000;
+    // int rtpIterations = 3'000'000;
+    // float kellyFraction = 0.75f;
+    // bool dealerHits17 = true;
+    // bool allowDoubleAfterSplit = true;
+    // bool allowReSplitAces = false;
+    // bool surrender = false;
+    // bool blackJackPayout3to2 = true;
+    // double initialBankroll = 50'000.0;
+    // collectStrategyDeviationEvRtpDataset(numDecks, deckPenetration,
+    //     [numDecks]() { return std::make_unique<OmegaIIStrategyAceCount>(static_cast<float>(numDecks)); },
+    //     monteIterations, evPerTcIterations,
+    //     rtpIterations, kellyFraction, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
+    //     surrender, blackJackPayout3to2, initialBankroll);
 
-    return 0;
+    // return 0;
 }

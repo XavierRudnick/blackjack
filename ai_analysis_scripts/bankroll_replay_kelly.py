@@ -262,6 +262,8 @@ class KellySummary:
     base: BaseSummary
     threshold_fractions: tuple[float, ...]   # as fractions of B0
     threshold_probs: tuple[float, ...]       # P(end < frac * B0)
+    percentile_probs: tuple[float, ...]      # percentile probabilities, 0..1
+    percentile_bankrolls: tuple[float, ...]  # ending bankroll at each percentile
 
 
 def compute_kelly_summary(
@@ -269,17 +271,23 @@ def compute_kelly_summary(
     start_bankroll: float,
     kelly: float,
     threshold_fractions: Sequence[float],
+    percentile_probs: Sequence[float] = (),
 ) -> KellySummary:
     base = base_compute_summary(results, start_bankroll)
     end_b = np.array([r.end_bankroll for r in results])
     probs = tuple(
         float(np.mean(end_b < frac * start_bankroll)) for frac in threshold_fractions
     )
+    pct_bankrolls = tuple(
+        float(np.percentile(end_b, p * 100.0)) for p in percentile_probs
+    )
     return KellySummary(
         kelly=kelly,
         base=base,
         threshold_fractions=tuple(threshold_fractions),
         threshold_probs=probs,
+        percentile_probs=tuple(percentile_probs),
+        percentile_bankrolls=pct_bankrolls,
     )
 
 

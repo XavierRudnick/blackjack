@@ -16,9 +16,9 @@ void OmegaIIStrategyAceCount::recomputeTrueCountFromState() {
         return;
     }
     raw_true_count = running_count / num_decks_left;
-    const int excess_aces =
-        (static_cast<int>(std::round((initial_decks - num_decks_left) * 4.0f)) - ace_seen) * 2;
-    true_count = (running_count + static_cast<float>(excess_aces)) / num_decks_left;
+    const float expectedAcesSeen = (initial_decks - num_decks_left) * 4.0f;
+    const float aceAdjustment = 2.0f * (expectedAcesSeen - static_cast<float>(ace_seen));
+    true_count = (running_count + aceAdjustment) / num_decks_left;
 }
 
 int OmegaIIStrategyAceCount::getBetSize() {
@@ -32,35 +32,35 @@ int OmegaIIStrategyAceCount::getBetSize() {
     bet = std::max(MIN_BET, bet);
     return std::min(getMaxBet(), bet);
 
-    float tc_bucketed = std::round(true_count * 2.0f) / 2.0f;  // match trace bucket
-    int count = static_cast<int>(std::ceil(tc_bucketed));
-    if (count <= 0){
-        return MIN_BET;
-    }
-    else if (count < 1){
-        return 25;
-    }
-    else if (count < 2){
-        return 50;
-    }
-    else if (count < 3){
-        return 100;
-    }
-    else if (count < 4){
-        return 200;
-    }
-    else if (count < 5){
-        return 300;
-    }
-    else if (count < 6){
-        return 400;
-    }
-    else if (count < 7){
-        return 500;
-    }
-    else {
-        return 600;
-    }
+    // float tc_bucketed = std::round(true_count * 2.0f) / 2.0f;  // match trace bucket
+    // int count = static_cast<int>(std::ceil(tc_bucketed));
+    // if (count <= 0){
+    //     return MIN_BET;
+    // }
+    // else if (count < 1){
+    //     return 25;
+    // }
+    // else if (count < 2){
+    //     return 50;
+    // }
+    // else if (count < 3){
+    //     return 100;
+    // }
+    // else if (count < 4){
+    //     return 200;
+    // }
+    // else if (count < 5){
+    //     return 300;
+    // }
+    // else if (count < 6){
+    //     return 400;
+    // }
+    // else if (count < 7){
+    //     return 500;
+    // }
+    // else {
+    //     return 600;
+    //}
 } 
 
 void OmegaIIStrategyAceCount::setUnitSize(float inputKellyFraction) {
@@ -120,6 +120,10 @@ void OmegaIIStrategyAceCount::updateDeckSize(int num_cards_left){
 
 float OmegaIIStrategyAceCount::getTrueCount() const{
     return raw_true_count;
+}
+
+float OmegaIIStrategyAceCount::getBettingTrueCount() const{
+    return true_count;
 }
 
 float OmegaIIStrategyAceCount::getRunningCount() const{

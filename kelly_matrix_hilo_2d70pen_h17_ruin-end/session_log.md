@@ -1,199 +1,199 @@
-Loading EV table from: data/ev_per_tc_data/evPerTC/HiLoStrategy/ev_per_tc_HiLoStrategy_6deck_70pen_H17_DAS_NoRAS_NoSurrender_3to2.csv
-  87 TC buckets in [-21.5 .. +22.0] (HandsPlayed >= 0)
-Loading traces from: stats/shoetraces/hand_traces_HiLoStrategy_6deck_75pen_H17_DAS_NoRAS_NoSurrender_3to2.csv.zst
-  Loaded 1,000,000 shoes | 43,061,863 hands (avg 43.1 hands/shoe) in 9.3s
+Loading EV table from: data/ev_per_tc_data/evPerTC/HiLoStrategy/ev_per_tc_HiLoStrategy_2deck_70pen_H17_DAS_NoRAS_NoSurrender_3to2.csv
+  142 TC buckets in [-36.0 .. +37.5] (HandsPlayed >= 0)
+Loading traces from: stats/shoetraces/hand_traces_HiLoStrategy_2deck_70pen_H17_DAS_NoRAS_NoSurrender_3to2.csv.zst
+  Loaded 1,000,000 shoes | 13,751,248 hands (avg 13.8 hands/shoe) in 3.0s
 
-Dispatching 188 jobs across 12 workers (replays=2,000, shoes/session=100)
-  [  1/188]  min$5/max$500  B0=$    200  k=1.25  (0.26 jobs/s, elapsed 3.8s)
-  [  2/188]  min$5/max$500  B0=$    200  k=4.00  (0.52 jobs/s, elapsed 3.8s)
-  [  3/188]  min$5/max$500  B0=$    200  k=2.50  (0.78 jobs/s, elapsed 3.8s)
-  [  4/188]  min$5/max$500  B0=$    200  k=2.00  (1.04 jobs/s, elapsed 3.8s)
-  [  5/188]  min$5/max$500  B0=$    200  k=3.00  (0.84 jobs/s, elapsed 5.9s)
-  [  6/188]  min$5/max$500  B0=$    200  k=1.00  (1.01 jobs/s, elapsed 5.9s)
-  [  7/188]  min$5/max$500  B0=$    200  k=5.00  (1.18 jobs/s, elapsed 5.9s)
-  [  8/188]  min$5/max$500  B0=$    200  k=6.00  (1.34 jobs/s, elapsed 6.0s)
-  [  9/188]  min$5/max$500  B0=$    200  k=0.75  (1.51 jobs/s, elapsed 6.0s)
-  [ 10/188]  min$5/max$500  B0=$    200  k=0.50  (1.66 jobs/s, elapsed 6.0s)
-  [ 11/188]  min$5/max$500  B0=$    200  k=1.50  (1.82 jobs/s, elapsed 6.0s)
-  [ 12/188]  min$5/max$500  B0=$    200  k=0.25  (1.98 jobs/s, elapsed 6.1s)
-  [ 13/188]  min$5/max$500  B0=$    500  k=0.75  (1.69 jobs/s, elapsed 7.7s)
-  [ 14/188]  min$5/max$500  B0=$    500  k=0.50  (1.82 jobs/s, elapsed 7.7s)
-  [ 15/188]  min$5/max$500  B0=$    500  k=0.25  (1.94 jobs/s, elapsed 7.7s)
-  [ 16/188]  min$5/max$500  B0=$    200  k=7.00  (1.96 jobs/s, elapsed 8.1s)
-  [ 17/188]  min$5/max$500  B0=$    500  k=2.00  (1.74 jobs/s, elapsed 9.8s)
-  [ 18/188]  min$5/max$500  B0=$    500  k=6.00  (1.57 jobs/s, elapsed 11.5s)
-  [ 19/188]  min$5/max$500  B0=$    500  k=7.00  (1.65 jobs/s, elapsed 11.5s)
-  [ 20/188]  min$5/max$500  B0=$    500  k=1.00  (1.68 jobs/s, elapsed 11.9s)
-  [ 21/188]  min$5/max$500  B0=$    500  k=2.50  (1.76 jobs/s, elapsed 12.0s)
-  [ 22/188]  min$5/max$500  B0=$  1,000  k=0.50  (1.84 jobs/s, elapsed 12.0s)
-  [ 23/188]  min$5/max$500  B0=$    500  k=1.50  (1.92 jobs/s, elapsed 12.0s)
-  [ 24/188]  min$5/max$500  B0=$    500  k=1.25  (1.99 jobs/s, elapsed 12.1s)
-  [ 25/188]  min$5/max$500  B0=$    500  k=3.00  (2.07 jobs/s, elapsed 12.1s)
-  [ 26/188]  min$5/max$500  B0=$    500  k=4.00  (2.14 jobs/s, elapsed 12.2s)
-  [ 27/188]  min$5/max$500  B0=$    500  k=5.00  (2.22 jobs/s, elapsed 12.2s)
-  [ 28/188]  min$5/max$500  B0=$  1,000  k=0.75  (2.06 jobs/s, elapsed 13.6s)
-  [ 29/188]  min$5/max$500  B0=$  1,000  k=0.25  (2.12 jobs/s, elapsed 13.7s)
-  [ 30/188]  min$5/max$500  B0=$  1,000  k=1.25  (1.95 jobs/s, elapsed 15.4s)
-  [ 31/188]  min$5/max$500  B0=$  1,000  k=1.00  (1.99 jobs/s, elapsed 15.5s)
-  [ 32/188]  min$5/max$500  B0=$  1,000  k=2.50  (2.03 jobs/s, elapsed 15.7s)
-  [ 33/188]  min$5/max$500  B0=$  1,000  k=6.00  (1.94 jobs/s, elapsed 17.0s)
-  [ 34/188]  min$10/max$1000  B0=$    500  k=0.25  (1.95 jobs/s, elapsed 17.4s)
-  [ 35/188]  min$5/max$500  B0=$  1,000  k=1.50  (1.95 jobs/s, elapsed 17.9s)
-  [ 36/188]  min$5/max$500  B0=$  1,000  k=2.00  (2.00 jobs/s, elapsed 18.0s)
-  [ 37/188]  min$5/max$500  B0=$  1,000  k=3.00  (2.05 jobs/s, elapsed 18.1s)
-  [ 38/188]  min$5/max$500  B0=$  1,000  k=5.00  (2.10 jobs/s, elapsed 18.1s)
-  [ 39/188]  min$5/max$500  B0=$  1,000  k=7.00  (2.14 jobs/s, elapsed 18.2s)
-  [ 40/188]  min$5/max$500  B0=$  1,000  k=4.00  (2.20 jobs/s, elapsed 18.2s)
-  [ 41/188]  min$10/max$1000  B0=$    500  k=0.75  (2.13 jobs/s, elapsed 19.2s)
-  [ 42/188]  min$10/max$1000  B0=$    500  k=1.25  (2.15 jobs/s, elapsed 19.5s)
-  [ 43/188]  min$10/max$1000  B0=$    500  k=0.50  (2.19 jobs/s, elapsed 19.7s)
-  [ 44/188]  min$10/max$1000  B0=$    500  k=1.50  (2.05 jobs/s, elapsed 21.5s)
-  [ 45/188]  min$10/max$1000  B0=$    500  k=1.00  (2.09 jobs/s, elapsed 21.5s)
-  [ 46/188]  min$10/max$1000  B0=$    500  k=2.00  (2.11 jobs/s, elapsed 21.8s)
-  [ 47/188]  min$10/max$1000  B0=$    500  k=2.50  (2.07 jobs/s, elapsed 22.7s)
-  [ 48/188]  min$10/max$1000  B0=$    500  k=5.00  (2.09 jobs/s, elapsed 23.0s)
-  [ 49/188]  min$10/max$1000  B0=$    500  k=6.00  (2.11 jobs/s, elapsed 23.2s)
-  [ 50/188]  min$10/max$1000  B0=$    500  k=3.00  (2.14 jobs/s, elapsed 23.3s)
-  [ 51/188]  min$10/max$1000  B0=$    500  k=4.00  (2.12 jobs/s, elapsed 24.1s)
-  [ 52/188]  min$10/max$1000  B0=$    500  k=7.00  (2.14 jobs/s, elapsed 24.3s)
-  [ 53/188]  min$10/max$1000  B0=$  1,000  k=0.25  (2.17 jobs/s, elapsed 24.4s)
-  [ 54/188]  min$10/max$1000  B0=$  1,000  k=0.50  (2.11 jobs/s, elapsed 25.5s)
-  [ 55/188]  min$10/max$1000  B0=$  1,000  k=1.00  (2.13 jobs/s, elapsed 25.8s)
-  [ 56/188]  min$10/max$1000  B0=$  1,000  k=0.75  (2.16 jobs/s, elapsed 26.0s)
-  [ 57/188]  min$10/max$1000  B0=$  1,000  k=2.50  (2.09 jobs/s, elapsed 27.2s)
-  [ 58/188]  min$10/max$1000  B0=$  1,000  k=2.00  (2.11 jobs/s, elapsed 27.4s)
-  [ 59/188]  min$10/max$1000  B0=$  1,000  k=1.25  (2.14 jobs/s, elapsed 27.6s)
-  [ 60/188]  min$10/max$1000  B0=$  1,000  k=1.50  (2.16 jobs/s, elapsed 27.8s)
-  [ 61/188]  min$10/max$1000  B0=$  1,000  k=4.00  (2.15 jobs/s, elapsed 28.4s)
-  [ 62/188]  min$10/max$1000  B0=$  1,000  k=5.00  (2.16 jobs/s, elapsed 28.7s)
-  [ 63/188]  min$10/max$1000  B0=$  1,000  k=6.00  (2.18 jobs/s, elapsed 28.9s)
-  [ 64/188]  min$10/max$1000  B0=$  1,000  k=3.00  (2.19 jobs/s, elapsed 29.2s)
-  [ 65/188]  min$10/max$1000  B0=$  2,000  k=0.50  (2.18 jobs/s, elapsed 29.9s)
-  [ 66/188]  min$10/max$1000  B0=$  1,000  k=7.00  (2.17 jobs/s, elapsed 30.4s)
-  [ 67/188]  min$10/max$1000  B0=$  2,000  k=1.00  (2.15 jobs/s, elapsed 31.2s)
-  [ 68/188]  min$10/max$1000  B0=$  2,000  k=0.25  (2.15 jobs/s, elapsed 31.6s)
-  [ 69/188]  min$10/max$1000  B0=$  2,000  k=3.00  (2.12 jobs/s, elapsed 32.6s)
-  [ 70/188]  min$10/max$1000  B0=$  2,000  k=0.75  (2.15 jobs/s, elapsed 32.6s)
-  [ 71/188]  min$10/max$1000  B0=$  2,000  k=4.00  (2.17 jobs/s, elapsed 32.8s)
-  [ 72/188]  min$10/max$1000  B0=$  2,000  k=1.25  (2.15 jobs/s, elapsed 33.4s)
-  [ 73/188]  min$10/max$1000  B0=$  2,000  k=1.50  (2.17 jobs/s, elapsed 33.7s)
-  [ 74/188]  min$10/max$1000  B0=$  2,000  k=6.00  (2.18 jobs/s, elapsed 33.9s)
-  [ 75/188]  min$10/max$1000  B0=$  2,000  k=2.00  (2.21 jobs/s, elapsed 33.9s)
-  [ 76/188]  min$10/max$1000  B0=$  2,000  k=2.50  (2.21 jobs/s, elapsed 34.4s)
-  [ 77/188]  min$25/max$2000  B0=$  1,000  k=0.25  (2.19 jobs/s, elapsed 35.1s)
-  [ 78/188]  min$10/max$1000  B0=$  2,000  k=5.00  (2.21 jobs/s, elapsed 35.3s)
-  [ 79/188]  min$10/max$1000  B0=$  2,000  k=7.00  (2.17 jobs/s, elapsed 36.4s)
-  [ 80/188]  min$25/max$2000  B0=$  1,000  k=0.75  (2.19 jobs/s, elapsed 36.5s)
-  [ 81/188]  min$25/max$2000  B0=$  1,000  k=1.25  (2.21 jobs/s, elapsed 36.7s)
-  [ 82/188]  min$25/max$2000  B0=$  1,000  k=0.50  (2.18 jobs/s, elapsed 37.7s)
-  [ 83/188]  min$25/max$2000  B0=$  1,000  k=2.50  (2.20 jobs/s, elapsed 37.8s)
-  [ 84/188]  min$25/max$2000  B0=$  2,000  k=0.25  (2.15 jobs/s, elapsed 39.1s)
-  [ 85/188]  min$25/max$2000  B0=$  1,000  k=1.00  (2.18 jobs/s, elapsed 39.1s)
-  [ 86/188]  min$25/max$2000  B0=$  1,000  k=1.50  (2.18 jobs/s, elapsed 39.5s)
-  [ 87/188]  min$25/max$2000  B0=$  1,000  k=2.00  (2.19 jobs/s, elapsed 39.8s)
-  [ 88/188]  min$25/max$2000  B0=$  1,000  k=3.00  (2.20 jobs/s, elapsed 39.9s)
-  [ 89/188]  min$25/max$2000  B0=$  1,000  k=4.00  (2.20 jobs/s, elapsed 40.5s)
-  [ 90/188]  min$25/max$2000  B0=$  2,000  k=1.00  (2.22 jobs/s, elapsed 40.6s)
-  [ 91/188]  min$25/max$2000  B0=$  2,000  k=1.25  (2.24 jobs/s, elapsed 40.6s)
-  [ 92/188]  min$25/max$2000  B0=$  2,000  k=0.50  (2.23 jobs/s, elapsed 41.3s)
-  [ 93/188]  min$25/max$2000  B0=$  2,000  k=2.00  (2.21 jobs/s, elapsed 42.0s)
-  [ 94/188]  min$25/max$2000  B0=$  2,000  k=1.50  (2.21 jobs/s, elapsed 42.5s)
-  [ 95/188]  min$25/max$2000  B0=$  2,000  k=0.75  (2.21 jobs/s, elapsed 43.0s)
-  [ 96/188]  min$25/max$2000  B0=$  5,000  k=0.50  (2.19 jobs/s, elapsed 43.8s)
-  [ 97/188]  min$25/max$2000  B0=$  2,000  k=3.00  (2.18 jobs/s, elapsed 44.5s)
-  [ 98/188]  min$25/max$2000  B0=$  2,000  k=2.50  (2.20 jobs/s, elapsed 44.6s)
-  [ 99/188]  min$25/max$2000  B0=$  5,000  k=1.00  (2.22 jobs/s, elapsed 44.6s)
-  [100/188]  min$25/max$2000  B0=$  5,000  k=1.25  (2.22 jobs/s, elapsed 45.1s)
-  [101/188]  min$25/max$2000  B0=$  2,000  k=4.00  (2.22 jobs/s, elapsed 45.5s)
-  [102/188]  min$25/max$2000  B0=$  5,000  k=0.25  (2.22 jobs/s, elapsed 45.9s)
-  [103/188]  min$25/max$2000  B0=$  5,000  k=2.50  (2.22 jobs/s, elapsed 46.3s)
-  [104/188]  min$25/max$2000  B0=$  5,000  k=0.75  (2.23 jobs/s, elapsed 46.7s)
-  [105/188]  min$25/max$2000  B0=$  5,000  k=1.50  (2.22 jobs/s, elapsed 47.4s)
-  [106/188]  min$25/max$2000  B0=$  5,000  k=4.00  (2.23 jobs/s, elapsed 47.6s)
-  [107/188]  min$25/max$2000  B0=$  5,000  k=2.00  (2.23 jobs/s, elapsed 48.0s)
-  [108/188]  min$25/max$2000  B0=$ 10,000  k=0.25  (2.23 jobs/s, elapsed 48.4s)
-  [109/188]  min$25/max$2000  B0=$ 10,000  k=0.75  (2.25 jobs/s, elapsed 48.4s)
-  [110/188]  min$25/max$2000  B0=$  5,000  k=3.00  (2.24 jobs/s, elapsed 49.0s)
-  [111/188]  min$25/max$2000  B0=$ 10,000  k=2.00  (2.21 jobs/s, elapsed 50.2s)
-  [112/188]  min$25/max$2000  B0=$ 10,000  k=0.50  (2.21 jobs/s, elapsed 50.6s)
-  [113/188]  min$25/max$2000  B0=$ 10,000  k=1.00  (2.21 jobs/s, elapsed 51.2s)
-  [114/188]  min$25/max$2000  B0=$ 10,000  k=4.00  (2.22 jobs/s, elapsed 51.4s)
-  [115/188]  min$25/max$2000  B0=$ 10,000  k=1.25  (2.23 jobs/s, elapsed 51.5s)
-  [116/188]  min$25/max$2000  B0=$ 10,000  k=1.50  (2.23 jobs/s, elapsed 52.1s)
-  [117/188]  min$50/max$2000  B0=$  1,000  k=0.75  (2.24 jobs/s, elapsed 52.3s)
-  [118/188]  min$50/max$2000  B0=$  1,000  k=0.50  (2.25 jobs/s, elapsed 52.5s)
-  [119/188]  min$25/max$2000  B0=$ 10,000  k=2.50  (2.25 jobs/s, elapsed 52.9s)
-  [120/188]  min$25/max$2000  B0=$ 10,000  k=3.00  (2.25 jobs/s, elapsed 53.4s)
-  [121/188]  min$50/max$2000  B0=$  1,000  k=1.25  (2.24 jobs/s, elapsed 54.0s)
-  [122/188]  min$50/max$2000  B0=$  1,000  k=0.25  (2.26 jobs/s, elapsed 54.1s)
-  [123/188]  min$50/max$2000  B0=$  1,000  k=1.00  (2.23 jobs/s, elapsed 55.0s)
-  [124/188]  min$50/max$2000  B0=$  1,000  k=2.50  (2.25 jobs/s, elapsed 55.2s)
-  [125/188]  min$50/max$2000  B0=$  1,000  k=3.00  (2.25 jobs/s, elapsed 55.5s)
-  [126/188]  min$50/max$2000  B0=$  2,000  k=0.25  (2.24 jobs/s, elapsed 56.2s)
-  [127/188]  min$50/max$2000  B0=$  1,000  k=1.50  (2.24 jobs/s, elapsed 56.6s)
-  [128/188]  min$50/max$2000  B0=$  1,000  k=2.00  (2.24 jobs/s, elapsed 57.2s)
-  [129/188]  min$50/max$2000  B0=$  2,000  k=1.25  (2.23 jobs/s, elapsed 57.8s)
-  [130/188]  min$50/max$2000  B0=$  1,000  k=4.00  (2.23 jobs/s, elapsed 58.2s)
-  [131/188]  min$50/max$2000  B0=$  2,000  k=0.50  (2.24 jobs/s, elapsed 58.5s)
-  [132/188]  min$50/max$2000  B0=$  2,000  k=2.50  (2.24 jobs/s, elapsed 59.0s)
-  [133/188]  min$50/max$2000  B0=$  2,000  k=3.00  (2.24 jobs/s, elapsed 59.2s)
-  [134/188]  min$50/max$2000  B0=$  2,000  k=1.00  (2.25 jobs/s, elapsed 59.5s)
-  [135/188]  min$50/max$2000  B0=$  2,000  k=0.75  (2.27 jobs/s, elapsed 59.5s)
-  [136/188]  min$50/max$2000  B0=$  2,000  k=4.00  (2.27 jobs/s, elapsed 60.0s)
-  [137/188]  min$50/max$2000  B0=$  2,000  k=1.50  (2.28 jobs/s, elapsed 60.1s)
-  [138/188]  min$50/max$2000  B0=$  2,000  k=2.00  (2.26 jobs/s, elapsed 61.1s)
-  [139/188]  min$50/max$2000  B0=$  5,000  k=0.75  (2.26 jobs/s, elapsed 61.6s)
-  [140/188]  min$50/max$2000  B0=$  5,000  k=0.25  (2.23 jobs/s, elapsed 62.6s)
-  [141/188]  min$50/max$2000  B0=$  5,000  k=1.50  (2.25 jobs/s, elapsed 62.8s)
-  [142/188]  min$50/max$2000  B0=$  5,000  k=2.00  (2.25 jobs/s, elapsed 63.1s)
-  [143/188]  min$50/max$2000  B0=$  5,000  k=0.50  (2.26 jobs/s, elapsed 63.3s)
-  [144/188]  min$50/max$2000  B0=$  5,000  k=4.00  (2.26 jobs/s, elapsed 63.8s)
-  [145/188]  min$50/max$2000  B0=$  5,000  k=1.00  (2.26 jobs/s, elapsed 64.3s)
-  [146/188]  min$50/max$2000  B0=$  5,000  k=1.25  (2.26 jobs/s, elapsed 64.5s)
-  [147/188]  min$50/max$2000  B0=$ 10,000  k=0.75  (2.25 jobs/s, elapsed 65.4s)
-  [148/188]  min$50/max$2000  B0=$  5,000  k=2.50  (2.26 jobs/s, elapsed 65.5s)
-  [149/188]  min$50/max$2000  B0=$  5,000  k=3.00  (2.25 jobs/s, elapsed 66.2s)
-  [150/188]  min$50/max$2000  B0=$ 10,000  k=0.25  (2.27 jobs/s, elapsed 66.2s)
-  [151/188]  min$50/max$2000  B0=$ 10,000  k=1.25  (2.27 jobs/s, elapsed 66.6s)
-  [152/188]  min$50/max$2000  B0=$ 10,000  k=1.50  (2.27 jobs/s, elapsed 66.8s)
-  [153/188]  min$50/max$2000  B0=$ 10,000  k=0.50  (2.28 jobs/s, elapsed 67.1s)
-  [154/188]  min$50/max$2000  B0=$ 10,000  k=2.50  (2.28 jobs/s, elapsed 67.6s)
-  [155/188]  min$50/max$2000  B0=$ 10,000  k=1.00  (2.26 jobs/s, elapsed 68.7s)
-  [156/188]  min$100/max$5000  B0=$ 10,000  k=0.25  (2.26 jobs/s, elapsed 69.2s)
-  [157/188]  min$50/max$2000  B0=$ 10,000  k=2.00  (2.26 jobs/s, elapsed 69.4s)
-  [158/188]  min$100/max$5000  B0=$ 10,000  k=1.25  (2.24 jobs/s, elapsed 70.4s)
-  [159/188]  min$50/max$2000  B0=$ 10,000  k=3.00  (2.26 jobs/s, elapsed 70.4s)
-  [160/188]  min$50/max$2000  B0=$ 10,000  k=4.00  (2.27 jobs/s, elapsed 70.5s)
-  [161/188]  min$100/max$5000  B0=$ 10,000  k=1.50  (2.28 jobs/s, elapsed 70.7s)
-  [162/188]  min$100/max$5000  B0=$ 10,000  k=2.50  (2.27 jobs/s, elapsed 71.4s)
-  [163/188]  min$100/max$5000  B0=$ 10,000  k=0.50  (2.28 jobs/s, elapsed 71.6s)
-  [164/188]  min$100/max$5000  B0=$ 10,000  k=1.00  (2.28 jobs/s, elapsed 71.8s)
-  [165/188]  min$100/max$5000  B0=$ 10,000  k=0.75  (2.27 jobs/s, elapsed 72.8s)
-  [166/188]  min$100/max$5000  B0=$ 10,000  k=4.00  (2.27 jobs/s, elapsed 73.0s)
-  [167/188]  min$100/max$5000  B0=$ 10,000  k=2.00  (2.28 jobs/s, elapsed 73.1s)
-  [168/188]  min$100/max$5000  B0=$ 10,000  k=3.00  (2.28 jobs/s, elapsed 73.8s)
-  [169/188]  min$100/max$5000  B0=$ 50,000  k=1.00  (2.25 jobs/s, elapsed 75.1s)
-  [170/188]  min$100/max$5000  B0=$ 50,000  k=1.50  (2.26 jobs/s, elapsed 75.4s)
-  [171/188]  min$100/max$5000  B0=$ 50,000  k=0.25  (2.26 jobs/s, elapsed 75.5s)
-  [172/188]  min$100/max$5000  B0=$ 50,000  k=0.50  (2.27 jobs/s, elapsed 75.7s)
-  [173/188]  min$100/max$5000  B0=$ 50,000  k=2.50  (2.28 jobs/s, elapsed 75.9s)
-  [174/188]  min$100/max$5000  B0=$ 50,000  k=1.25  (2.29 jobs/s, elapsed 75.9s)
-  [175/188]  min$100/max$5000  B0=$ 50,000  k=0.75  (2.29 jobs/s, elapsed 76.6s)
-  [176/188]  min$100/max$5000  B0=$ 50,000  k=4.00  (2.27 jobs/s, elapsed 77.6s)
-  [177/188]  min$100/max$5000  B0=$ 50,000  k=2.00  (2.28 jobs/s, elapsed 77.7s)
-  [178/188]  min$100/max$5000  B0=$ 50,000  k=3.00  (2.26 jobs/s, elapsed 78.8s)
-  [179/188]  min$100/max$5000  B0=$100,000  k=0.75  (2.27 jobs/s, elapsed 79.0s)
-  [180/188]  min$100/max$5000  B0=$100,000  k=0.25  (2.27 jobs/s, elapsed 79.2s)
-  [181/188]  min$100/max$5000  B0=$100,000  k=1.50  (2.28 jobs/s, elapsed 79.4s)
-  [182/188]  min$100/max$5000  B0=$100,000  k=0.50  (2.29 jobs/s, elapsed 79.5s)
-  [183/188]  min$100/max$5000  B0=$100,000  k=2.00  (2.30 jobs/s, elapsed 79.6s)
-  [184/188]  min$100/max$5000  B0=$100,000  k=2.50  (2.31 jobs/s, elapsed 79.7s)
-  [185/188]  min$100/max$5000  B0=$100,000  k=1.00  (2.30 jobs/s, elapsed 80.4s)
-  [186/188]  min$100/max$5000  B0=$100,000  k=1.25  (2.31 jobs/s, elapsed 80.6s)
-  [187/188]  min$100/max$5000  B0=$100,000  k=3.00  (2.32 jobs/s, elapsed 80.7s)
-  [188/188]  min$100/max$5000  B0=$100,000  k=4.00  (2.30 jobs/s, elapsed 81.8s)
+Dispatching 188 jobs across 12 workers (replays=2,000, shoes/session=1000)
+  [  1/188]  min$5/max$500  B0=$    200  k=2.50  (0.03 jobs/s, elapsed 35.7s)
+  [  2/188]  min$5/max$500  B0=$    200  k=0.50  (0.06 jobs/s, elapsed 35.7s)
+  [  3/188]  min$5/max$500  B0=$    200  k=5.00  (0.08 jobs/s, elapsed 36.0s)
+  [  4/188]  min$5/max$500  B0=$    200  k=1.50  (0.11 jobs/s, elapsed 36.1s)
+  [  5/188]  min$5/max$500  B0=$    200  k=1.00  (0.09 jobs/s, elapsed 58.8s)
+  [  6/188]  min$5/max$500  B0=$    200  k=3.00  (0.10 jobs/s, elapsed 58.9s)
+  [  7/188]  min$5/max$500  B0=$    200  k=4.00  (0.12 jobs/s, elapsed 59.1s)
+  [  8/188]  min$5/max$500  B0=$    200  k=1.25  (0.14 jobs/s, elapsed 59.1s)
+  [  9/188]  min$5/max$500  B0=$    200  k=0.75  (0.15 jobs/s, elapsed 59.3s)
+  [ 10/188]  min$5/max$500  B0=$    200  k=2.00  (0.17 jobs/s, elapsed 59.4s)
+  [ 11/188]  min$5/max$500  B0=$    200  k=6.00  (0.19 jobs/s, elapsed 59.4s)
+  [ 12/188]  min$5/max$500  B0=$    200  k=0.25  (0.19 jobs/s, elapsed 63.1s)
+  [ 13/188]  min$5/max$500  B0=$    200  k=7.00  (0.18 jobs/s, elapsed 72.0s)
+  [ 14/188]  min$5/max$500  B0=$    500  k=0.25  (0.19 jobs/s, elapsed 72.1s)
+  [ 15/188]  min$5/max$500  B0=$    500  k=0.50  (0.21 jobs/s, elapsed 72.2s)
+  [ 16/188]  min$5/max$500  B0=$    500  k=0.75  (0.20 jobs/s, elapsed 78.6s)
+  [ 17/188]  min$5/max$500  B0=$    500  k=2.00  (0.17 jobs/s, elapsed 102.1s)
+  [ 18/188]  min$5/max$500  B0=$    500  k=4.00  (0.16 jobs/s, elapsed 112.1s)
+  [ 19/188]  min$5/max$500  B0=$  1,000  k=0.25  (0.17 jobs/s, elapsed 112.9s)
+  [ 20/188]  min$5/max$500  B0=$    500  k=7.00  (0.18 jobs/s, elapsed 114.0s)
+  [ 21/188]  min$5/max$500  B0=$    500  k=3.00  (0.18 jobs/s, elapsed 114.6s)
+  [ 22/188]  min$5/max$500  B0=$    500  k=6.00  (0.19 jobs/s, elapsed 114.6s)
+  [ 23/188]  min$5/max$500  B0=$    500  k=1.50  (0.20 jobs/s, elapsed 115.7s)
+  [ 24/188]  min$5/max$500  B0=$    500  k=5.00  (0.21 jobs/s, elapsed 116.1s)
+  [ 25/188]  min$5/max$500  B0=$    500  k=2.50  (0.22 jobs/s, elapsed 116.3s)
+  [ 26/188]  min$5/max$500  B0=$    500  k=1.25  (0.22 jobs/s, elapsed 118.2s)
+  [ 27/188]  min$5/max$500  B0=$    500  k=1.00  (0.23 jobs/s, elapsed 118.8s)
+  [ 28/188]  min$5/max$500  B0=$  1,000  k=0.50  (0.20 jobs/s, elapsed 136.7s)
+  [ 29/188]  min$5/max$500  B0=$  1,000  k=0.75  (0.19 jobs/s, elapsed 150.9s)
+  [ 30/188]  min$5/max$500  B0=$  1,000  k=1.00  (0.19 jobs/s, elapsed 155.7s)
+  [ 31/188]  min$5/max$500  B0=$  1,000  k=2.50  (0.20 jobs/s, elapsed 157.1s)
+  [ 32/188]  min$5/max$500  B0=$  1,000  k=1.25  (0.20 jobs/s, elapsed 159.3s)
+  [ 33/188]  min$5/max$500  B0=$  1,000  k=1.50  (0.21 jobs/s, elapsed 160.8s)
+  [ 34/188]  min$5/max$500  B0=$  1,000  k=3.00  (0.21 jobs/s, elapsed 161.3s)
+  [ 35/188]  min$5/max$500  B0=$  1,000  k=2.00  (0.21 jobs/s, elapsed 166.3s)
+  [ 36/188]  min$5/max$500  B0=$  1,000  k=5.00  (0.21 jobs/s, elapsed 172.5s)
+  [ 37/188]  min$10/max$1000  B0=$    500  k=0.25  (0.21 jobs/s, elapsed 172.8s)
+  [ 38/188]  min$5/max$500  B0=$  1,000  k=4.00  (0.22 jobs/s, elapsed 175.7s)
+  [ 39/188]  min$5/max$500  B0=$  1,000  k=6.00  (0.22 jobs/s, elapsed 177.8s)
+  [ 40/188]  min$5/max$500  B0=$  1,000  k=7.00  (0.22 jobs/s, elapsed 179.4s)
+  [ 41/188]  min$10/max$1000  B0=$    500  k=0.75  (0.21 jobs/s, elapsed 192.0s)
+  [ 42/188]  min$10/max$1000  B0=$    500  k=2.00  (0.21 jobs/s, elapsed 203.6s)
+  [ 43/188]  min$10/max$1000  B0=$    500  k=3.00  (0.21 jobs/s, elapsed 208.7s)
+  [ 44/188]  min$10/max$1000  B0=$    500  k=4.00  (0.21 jobs/s, elapsed 208.8s)
+  [ 45/188]  min$10/max$1000  B0=$    500  k=1.00  (0.21 jobs/s, elapsed 209.8s)
+  [ 46/188]  min$10/max$1000  B0=$    500  k=0.50  (0.22 jobs/s, elapsed 210.3s)
+  [ 47/188]  min$10/max$1000  B0=$    500  k=5.00  (0.21 jobs/s, elapsed 218.7s)
+  [ 48/188]  min$10/max$1000  B0=$    500  k=1.25  (0.22 jobs/s, elapsed 219.4s)
+  [ 49/188]  min$10/max$1000  B0=$    500  k=6.00  (0.22 jobs/s, elapsed 219.8s)
+  [ 50/188]  min$10/max$1000  B0=$    500  k=1.50  (0.23 jobs/s, elapsed 220.2s)
+  [ 51/188]  min$10/max$1000  B0=$    500  k=2.50  (0.23 jobs/s, elapsed 225.7s)
+  [ 52/188]  min$10/max$1000  B0=$    500  k=7.00  (0.22 jobs/s, elapsed 239.0s)
+  [ 53/188]  min$10/max$1000  B0=$  1,000  k=1.00  (0.22 jobs/s, elapsed 245.0s)
+  [ 54/188]  min$10/max$1000  B0=$  1,000  k=0.75  (0.22 jobs/s, elapsed 245.0s)
+  [ 55/188]  min$10/max$1000  B0=$  1,000  k=0.25  (0.22 jobs/s, elapsed 250.3s)
+  [ 56/188]  min$10/max$1000  B0=$  1,000  k=2.00  (0.22 jobs/s, elapsed 255.0s)
+  [ 57/188]  min$10/max$1000  B0=$  1,000  k=3.00  (0.22 jobs/s, elapsed 256.0s)
+  [ 58/188]  min$10/max$1000  B0=$  1,000  k=0.50  (0.22 jobs/s, elapsed 266.9s)
+  [ 59/188]  min$10/max$1000  B0=$  1,000  k=1.25  (0.22 jobs/s, elapsed 269.3s)
+  [ 60/188]  min$10/max$1000  B0=$  1,000  k=1.50  (0.22 jobs/s, elapsed 269.6s)
+  [ 61/188]  min$10/max$1000  B0=$  1,000  k=2.50  (0.22 jobs/s, elapsed 279.7s)
+  [ 62/188]  min$10/max$1000  B0=$  1,000  k=4.00  (0.22 jobs/s, elapsed 279.8s)
+  [ 63/188]  min$10/max$1000  B0=$  2,000  k=0.25  (0.22 jobs/s, elapsed 281.5s)
+  [ 64/188]  min$10/max$1000  B0=$  1,000  k=7.00  (0.23 jobs/s, elapsed 281.9s)
+  [ 65/188]  min$10/max$1000  B0=$  1,000  k=5.00  (0.23 jobs/s, elapsed 285.2s)
+  [ 66/188]  min$10/max$1000  B0=$  2,000  k=0.75  (0.23 jobs/s, elapsed 291.6s)
+  [ 67/188]  min$10/max$1000  B0=$  2,000  k=1.00  (0.23 jobs/s, elapsed 294.4s)
+  [ 68/188]  min$10/max$1000  B0=$  2,000  k=0.50  (0.23 jobs/s, elapsed 297.1s)
+  [ 69/188]  min$10/max$1000  B0=$  1,000  k=6.00  (0.23 jobs/s, elapsed 298.5s)
+  [ 70/188]  min$10/max$1000  B0=$  2,000  k=4.00  (0.22 jobs/s, elapsed 317.7s)
+  [ 71/188]  min$10/max$1000  B0=$  2,000  k=1.25  (0.22 jobs/s, elapsed 326.8s)
+  [ 72/188]  min$10/max$1000  B0=$  2,000  k=2.00  (0.22 jobs/s, elapsed 329.0s)
+  [ 73/188]  min$10/max$1000  B0=$  2,000  k=1.50  (0.22 jobs/s, elapsed 329.1s)
+  [ 74/188]  min$10/max$1000  B0=$  2,000  k=7.00  (0.22 jobs/s, elapsed 330.2s)
+  [ 75/188]  min$25/max$2000  B0=$  1,000  k=0.25  (0.23 jobs/s, elapsed 330.9s)
+  [ 76/188]  min$10/max$1000  B0=$  2,000  k=5.00  (0.23 jobs/s, elapsed 334.9s)
+  [ 77/188]  min$25/max$2000  B0=$  1,000  k=0.50  (0.23 jobs/s, elapsed 336.5s)
+  [ 78/188]  min$10/max$1000  B0=$  2,000  k=3.00  (0.23 jobs/s, elapsed 339.5s)
+  [ 79/188]  min$10/max$1000  B0=$  2,000  k=2.50  (0.23 jobs/s, elapsed 340.0s)
+  [ 80/188]  min$10/max$1000  B0=$  2,000  k=6.00  (0.23 jobs/s, elapsed 344.6s)
+  [ 81/188]  min$25/max$2000  B0=$  1,000  k=0.75  (0.23 jobs/s, elapsed 359.0s)
+  [ 82/188]  min$25/max$2000  B0=$  1,000  k=1.00  (0.23 jobs/s, elapsed 361.8s)
+  [ 83/188]  min$25/max$2000  B0=$  1,000  k=2.50  (0.23 jobs/s, elapsed 368.7s)
+  [ 84/188]  min$25/max$2000  B0=$  1,000  k=3.00  (0.23 jobs/s, elapsed 371.1s)
+  [ 85/188]  min$25/max$2000  B0=$  1,000  k=4.00  (0.23 jobs/s, elapsed 372.1s)
+  [ 86/188]  min$25/max$2000  B0=$  2,000  k=0.25  (0.23 jobs/s, elapsed 374.3s)
+  [ 87/188]  min$25/max$2000  B0=$  1,000  k=1.50  (0.22 jobs/s, elapsed 388.5s)
+  [ 88/188]  min$25/max$2000  B0=$  1,000  k=2.00  (0.23 jobs/s, elapsed 388.8s)
+  [ 89/188]  min$25/max$2000  B0=$  1,000  k=1.25  (0.23 jobs/s, elapsed 388.8s)
+  [ 90/188]  min$25/max$2000  B0=$  2,000  k=0.50  (0.23 jobs/s, elapsed 399.3s)
+  [ 91/188]  min$25/max$2000  B0=$  2,000  k=0.75  (0.23 jobs/s, elapsed 400.4s)
+  [ 92/188]  min$25/max$2000  B0=$  2,000  k=1.00  (0.23 jobs/s, elapsed 404.1s)
+  [ 93/188]  min$25/max$2000  B0=$  2,000  k=2.00  (0.23 jobs/s, elapsed 405.2s)
+  [ 94/188]  min$25/max$2000  B0=$  2,000  k=2.50  (0.23 jobs/s, elapsed 407.7s)
+  [ 95/188]  min$25/max$2000  B0=$  2,000  k=4.00  (0.23 jobs/s, elapsed 412.9s)
+  [ 96/188]  min$25/max$2000  B0=$  2,000  k=3.00  (0.23 jobs/s, elapsed 418.5s)
+  [ 97/188]  min$25/max$2000  B0=$  2,000  k=1.25  (0.23 jobs/s, elapsed 419.2s)
+  [ 98/188]  min$25/max$2000  B0=$  2,000  k=1.50  (0.23 jobs/s, elapsed 420.9s)
+  [ 99/188]  min$25/max$2000  B0=$  5,000  k=0.25  (0.23 jobs/s, elapsed 432.4s)
+  [100/188]  min$25/max$2000  B0=$  5,000  k=0.75  (0.23 jobs/s, elapsed 440.2s)
+  [101/188]  min$25/max$2000  B0=$  5,000  k=2.00  (0.23 jobs/s, elapsed 441.7s)
+  [102/188]  min$25/max$2000  B0=$  5,000  k=1.50  (0.23 jobs/s, elapsed 442.0s)
+  [103/188]  min$25/max$2000  B0=$  5,000  k=2.50  (0.23 jobs/s, elapsed 444.2s)
+  [104/188]  min$25/max$2000  B0=$  5,000  k=0.50  (0.23 jobs/s, elapsed 449.4s)
+  [105/188]  min$25/max$2000  B0=$  5,000  k=1.00  (0.23 jobs/s, elapsed 459.0s)
+  [106/188]  min$25/max$2000  B0=$  5,000  k=1.25  (0.23 jobs/s, elapsed 460.8s)
+  [107/188]  min$25/max$2000  B0=$ 10,000  k=0.75  (0.23 jobs/s, elapsed 468.7s)
+  [108/188]  min$25/max$2000  B0=$  5,000  k=3.00  (0.23 jobs/s, elapsed 476.9s)
+  [109/188]  min$25/max$2000  B0=$  5,000  k=4.00  (0.23 jobs/s, elapsed 478.1s)
+  [110/188]  min$25/max$2000  B0=$ 10,000  k=1.25  (0.23 jobs/s, elapsed 478.2s)
+  [111/188]  min$25/max$2000  B0=$ 10,000  k=1.50  (0.23 jobs/s, elapsed 478.3s)
+  [112/188]  min$25/max$2000  B0=$ 10,000  k=0.25  (0.23 jobs/s, elapsed 479.7s)
+  [113/188]  min$25/max$2000  B0=$ 10,000  k=0.50  (0.24 jobs/s, elapsed 480.6s)
+  [114/188]  min$25/max$2000  B0=$ 10,000  k=2.00  (0.24 jobs/s, elapsed 480.7s)
+  [115/188]  min$25/max$2000  B0=$ 10,000  k=1.00  (0.23 jobs/s, elapsed 499.3s)
+  [116/188]  min$50/max$2000  B0=$  1,000  k=0.25  (0.23 jobs/s, elapsed 504.9s)
+  [117/188]  min$25/max$2000  B0=$ 10,000  k=2.50  (0.23 jobs/s, elapsed 510.2s)
+  [118/188]  min$50/max$2000  B0=$  1,000  k=1.00  (0.23 jobs/s, elapsed 514.5s)
+  [119/188]  min$50/max$2000  B0=$  1,000  k=1.25  (0.23 jobs/s, elapsed 514.6s)
+  [120/188]  min$50/max$2000  B0=$  1,000  k=2.50  (0.23 jobs/s, elapsed 516.9s)
+  [121/188]  min$25/max$2000  B0=$ 10,000  k=3.00  (0.23 jobs/s, elapsed 518.6s)
+  [122/188]  min$25/max$2000  B0=$ 10,000  k=4.00  (0.23 jobs/s, elapsed 521.0s)
+  [123/188]  min$50/max$2000  B0=$  1,000  k=0.75  (0.23 jobs/s, elapsed 537.9s)
+  [124/188]  min$50/max$2000  B0=$  1,000  k=1.50  (0.23 jobs/s, elapsed 540.2s)
+  [125/188]  min$50/max$2000  B0=$  1,000  k=2.00  (0.23 jobs/s, elapsed 540.4s)
+  [126/188]  min$50/max$2000  B0=$  1,000  k=0.50  (0.23 jobs/s, elapsed 540.8s)
+  [127/188]  min$50/max$2000  B0=$  1,000  k=4.00  (0.23 jobs/s, elapsed 541.3s)
+  [128/188]  min$50/max$2000  B0=$  2,000  k=0.75  (0.23 jobs/s, elapsed 550.8s)
+  [129/188]  min$50/max$2000  B0=$  2,000  k=0.50  (0.23 jobs/s, elapsed 551.0s)
+  [130/188]  min$50/max$2000  B0=$  2,000  k=1.00  (0.23 jobs/s, elapsed 553.3s)
+  [131/188]  min$50/max$2000  B0=$  1,000  k=3.00  (0.23 jobs/s, elapsed 558.6s)
+  [132/188]  min$50/max$2000  B0=$  2,000  k=0.25  (0.23 jobs/s, elapsed 571.0s)
+  [133/188]  min$50/max$2000  B0=$  2,000  k=1.50  (0.23 jobs/s, elapsed 571.0s)
+  [134/188]  min$50/max$2000  B0=$  2,000  k=1.25  (0.23 jobs/s, elapsed 577.9s)
+  [135/188]  min$50/max$2000  B0=$  5,000  k=0.50  (0.23 jobs/s, elapsed 587.1s)
+  [136/188]  min$50/max$2000  B0=$  5,000  k=0.75  (0.23 jobs/s, elapsed 587.1s)
+  [137/188]  min$50/max$2000  B0=$  5,000  k=1.00  (0.23 jobs/s, elapsed 589.6s)
+  [138/188]  min$50/max$2000  B0=$  5,000  k=0.25  (0.23 jobs/s, elapsed 591.3s)
+  [139/188]  min$50/max$2000  B0=$  2,000  k=2.00  (0.23 jobs/s, elapsed 597.9s)
+  [140/188]  min$50/max$2000  B0=$  2,000  k=3.00  (0.23 jobs/s, elapsed 600.5s)
+  [141/188]  min$50/max$2000  B0=$  2,000  k=2.50  (0.23 jobs/s, elapsed 600.5s)
+  [142/188]  min$50/max$2000  B0=$  2,000  k=4.00  (0.23 jobs/s, elapsed 605.1s)
+  [143/188]  min$50/max$2000  B0=$  5,000  k=2.00  (0.24 jobs/s, elapsed 607.6s)
+  [144/188]  min$50/max$2000  B0=$  5,000  k=1.25  (0.23 jobs/s, elapsed 618.1s)
+  [145/188]  min$50/max$2000  B0=$  5,000  k=3.00  (0.23 jobs/s, elapsed 623.5s)
+  [146/188]  min$50/max$2000  B0=$  5,000  k=4.00  (0.23 jobs/s, elapsed 623.5s)
+  [147/188]  min$50/max$2000  B0=$ 10,000  k=0.25  (0.23 jobs/s, elapsed 626.0s)
+  [148/188]  min$50/max$2000  B0=$  5,000  k=1.50  (0.23 jobs/s, elapsed 631.6s)
+  [149/188]  min$50/max$2000  B0=$  5,000  k=2.50  (0.23 jobs/s, elapsed 637.5s)
+  [150/188]  min$50/max$2000  B0=$ 10,000  k=2.00  (0.23 jobs/s, elapsed 644.1s)
+  [151/188]  min$50/max$2000  B0=$ 10,000  k=0.50  (0.23 jobs/s, elapsed 651.1s)
+  [152/188]  min$50/max$2000  B0=$ 10,000  k=0.75  (0.23 jobs/s, elapsed 658.0s)
+  [153/188]  min$50/max$2000  B0=$ 10,000  k=3.00  (0.23 jobs/s, elapsed 659.8s)
+  [154/188]  min$50/max$2000  B0=$ 10,000  k=4.00  (0.23 jobs/s, elapsed 659.8s)
+  [155/188]  min$50/max$2000  B0=$ 10,000  k=1.00  (0.23 jobs/s, elapsed 660.6s)
+  [156/188]  min$50/max$2000  B0=$ 10,000  k=1.25  (0.24 jobs/s, elapsed 660.8s)
+  [157/188]  min$100/max$5000  B0=$ 10,000  k=0.25  (0.24 jobs/s, elapsed 662.4s)
+  [158/188]  min$50/max$2000  B0=$ 10,000  k=1.50  (0.24 jobs/s, elapsed 669.8s)
+  [159/188]  min$50/max$2000  B0=$ 10,000  k=2.50  (0.23 jobs/s, elapsed 677.8s)
+  [160/188]  min$100/max$5000  B0=$ 10,000  k=1.00  (0.23 jobs/s, elapsed 685.0s)
+  [161/188]  min$100/max$5000  B0=$ 10,000  k=0.50  (0.23 jobs/s, elapsed 692.2s)
+  [162/188]  min$100/max$5000  B0=$ 10,000  k=2.00  (0.23 jobs/s, elapsed 696.9s)
+  [163/188]  min$100/max$5000  B0=$ 10,000  k=2.50  (0.23 jobs/s, elapsed 697.4s)
+  [164/188]  min$100/max$5000  B0=$ 10,000  k=0.75  (0.24 jobs/s, elapsed 697.6s)
+  [165/188]  min$100/max$5000  B0=$ 50,000  k=0.25  (0.24 jobs/s, elapsed 700.0s)
+  [166/188]  min$100/max$5000  B0=$ 50,000  k=0.50  (0.23 jobs/s, elapsed 710.4s)
+  [167/188]  min$100/max$5000  B0=$ 10,000  k=1.25  (0.23 jobs/s, elapsed 711.3s)
+  [168/188]  min$100/max$5000  B0=$ 10,000  k=1.50  (0.23 jobs/s, elapsed 718.2s)
+  [169/188]  min$100/max$5000  B0=$ 10,000  k=3.00  (0.23 jobs/s, elapsed 720.9s)
+  [170/188]  min$100/max$5000  B0=$ 10,000  k=4.00  (0.24 jobs/s, elapsed 721.0s)
+  [171/188]  min$100/max$5000  B0=$ 50,000  k=1.50  (0.23 jobs/s, elapsed 734.8s)
+  [172/188]  min$100/max$5000  B0=$ 50,000  k=2.00  (0.23 jobs/s, elapsed 735.1s)
+  [173/188]  min$100/max$5000  B0=$ 50,000  k=0.75  (0.23 jobs/s, elapsed 737.3s)
+  [174/188]  min$100/max$5000  B0=$ 50,000  k=3.00  (0.24 jobs/s, elapsed 737.8s)
+  [175/188]  min$100/max$5000  B0=$ 50,000  k=1.00  (0.23 jobs/s, elapsed 745.1s)
+  [176/188]  min$100/max$5000  B0=$ 50,000  k=4.00  (0.24 jobs/s, elapsed 748.7s)
+  [177/188]  min$100/max$5000  B0=$ 50,000  k=1.25  (0.24 jobs/s, elapsed 752.7s)
+  [178/188]  min$100/max$5000  B0=$ 50,000  k=2.50  (0.23 jobs/s, elapsed 757.8s)
+  [179/188]  min$100/max$5000  B0=$100,000  k=0.25  (0.23 jobs/s, elapsed 766.1s)
+  [180/188]  min$100/max$5000  B0=$100,000  k=1.00  (0.23 jobs/s, elapsed 770.7s)
+  [181/188]  min$100/max$5000  B0=$100,000  k=1.25  (0.23 jobs/s, elapsed 771.9s)
+  [182/188]  min$100/max$5000  B0=$100,000  k=1.50  (0.24 jobs/s, elapsed 772.2s)
+  [183/188]  min$100/max$5000  B0=$100,000  k=2.50  (0.24 jobs/s, elapsed 774.4s)
+  [184/188]  min$100/max$5000  B0=$100,000  k=0.50  (0.24 jobs/s, elapsed 774.8s)
+  [185/188]  min$100/max$5000  B0=$100,000  k=0.75  (0.24 jobs/s, elapsed 776.4s)
+  [186/188]  min$100/max$5000  B0=$100,000  k=2.00  (0.24 jobs/s, elapsed 784.0s)
+  [187/188]  min$100/max$5000  B0=$100,000  k=4.00  (0.24 jobs/s, elapsed 785.4s)
+  [188/188]  min$100/max$5000  B0=$100,000  k=3.00  (0.24 jobs/s, elapsed 788.7s)
 
-All 188 jobs done in 81.8s (2.30 jobs/s avg)
+All 188 jobs done in 788.7s (0.24 jobs/s avg)
 
 ######################################################################
 # REGIME: min$5 / max$500  |  B0=$200
@@ -203,7 +203,7 @@ All 188 jobs done in 81.8s (2.30 jobs/s avg)
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             200.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -211,11 +211,11 @@ Sizer                          Kelly k=0.250 | B0=$200 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $       15
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      200
 Median bucket bet              $                  5
-Spread (max / min)                            3.00×
-Buckets at table min                             86
+Spread (max / min)                           40.00×
+Buckets at table min                            140
 Buckets at table max                              0
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
@@ -233,42 +233,42 @@ TC +10                         $                  5
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -121.49
-P(finish down)  (end < B0)                   62.80%
-P(ruin)                                      42.45%
+E[profit]  = E[end − B0]       $            -243.44
+P(finish down)  (end < B0)                   63.60%
+P(ruin)                                      52.55%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $              78.51
-Median ending bankroll         $              77.50
-95% range [p2.5 .. p97.5]      $  -675.12  ..  $   810.06
-P(lose > 25%)                                57.30%
-P(lose > 50%)                                52.55%
-P(double bankroll)                           20.45%
+E[ending bankroll]             $             -43.44
+Median ending bankroll         $             -31.25
+95% range [p2.5 .. p97.5]      $-1,395.19  ..  $ 1,270.00
+P(lose > 25%)                                60.75%
+P(lose > 50%)                                58.45%
+P(double bankroll)                           25.80%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             106.88
-Median max drawdown            $             105.00
-95th pct max drawdown          $             132.50
-99th pct max drawdown          $             147.50
+Mean max drawdown              $              68.69
+Median max drawdown            $              67.50
+95th pct max drawdown          $              80.00
+99th pct max drawdown          $              85.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5061%
-Avg session wagered            $          24,599.75
+RTP                                        99.6907%
+Avg session wagered            $          78,696.00
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             200.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -276,11 +276,11 @@ Sizer                          Kelly k=0.500 | B0=$200 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $       30
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      400
 Median bucket bet              $                  5
-Spread (max / min)                            6.00×
-Buckets at table min                             79
+Spread (max / min)                           80.00×
+Buckets at table min                            115
 Buckets at table max                              0
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
@@ -298,42 +298,42 @@ TC +10                         $                  5
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -132.68
-P(finish down)  (end < B0)                   63.70%
-P(ruin)                                      41.75%
+E[profit]  = E[end − B0]       $            -247.14
+P(finish down)  (end < B0)                   64.20%
+P(ruin)                                      52.30%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $              67.32
-Median ending bankroll         $              82.50
-95% range [p2.5 .. p97.5]      $  -697.50  ..  $   790.06
-P(lose > 25%)                                57.70%
-P(lose > 50%)                                52.00%
-P(double bankroll)                           19.70%
+E[ending bankroll]             $             -47.14
+Median ending bankroll         $             -37.50
+95% range [p2.5 .. p97.5]      $-1,367.56  ..  $ 1,275.06
+P(lose > 25%)                                61.55%
+P(lose > 50%)                                58.65%
+P(double bankroll)                           25.85%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             107.64
-Median max drawdown            $             105.00
-95th pct max drawdown          $             132.50
-99th pct max drawdown          $             145.00
+Mean max drawdown              $              68.86
+Median max drawdown            $              70.00
+95th pct max drawdown          $              80.00
+99th pct max drawdown          $              85.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4606%
-Avg session wagered            $          24,595.72
+RTP                                        99.6861%
+Avg session wagered            $          78,733.71
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
+Avg shoes played                             1000.0
+Avg hands played                            13753.0
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             200.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -341,12 +341,12 @@ Sizer                          Kelly k=0.750 | B0=$200 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $       50
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           10.00×
-Buckets at table min                             73
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                            102
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -363,42 +363,42 @@ TC +10                         $                  5
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -117.50
-P(finish down)  (end < B0)                   61.00%
-P(ruin)                                      41.25%
+E[profit]  = E[end − B0]       $            -225.60
+P(finish down)  (end < B0)                   62.35%
+P(ruin)                                      51.30%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $              82.50
-Median ending bankroll         $              92.50
-95% range [p2.5 .. p97.5]      $  -672.56  ..  $   817.62
-P(lose > 25%)                                56.60%
-P(lose > 50%)                                50.55%
-P(double bankroll)                           20.55%
+E[ending bankroll]             $             -25.60
+Median ending bankroll         $             -17.50
+95% range [p2.5 .. p97.5]      $-1,375.12  ..  $ 1,325.31
+P(lose > 25%)                                59.15%
+P(lose > 50%)                                55.90%
+P(double bankroll)                           26.70%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             106.93
-Median max drawdown            $             105.00
-95th pct max drawdown          $             130.00
-99th pct max drawdown          $             145.00
+Mean max drawdown              $              71.60
+Median max drawdown            $              70.00
+95th pct max drawdown          $              85.00
+99th pct max drawdown          $              95.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5224%
-Avg session wagered            $          24,604.42
+RTP                                        99.7156%
+Avg session wagered            $          79,316.74
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
+Avg shoes played                             1000.0
+Avg hands played                            13751.7
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             200.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -406,12 +406,12 @@ Sizer                          Kelly k=1.000 | B0=$200 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $       65
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           13.00×
-Buckets at table min                             66
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             96
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -422,48 +422,48 @@ TC +4                          $                  5
 TC +5                          $                  5
 TC +6                          $                  5
 TC +7                          $                  5
-TC +8                          $                  5
+TC +8                          $                 10
 TC +9                          $                 10
 TC +10                         $                 10
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -114.56
-P(finish down)  (end < B0)                   60.75%
-P(ruin)                                      41.85%
+E[profit]  = E[end − B0]       $            -152.79
+P(finish down)  (end < B0)                   57.10%
+P(ruin)                                      45.85%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $              85.44
-Median ending bankroll         $              86.25
-95% range [p2.5 .. p97.5]      $  -692.50  ..  $   837.56
-P(lose > 25%)                                55.85%
-P(lose > 50%)                                51.05%
-P(double bankroll)                           22.45%
+E[ending bankroll]             $              47.21
+Median ending bankroll         $              72.50
+95% range [p2.5 .. p97.5]      $-1,377.50  ..  $ 1,325.00
+P(lose > 25%)                                54.40%
+P(lose > 50%)                                51.45%
+P(double bankroll)                           30.80%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             107.57
-Median max drawdown            $             105.00
-95th pct max drawdown          $             132.50
-99th pct max drawdown          $             142.50
+Mean max drawdown              $              80.82
+Median max drawdown            $              80.00
+95th pct max drawdown          $             102.50
+99th pct max drawdown          $             120.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5353%
-Avg session wagered            $          24,652.85
+RTP                                        99.8111%
+Avg session wagered            $          80,895.59
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.7
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             200.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -471,12 +471,12 @@ Sizer                          Kelly k=1.250 | B0=$200 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $       80
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           16.00×
-Buckets at table min                             62
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             93
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -493,42 +493,42 @@ TC +10                         $                 10
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -123.59
-P(finish down)  (end < B0)                   61.40%
-P(ruin)                                      42.15%
+E[profit]  = E[end − B0]       $             -75.03
+P(finish down)  (end < B0)                   54.45%
+P(ruin)                                      43.45%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $              76.41
-Median ending bankroll         $              80.00
-95% range [p2.5 .. p97.5]      $  -675.00  ..  $   820.06
-P(lose > 25%)                                57.00%
-P(lose > 50%)                                51.95%
-P(double bankroll)                           20.70%
+E[ending bankroll]             $             124.97
+Median ending bankroll         $             123.75
+95% range [p2.5 .. p97.5]      $-1,370.06  ..  $ 1,585.00
+P(lose > 25%)                                51.55%
+P(lose > 50%)                                48.70%
+P(double bankroll)                           35.10%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             110.14
-Median max drawdown            $             107.50
-95th pct max drawdown          $             137.50
-99th pct max drawdown          $             150.00
+Mean max drawdown              $              94.79
+Median max drawdown            $              90.00
+95th pct max drawdown          $             125.00
+99th pct max drawdown          $             155.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5021%
-Avg session wagered            $          24,822.27
+RTP                                        99.9097%
+Avg session wagered            $          83,114.56
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13751.8
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             200.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -536,12 +536,12 @@ Sizer                          Kelly k=1.500 | B0=$200 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $       95
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           19.00×
-Buckets at table min                             61
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             91
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -550,50 +550,50 @@ TC +2                          $                  5
 TC +3                          $                  5
 TC +4                          $                  5
 TC +5                          $                  5
-TC +6                          $                  5
+TC +6                          $                 10
 TC +7                          $                 10
 TC +8                          $                 10
-TC +9                          $                 10
+TC +9                          $                 15
 TC +10                         $                 15
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -123.99
-P(finish down)  (end < B0)                   61.80%
-P(ruin)                                      42.35%
+E[profit]  = E[end − B0]       $             +38.69
+P(finish down)  (end < B0)                   49.10%
+P(ruin)                                      39.10%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $              76.01
-Median ending bankroll         $              85.00
-95% range [p2.5 .. p97.5]      $  -667.62  ..  $   765.06
-P(lose > 25%)                                56.55%
-P(lose > 50%)                                51.80%
-P(double bankroll)                           19.35%
+E[ending bankroll]             $             238.69
+Median ending bankroll         $             212.50
+95% range [p2.5 .. p97.5]      $-1,245.12  ..  $ 1,830.06
+P(lose > 25%)                                46.90%
+P(lose > 50%)                                44.20%
+P(double bankroll)                           41.05%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             112.58
-Median max drawdown            $             110.00
-95th pct max drawdown          $             145.00
-99th pct max drawdown          $             167.50
+Mean max drawdown              $             108.93
+Median max drawdown            $             105.00
+95th pct max drawdown          $             142.50
+99th pct max drawdown          $             165.05
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5024%
-Avg session wagered            $          24,916.55
+RTP                                       100.0451%
+Avg session wagered            $          85,796.60
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13751.6
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             200.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -601,77 +601,12 @@ Sizer                          Kelly k=2.000 | B0=$200 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      130
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           26.00×
-Buckets at table min                             57
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                  5
-TC +2                          $                  5
-TC +3                          $                  5
-TC +4                          $                  5
-TC +5                          $                 10
-TC +6                          $                 10
-TC +7                          $                 10
-TC +8                          $                 15
-TC +9                          $                 15
-TC +10                         $                 15
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -98.41
-P(finish down)  (end < B0)                   59.55%
-P(ruin)                                      40.15%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $             101.59
-Median ending bankroll         $              97.50
-95% range [p2.5 .. p97.5]      $  -650.00  ..  $   892.50
-P(lose > 25%)                                54.30%
-P(lose > 50%)                                50.05%
-P(double bankroll)                           22.70%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $             122.30
-Median max drawdown            $             117.50
-95th pct max drawdown          $             167.50
-99th pct max drawdown          $             195.00
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                        99.6144%
-Avg session wagered            $          25,522.65
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.500
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $             200.00
-Table min / max                 $5 / $500
-Ruin mode                                       end
-Sizer                          Kelly k=2.500 | B0=$200 | min=$5 / max=$500
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      160
-Median bucket bet              $                  5
-Spread (max / min)                           32.00×
-Buckets at table min                             56
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             89
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -683,60 +618,60 @@ TC +5                          $                 10
 TC +6                          $                 10
 TC +7                          $                 15
 TC +8                          $                 15
-TC +9                          $                 20
+TC +9                          $                 15
 TC +10                         $                 20
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -90.58
-P(finish down)  (end < B0)                   59.60%
-P(ruin)                                      40.10%
+E[profit]  = E[end − B0]       $            +213.16
+P(finish down)  (end < B0)                   39.25%
+P(ruin)                                      30.50%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             109.42
-Median ending bankroll         $             107.50
-95% range [p2.5 .. p97.5]      $  -665.00  ..  $   945.00
-P(lose > 25%)                                54.55%
-P(lose > 50%)                                48.85%
-P(double bankroll)                           22.35%
+E[ending bankroll]             $             413.16
+Median ending bankroll         $             415.00
+95% range [p2.5 .. p97.5]      $-1,297.69  ..  $ 1,970.06
+P(lose > 25%)                                36.95%
+P(lose > 50%)                                34.85%
+P(double bankroll)                           50.65%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             136.11
-Median max drawdown            $             130.00
-95th pct max drawdown          $             197.62
-99th pct max drawdown          $             247.52
+Mean max drawdown              $             139.71
+Median max drawdown            $             135.00
+95th pct max drawdown          $             185.00
+99th pct max drawdown          $             210.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6519%
-Avg session wagered            $          26,019.67
+RTP                                       100.2338%
+Avg session wagered            $          91,183.60
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 3.000
+KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             200.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
-Sizer                          Kelly k=3.000 | B0=$200 | min=$5 / max=$500
+Sizer                          Kelly k=2.500 | B0=$200 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      195
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           39.00×
-Buckets at table min                             55
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             87
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -746,62 +681,62 @@ TC +3                          $                  5
 TC +4                          $                 10
 TC +5                          $                 10
 TC +6                          $                 15
-TC +7                          $                 20
+TC +7                          $                 15
 TC +8                          $                 20
-TC +9                          $                 25
+TC +9                          $                 20
 TC +10                         $                 25
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -90.82
-P(finish down)  (end < B0)                   58.50%
-P(ruin)                                      39.65%
+E[profit]  = E[end − B0]       $            +443.07
+P(finish down)  (end < B0)                   31.70%
+P(ruin)                                      26.05%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             109.18
-Median ending bankroll         $             110.00
-95% range [p2.5 .. p97.5]      $  -750.06  ..  $   980.12
-P(lose > 25%)                                53.75%
-P(lose > 50%)                                48.60%
-P(double bankroll)                           26.70%
+E[ending bankroll]             $             643.07
+Median ending bankroll         $             655.00
+95% range [p2.5 .. p97.5]      $-1,232.75  ..  $ 2,537.87
+P(lose > 25%)                                30.35%
+P(lose > 50%)                                28.95%
+P(double bankroll)                           61.10%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             155.77
-Median max drawdown            $             147.50
-95th pct max drawdown          $             235.00
-99th pct max drawdown          $             290.02
+Mean max drawdown              $             173.14
+Median max drawdown            $             170.00
+95th pct max drawdown          $             225.00
+99th pct max drawdown          $             257.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6613%
-Avg session wagered            $          26,811.09
+RTP                                       100.4461%
+Avg session wagered            $          99,327.90
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.9
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 4.000
+KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             200.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
-Sizer                          Kelly k=4.000 | B0=$200 | min=$5 / max=$500
+Sizer                          Kelly k=3.000 | B0=$200 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      260
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           52.00×
-Buckets at table min                             53
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             86
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -810,63 +745,63 @@ TC +2                          $                  5
 TC +3                          $                 10
 TC +4                          $                 10
 TC +5                          $                 15
-TC +6                          $                 20
-TC +7                          $                 25
+TC +6                          $                 15
+TC +7                          $                 20
 TC +8                          $                 25
-TC +9                          $                 30
-TC +10                         $                 35
+TC +9                          $                 25
+TC +10                         $                 30
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -48.46
-P(finish down)  (end < B0)                   52.40%
-P(ruin)                                      38.10%
+E[profit]  = E[end − B0]       $            +664.46
+P(finish down)  (end < B0)                   28.10%
+P(ruin)                                      22.20%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             151.54
-Median ending bankroll         $             172.50
-95% range [p2.5 .. p97.5]      $  -875.00  ..  $ 1,142.62
-P(lose > 25%)                                48.20%
-P(lose > 50%)                                45.20%
-P(double bankroll)                           31.80%
+E[ending bankroll]             $             864.46
+Median ending bankroll         $             875.00
+95% range [p2.5 .. p97.5]      $-1,342.50  ..  $ 3,085.06
+P(lose > 25%)                                26.75%
+P(lose > 50%)                                25.15%
+P(double bankroll)                           64.45%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             200.13
-Median max drawdown            $             190.00
-95th pct max drawdown          $             307.87
-99th pct max drawdown          $             395.00
+Mean max drawdown              $             205.31
+Median max drawdown            $             200.00
+95th pct max drawdown          $             270.00
+99th pct max drawdown          $             305.02
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.8323%
-Avg session wagered            $          28,902.92
+RTP                                       100.6191%
+Avg session wagered            $         107,322.80
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13750.8
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 5.000
+KELLY BANKROLL REPLAY  —  k = 4.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             200.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
-Sizer                          Kelly k=5.000 | B0=$200 | min=$5 / max=$500
+Sizer                          Kelly k=4.000 | B0=$200 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      325
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           65.00×
-Buckets at table min                             52
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             85
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -875,50 +810,115 @@ TC +2                          $                  5
 TC +3                          $                 10
 TC +4                          $                 15
 TC +5                          $                 20
-TC +6                          $                 25
+TC +6                          $                 20
+TC +7                          $                 25
+TC +8                          $                 30
+TC +9                          $                 35
+TC +10                         $                 35
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +1,045.88
+P(finish down)  (end < B0)                   22.05%
+P(ruin)                                      18.20%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $           1,245.88
+Median ending bankroll         $           1,272.50
+95% range [p2.5 .. p97.5]      $-1,487.50  ..  $ 3,935.00
+P(lose > 25%)                                21.10%
+P(lose > 50%)                                20.05%
+P(double bankroll)                           73.15%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $             269.11
+Median max drawdown            $             262.50
+95th pct max drawdown          $             357.50
+99th pct max drawdown          $             407.50
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       100.8581%
+Avg session wagered            $         121,887.50
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 5.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $             200.00
+Table min / max                 $5 / $500
+Ruin mode                                       end
+Sizer                          Kelly k=5.000 | B0=$200 | min=$5 / max=$500
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
+Median bucket bet              $                  5
+Spread (max / min)                          100.00×
+Buckets at table min                             84
+Buckets at table max                              1
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                  5
+TC +2                          $                 10
+TC +3                          $                 15
+TC +4                          $                 20
+TC +5                          $                 25
+TC +6                          $                 30
 TC +7                          $                 30
-TC +8                          $                 35
+TC +8                          $                 40
 TC +9                          $                 40
 TC +10                         $                 45
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -15.99
-P(finish down)  (end < B0)                   51.15%
-P(ruin)                                      37.95%
+E[profit]  = E[end − B0]       $          +1,499.52
+P(finish down)  (end < B0)                   18.45%
+P(ruin)                                      15.20%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             184.00
-Median ending bankroll         $             176.25
-95% range [p2.5 .. p97.5]      $  -885.00  ..  $ 1,270.19
-P(lose > 25%)                                48.00%
-P(lose > 50%)                                44.30%
-P(double bankroll)                           35.15%
+E[ending bankroll]             $           1,699.52
+Median ending bankroll         $           1,671.25
+95% range [p2.5 .. p97.5]      $-1,597.56  ..  $ 5,065.44
+P(lose > 25%)                                17.10%
+P(lose > 50%)                                16.20%
+P(double bankroll)                           77.70%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             237.59
-Median max drawdown            $             222.50
-95th pct max drawdown          $             372.50
-99th pct max drawdown          $             475.00
+Mean max drawdown              $             335.26
+Median max drawdown            $             330.00
+95th pct max drawdown          $             445.00
+99th pct max drawdown          $             500.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.9480%
-Avg session wagered            $          30,765.92
+RTP                                       101.0753%
+Avg session wagered            $         139,457.09
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.6
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 6.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             200.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -926,64 +926,64 @@ Sizer                          Kelly k=6.000 | B0=$200 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      390
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           78.00×
-Buckets at table min                             52
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             84
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                  5
-TC +2                          $                  5
-TC +3                          $                 10
-TC +4                          $                 15
-TC +5                          $                 25
-TC +6                          $                 30
-TC +7                          $                 35
-TC +8                          $                 40
+TC +2                          $                 10
+TC +3                          $                 15
+TC +4                          $                 20
+TC +5                          $                 30
+TC +6                          $                 35
+TC +7                          $                 40
+TC +8                          $                 45
 TC +9                          $                 50
-TC +10                         $                 50
+TC +10                         $                 55
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             +45.95
-P(finish down)  (end < B0)                   47.35%
-P(ruin)                                      35.05%
+E[profit]  = E[end − B0]       $          +1,908.25
+P(finish down)  (end < B0)                   16.80%
+P(ruin)                                      14.85%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             245.94
-Median ending bankroll         $             237.50
-95% range [p2.5 .. p97.5]      $  -955.06  ..  $ 1,477.56
-P(lose > 25%)                                44.10%
-P(lose > 50%)                                41.25%
-P(double bankroll)                           39.75%
+E[ending bankroll]             $           2,108.25
+Median ending bankroll         $           2,092.50
+95% range [p2.5 .. p97.5]      $-1,700.06  ..  $ 5,928.12
+P(lose > 25%)                                16.30%
+P(lose > 50%)                                15.75%
+P(double bankroll)                           80.25%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             289.64
-Median max drawdown            $             270.00
-95th pct max drawdown          $             460.00
-99th pct max drawdown          $             585.00
+Mean max drawdown              $             403.13
+Median max drawdown            $             390.00
+95th pct max drawdown          $             535.00
+99th pct max drawdown          $             610.05
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.1416%
-Avg session wagered            $          32,440.60
+RTP                                       101.2396%
+Avg session wagered            $         153,939.44
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.7
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 7.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             200.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -991,60 +991,60 @@ Sizer                          Kelly k=7.000 | B0=$200 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      455
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           91.00×
-Buckets at table min                             51
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             83
+Buckets at table max                              2
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                  5
-TC +2                          $                  5
-TC +3                          $                 15
-TC +4                          $                 20
-TC +5                          $                 25
-TC +6                          $                 35
-TC +7                          $                 40
-TC +8                          $                 50
-TC +9                          $                 55
-TC +10                         $                 60
+TC +2                          $                 10
+TC +3                          $                 20
+TC +4                          $                 25
+TC +5                          $                 35
+TC +6                          $                 40
+TC +7                          $                 45
+TC +8                          $                 55
+TC +9                          $                 60
+TC +10                         $                 65
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             +71.16
-P(finish down)  (end < B0)                   45.45%
-P(ruin)                                      35.20%
+E[profit]  = E[end − B0]       $          +2,350.28
+P(finish down)  (end < B0)                   14.00%
+P(ruin)                                      12.00%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             271.16
-Median ending bankroll         $             267.50
-95% range [p2.5 .. p97.5]      $-1,102.62  ..  $ 1,637.56
-P(lose > 25%)                                42.95%
-P(lose > 50%)                                40.00%
-P(double bankroll)                           42.30%
+E[ending bankroll]             $           2,550.28
+Median ending bankroll         $           2,537.50
+95% range [p2.5 .. p97.5]      $-1,752.88  ..  $ 6,760.25
+P(lose > 25%)                                13.50%
+P(lose > 50%)                                12.95%
+P(double bankroll)                           83.55%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             332.11
-Median max drawdown            $             315.00
-95th pct max drawdown          $             520.12
-99th pct max drawdown          $             675.10
+Mean max drawdown              $             470.32
+Median max drawdown            $             457.50
+95th pct max drawdown          $             630.00
+99th pct max drawdown          $             727.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.2080%
-Avg session wagered            $          34,213.65
+RTP                                       101.3658%
+Avg session wagered            $         172,084.26
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min5_max500_br200_replays2000_shoes100.png
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min5_max500_br200_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$5 / max$500  |  B0=$500
@@ -1054,7 +1054,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min5_max500_br200_rep
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -1062,12 +1062,12 @@ Sizer                          Kelly k=0.250 | B0=$500 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $       40
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                            8.00×
-Buckets at table min                             78
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                            107
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -1084,42 +1084,42 @@ TC +10                         $                  5
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -132.88
-P(finish down)  (end < B0)                   63.10%
-P(ruin)                                      16.85%
+E[profit]  = E[end − B0]       $            -213.58
+P(finish down)  (end < B0)                   62.85%
+P(ruin)                                      32.60%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             367.12
-Median ending bankroll         $             351.25
-95% range [p2.5 .. p97.5]      $  -402.56  ..  $ 1,120.00
-P(lose > 25%)                                52.55%
-P(lose > 50%)                                38.60%
-P(double bankroll)                            5.75%
+E[ending bankroll]             $             286.42
+Median ending bankroll         $             287.50
+95% range [p2.5 .. p97.5]      $-1,087.69  ..  $ 1,602.69
+P(lose > 25%)                                55.10%
+P(lose > 50%)                                47.30%
+P(double bankroll)                           14.75%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             106.86
-Median max drawdown            $             105.00
-95th pct max drawdown          $             132.50
-99th pct max drawdown          $             140.00
+Mean max drawdown              $              69.59
+Median max drawdown            $              70.00
+95th pct max drawdown          $              80.00
+99th pct max drawdown          $              87.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4598%
-Avg session wagered            $          24,598.22
+RTP                                        99.7293%
+Avg session wagered            $          78,894.18
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.0
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -1127,12 +1127,12 @@ Sizer                          Kelly k=0.500 | B0=$500 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $       80
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           16.00×
-Buckets at table min                             62
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             93
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -1149,42 +1149,42 @@ TC +10                         $                 10
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -118.67
-P(finish down)  (end < B0)                   63.70%
-P(ruin)                                      15.25%
+E[profit]  = E[end − B0]       $             -27.79
+P(finish down)  (end < B0)                   51.15%
+P(ruin)                                      26.45%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             381.33
-Median ending bankroll         $             376.25
-95% range [p2.5 .. p97.5]      $  -380.06  ..  $ 1,152.62
-P(lose > 25%)                                49.85%
-P(lose > 50%)                                36.40%
-P(double bankroll)                            5.35%
+E[ending bankroll]             $             472.21
+Median ending bankroll         $             473.75
+95% range [p2.5 .. p97.5]      $  -980.19  ..  $ 1,942.56
+P(lose > 25%)                                44.40%
+P(lose > 50%)                                37.95%
+P(double bankroll)                           23.50%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             110.72
-Median max drawdown            $             110.00
-95th pct max drawdown          $             137.50
-99th pct max drawdown          $             152.50
+Mean max drawdown              $              93.90
+Median max drawdown            $              90.00
+95th pct max drawdown          $             122.50
+99th pct max drawdown          $             140.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5218%
-Avg session wagered            $          24,817.85
+RTP                                        99.9666%
+Avg session wagered            $          83,108.73
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13750.6
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -1192,77 +1192,12 @@ Sizer                          Kelly k=0.750 | B0=$500 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      120
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           24.00×
-Buckets at table min                             58
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                  5
-TC +2                          $                  5
-TC +3                          $                  5
-TC +4                          $                  5
-TC +5                          $                  5
-TC +6                          $                 10
-TC +7                          $                 10
-TC +8                          $                 15
-TC +9                          $                 15
-TC +10                         $                 15
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -102.60
-P(finish down)  (end < B0)                   60.30%
-P(ruin)                                      15.30%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $             397.40
-Median ending bankroll         $             397.50
-95% range [p2.5 .. p97.5]      $  -430.19  ..  $ 1,165.06
-P(lose > 25%)                                47.25%
-P(lose > 50%)                                33.85%
-P(double bankroll)                            5.70%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $             117.95
-Median max drawdown            $             112.50
-95th pct max drawdown          $             160.00
-99th pct max drawdown          $             195.05
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                        99.5941%
-Avg session wagered            $          25,278.53
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $             500.00
-Table min / max                 $5 / $500
-Ruin mode                                       end
-Sizer                          Kelly k=1.000 | B0=$500 | min=$5 / max=$500
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      160
-Median bucket bet              $                  5
-Spread (max / min)                           32.00×
-Buckets at table min                             56
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             89
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -1272,62 +1207,62 @@ TC +3                          $                  5
 TC +4                          $                  5
 TC +5                          $                 10
 TC +6                          $                 10
-TC +7                          $                 15
+TC +7                          $                 10
 TC +8                          $                 15
-TC +9                          $                 20
-TC +10                         $                 20
+TC +9                          $                 15
+TC +10                         $                 15
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -82.15
-P(finish down)  (end < B0)                   56.40%
-P(ruin)                                      16.95%
+E[profit]  = E[end − B0]       $            +197.48
+P(finish down)  (end < B0)                   41.05%
+P(ruin)                                      20.50%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             417.85
-Median ending bankroll         $             431.25
-95% range [p2.5 .. p97.5]      $  -420.12  ..  $ 1,240.06
-P(lose > 25%)                                44.65%
-P(lose > 50%)                                33.65%
-P(double bankroll)                            8.00%
+E[ending bankroll]             $             697.48
+Median ending bankroll         $             695.00
+95% range [p2.5 .. p97.5]      $  -947.69  ..  $ 2,357.87
+P(lose > 25%)                                36.10%
+P(lose > 50%)                                30.90%
+P(double bankroll)                           35.80%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             134.69
+Mean max drawdown              $             131.78
 Median max drawdown            $             127.50
-95th pct max drawdown          $             197.50
-99th pct max drawdown          $             245.00
+95th pct max drawdown          $             175.12
+99th pct max drawdown          $             205.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6842%
-Avg session wagered            $          26,013.19
+RTP                                       100.2191%
+Avg session wagered            $          90,135.30
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
+Avg shoes played                             1000.0
+Avg hands played                            13750.6
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.250
+KELLY BANKROLL REPLAY  —  k = 1.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
-Sizer                          Kelly k=1.250 | B0=$500 | min=$5 / max=$500
+Sizer                          Kelly k=1.000 | B0=$500 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      205
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           41.00×
-Buckets at table min                             54
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             87
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -1337,62 +1272,62 @@ TC +3                          $                  5
 TC +4                          $                 10
 TC +5                          $                 10
 TC +6                          $                 15
-TC +7                          $                 20
+TC +7                          $                 15
 TC +8                          $                 20
-TC +9                          $                 25
+TC +9                          $                 20
 TC +10                         $                 25
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -82.84
-P(finish down)  (end < B0)                   56.55%
-P(ruin)                                      19.60%
+E[profit]  = E[end − B0]       $            +415.85
+P(finish down)  (end < B0)                   32.95%
+P(ruin)                                      18.55%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             417.16
-Median ending bankroll         $             423.75
-95% range [p2.5 .. p97.5]      $  -502.50  ..  $ 1,345.12
-P(lose > 25%)                                45.55%
-P(lose > 50%)                                36.05%
-P(double bankroll)                           10.65%
+E[ending bankroll]             $             915.85
+Median ending bankroll         $             915.00
+95% range [p2.5 .. p97.5]      $  -992.88  ..  $ 2,780.31
+P(lose > 25%)                                29.55%
+P(lose > 50%)                                26.05%
+P(double bankroll)                           46.30%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             161.45
-Median max drawdown            $             150.00
-95th pct max drawdown          $             242.50
-99th pct max drawdown          $             305.02
+Mean max drawdown              $             173.74
+Median max drawdown            $             170.00
+95th pct max drawdown          $             230.12
+99th pct max drawdown          $             270.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6963%
-Avg session wagered            $          27,277.73
+RTP                                       100.4187%
+Avg session wagered            $          99,309.97
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.8
+Avg shoes played                             1000.0
+Avg hands played                            13750.3
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.500
+KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
-Sizer                          Kelly k=1.500 | B0=$500 | min=$5 / max=$500
+Sizer                          Kelly k=1.250 | B0=$500 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      245
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           49.00×
-Buckets at table min                             53
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             86
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -1401,63 +1336,63 @@ TC +2                          $                  5
 TC +3                          $                 10
 TC +4                          $                 10
 TC +5                          $                 15
-TC +6                          $                 20
-TC +7                          $                 25
+TC +6                          $                 15
+TC +7                          $                 20
 TC +8                          $                 25
-TC +9                          $                 30
+TC +9                          $                 25
 TC +10                         $                 30
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -45.66
-P(finish down)  (end < B0)                   52.90%
-P(ruin)                                      17.90%
+E[profit]  = E[end − B0]       $            +685.91
+P(finish down)  (end < B0)                   28.40%
+P(ruin)                                      15.10%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             454.34
-Median ending bankroll         $             467.50
-95% range [p2.5 .. p97.5]      $  -492.75  ..  $ 1,405.19
-P(lose > 25%)                                42.75%
-P(lose > 50%)                                33.20%
-P(double bankroll)                           12.45%
+E[ending bankroll]             $           1,185.91
+Median ending bankroll         $           1,162.50
+95% range [p2.5 .. p97.5]      $-1,023.06  ..  $ 3,370.81
+P(lose > 25%)                                24.45%
+P(lose > 50%)                                20.95%
+P(double bankroll)                           55.60%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             190.92
-Median max drawdown            $             180.00
-95th pct max drawdown          $             292.50
-99th pct max drawdown          $             360.00
+Mean max drawdown              $             212.13
+Median max drawdown            $             205.00
+95th pct max drawdown          $             280.00
+99th pct max drawdown          $             322.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.8413%
-Avg session wagered            $          28,767.82
+RTP                                       100.6368%
+Avg session wagered            $         107,719.05
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.000
+KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
-Sizer                          Kelly k=2.000 | B0=$500 | min=$5 / max=$500
+Sizer                          Kelly k=1.500 | B0=$500 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      325
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           65.00×
-Buckets at table min                             52
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             85
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -1465,129 +1400,64 @@ TC +1                          $                  5
 TC +2                          $                  5
 TC +3                          $                 10
 TC +4                          $                 15
-TC +5                          $                 20
-TC +6                          $                 25
-TC +7                          $                 30
-TC +8                          $                 35
-TC +9                          $                 40
-TC +10                         $                 45
+TC +5                          $                 15
+TC +6                          $                 20
+TC +7                          $                 25
+TC +8                          $                 30
+TC +9                          $                 30
+TC +10                         $                 35
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $              -4.49
-P(finish down)  (end < B0)                   50.30%
-P(ruin)                                      19.85%
+E[profit]  = E[end − B0]       $            +967.01
+P(finish down)  (end < B0)                   21.80%
+P(ruin)                                      12.10%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             495.51
-Median ending bankroll         $             493.75
-95% range [p2.5 .. p97.5]      $  -555.00  ..  $ 1,637.56
-P(lose > 25%)                                41.20%
-P(lose > 50%)                                32.40%
-P(double bankroll)                           18.10%
+E[ending bankroll]             $           1,467.01
+Median ending bankroll         $           1,452.50
+95% range [p2.5 .. p97.5]      $-1,000.31  ..  $ 4,032.81
+P(lose > 25%)                                18.95%
+P(lose > 50%)                                16.45%
+P(double bankroll)                           64.25%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             240.75
-Median max drawdown            $             225.00
-95th pct max drawdown          $             380.25
-99th pct max drawdown          $             465.02
+Mean max drawdown              $             254.50
+Median max drawdown            $             250.00
+95th pct max drawdown          $             335.00
+99th pct max drawdown          $             385.05
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.9854%
-Avg session wagered            $          30,784.37
+RTP                                       100.8195%
+Avg session wagered            $         117,994.10
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13750.6
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.500
+KELLY BANKROLL REPLAY  —  k = 2.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
-Sizer                          Kelly k=2.500 | B0=$500 | min=$5 / max=$500
+Sizer                          Kelly k=2.000 | B0=$500 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      405
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           81.00×
-Buckets at table min                             51
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                  5
-TC +2                          $                  5
-TC +3                          $                 15
-TC +4                          $                 20
-TC +5                          $                 25
-TC +6                          $                 30
-TC +7                          $                 40
-TC +8                          $                 45
-TC +9                          $                 50
-TC +10                         $                 55
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             +24.02
-P(finish down)  (end < B0)                   47.70%
-P(ruin)                                      21.35%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $             524.02
-Median ending bankroll         $             538.75
-95% range [p2.5 .. p97.5]      $  -820.25  ..  $ 1,840.06
-P(lose > 25%)                                40.75%
-P(lose > 50%)                                33.60%
-P(double bankroll)                           23.30%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $             309.15
-Median max drawdown            $             292.50
-95th pct max drawdown          $             500.12
-99th pct max drawdown          $             615.00
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                       100.0714%
-Avg session wagered            $          33,617.78
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.7
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 3.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $             500.00
-Table min / max                 $5 / $500
-Ruin mode                                       end
-Sizer                          Kelly k=3.000 | B0=$500 | min=$5 / max=$500
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      485
-Median bucket bet              $                  5
-Spread (max / min)                           97.00×
-Buckets at table min                             50
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             84
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -1595,63 +1465,128 @@ TC +1                          $                  5
 TC +2                          $                 10
 TC +3                          $                 15
 TC +4                          $                 20
-TC +5                          $                 30
-TC +6                          $                 35
-TC +7                          $                 45
-TC +8                          $                 50
-TC +9                          $                 60
-TC +10                         $                 65
+TC +5                          $                 25
+TC +6                          $                 30
+TC +7                          $                 30
+TC +8                          $                 40
+TC +9                          $                 40
+TC +10                         $                 45
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             +90.30
-P(finish down)  (end < B0)                   44.95%
-P(ruin)                                      21.75%
+E[profit]  = E[end − B0]       $          +1,515.16
+P(finish down)  (end < B0)                   19.05%
+P(ruin)                                      11.85%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             590.30
-Median ending bankroll         $             592.50
-95% range [p2.5 .. p97.5]      $  -943.06  ..  $ 2,045.00
-P(lose > 25%)                                38.25%
-P(lose > 50%)                                32.00%
-P(double bankroll)                           30.20%
+E[ending bankroll]             $           2,015.16
+Median ending bankroll         $           2,067.50
+95% range [p2.5 .. p97.5]      $-1,112.81  ..  $ 5,225.12
+P(lose > 25%)                                17.15%
+P(lose > 50%)                                15.50%
+P(double bankroll)                           71.95%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             352.56
-Median max drawdown            $             335.00
-95th pct max drawdown          $             565.00
-99th pct max drawdown          $             692.52
+Mean max drawdown              $             336.61
+Median max drawdown            $             330.00
+95th pct max drawdown          $             450.00
+99th pct max drawdown          $             500.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.2498%
-Avg session wagered            $          36,149.32
+RTP                                       101.0864%
+Avg session wagered            $         139,466.86
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13751.4
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 4.000
+KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
-Sizer                          Kelly k=4.000 | B0=$500 | min=$5 / max=$500
+Sizer                          Kelly k=2.500 | B0=$500 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
 Spread (max / min)                          100.00×
-Buckets at table min                             50
+Buckets at table min                             83
+Buckets at table max                              1
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                  5
+TC +2                          $                 10
+TC +3                          $                 15
+TC +4                          $                 25
+TC +5                          $                 30
+TC +6                          $                 35
+TC +7                          $                 40
+TC +8                          $                 45
+TC +9                          $                 55
+TC +10                         $                 60
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +2,098.49
+P(finish down)  (end < B0)                   15.10%
+P(ruin)                                      10.15%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $           2,598.49
+Median ending bankroll         $           2,581.25
+95% range [p2.5 .. p97.5]      $-1,255.25  ..  $ 6,560.56
+P(lose > 25%)                                13.55%
+P(lose > 50%)                                12.30%
+P(double bankroll)                           77.60%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $             423.81
+Median max drawdown            $             412.50
+95th pct max drawdown          $             557.50
+99th pct max drawdown          $             640.05
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.2976%
+Avg session wagered            $         161,716.23
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13752.3
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 3.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $             500.00
+Table min / max                 $5 / $500
+Ruin mode                                       end
+Sizer                          Kelly k=3.000 | B0=$500 | min=$5 / max=$500
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
+Median bucket bet              $                  5
+Spread (max / min)                          100.00×
+Buckets at table min                             83
 Buckets at table max                              2
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
@@ -1660,51 +1595,116 @@ TC +1                          $                  5
 TC +2                          $                 10
 TC +3                          $                 20
 TC +4                          $                 30
-TC +5                          $                 40
-TC +6                          $                 50
-TC +7                          $                 60
-TC +8                          $                 70
-TC +9                          $                 80
-TC +10                         $                 85
+TC +5                          $                 35
+TC +6                          $                 40
+TC +7                          $                 50
+TC +8                          $                 55
+TC +9                          $                 65
+TC +10                         $                 70
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +193.37
-P(finish down)  (end < B0)                   42.85%
-P(ruin)                                      23.10%
+E[profit]  = E[end − B0]       $          +2,537.26
+P(finish down)  (end < B0)                   14.00%
+P(ruin)                                      10.25%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             693.37
-Median ending bankroll         $             662.50
-95% range [p2.5 .. p97.5]      $-1,065.06  ..  $ 2,575.12
-P(lose > 25%)                                37.80%
-P(lose > 50%)                                31.95%
-P(double bankroll)                           36.00%
+E[ending bankroll]             $           3,037.26
+Median ending bankroll         $           2,985.00
+95% range [p2.5 .. p97.5]      $-1,611.38  ..  $ 7,697.50
+P(lose > 25%)                                13.15%
+P(lose > 50%)                                12.15%
+P(double bankroll)                           81.15%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             473.88
-Median max drawdown            $             452.50
-95th pct max drawdown          $             737.50
-99th pct max drawdown          $             902.55
+Mean max drawdown              $             502.57
+Median max drawdown            $             490.00
+95th pct max drawdown          $             655.12
+99th pct max drawdown          $             765.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.4681%
-Avg session wagered            $          41,314.13
+RTP                                       101.4118%
+Avg session wagered            $         179,722.34
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.4
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 4.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $             500.00
+Table min / max                 $5 / $500
+Ruin mode                                       end
+Sizer                          Kelly k=4.000 | B0=$500 | min=$5 / max=$500
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
+Median bucket bet              $                  5
+Spread (max / min)                          100.00×
+Buckets at table min                             83
+Buckets at table max                              6
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                  5
+TC +2                          $                 15
+TC +3                          $                 30
+TC +4                          $                 35
+TC +5                          $                 45
+TC +6                          $                 55
+TC +7                          $                 65
+TC +8                          $                 75
+TC +9                          $                 85
+TC +10                         $                 90
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +3,575.51
+P(finish down)  (end < B0)                   11.80%
+P(ruin)                                       9.45%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $           4,075.51
+Median ending bankroll         $           4,035.00
+95% range [p2.5 .. p97.5]      $-1,877.69  ..  $10,065.12
+P(lose > 25%)                                11.05%
+P(lose > 50%)                                10.40%
+P(double bankroll)                           84.25%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $             667.37
+Median max drawdown            $             647.50
+95th pct max drawdown          $             895.00
+99th pct max drawdown          $           1,037.50
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.6476%
+Avg session wagered            $         217,018.88
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13752.4
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 5.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -1712,64 +1712,64 @@ Sizer                          Kelly k=5.000 | B0=$500 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
 Spread (max / min)                          100.00×
-Buckets at table min                             50
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              7
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                  5
-TC +2                          $                 15
-TC +3                          $                 25
-TC +4                          $                 35
-TC +5                          $                 50
-TC +6                          $                 60
-TC +7                          $                 75
-TC +8                          $                 85
-TC +9                          $                100
-TC +10                         $                105
+TC +1                          $                 10
+TC +2                          $                 20
+TC +3                          $                 35
+TC +4                          $                 45
+TC +5                          $                 60
+TC +6                          $                 70
+TC +7                          $                 80
+TC +8                          $                 95
+TC +9                          $                105
+TC +10                         $                115
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +265.11
-P(finish down)  (end < B0)                   40.40%
-P(ruin)                                      25.95%
+E[profit]  = E[end − B0]       $          +4,817.69
+P(finish down)  (end < B0)                   10.50%
+P(ruin)                                       8.40%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             765.11
-Median ending bankroll         $             756.25
-95% range [p2.5 .. p97.5]      $-1,507.62  ..  $ 3,077.81
-P(lose > 25%)                                36.90%
-P(lose > 50%)                                32.85%
-P(double bankroll)                           41.30%
+E[ending bankroll]             $           5,317.69
+Median ending bankroll         $           5,157.50
+95% range [p2.5 .. p97.5]      $-2,185.69  ..  $13,180.12
+P(lose > 25%)                                 9.90%
+P(lose > 50%)                                 9.35%
+P(double bankroll)                           86.60%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             592.83
-Median max drawdown            $             565.00
-95th pct max drawdown          $             930.00
-99th pct max drawdown          $           1,165.00
+Mean max drawdown              $             840.17
+Median max drawdown            $             811.25
+95th pct max drawdown          $           1,115.00
+99th pct max drawdown          $           1,297.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.5633%
-Avg session wagered            $          47,060.68
+RTP                                       101.7997%
+Avg session wagered            $         267,697.85
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13750.9
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 6.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -1777,64 +1777,64 @@ Sizer                          Kelly k=6.000 | B0=$500 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
 Spread (max / min)                          100.00×
-Buckets at table min                             49
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              8
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                  5
-TC +2                          $                 15
-TC +3                          $                 30
-TC +4                          $                 40
-TC +5                          $                 60
-TC +6                          $                 75
-TC +7                          $                 90
-TC +8                          $                105
-TC +9                          $                120
-TC +10                         $                130
+TC +1                          $                 10
+TC +2                          $                 25
+TC +3                          $                 40
+TC +4                          $                 55
+TC +5                          $                 70
+TC +6                          $                 85
+TC +7                          $                 95
+TC +8                          $                115
+TC +9                          $                125
+TC +10                         $                140
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +334.27
-P(finish down)  (end < B0)                   40.50%
-P(ruin)                                      26.60%
+E[profit]  = E[end − B0]       $          +5,789.54
+P(finish down)  (end < B0)                   11.40%
+P(ruin)                                       9.45%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             834.27
-Median ending bankroll         $             817.50
-95% range [p2.5 .. p97.5]      $-1,830.00  ..  $ 3,467.87
-P(lose > 25%)                                36.85%
-P(lose > 50%)                                33.45%
-P(double bankroll)                           45.65%
+E[ending bankroll]             $           6,289.54
+Median ending bankroll         $           6,315.00
+95% range [p2.5 .. p97.5]      $-3,028.06  ..  $15,863.44
+P(lose > 25%)                                10.60%
+P(lose > 50%)                                10.25%
+P(double bankroll)                           86.60%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             704.38
-Median max drawdown            $             666.25
-95th pct max drawdown          $           1,102.62
-99th pct max drawdown          $           1,435.00
+Mean max drawdown              $           1,006.71
+Median max drawdown            $             975.00
+95th pct max drawdown          $           1,355.00
+99th pct max drawdown          $           1,567.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.6327%
-Avg session wagered            $          52,831.68
+RTP                                       101.8779%
+Avg session wagered            $         308,296.23
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13750.6
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 7.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -1842,60 +1842,60 @@ Sizer                          Kelly k=7.000 | B0=$500 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
 Spread (max / min)                          100.00×
-Buckets at table min                             49
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              8
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                  5
-TC +2                          $                 20
-TC +3                          $                 35
-TC +4                          $                 50
-TC +5                          $                 70
-TC +6                          $                 85
-TC +7                          $                105
-TC +8                          $                120
-TC +9                          $                140
-TC +10                         $                150
+TC +1                          $                 10
+TC +2                          $                 25
+TC +3                          $                 50
+TC +4                          $                 65
+TC +5                          $                 80
+TC +6                          $                 95
+TC +7                          $                115
+TC +8                          $                130
+TC +9                          $                145
+TC +10                         $                160
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +433.36
-P(finish down)  (end < B0)                   38.95%
-P(ruin)                                      27.65%
+E[profit]  = E[end − B0]       $          +6,838.96
+P(finish down)  (end < B0)                   10.45%
+P(ruin)                                       9.15%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             933.36
-Median ending bankroll         $             936.25
-95% range [p2.5 .. p97.5]      $-2,287.50  ..  $ 4,045.50
-P(lose > 25%)                                36.25%
-P(lose > 50%)                                33.90%
-P(double bankroll)                           48.60%
+E[ending bankroll]             $           7,338.96
+Median ending bankroll         $           7,212.50
+95% range [p2.5 .. p97.5]      $-2,895.88  ..  $18,284.62
+P(lose > 25%)                                10.35%
+P(lose > 50%)                                10.00%
+P(double bankroll)                           87.85%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             806.33
-Median max drawdown            $             757.50
-95th pct max drawdown          $           1,260.00
-99th pct max drawdown          $           1,712.53
+Mean max drawdown              $           1,167.24
+Median max drawdown            $           1,130.00
+95th pct max drawdown          $           1,562.50
+99th pct max drawdown          $           1,775.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.7521%
-Avg session wagered            $          57,621.97
+RTP                                       101.9740%
+Avg session wagered            $         346,446.26
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min5_max500_br500_replays2000_shoes100.png
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min5_max500_br500_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$5 / max$500  |  B0=$1,000
@@ -1905,7 +1905,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min5_max500_br500_rep
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -1913,12 +1913,12 @@ Sizer                          Kelly k=0.250 | B0=$1,000 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $       80
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           16.00×
-Buckets at table min                             62
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             93
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -1935,42 +1935,42 @@ TC +10                         $                 10
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -109.80
-P(finish down)  (end < B0)                   60.05%
-P(ruin)                                       1.20%
+E[profit]  = E[end − B0]       $             -85.80
+P(finish down)  (end < B0)                   54.70%
+P(ruin)                                      11.70%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             890.20
-Median ending bankroll         $             890.00
-95% range [p2.5 .. p97.5]      $   114.94  ..  $ 1,662.56
-P(lose > 25%)                                35.05%
-P(lose > 50%)                                15.70%
-P(double bankroll)                            0.30%
+E[ending bankroll]             $             914.20
+Median ending bankroll         $             896.25
+95% range [p2.5 .. p97.5]      $  -567.50  ..  $ 2,402.56
+P(lose > 25%)                                42.30%
+P(lose > 50%)                                29.05%
+P(double bankroll)                            8.05%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             109.97
-Median max drawdown            $             107.50
-95th pct max drawdown          $             137.50
-99th pct max drawdown          $             152.52
+Mean max drawdown              $              94.44
+Median max drawdown            $              90.00
+95th pct max drawdown          $             122.50
+99th pct max drawdown          $             140.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5577%
-Avg session wagered            $          24,825.10
+RTP                                        99.8968%
+Avg session wagered            $          83,115.14
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13750.9
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -1978,64 +1978,64 @@ Sizer                          Kelly k=0.500 | B0=$1,000 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      160
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           32.00×
-Buckets at table min                             56
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             87
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                  5
 TC +2                          $                  5
 TC +3                          $                  5
-TC +4                          $                  5
+TC +4                          $                 10
 TC +5                          $                 10
-TC +6                          $                 10
+TC +6                          $                 15
 TC +7                          $                 15
-TC +8                          $                 15
+TC +8                          $                 20
 TC +9                          $                 20
-TC +10                         $                 20
+TC +10                         $                 25
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -81.05
-P(finish down)  (end < B0)                   57.80%
-P(ruin)                                       1.65%
+E[profit]  = E[end − B0]       $            +441.90
+P(finish down)  (end < B0)                   32.25%
+P(ruin)                                       6.75%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             918.95
-Median ending bankroll         $             920.00
-95% range [p2.5 .. p97.5]      $    87.44  ..  $ 1,727.56
-P(lose > 25%)                                34.10%
-P(lose > 50%)                                15.80%
-P(double bankroll)                            0.65%
+E[ending bankroll]             $           1,441.90
+Median ending bankroll         $           1,410.00
+95% range [p2.5 .. p97.5]      $  -490.12  ..  $ 3,357.75
+P(lose > 25%)                                22.85%
+P(lose > 50%)                                16.25%
+P(double bankroll)                           28.25%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             134.04
-Median max drawdown            $             125.00
-95th pct max drawdown          $             197.50
-99th pct max drawdown          $             255.05
+Mean max drawdown              $             174.77
+Median max drawdown            $             170.00
+95th pct max drawdown          $             230.00
+99th pct max drawdown          $             275.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6883%
-Avg session wagered            $          26,003.85
+RTP                                       100.4451%
+Avg session wagered            $          99,283.10
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.1
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -2043,77 +2043,12 @@ Sizer                          Kelly k=0.750 | B0=$1,000 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      245
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           49.00×
-Buckets at table min                             53
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                  5
-TC +2                          $                  5
-TC +3                          $                 10
-TC +4                          $                 10
-TC +5                          $                 15
-TC +6                          $                 20
-TC +7                          $                 25
-TC +8                          $                 25
-TC +9                          $                 30
-TC +10                         $                 30
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -55.98
-P(finish down)  (end < B0)                   55.15%
-P(ruin)                                       2.45%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $             944.02
-Median ending bankroll         $             945.00
-95% range [p2.5 .. p97.5]      $    29.81  ..  $ 1,940.12
-P(lose > 25%)                                35.45%
-P(lose > 50%)                                18.30%
-P(double bankroll)                            1.90%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $             193.83
-Median max drawdown            $             185.00
-95th pct max drawdown          $             295.00
-99th pct max drawdown          $             380.00
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                        99.8052%
-Avg session wagered            $          28,743.32
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $           1,000.00
-Table min / max                 $5 / $500
-Ruin mode                                       end
-Sizer                          Kelly k=1.000 | B0=$1,000 | min=$5 / max=$500
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      325
-Median bucket bet              $                  5
-Spread (max / min)                           65.00×
-Buckets at table min                             52
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             85
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -2121,129 +2056,64 @@ TC +1                          $                  5
 TC +2                          $                  5
 TC +3                          $                 10
 TC +4                          $                 15
-TC +5                          $                 20
-TC +6                          $                 25
-TC +7                          $                 30
-TC +8                          $                 35
-TC +9                          $                 40
-TC +10                         $                 45
+TC +5                          $                 15
+TC +6                          $                 20
+TC +7                          $                 25
+TC +8                          $                 30
+TC +9                          $                 30
+TC +10                         $                 35
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -10.92
-P(finish down)  (end < B0)                   50.55%
-P(ruin)                                       4.05%
+E[profit]  = E[end − B0]       $            +976.81
+P(finish down)  (end < B0)                   22.60%
+P(ruin)                                       6.45%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             989.08
-Median ending bankroll         $             990.00
-95% range [p2.5 .. p97.5]      $  -110.37  ..  $ 2,107.81
-P(lose > 25%)                                33.85%
-P(lose > 50%)                                19.60%
-P(double bankroll)                            3.80%
+E[ending bankroll]             $           1,976.81
+Median ending bankroll         $           1,977.50
+95% range [p2.5 .. p97.5]      $  -557.81  ..  $ 4,510.00
+P(lose > 25%)                                16.60%
+P(lose > 50%)                                12.60%
+P(double bankroll)                           49.50%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             239.20
-Median max drawdown            $             222.50
-95th pct max drawdown          $             385.00
-99th pct max drawdown          $             485.15
+Mean max drawdown              $             253.47
+Median max drawdown            $             245.00
+95th pct max drawdown          $             335.00
+99th pct max drawdown          $             385.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.9645%
-Avg session wagered            $          30,753.75
+RTP                                       100.8285%
+Avg session wagered            $         117,907.49
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
+Avg shoes played                             1000.0
+Avg hands played                            13752.0
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.250
+KELLY BANKROLL REPLAY  —  k = 1.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
-Sizer                          Kelly k=1.250 | B0=$1,000 | min=$5 / max=$500
+Sizer                          Kelly k=1.000 | B0=$1,000 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      405
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
-Spread (max / min)                           81.00×
-Buckets at table min                             51
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                  5
-TC +2                          $                  5
-TC +3                          $                 15
-TC +4                          $                 20
-TC +5                          $                 25
-TC +6                          $                 30
-TC +7                          $                 40
-TC +8                          $                 45
-TC +9                          $                 50
-TC +10                         $                 55
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             +15.46
-P(finish down)  (end < B0)                   48.80%
-P(ruin)                                       7.05%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $           1,015.46
-Median ending bankroll         $           1,015.00
-95% range [p2.5 .. p97.5]      $  -320.06  ..  $ 2,347.69
-P(lose > 25%)                                34.35%
-P(lose > 50%)                                22.25%
-P(double bankroll)                            8.45%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $             310.40
-Median max drawdown            $             292.50
-95th pct max drawdown          $             480.00
-99th pct max drawdown          $             602.50
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                       100.0460%
-Avg session wagered            $          33,628.67
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.500
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $           1,000.00
-Table min / max                 $5 / $500
-Ruin mode                                       end
-Sizer                          Kelly k=1.500 | B0=$1,000 | min=$5 / max=$500
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $        5  /  $      485
-Median bucket bet              $                  5
-Spread (max / min)                           97.00×
-Buckets at table min                             50
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             84
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -2251,63 +2121,128 @@ TC +1                          $                  5
 TC +2                          $                 10
 TC +3                          $                 15
 TC +4                          $                 20
-TC +5                          $                 30
-TC +6                          $                 35
-TC +7                          $                 45
-TC +8                          $                 50
-TC +9                          $                 60
-TC +10                         $                 65
+TC +5                          $                 25
+TC +6                          $                 30
+TC +7                          $                 30
+TC +8                          $                 40
+TC +9                          $                 40
+TC +10                         $                 45
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             +91.30
-P(finish down)  (end < B0)                   45.25%
-P(ruin)                                       7.70%
+E[profit]  = E[end − B0]       $          +1,488.28
+P(finish down)  (end < B0)                   18.60%
+P(ruin)                                       6.70%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,091.30
-Median ending bankroll         $           1,073.75
-95% range [p2.5 .. p97.5]      $  -437.56  ..  $ 2,597.81
-P(lose > 25%)                                32.95%
-P(lose > 50%)                                22.40%
-P(double bankroll)                           12.30%
+E[ending bankroll]             $           2,488.28
+Median ending bankroll         $           2,495.00
+95% range [p2.5 .. p97.5]      $  -662.69  ..  $ 5,873.56
+P(lose > 25%)                                14.55%
+P(lose > 50%)                                11.65%
+P(double bankroll)                           62.00%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             355.89
-Median max drawdown            $             335.00
-95th pct max drawdown          $             555.00
-99th pct max drawdown          $             700.07
+Mean max drawdown              $             335.14
+Median max drawdown            $             325.00
+95th pct max drawdown          $             450.00
+99th pct max drawdown          $             507.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.2520%
-Avg session wagered            $          36,222.31
+RTP                                       101.0680%
+Avg session wagered            $         139,346.32
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13750.5
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.000
+KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
-Sizer                          Kelly k=2.000 | B0=$1,000 | min=$5 / max=$500
+Sizer                          Kelly k=1.250 | B0=$1,000 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
 Spread (max / min)                          100.00×
-Buckets at table min                             50
+Buckets at table min                             83
+Buckets at table max                              1
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                  5
+TC +2                          $                 10
+TC +3                          $                 15
+TC +4                          $                 25
+TC +5                          $                 30
+TC +6                          $                 35
+TC +7                          $                 40
+TC +8                          $                 45
+TC +9                          $                 55
+TC +10                         $                 60
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +2,046.06
+P(finish down)  (end < B0)                   15.50%
+P(ruin)                                       6.40%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $           3,046.06
+Median ending bankroll         $           3,047.50
+95% range [p2.5 .. p97.5]      $-1,037.69  ..  $ 7,090.50
+P(lose > 25%)                                12.60%
+P(lose > 50%)                                10.35%
+P(double bankroll)                           70.15%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $             420.65
+Median max drawdown            $             405.00
+95th pct max drawdown          $             565.00
+99th pct max drawdown          $             635.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.2658%
+Avg session wagered            $         161,644.92
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 1.500
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $           1,000.00
+Table min / max                 $5 / $500
+Ruin mode                                       end
+Sizer                          Kelly k=1.500 | B0=$1,000 | min=$5 / max=$500
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
+Median bucket bet              $                  5
+Spread (max / min)                          100.00×
+Buckets at table min                             83
 Buckets at table max                              2
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
@@ -2316,51 +2251,116 @@ TC +1                          $                  5
 TC +2                          $                 10
 TC +3                          $                 20
 TC +4                          $                 30
-TC +5                          $                 40
-TC +6                          $                 50
-TC +7                          $                 60
-TC +8                          $                 70
-TC +9                          $                 80
-TC +10                         $                 85
+TC +5                          $                 35
+TC +6                          $                 40
+TC +7                          $                 50
+TC +8                          $                 55
+TC +9                          $                 65
+TC +10                         $                 70
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +152.46
-P(finish down)  (end < B0)                   44.00%
-P(ruin)                                      11.75%
+E[profit]  = E[end − B0]       $          +2,530.36
+P(finish down)  (end < B0)                   15.30%
+P(ruin)                                       8.05%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,152.46
-Median ending bankroll         $           1,145.00
-95% range [p2.5 .. p97.5]      $  -737.56  ..  $ 3,090.06
-P(lose > 25%)                                34.00%
-P(lose > 50%)                                24.15%
-P(double bankroll)                           19.60%
+E[ending bankroll]             $           3,530.36
+Median ending bankroll         $           3,518.75
+95% range [p2.5 .. p97.5]      $-1,262.75  ..  $ 8,282.69
+P(lose > 25%)                                13.20%
+P(lose > 50%)                                11.30%
+P(double bankroll)                           73.45%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             473.19
-Median max drawdown            $             450.00
-95th pct max drawdown          $             742.50
-99th pct max drawdown          $             935.00
+Mean max drawdown              $             502.38
+Median max drawdown            $             487.50
+95th pct max drawdown          $             675.00
+99th pct max drawdown          $             780.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.3689%
-Avg session wagered            $          41,327.22
+RTP                                       101.4092%
+Avg session wagered            $         179,561.57
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
+Avg shoes played                             1000.0
+Avg hands played                            13751.6
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 2.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $           1,000.00
+Table min / max                 $5 / $500
+Ruin mode                                       end
+Sizer                          Kelly k=2.000 | B0=$1,000 | min=$5 / max=$500
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $        5  /  $      500
+Median bucket bet              $                  5
+Spread (max / min)                          100.00×
+Buckets at table min                             83
+Buckets at table max                              6
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                  5
+TC +2                          $                 15
+TC +3                          $                 30
+TC +4                          $                 35
+TC +5                          $                 45
+TC +6                          $                 55
+TC +7                          $                 65
+TC +8                          $                 75
+TC +9                          $                 85
+TC +10                         $                 90
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +3,546.49
+P(finish down)  (end < B0)                   13.15%
+P(ruin)                                       7.60%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $           4,546.49
+Median ending bankroll         $           4,480.00
+95% range [p2.5 .. p97.5]      $-1,632.50  ..  $10,845.31
+P(lose > 25%)                                11.60%
+P(lose > 50%)                                10.35%
+P(double bankroll)                           78.70%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $             662.53
+Median max drawdown            $             645.00
+95th pct max drawdown          $             885.00
+99th pct max drawdown          $           1,020.05
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.6339%
+Avg session wagered            $         217,055.23
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13751.7
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -2368,64 +2368,64 @@ Sizer                          Kelly k=2.500 | B0=$1,000 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
 Spread (max / min)                          100.00×
-Buckets at table min                             50
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              7
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                  5
-TC +2                          $                 15
-TC +3                          $                 25
-TC +4                          $                 35
-TC +5                          $                 50
-TC +6                          $                 60
-TC +7                          $                 75
-TC +8                          $                 85
-TC +9                          $                100
-TC +10                         $                105
+TC +1                          $                 10
+TC +2                          $                 20
+TC +3                          $                 35
+TC +4                          $                 45
+TC +5                          $                 60
+TC +6                          $                 70
+TC +7                          $                 80
+TC +8                          $                 95
+TC +9                          $                105
+TC +10                         $                115
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +248.60
-P(finish down)  (end < B0)                   42.35%
-P(ruin)                                      14.40%
+E[profit]  = E[end − B0]       $          +4,691.73
+P(finish down)  (end < B0)                   11.60%
+P(ruin)                                       7.35%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,248.60
-Median ending bankroll         $           1,238.75
-95% range [p2.5 .. p97.5]      $-1,028.06  ..  $ 3,640.56
-P(lose > 25%)                                33.90%
-P(lose > 50%)                                26.75%
-P(double bankroll)                           25.50%
+E[ending bankroll]             $           5,691.73
+Median ending bankroll         $           5,706.25
+95% range [p2.5 .. p97.5]      $-1,948.44  ..  $13,275.44
+P(lose > 25%)                                10.30%
+P(lose > 50%)                                 9.20%
+P(double bankroll)                           82.55%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             583.84
-Median max drawdown            $             557.50
-95th pct max drawdown          $             890.00
-99th pct max drawdown          $           1,170.00
+Mean max drawdown              $             839.30
+Median max drawdown            $             815.00
+95th pct max drawdown          $           1,110.00
+99th pct max drawdown          $           1,355.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.5295%
-Avg session wagered            $          46,947.18
+RTP                                       101.7547%
+Avg session wagered            $         267,385.70
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.6
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -2433,64 +2433,64 @@ Sizer                          Kelly k=3.000 | B0=$1,000 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
 Spread (max / min)                          100.00×
-Buckets at table min                             49
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              8
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                  5
-TC +2                          $                 15
-TC +3                          $                 30
-TC +4                          $                 40
-TC +5                          $                 60
-TC +6                          $                 75
-TC +7                          $                 90
-TC +8                          $                105
-TC +9                          $                120
-TC +10                         $                130
+TC +1                          $                 10
+TC +2                          $                 25
+TC +3                          $                 40
+TC +4                          $                 55
+TC +5                          $                 70
+TC +6                          $                 85
+TC +7                          $                 95
+TC +8                          $                115
+TC +9                          $                125
+TC +10                         $                140
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +310.31
-P(finish down)  (end < B0)                   41.45%
-P(ruin)                                      16.40%
+E[profit]  = E[end − B0]       $          +5,533.39
+P(finish down)  (end < B0)                   12.00%
+P(ruin)                                       8.30%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,310.31
-Median ending bankroll         $           1,305.00
-95% range [p2.5 .. p97.5]      $-1,360.69  ..  $ 3,940.19
-P(lose > 25%)                                33.60%
-P(lose > 50%)                                27.25%
-P(double bankroll)                           30.70%
+E[ending bankroll]             $           6,533.39
+Median ending bankroll         $           6,551.25
+95% range [p2.5 .. p97.5]      $-2,436.12  ..  $15,961.06
+P(lose > 25%)                                11.15%
+P(lose > 50%)                                 9.95%
+P(double bankroll)                           83.30%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             708.47
-Median max drawdown            $             665.00
-95th pct max drawdown          $           1,120.00
-99th pct max drawdown          $           1,405.15
+Mean max drawdown              $           1,005.39
+Median max drawdown            $             977.50
+95th pct max drawdown          $           1,345.00
+99th pct max drawdown          $           1,525.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.5870%
-Avg session wagered            $          52,860.36
+RTP                                       101.7959%
+Avg session wagered            $         308,114.57
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 4.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -2498,64 +2498,64 @@ Sizer                          Kelly k=4.000 | B0=$1,000 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
 Spread (max / min)                          100.00×
-Buckets at table min                             49
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              9
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                  5
-TC +2                          $                 20
-TC +3                          $                 40
-TC +4                          $                 55
-TC +5                          $                 80
-TC +6                          $                 95
-TC +7                          $                120
-TC +8                          $                135
-TC +9                          $                160
-TC +10                         $                170
+TC +1                          $                 15
+TC +2                          $                 30
+TC +3                          $                 55
+TC +4                          $                 75
+TC +5                          $                 95
+TC +6                          $                110
+TC +7                          $                130
+TC +8                          $                150
+TC +9                          $                170
+TC +10                         $                185
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +492.79
-P(finish down)  (end < B0)                   39.10%
-P(ruin)                                      20.85%
+E[profit]  = E[end − B0]       $          +7,796.42
+P(finish down)  (end < B0)                   10.35%
+P(ruin)                                       7.85%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,492.79
-Median ending bankroll         $           1,466.25
-95% range [p2.5 .. p97.5]      $-2,207.56  ..  $ 5,070.31
-P(lose > 25%)                                33.40%
-P(lose > 50%)                                28.20%
-P(double bankroll)                           38.50%
+E[ending bankroll]             $           8,796.42
+Median ending bankroll         $           8,627.50
+95% range [p2.5 .. p97.5]      $-3,463.88  ..  $21,072.50
+P(lose > 25%)                                 9.25%
+P(lose > 50%)                                 8.70%
+P(double bankroll)                           85.85%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             936.64
-Median max drawdown            $             880.00
-95th pct max drawdown          $           1,485.25
-99th pct max drawdown          $           1,922.50
+Mean max drawdown              $           1,343.19
+Median max drawdown            $           1,295.00
+95th pct max drawdown          $           1,790.50
+99th pct max drawdown          $           2,055.25
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.7827%
-Avg session wagered            $          62,956.20
+RTP                                       101.9594%
+Avg session wagered            $         397,893.30
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13750.9
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 5.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -2563,64 +2563,64 @@ Sizer                          Kelly k=5.000 | B0=$1,000 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
 Spread (max / min)                          100.00×
-Buckets at table min                             49
-Buckets at table max                              4
+Buckets at table min                             82
+Buckets at table max                             16
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                  5
-TC +2                          $                 25
-TC +3                          $                 50
-TC +4                          $                 70
-TC +5                          $                 95
-TC +6                          $                120
-TC +7                          $                150
-TC +8                          $                170
-TC +9                          $                200
-TC +10                         $                215
+TC +1                          $                 15
+TC +2                          $                 40
+TC +3                          $                 70
+TC +4                          $                 90
+TC +5                          $                115
+TC +6                          $                140
+TC +7                          $                160
+TC +8                          $                190
+TC +9                          $                210
+TC +10                         $                230
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +634.97
-P(finish down)  (end < B0)                   38.80%
-P(ruin)                                      23.55%
+E[profit]  = E[end − B0]       $          +9,993.87
+P(finish down)  (end < B0)                   11.10%
+P(ruin)                                       9.25%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,634.97
-Median ending bankroll         $           1,600.00
-95% range [p2.5 .. p97.5]      $-2,872.75  ..  $ 5,927.94
-P(lose > 25%)                                34.95%
-P(lose > 50%)                                30.90%
-P(double bankroll)                           43.90%
+E[ending bankroll]             $          10,993.87
+Median ending bankroll         $          11,357.50
+95% range [p2.5 .. p97.5]      $-4,705.56  ..  $26,400.00
+P(lose > 25%)                                10.35%
+P(lose > 50%)                                 9.90%
+P(double bankroll)                           86.90%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,153.18
-Median max drawdown            $           1,085.00
-95th pct max drawdown          $           1,825.37
-99th pct max drawdown          $           2,300.10
+Mean max drawdown              $           1,672.03
+Median max drawdown            $           1,630.00
+95th pct max drawdown          $           2,240.00
+99th pct max drawdown          $           2,540.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.8490%
-Avg session wagered            $          74,792.64
+RTP                                       102.0865%
+Avg session wagered            $         478,979.55
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 6.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -2628,64 +2628,64 @@ Sizer                          Kelly k=6.000 | B0=$1,000 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
 Spread (max / min)                          100.00×
-Buckets at table min                             49
-Buckets at table max                              7
+Buckets at table min                             82
+Buckets at table max                             24
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                  5
-TC +2                          $                 30
-TC +3                          $                 60
-TC +4                          $                 85
-TC +5                          $                115
-TC +6                          $                145
-TC +7                          $                180
-TC +8                          $                205
-TC +9                          $                240
-TC +10                         $                255
+TC +1                          $                 20
+TC +2                          $                 45
+TC +3                          $                 85
+TC +4                          $                110
+TC +5                          $                140
+TC +6                          $                165
+TC +7                          $                195
+TC +8                          $                225
+TC +9                          $                255
+TC +10                         $                275
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +807.49
-P(finish down)  (end < B0)                   39.15%
-P(ruin)                                      26.00%
+E[profit]  = E[end − B0]       $         +11,989.13
+P(finish down)  (end < B0)                   10.85%
+P(ruin)                                       9.00%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,807.49
-Median ending bankroll         $           1,853.75
-95% range [p2.5 .. p97.5]      $-3,588.44  ..  $ 7,197.62
-P(lose > 25%)                                35.70%
-P(lose > 50%)                                32.30%
-P(double bankroll)                           47.95%
+E[ending bankroll]             $          12,989.13
+Median ending bankroll         $          13,007.50
+95% range [p2.5 .. p97.5]      $-5,685.19  ..  $32,055.12
+P(lose > 25%)                                10.50%
+P(lose > 50%)                                 9.90%
+P(double bankroll)                           87.10%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,424.52
-Median max drawdown            $           1,338.75
-95th pct max drawdown          $           2,267.62
-99th pct max drawdown          $           2,895.05
+Mean max drawdown              $           2,027.52
+Median max drawdown            $           1,970.00
+95th pct max drawdown          $           2,720.00
+99th pct max drawdown          $           3,370.05
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.9443%
-Avg session wagered            $          85,512.84
+RTP                                       102.1255%
+Avg session wagered            $         564,066.28
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13750.8
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 7.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $5 / $500
 Ruin mode                                       end
@@ -2693,60 +2693,60 @@ Sizer                          Kelly k=7.000 | B0=$1,000 | min=$5 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $        5  /  $      500
 Median bucket bet              $                  5
 Spread (max / min)                          100.00×
-Buckets at table min                             49
-Buckets at table max                              9
+Buckets at table min                             82
+Buckets at table max                             33
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                  5
-TC +2                          $                 35
-TC +3                          $                 70
-TC +4                          $                100
-TC +5                          $                135
-TC +6                          $                170
-TC +7                          $                210
-TC +8                          $                240
-TC +9                          $                280
-TC +10                         $                300
+TC +1                          $                 20
+TC +2                          $                 55
+TC +3                          $                 95
+TC +4                          $                130
+TC +5                          $                165
+TC +6                          $                195
+TC +7                          $                225
+TC +8                          $                265
+TC +9                          $                295
+TC +10                         $                320
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,075.91
-P(finish down)  (end < B0)                   36.60%
-P(ruin)                                      24.90%
+E[profit]  = E[end − B0]       $         +13,560.86
+P(finish down)  (end < B0)                   10.70%
+P(ruin)                                       9.55%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           2,075.91
-Median ending bankroll         $           2,130.00
-95% range [p2.5 .. p97.5]      $-4,023.69  ..  $ 8,126.19
-P(lose > 25%)                                33.40%
-P(lose > 50%)                                30.25%
-P(double bankroll)                           52.10%
+E[ending bankroll]             $          14,560.86
+Median ending bankroll         $          14,702.50
+95% range [p2.5 .. p97.5]      $-7,531.19  ..  $35,356.56
+P(lose > 25%)                                10.40%
+P(lose > 50%)                                10.05%
+P(double bankroll)                           87.60%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,643.02
-Median max drawdown            $           1,535.00
-95th pct max drawdown          $           2,605.37
-99th pct max drawdown          $           3,287.67
+Mean max drawdown              $           2,320.63
+Median max drawdown            $           2,267.50
+95th pct max drawdown          $           3,060.00
+99th pct max drawdown          $           3,545.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       101.1042%
-Avg session wagered            $          97,437.52
+RTP                                       102.0996%
+Avg session wagered            $         645,881.64
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13750.8
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min5_max500_br1000_replays2000_shoes100.png
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min5_max500_br1000_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$10 / max$1000  |  B0=$500
@@ -2756,7 +2756,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min5_max500_br1000_re
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -2764,11 +2764,11 @@ Sizer                          Kelly k=0.250 | B0=$500 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $       40
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $      500
 Median bucket bet              $                 10
-Spread (max / min)                            4.00×
-Buckets at table min                             86
+Spread (max / min)                           50.00×
+Buckets at table min                            138
 Buckets at table max                              0
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
@@ -2786,42 +2786,42 @@ TC +10                         $                 10
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -246.92
-P(finish down)  (end < B0)                   62.15%
-P(ruin)                                      37.75%
+E[profit]  = E[end − B0]       $            -501.89
+P(finish down)  (end < B0)                   63.95%
+P(ruin)                                      50.10%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             253.08
-Median ending bankroll         $             252.50
-95% range [p2.5 .. p97.5]      $-1,235.12  ..  $ 1,740.12
-P(lose > 25%)                                55.65%
-P(lose > 50%)                                49.90%
-P(double bankroll)                           16.70%
+E[ending bankroll]             $              -1.89
+Median ending bankroll         $               5.00
+95% range [p2.5 .. p97.5]      $-2,580.12  ..  $ 2,665.87
+P(lose > 25%)                                60.35%
+P(lose > 50%)                                56.75%
+P(double bankroll)                           23.65%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             213.85
-Median max drawdown            $             210.00
-95th pct max drawdown          $             265.00
-99th pct max drawdown          $             285.05
+Mean max drawdown              $             137.26
+Median max drawdown            $             140.00
+95th pct max drawdown          $             160.00
+99th pct max drawdown          $             170.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4982%
-Avg session wagered            $          49,210.18
+RTP                                        99.6811%
+Avg session wagered            $         157,388.21
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -2829,12 +2829,12 @@ Sizer                          Kelly k=0.500 | B0=$500 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $       80
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                            8.00×
-Buckets at table min                             78
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                            107
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -2851,42 +2851,42 @@ TC +10                         $                 10
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -253.22
-P(finish down)  (end < B0)                   62.90%
-P(ruin)                                      37.80%
+E[profit]  = E[end − B0]       $            -431.62
+P(finish down)  (end < B0)                   61.65%
+P(ruin)                                      48.80%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             246.78
-Median ending bankroll         $             245.00
-95% range [p2.5 .. p97.5]      $-1,250.00  ..  $ 1,720.25
-P(lose > 25%)                                56.95%
-P(lose > 50%)                                50.20%
-P(double bankroll)                           16.50%
+E[ending bankroll]             $              68.38
+Median ending bankroll         $              50.00
+95% range [p2.5 .. p97.5]      $-2,545.12  ..  $ 2,890.37
+P(lose > 25%)                                58.15%
+P(lose > 50%)                                54.35%
+P(double bankroll)                           26.00%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             213.84
-Median max drawdown            $             210.00
-95th pct max drawdown          $             260.00
-99th pct max drawdown          $             285.00
+Mean max drawdown              $             138.76
+Median max drawdown            $             140.00
+95th pct max drawdown          $             160.00
+99th pct max drawdown          $             175.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4853%
-Avg session wagered            $          49,199.61
+RTP                                        99.7265%
+Avg session wagered            $         157,799.76
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.0
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -2894,12 +2894,12 @@ Sizer                          Kelly k=0.750 | B0=$500 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      120
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           12.00×
-Buckets at table min                             69
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             98
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -2911,47 +2911,47 @@ TC +5                          $                 10
 TC +6                          $                 10
 TC +7                          $                 10
 TC +8                          $                 10
-TC +9                          $                 10
+TC +9                          $                 20
 TC +10                         $                 20
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -250.67
-P(finish down)  (end < B0)                   63.00%
-P(ruin)                                      38.90%
+E[profit]  = E[end − B0]       $            -346.40
+P(finish down)  (end < B0)                   57.90%
+P(ruin)                                      45.35%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             249.33
-Median ending bankroll         $             245.00
-95% range [p2.5 .. p97.5]      $-1,250.12  ..  $ 1,735.00
-P(lose > 25%)                                57.35%
-P(lose > 50%)                                50.10%
-P(double bankroll)                           17.15%
+E[ending bankroll]             $             153.60
+Median ending bankroll         $             195.00
+95% range [p2.5 .. p97.5]      $-2,640.62  ..  $ 2,890.25
+P(lose > 25%)                                54.60%
+P(lose > 50%)                                51.25%
+P(double bankroll)                           28.20%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             215.28
-Median max drawdown            $             210.00
-95th pct max drawdown          $             265.25
-99th pct max drawdown          $             295.00
+Mean max drawdown              $             154.10
+Median max drawdown            $             150.00
+95th pct max drawdown          $             195.00
+99th pct max drawdown          $             220.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4911%
-Avg session wagered            $          49,254.71
+RTP                                        99.7839%
+Avg session wagered            $         160,327.51
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -2959,12 +2959,12 @@ Sizer                          Kelly k=1.000 | B0=$500 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      160
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           16.00×
-Buckets at table min                             62
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             93
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -2981,42 +2981,42 @@ TC +10                         $                 20
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -218.52
-P(finish down)  (end < B0)                   61.20%
-P(ruin)                                      35.70%
+E[profit]  = E[end − B0]       $             -89.39
+P(finish down)  (end < B0)                   52.15%
+P(ruin)                                      39.25%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             281.48
-Median ending bankroll         $             275.00
-95% range [p2.5 .. p97.5]      $-1,155.25  ..  $ 1,835.00
-P(lose > 25%)                                54.75%
-P(lose > 50%)                                48.30%
-P(double bankroll)                           17.85%
+E[ending bankroll]             $             410.62
+Median ending bankroll         $             422.50
+95% range [p2.5 .. p97.5]      $-2,420.38  ..  $ 3,285.12
+P(lose > 25%)                                48.45%
+P(lose > 50%)                                45.20%
+P(double bankroll)                           34.75%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             219.15
-Median max drawdown            $             215.00
-95th pct max drawdown          $             270.00
-99th pct max drawdown          $             300.00
+Mean max drawdown              $             189.13
+Median max drawdown            $             180.00
+95th pct max drawdown          $             245.25
+99th pct max drawdown          $             285.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5598%
-Avg session wagered            $          49,644.45
+RTP                                        99.9462%
+Avg session wagered            $         166,254.60
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -3024,12 +3024,12 @@ Sizer                          Kelly k=1.250 | B0=$500 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      200
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           20.00×
-Buckets at table min                             60
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             91
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -3041,47 +3041,47 @@ TC +5                          $                 10
 TC +6                          $                 20
 TC +7                          $                 20
 TC +8                          $                 20
-TC +9                          $                 20
+TC +9                          $                 30
 TC +10                         $                 30
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -218.43
-P(finish down)  (end < B0)                   61.05%
-P(ruin)                                      36.85%
+E[profit]  = E[end − B0]       $             +43.09
+P(finish down)  (end < B0)                   48.45%
+P(ruin)                                      36.15%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             281.57
-Median ending bankroll         $             275.00
-95% range [p2.5 .. p97.5]      $-1,250.00  ..  $ 1,915.12
-P(lose > 25%)                                54.90%
-P(lose > 50%)                                48.20%
-P(double bankroll)                           17.95%
+E[ending bankroll]             $             543.09
+Median ending bankroll         $             565.00
+95% range [p2.5 .. p97.5]      $-2,590.00  ..  $ 3,560.25
+P(lose > 25%)                                45.30%
+P(lose > 50%)                                42.35%
+P(double bankroll)                           38.85%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             225.60
+Mean max drawdown              $             223.24
 Median max drawdown            $             220.00
-95th pct max drawdown          $             285.00
-99th pct max drawdown          $             325.05
+95th pct max drawdown          $             290.00
+99th pct max drawdown          $             340.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5635%
-Avg session wagered            $          50,043.16
+RTP                                       100.0251%
+Avg session wagered            $         171,794.75
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13750.9
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -3089,77 +3089,12 @@ Sizer                          Kelly k=1.500 | B0=$500 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      240
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           24.00×
-Buckets at table min                             58
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 10
-TC +2                          $                 10
-TC +3                          $                 10
-TC +4                          $                 10
-TC +5                          $                 10
-TC +6                          $                 20
-TC +7                          $                 20
-TC +8                          $                 30
-TC +9                          $                 30
-TC +10                         $                 30
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -178.37
-P(finish down)  (end < B0)                   59.25%
-P(ruin)                                      34.75%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $             321.63
-Median ending bankroll         $             315.00
-95% range [p2.5 .. p97.5]      $-1,195.00  ..  $ 1,830.37
-P(lose > 25%)                                53.65%
-P(lose > 50%)                                45.95%
-P(double bankroll)                           19.70%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $             238.24
-Median max drawdown            $             230.00
-95th pct max drawdown          $             325.00
-99th pct max drawdown          $             385.00
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                        99.6472%
-Avg session wagered            $          50,554.22
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $             500.00
-Table min / max                 $10 / $1000
-Ruin mode                                       end
-Sizer                          Kelly k=2.000 | B0=$500 | min=$10 / max=$1000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      320
-Median bucket bet              $                 10
-Spread (max / min)                           32.00×
-Buckets at table min                             56
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             89
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -3169,62 +3104,62 @@ TC +3                          $                 10
 TC +4                          $                 10
 TC +5                          $                 20
 TC +6                          $                 20
-TC +7                          $                 30
+TC +7                          $                 20
 TC +8                          $                 30
-TC +9                          $                 40
-TC +10                         $                 40
+TC +9                          $                 30
+TC +10                         $                 30
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -185.92
-P(finish down)  (end < B0)                   58.70%
-P(ruin)                                      36.25%
+E[profit]  = E[end − B0]       $            +380.56
+P(finish down)  (end < B0)                   40.60%
+P(ruin)                                      29.75%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             314.08
-Median ending bankroll         $             325.00
-95% range [p2.5 .. p97.5]      $-1,360.25  ..  $ 2,005.25
-P(lose > 25%)                                52.75%
-P(lose > 50%)                                46.80%
-P(double bankroll)                           21.75%
+E[ending bankroll]             $             880.56
+Median ending bankroll         $             932.50
+95% range [p2.5 .. p97.5]      $-2,340.00  ..  $ 4,010.00
+P(lose > 25%)                                37.90%
+P(lose > 50%)                                34.75%
+P(double bankroll)                           48.25%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             269.19
-Median max drawdown            $             255.00
-95th pct max drawdown          $             395.00
-99th pct max drawdown          $             480.00
+Mean max drawdown              $             261.64
+Median max drawdown            $             250.00
+95th pct max drawdown          $             350.00
+99th pct max drawdown          $             395.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6424%
-Avg session wagered            $          51,984.30
+RTP                                       100.2111%
+Avg session wagered            $         180,266.50
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13750.3
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.500
+KELLY BANKROLL REPLAY  —  k = 2.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
-Sizer                          Kelly k=2.500 | B0=$500 | min=$10 / max=$1000
+Sizer                          Kelly k=2.000 | B0=$500 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      410
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           41.00×
-Buckets at table min                             54
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             87
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -3234,62 +3169,62 @@ TC +3                          $                 10
 TC +4                          $                 20
 TC +5                          $                 20
 TC +6                          $                 30
-TC +7                          $                 40
+TC +7                          $                 30
 TC +8                          $                 40
-TC +9                          $                 50
+TC +9                          $                 40
 TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -117.83
-P(finish down)  (end < B0)                   55.25%
-P(ruin)                                      33.50%
+E[profit]  = E[end − B0]       $            +941.17
+P(finish down)  (end < B0)                   31.70%
+P(ruin)                                      23.30%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             382.17
-Median ending bankroll         $             375.00
-95% range [p2.5 .. p97.5]      $-1,345.25  ..  $ 2,120.00
-P(lose > 25%)                                49.70%
-P(lose > 50%)                                43.90%
-P(double bankroll)                           25.55%
+E[ending bankroll]             $           1,441.17
+Median ending bankroll         $           1,400.00
+95% range [p2.5 .. p97.5]      $-2,320.50  ..  $ 5,325.12
+P(lose > 25%)                                29.50%
+P(lose > 50%)                                26.95%
+P(double bankroll)                           58.20%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             320.44
-Median max drawdown            $             305.00
-95th pct max drawdown          $             475.00
-99th pct max drawdown          $             595.00
+Mean max drawdown              $             349.33
+Median max drawdown            $             340.00
+95th pct max drawdown          $             460.00
+99th pct max drawdown          $             530.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.7841%
-Avg session wagered            $          54,573.82
+RTP                                       100.4737%
+Avg session wagered            $         198,702.27
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.2
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 3.000
+KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
-Sizer                          Kelly k=3.000 | B0=$500 | min=$10 / max=$1000
+Sizer                          Kelly k=2.500 | B0=$500 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      490
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           49.00×
-Buckets at table min                             53
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             86
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -3298,63 +3233,63 @@ TC +2                          $                 10
 TC +3                          $                 20
 TC +4                          $                 20
 TC +5                          $                 30
-TC +6                          $                 40
-TC +7                          $                 50
+TC +6                          $                 30
+TC +7                          $                 40
 TC +8                          $                 50
-TC +9                          $                 60
+TC +9                          $                 50
 TC +10                         $                 60
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -27.40
-P(finish down)  (end < B0)                   51.65%
-P(ruin)                                      32.85%
+E[profit]  = E[end − B0]       $          +1,305.28
+P(finish down)  (end < B0)                   28.30%
+P(ruin)                                      22.10%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             472.60
-Median ending bankroll         $             447.50
-95% range [p2.5 .. p97.5]      $-1,480.00  ..  $ 2,440.00
-P(lose > 25%)                                47.15%
-P(lose > 50%)                                41.85%
-P(double bankroll)                           30.35%
+E[ending bankroll]             $           1,805.28
+Median ending bankroll         $           1,830.00
+95% range [p2.5 .. p97.5]      $-2,695.50  ..  $ 6,320.00
+P(lose > 25%)                                26.60%
+P(lose > 50%)                                25.00%
+P(double bankroll)                           64.40%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             385.67
-Median max drawdown            $             365.00
-95th pct max drawdown          $             595.00
-99th pct max drawdown          $             710.05
+Mean max drawdown              $             424.39
+Median max drawdown            $             410.00
+95th pct max drawdown          $             560.00
+99th pct max drawdown          $             650.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.9524%
-Avg session wagered            $          57,537.51
+RTP                                       100.6059%
+Avg session wagered            $         215,428.98
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13750.9
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 4.000
+KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
-Sizer                          Kelly k=4.000 | B0=$500 | min=$10 / max=$1000
+Sizer                          Kelly k=3.000 | B0=$500 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      650
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           65.00×
-Buckets at table min                             52
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             85
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -3362,51 +3297,116 @@ TC +1                          $                 10
 TC +2                          $                 10
 TC +3                          $                 20
 TC +4                          $                 30
-TC +5                          $                 40
-TC +6                          $                 50
+TC +5                          $                 30
+TC +6                          $                 40
+TC +7                          $                 50
+TC +8                          $                 60
+TC +9                          $                 60
+TC +10                         $                 70
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +1,859.81
+P(finish down)  (end < B0)                   24.45%
+P(ruin)                                      18.75%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $           2,359.81
+Median ending bankroll         $           2,387.50
+95% range [p2.5 .. p97.5]      $-2,641.50  ..  $ 7,675.50
+P(lose > 25%)                                23.20%
+P(lose > 50%)                                21.40%
+P(double bankroll)                           70.10%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $             509.67
+Median max drawdown            $             490.00
+95th pct max drawdown          $             680.00
+99th pct max drawdown          $             770.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       100.7882%
+Avg session wagered            $         235,944.60
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13750.3
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 4.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $             500.00
+Table min / max                 $10 / $1000
+Ruin mode                                       end
+Sizer                          Kelly k=4.000 | B0=$500 | min=$10 / max=$1000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
+Median bucket bet              $                 10
+Spread (max / min)                          100.00×
+Buckets at table min                             84
+Buckets at table max                              1
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 10
+TC +2                          $                 20
+TC +3                          $                 30
+TC +4                          $                 40
+TC +5                          $                 50
+TC +6                          $                 60
 TC +7                          $                 60
-TC +8                          $                 70
+TC +8                          $                 80
 TC +9                          $                 80
 TC +10                         $                 90
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             +24.48
-P(finish down)  (end < B0)                   48.80%
-P(ruin)                                      32.15%
+E[profit]  = E[end − B0]       $          +2,903.46
+P(finish down)  (end < B0)                   18.45%
+P(ruin)                                      14.55%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             524.48
-Median ending bankroll         $             530.00
-95% range [p2.5 .. p97.5]      $-1,675.25  ..  $ 2,695.37
-P(lose > 25%)                                44.55%
-P(lose > 50%)                                40.25%
-P(double bankroll)                           32.60%
+E[ending bankroll]             $           3,403.46
+Median ending bankroll         $           3,337.50
+95% range [p2.5 .. p97.5]      $-2,961.50  ..  $ 9,910.25
+P(lose > 25%)                                17.80%
+P(lose > 50%)                                16.80%
+P(double bankroll)                           76.25%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             475.87
-Median max drawdown            $             450.00
-95th pct max drawdown          $             750.25
-99th pct max drawdown          $             935.15
+Mean max drawdown              $             677.13
+Median max drawdown            $             655.00
+95th pct max drawdown          $             905.25
+99th pct max drawdown          $           1,075.55
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.0398%
-Avg session wagered            $          61,471.86
+RTP                                       101.0408%
+Avg session wagered            $         278,950.91
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.7
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 5.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -3414,64 +3414,64 @@ Sizer                          Kelly k=5.000 | B0=$500 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      810
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           81.00×
-Buckets at table min                             51
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             83
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                 10
-TC +2                          $                 10
+TC +2                          $                 20
 TC +3                          $                 30
-TC +4                          $                 40
-TC +5                          $                 50
-TC +6                          $                 60
+TC +4                          $                 50
+TC +5                          $                 60
+TC +6                          $                 70
 TC +7                          $                 80
 TC +8                          $                 90
-TC +9                          $                100
-TC +10                         $                110
+TC +9                          $                110
+TC +10                         $                120
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             +76.31
-P(finish down)  (end < B0)                   48.20%
-P(ruin)                                      33.10%
+E[profit]  = E[end − B0]       $          +4,083.77
+P(finish down)  (end < B0)                   16.15%
+P(ruin)                                      13.40%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             576.31
-Median ending bankroll         $             567.50
-95% range [p2.5 .. p97.5]      $-2,005.75  ..  $ 3,200.12
-P(lose > 25%)                                44.20%
-P(lose > 50%)                                40.45%
-P(double bankroll)                           36.85%
+E[ending bankroll]             $           4,583.77
+Median ending bankroll         $           4,552.50
+95% range [p2.5 .. p97.5]      $-3,447.12  ..  $12,975.25
+P(lose > 25%)                                15.50%
+P(lose > 50%)                                15.00%
+P(double bankroll)                           80.80%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             621.83
-Median max drawdown            $             585.00
-95th pct max drawdown          $             975.00
-99th pct max drawdown          $           1,230.00
+Mean max drawdown              $             846.82
+Median max drawdown            $             820.00
+95th pct max drawdown          $           1,110.00
+99th pct max drawdown          $           1,290.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.1135%
-Avg session wagered            $          67,211.84
+RTP                                       101.2629%
+Avg session wagered            $         323,376.16
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
+Avg shoes played                             1000.0
+Avg hands played                            13750.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 6.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -3479,64 +3479,64 @@ Sizer                          Kelly k=6.000 | B0=$500 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      970
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           97.00×
-Buckets at table min                             50
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             83
+Buckets at table max                              2
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                 10
 TC +2                          $                 20
-TC +3                          $                 30
-TC +4                          $                 40
-TC +5                          $                 60
-TC +6                          $                 70
-TC +7                          $                 90
-TC +8                          $                100
-TC +9                          $                120
-TC +10                         $                130
+TC +3                          $                 40
+TC +4                          $                 60
+TC +5                          $                 70
+TC +6                          $                 80
+TC +7                          $                100
+TC +8                          $                110
+TC +9                          $                130
+TC +10                         $                140
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +147.91
-P(finish down)  (end < B0)                   46.55%
-P(ruin)                                      34.35%
+E[profit]  = E[end − B0]       $          +5,119.01
+P(finish down)  (end < B0)                   15.30%
+P(ruin)                                      12.55%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             647.91
-Median ending bankroll         $             640.00
-95% range [p2.5 .. p97.5]      $-2,215.50  ..  $ 3,560.75
-P(lose > 25%)                                43.35%
-P(lose > 50%)                                40.35%
-P(double bankroll)                           40.50%
+E[ending bankroll]             $           5,619.01
+Median ending bankroll         $           5,567.50
+95% range [p2.5 .. p97.5]      $-3,921.00  ..  $15,436.75
+P(lose > 25%)                                14.70%
+P(lose > 50%)                                13.65%
+P(double bankroll)                           82.90%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             708.96
-Median max drawdown            $             660.00
-95th pct max drawdown          $           1,130.00
-99th pct max drawdown          $           1,365.35
+Mean max drawdown              $           1,003.51
+Median max drawdown            $             960.00
+95th pct max drawdown          $           1,350.00
+99th pct max drawdown          $           1,725.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.2052%
-Avg session wagered            $          72,081.57
+RTP                                       101.4257%
+Avg session wagered            $         359,064.35
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13751.6
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 7.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $             500.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -3544,60 +3544,60 @@ Sizer                          Kelly k=7.000 | B0=$500 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
 Spread (max / min)                          100.00×
-Buckets at table min                             50
-Buckets at table max                              1
+Buckets at table min                             83
+Buckets at table max                              2
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                 10
-TC +2                          $                 20
-TC +3                          $                 40
-TC +4                          $                 50
-TC +5                          $                 70
-TC +6                          $                 80
+TC +2                          $                 30
+TC +3                          $                 50
+TC +4                          $                 60
+TC +5                          $                 80
+TC +6                          $                100
 TC +7                          $                110
-TC +8                          $                120
-TC +9                          $                140
-TC +10                         $                150
+TC +8                          $                130
+TC +9                          $                150
+TC +10                         $                160
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +341.51
-P(finish down)  (end < B0)                   42.20%
-P(ruin)                                      31.25%
+E[profit]  = E[end − B0]       $          +6,191.93
+P(finish down)  (end < B0)                   14.00%
+P(ruin)                                      12.35%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             841.51
-Median ending bankroll         $             867.50
-95% range [p2.5 .. p97.5]      $-2,550.00  ..  $ 4,325.00
-P(lose > 25%)                                39.05%
-P(lose > 50%)                                35.85%
-P(double bankroll)                           47.15%
+E[ending bankroll]             $           6,691.93
+Median ending bankroll         $           6,690.00
+95% range [p2.5 .. p97.5]      $-4,055.62  ..  $17,225.50
+P(lose > 25%)                                13.50%
+P(lose > 50%)                                13.05%
+P(double bankroll)                           84.60%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             826.28
-Median max drawdown            $             787.50
-95th pct max drawdown          $           1,290.00
-99th pct max drawdown          $           1,550.00
+Mean max drawdown              $           1,160.51
+Median max drawdown            $           1,120.00
+95th pct max drawdown          $           1,560.25
+99th pct max drawdown          $           1,805.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.4342%
-Avg session wagered            $          78,651.84
+RTP                                       101.5496%
+Avg session wagered            $         399,574.72
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13750.9
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min10_max1000_br500_replays2000_shoes100.png
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min10_max1000_br500_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$10 / max$1000  |  B0=$1,000
@@ -3607,7 +3607,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min10_max1000_br500_r
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -3615,12 +3615,12 @@ Sizer                          Kelly k=0.250 | B0=$1,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $       80
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                            8.00×
-Buckets at table min                             78
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                            107
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -3637,42 +3637,42 @@ TC +10                         $                 10
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -250.38
-P(finish down)  (end < B0)                   61.75%
-P(ruin)                                      16.85%
+E[profit]  = E[end − B0]       $            -424.73
+P(finish down)  (end < B0)                   62.00%
+P(ruin)                                      32.45%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             749.62
-Median ending bankroll         $             765.00
-95% range [p2.5 .. p97.5]      $  -770.25  ..  $ 2,195.12
-P(lose > 25%)                                48.50%
-P(lose > 50%)                                36.10%
-P(double bankroll)                            4.15%
+E[ending bankroll]             $             575.27
+Median ending bankroll         $             580.00
+95% range [p2.5 .. p97.5]      $-2,060.12  ..  $ 3,165.12
+P(lose > 25%)                                55.35%
+P(lose > 50%)                                47.30%
+P(double bankroll)                           13.45%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             214.01
-Median max drawdown            $             210.00
-95th pct max drawdown          $             265.00
-99th pct max drawdown          $             285.05
+Mean max drawdown              $             138.76
+Median max drawdown            $             140.00
+95th pct max drawdown          $             160.00
+99th pct max drawdown          $             180.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4910%
-Avg session wagered            $          49,195.81
+RTP                                        99.7308%
+Avg session wagered            $         157,784.99
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.2
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -3680,12 +3680,12 @@ Sizer                          Kelly k=0.500 | B0=$1,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      160
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           16.00×
-Buckets at table min                             62
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             93
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -3702,42 +3702,42 @@ TC +10                         $                 20
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -262.86
-P(finish down)  (end < B0)                   64.05%
-P(ruin)                                      17.10%
+E[profit]  = E[end − B0]       $            -118.99
+P(finish down)  (end < B0)                   52.65%
+P(ruin)                                      27.75%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             737.14
-Median ending bankroll         $             722.50
-95% range [p2.5 .. p97.5]      $  -735.25  ..  $ 2,225.12
-P(lose > 25%)                                51.35%
-P(lose > 50%)                                38.35%
-P(double bankroll)                            4.85%
+E[ending bankroll]             $             881.01
+Median ending bankroll         $             877.50
+95% range [p2.5 .. p97.5]      $-1,980.12  ..  $ 3,730.25
+P(lose > 25%)                                46.15%
+P(lose > 50%)                                39.50%
+P(double bankroll)                           22.05%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             221.03
-Median max drawdown            $             215.00
-95th pct max drawdown          $             275.00
-99th pct max drawdown          $             310.05
+Mean max drawdown              $             188.49
+Median max drawdown            $             180.00
+95th pct max drawdown          $             240.00
+99th pct max drawdown          $             280.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4705%
-Avg session wagered            $          49,643.88
+RTP                                        99.9284%
+Avg session wagered            $         166,225.40
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13750.9
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -3745,77 +3745,12 @@ Sizer                          Kelly k=0.750 | B0=$1,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      240
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           24.00×
-Buckets at table min                             58
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 10
-TC +2                          $                 10
-TC +3                          $                 10
-TC +4                          $                 10
-TC +5                          $                 10
-TC +6                          $                 20
-TC +7                          $                 20
-TC +8                          $                 30
-TC +9                          $                 30
-TC +10                         $                 30
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -180.13
-P(finish down)  (end < B0)                   58.00%
-P(ruin)                                      15.85%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $             819.87
-Median ending bankroll         $             835.00
-95% range [p2.5 .. p97.5]      $  -790.75  ..  $ 2,365.00
-P(lose > 25%)                                45.40%
-P(lose > 50%)                                33.95%
-P(double bankroll)                            7.20%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $             237.33
-Median max drawdown            $             230.00
-95th pct max drawdown          $             315.00
-99th pct max drawdown          $             380.05
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                        99.6437%
-Avg session wagered            $          50,555.94
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.6
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $           1,000.00
-Table min / max                 $10 / $1000
-Ruin mode                                       end
-Sizer                          Kelly k=1.000 | B0=$1,000 | min=$10 / max=$1000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      320
-Median bucket bet              $                 10
-Spread (max / min)                           32.00×
-Buckets at table min                             56
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             89
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -3825,62 +3760,62 @@ TC +3                          $                 10
 TC +4                          $                 10
 TC +5                          $                 20
 TC +6                          $                 20
-TC +7                          $                 30
+TC +7                          $                 20
 TC +8                          $                 30
-TC +9                          $                 40
-TC +10                         $                 40
+TC +9                          $                 30
+TC +10                         $                 30
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -200.38
-P(finish down)  (end < B0)                   58.70%
-P(ruin)                                      17.00%
+E[profit]  = E[end − B0]       $            +359.40
+P(finish down)  (end < B0)                   41.75%
+P(ruin)                                      21.20%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             799.62
-Median ending bankroll         $             815.00
-95% range [p2.5 .. p97.5]      $  -840.00  ..  $ 2,425.00
-P(lose > 25%)                                47.35%
-P(lose > 50%)                                34.50%
-P(double bankroll)                            7.10%
+E[ending bankroll]             $           1,359.40
+Median ending bankroll         $           1,355.00
+95% range [p2.5 .. p97.5]      $-1,846.25  ..  $ 4,670.37
+P(lose > 25%)                                35.70%
+P(lose > 50%)                                30.95%
+P(double bankroll)                           35.00%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             269.78
+Mean max drawdown              $             262.44
 Median max drawdown            $             255.00
-95th pct max drawdown          $             390.00
-99th pct max drawdown          $             490.00
+95th pct max drawdown          $             350.00
+99th pct max drawdown          $             390.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6147%
-Avg session wagered            $          52,011.19
+RTP                                       100.1993%
+Avg session wagered            $         180,316.64
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.250
+KELLY BANKROLL REPLAY  —  k = 1.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
-Sizer                          Kelly k=1.250 | B0=$1,000 | min=$10 / max=$1000
+Sizer                          Kelly k=1.000 | B0=$1,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      410
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           41.00×
-Buckets at table min                             54
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             87
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -3890,62 +3825,62 @@ TC +3                          $                 10
 TC +4                          $                 20
 TC +5                          $                 20
 TC +6                          $                 30
-TC +7                          $                 40
+TC +7                          $                 30
 TC +8                          $                 40
-TC +9                          $                 50
+TC +9                          $                 40
 TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -168.49
-P(finish down)  (end < B0)                   56.90%
-P(ruin)                                      17.95%
+E[profit]  = E[end − B0]       $            +881.77
+P(finish down)  (end < B0)                   32.90%
+P(ruin)                                      17.20%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             831.51
-Median ending bankroll         $             830.00
-95% range [p2.5 .. p97.5]      $  -975.12  ..  $ 2,630.12
-P(lose > 25%)                                46.40%
-P(lose > 50%)                                35.30%
-P(double bankroll)                            9.90%
+E[ending bankroll]             $           1,881.78
+Median ending bankroll         $           1,860.00
+95% range [p2.5 .. p97.5]      $-1,940.62  ..  $ 5,815.12
+P(lose > 25%)                                28.50%
+P(lose > 50%)                                24.50%
+P(double bankroll)                           47.05%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             323.61
-Median max drawdown            $             305.00
-95th pct max drawdown          $             490.00
-99th pct max drawdown          $             610.05
+Mean max drawdown              $             347.85
+Median max drawdown            $             340.00
+95th pct max drawdown          $             470.00
+99th pct max drawdown          $             530.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6914%
-Avg session wagered            $          54,588.56
+RTP                                       100.4440%
+Avg session wagered            $         198,616.13
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.6
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.500
+KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
-Sizer                          Kelly k=1.500 | B0=$1,000 | min=$10 / max=$1000
+Sizer                          Kelly k=1.250 | B0=$1,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      490
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           49.00×
-Buckets at table min                             53
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             86
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -3954,63 +3889,63 @@ TC +2                          $                 10
 TC +3                          $                 20
 TC +4                          $                 20
 TC +5                          $                 30
-TC +6                          $                 40
-TC +7                          $                 50
+TC +6                          $                 30
+TC +7                          $                 40
 TC +8                          $                 50
-TC +9                          $                 60
+TC +9                          $                 50
 TC +10                         $                 60
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -93.80
-P(finish down)  (end < B0)                   54.25%
-P(ruin)                                      18.80%
+E[profit]  = E[end − B0]       $          +1,443.46
+P(finish down)  (end < B0)                   26.35%
+P(ruin)                                      14.80%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             906.20
-Median ending bankroll         $             900.00
-95% range [p2.5 .. p97.5]      $-1,045.12  ..  $ 2,905.25
-P(lose > 25%)                                43.60%
-P(lose > 50%)                                33.90%
-P(double bankroll)                           13.35%
+E[ending bankroll]             $           2,443.46
+Median ending bankroll         $           2,455.00
+95% range [p2.5 .. p97.5]      $-1,935.25  ..  $ 6,785.12
+P(lose > 25%)                                22.85%
+P(lose > 50%)                                19.90%
+P(double bankroll)                           57.80%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             387.59
-Median max drawdown            $             370.00
-95th pct max drawdown          $             590.00
-99th pct max drawdown          $             715.05
+Mean max drawdown              $             423.60
+Median max drawdown            $             410.00
+95th pct max drawdown          $             560.00
+99th pct max drawdown          $             665.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.8369%
-Avg session wagered            $          57,518.10
+RTP                                       100.6697%
+Avg session wagered            $         215,540.49
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.6
+Avg shoes played                             1000.0
+Avg hands played                            13750.7
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.000
+KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
-Sizer                          Kelly k=2.000 | B0=$1,000 | min=$10 / max=$1000
+Sizer                          Kelly k=1.500 | B0=$1,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      650
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           65.00×
-Buckets at table min                             52
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             85
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -4018,129 +3953,64 @@ TC +1                          $                 10
 TC +2                          $                 10
 TC +3                          $                 20
 TC +4                          $                 30
-TC +5                          $                 40
-TC +6                          $                 50
-TC +7                          $                 60
-TC +8                          $                 70
-TC +9                          $                 80
-TC +10                         $                 90
+TC +5                          $                 30
+TC +6                          $                 40
+TC +7                          $                 50
+TC +8                          $                 60
+TC +9                          $                 60
+TC +10                         $                 70
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -11.61
-P(finish down)  (end < B0)                   50.35%
-P(ruin)                                      19.85%
+E[profit]  = E[end − B0]       $          +1,894.78
+P(finish down)  (end < B0)                   23.40%
+P(ruin)                                      12.60%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             988.39
-Median ending bankroll         $             980.00
-95% range [p2.5 .. p97.5]      $-1,275.25  ..  $ 3,260.12
-P(lose > 25%)                                42.20%
-P(lose > 50%)                                33.90%
-P(double bankroll)                           19.85%
+E[ending bankroll]             $           2,894.78
+Median ending bankroll         $           2,895.00
+95% range [p2.5 .. p97.5]      $-1,905.12  ..  $ 8,005.62
+P(lose > 25%)                                20.65%
+P(lose > 50%)                                18.50%
+P(double bankroll)                           63.20%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             483.87
-Median max drawdown            $             455.00
-95th pct max drawdown          $             770.00
-99th pct max drawdown          $             970.20
+Mean max drawdown              $             504.80
+Median max drawdown            $             490.00
+95th pct max drawdown          $             680.00
+99th pct max drawdown          $             770.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.9812%
-Avg session wagered            $          61,611.58
+RTP                                       100.8029%
+Avg session wagered            $         235,982.02
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13752.3
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.500
+KELLY BANKROLL REPLAY  —  k = 2.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
-Sizer                          Kelly k=2.500 | B0=$1,000 | min=$10 / max=$1000
+Sizer                          Kelly k=2.000 | B0=$1,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      810
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           81.00×
-Buckets at table min                             51
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 10
-TC +2                          $                 10
-TC +3                          $                 30
-TC +4                          $                 40
-TC +5                          $                 50
-TC +6                          $                 60
-TC +7                          $                 80
-TC +8                          $                 90
-TC +9                          $                100
-TC +10                         $                110
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +118.36
-P(finish down)  (end < B0)                   44.75%
-P(ruin)                                      20.60%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $           1,118.36
-Median ending bankroll         $           1,200.00
-95% range [p2.5 .. p97.5]      $-1,660.12  ..  $ 3,665.12
-P(lose > 25%)                                38.00%
-P(lose > 50%)                                31.80%
-P(double bankroll)                           25.60%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $             613.47
-Median max drawdown            $             580.00
-95th pct max drawdown          $             940.00
-99th pct max drawdown          $           1,230.00
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                       100.1760%
-Avg session wagered            $          67,249.50
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 3.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $           1,000.00
-Table min / max                 $10 / $1000
-Ruin mode                                       end
-Sizer                          Kelly k=3.000 | B0=$1,000 | min=$10 / max=$1000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      970
-Median bucket bet              $                 10
-Spread (max / min)                           97.00×
-Buckets at table min                             50
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             84
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -4148,63 +4018,128 @@ TC +1                          $                 10
 TC +2                          $                 20
 TC +3                          $                 30
 TC +4                          $                 40
-TC +5                          $                 60
-TC +6                          $                 70
-TC +7                          $                 90
-TC +8                          $                100
-TC +9                          $                120
-TC +10                         $                130
+TC +5                          $                 50
+TC +6                          $                 60
+TC +7                          $                 60
+TC +8                          $                 80
+TC +9                          $                 80
+TC +10                         $                 90
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +173.16
-P(finish down)  (end < B0)                   45.25%
-P(ruin)                                      20.40%
+E[profit]  = E[end − B0]       $          +2,925.61
+P(finish down)  (end < B0)                   19.15%
+P(ruin)                                      12.85%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,173.15
-Median ending bankroll         $           1,160.00
-95% range [p2.5 .. p97.5]      $-1,760.12  ..  $ 4,045.25
-P(lose > 25%)                                37.60%
-P(lose > 50%)                                31.60%
-P(double bankroll)                           29.35%
+E[ending bankroll]             $           3,925.61
+Median ending bankroll         $           3,950.00
+95% range [p2.5 .. p97.5]      $-2,931.12  ..  $10,355.12
+P(lose > 25%)                                16.90%
+P(lose > 50%)                                15.55%
+P(double bankroll)                           72.25%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             713.31
-Median max drawdown            $             675.00
-95th pct max drawdown          $           1,105.25
-99th pct max drawdown          $           1,385.00
+Mean max drawdown              $             673.48
+Median max drawdown            $             655.00
+95th pct max drawdown          $             900.00
+99th pct max drawdown          $           1,030.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.2390%
-Avg session wagered            $          72,435.97
+RTP                                       101.0496%
+Avg session wagered            $         278,728.59
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 4.000
+KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
-Sizer                          Kelly k=4.000 | B0=$1,000 | min=$10 / max=$1000
+Sizer                          Kelly k=2.500 | B0=$1,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
 Spread (max / min)                          100.00×
-Buckets at table min                             50
+Buckets at table min                             83
+Buckets at table max                              1
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 10
+TC +2                          $                 20
+TC +3                          $                 30
+TC +4                          $                 50
+TC +5                          $                 60
+TC +6                          $                 70
+TC +7                          $                 80
+TC +8                          $                 90
+TC +9                          $                110
+TC +10                         $                120
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +3,991.29
+P(finish down)  (end < B0)                   15.65%
+P(ruin)                                      10.85%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $           4,991.29
+Median ending bankroll         $           4,977.50
+95% range [p2.5 .. p97.5]      $-3,155.75  ..  $13,010.75
+P(lose > 25%)                                14.60%
+P(lose > 50%)                                13.60%
+P(double bankroll)                           77.15%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $             847.62
+Median max drawdown            $             810.00
+95th pct max drawdown          $           1,130.00
+99th pct max drawdown          $           1,450.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.2352%
+Avg session wagered            $         323,122.19
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13750.8
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 3.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $           1,000.00
+Table min / max                 $10 / $1000
+Ruin mode                                       end
+Sizer                          Kelly k=3.000 | B0=$1,000 | min=$10 / max=$1000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
+Median bucket bet              $                 10
+Spread (max / min)                          100.00×
+Buckets at table min                             83
 Buckets at table max                              2
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
@@ -4213,51 +4148,116 @@ TC +1                          $                 10
 TC +2                          $                 20
 TC +3                          $                 40
 TC +4                          $                 60
-TC +5                          $                 80
-TC +6                          $                100
-TC +7                          $                120
-TC +8                          $                140
-TC +9                          $                160
-TC +10                         $                170
+TC +5                          $                 70
+TC +6                          $                 80
+TC +7                          $                100
+TC +8                          $                110
+TC +9                          $                130
+TC +10                         $                140
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +304.92
-P(finish down)  (end < B0)                   42.95%
-P(ruin)                                      25.80%
+E[profit]  = E[end − B0]       $          +5,129.39
+P(finish down)  (end < B0)                   14.85%
+P(ruin)                                      10.80%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,304.92
-Median ending bankroll         $           1,297.50
-95% range [p2.5 .. p97.5]      $-2,395.62  ..  $ 5,235.12
-P(lose > 25%)                                38.10%
-P(lose > 50%)                                33.80%
-P(double bankroll)                           35.95%
+E[ending bankroll]             $           6,129.39
+Median ending bankroll         $           6,132.50
+95% range [p2.5 .. p97.5]      $-2,965.50  ..  $15,520.75
+P(lose > 25%)                                13.65%
+P(lose > 50%)                                12.70%
+P(double bankroll)                           80.05%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             964.39
-Median max drawdown            $             895.00
-95th pct max drawdown          $           1,550.25
-99th pct max drawdown          $           1,930.00
+Mean max drawdown              $           1,016.63
+Median max drawdown            $             985.00
+95th pct max drawdown          $           1,360.00
+99th pct max drawdown          $           1,540.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.3681%
-Avg session wagered            $          82,845.73
+RTP                                       101.4262%
+Avg session wagered            $         359,657.73
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.7
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 4.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $           1,000.00
+Table min / max                 $10 / $1000
+Ruin mode                                       end
+Sizer                          Kelly k=4.000 | B0=$1,000 | min=$10 / max=$1000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
+Median bucket bet              $                 10
+Spread (max / min)                          100.00×
+Buckets at table min                             83
+Buckets at table max                              6
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 10
+TC +2                          $                 30
+TC +3                          $                 60
+TC +4                          $                 70
+TC +5                          $                 90
+TC +6                          $                110
+TC +7                          $                130
+TC +8                          $                150
+TC +9                          $                170
+TC +10                         $                180
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +7,165.52
+P(finish down)  (end < B0)                   11.85%
+P(ruin)                                       9.05%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $           8,165.52
+Median ending bankroll         $           8,300.00
+95% range [p2.5 .. p97.5]      $-3,975.25  ..  $19,581.25
+P(lose > 25%)                                11.30%
+P(lose > 50%)                                10.25%
+P(double bankroll)                           84.85%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $           1,327.27
+Median max drawdown            $           1,285.00
+95th pct max drawdown          $           1,760.50
+99th pct max drawdown          $           2,030.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.6500%
+Avg session wagered            $         434,286.96
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13751.0
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 5.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -4265,64 +4265,64 @@ Sizer                          Kelly k=5.000 | B0=$1,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
 Spread (max / min)                          100.00×
-Buckets at table min                             50
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              7
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 10
-TC +2                          $                 30
-TC +3                          $                 50
-TC +4                          $                 70
-TC +5                          $                100
-TC +6                          $                120
-TC +7                          $                150
-TC +8                          $                170
-TC +9                          $                200
-TC +10                         $                210
+TC +1                          $                 20
+TC +2                          $                 40
+TC +3                          $                 70
+TC +4                          $                 90
+TC +5                          $                120
+TC +6                          $                140
+TC +7                          $                160
+TC +8                          $                190
+TC +9                          $                210
+TC +10                         $                230
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +465.49
-P(finish down)  (end < B0)                   42.35%
-P(ruin)                                      26.65%
+E[profit]  = E[end − B0]       $          +9,436.68
+P(finish down)  (end < B0)                   11.50%
+P(ruin)                                       9.55%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,465.49
-Median ending bankroll         $           1,477.50
-95% range [p2.5 .. p97.5]      $-3,210.12  ..  $ 6,240.75
-P(lose > 25%)                                38.45%
-P(lose > 50%)                                34.35%
-P(double bankroll)                           42.20%
+E[ending bankroll]             $          10,436.68
+Median ending bankroll         $          10,600.00
+95% range [p2.5 .. p97.5]      $-5,642.12  ..  $25,326.37
+P(lose > 25%)                                11.00%
+P(lose > 50%)                                10.20%
+P(double bankroll)                           85.80%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,175.39
-Median max drawdown            $           1,120.00
-95th pct max drawdown          $           1,830.25
-99th pct max drawdown          $           2,210.00
+Mean max drawdown              $           1,681.05
+Median max drawdown            $           1,630.00
+95th pct max drawdown          $           2,250.00
+99th pct max drawdown          $           2,560.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.4950%
-Avg session wagered            $          94,047.01
+RTP                                       101.7642%
+Avg session wagered            $         534,911.18
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13750.7
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 6.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -4330,64 +4330,64 @@ Sizer                          Kelly k=6.000 | B0=$1,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
 Spread (max / min)                          100.00×
-Buckets at table min                             49
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              8
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 10
-TC +2                          $                 30
-TC +3                          $                 60
-TC +4                          $                 80
-TC +5                          $                120
-TC +6                          $                150
-TC +7                          $                180
-TC +8                          $                210
-TC +9                          $                240
-TC +10                         $                260
+TC +1                          $                 20
+TC +2                          $                 50
+TC +3                          $                 80
+TC +4                          $                110
+TC +5                          $                140
+TC +6                          $                170
+TC +7                          $                190
+TC +8                          $                230
+TC +9                          $                250
+TC +10                         $                280
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +733.01
-P(finish down)  (end < B0)                   39.75%
-P(ruin)                                      26.50%
+E[profit]  = E[end − B0]       $         +11,081.25
+P(finish down)  (end < B0)                   12.40%
+P(ruin)                                      10.20%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,733.01
-Median ending bankroll         $           1,637.50
-95% range [p2.5 .. p97.5]      $-3,515.25  ..  $ 7,395.50
-P(lose > 25%)                                36.15%
-P(lose > 50%)                                32.50%
-P(double bankroll)                           44.80%
+E[ending bankroll]             $          12,081.25
+Median ending bankroll         $          11,950.00
+95% range [p2.5 .. p97.5]      $-6,020.88  ..  $30,651.37
+P(lose > 25%)                                11.85%
+P(lose > 50%)                                11.05%
+P(double bankroll)                           85.05%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,400.63
-Median max drawdown            $           1,330.00
-95th pct max drawdown          $           2,230.00
-99th pct max drawdown          $           2,640.20
+Mean max drawdown              $           2,000.59
+Median max drawdown            $           1,940.00
+95th pct max drawdown          $           2,640.00
+99th pct max drawdown          $           3,100.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.6939%
-Avg session wagered            $         105,630.55
+RTP                                       101.7982%
+Avg session wagered            $         616,240.52
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13752.7
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 7.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -4395,60 +4395,60 @@ Sizer                          Kelly k=7.000 | B0=$1,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
 Spread (max / min)                          100.00×
-Buckets at table min                             49
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              8
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 10
-TC +2                          $                 40
-TC +3                          $                 70
-TC +4                          $                100
-TC +5                          $                140
-TC +6                          $                170
-TC +7                          $                210
-TC +8                          $                240
-TC +9                          $                280
-TC +10                         $                300
+TC +1                          $                 20
+TC +2                          $                 50
+TC +3                          $                100
+TC +4                          $                130
+TC +5                          $                160
+TC +6                          $                190
+TC +7                          $                230
+TC +8                          $                260
+TC +9                          $                290
+TC +10                         $                320
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +983.11
-P(finish down)  (end < B0)                   37.80%
-P(ruin)                                      27.85%
+E[profit]  = E[end − B0]       $         +13,335.45
+P(finish down)  (end < B0)                   10.35%
+P(ruin)                                       9.45%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,983.11
-Median ending bankroll         $           2,047.50
-95% range [p2.5 .. p97.5]      $-4,210.88  ..  $ 8,570.37
-P(lose > 25%)                                35.10%
-P(lose > 50%)                                32.85%
-P(double bankroll)                           50.60%
+E[ending bankroll]             $          14,335.45
+Median ending bankroll         $          14,127.50
+95% range [p2.5 .. p97.5]      $-6,945.50  ..  $35,211.25
+P(lose > 25%)                                10.30%
+P(lose > 50%)                                 9.95%
+P(double bankroll)                           87.95%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,610.04
-Median max drawdown            $           1,500.00
-95th pct max drawdown          $           2,580.00
-99th pct max drawdown          $           3,230.30
+Mean max drawdown              $           2,336.82
+Median max drawdown            $           2,255.00
+95th pct max drawdown          $           3,070.50
+99th pct max drawdown          $           3,620.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.8504%
-Avg session wagered            $         115,599.80
+RTP                                       101.9251%
+Avg session wagered            $         692,725.87
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.1
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min10_max1000_br1000_replays2000_shoes100.png
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min10_max1000_br1000_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$10 / max$1000  |  B0=$2,000
@@ -4458,7 +4458,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min10_max1000_br1000_
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -4466,12 +4466,12 @@ Sizer                          Kelly k=0.250 | B0=$2,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      160
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           16.00×
-Buckets at table min                             62
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             93
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -4488,42 +4488,42 @@ TC +10                         $                 20
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -243.00
-P(finish down)  (end < B0)                   62.05%
-P(ruin)                                       0.85%
+E[profit]  = E[end − B0]       $             -90.44
+P(finish down)  (end < B0)                   53.25%
+P(ruin)                                       9.90%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,757.00
-Median ending bankroll         $           1,750.00
-95% range [p2.5 .. p97.5]      $   295.00  ..  $ 3,260.12
-P(lose > 25%)                                37.95%
-P(lose > 50%)                                16.05%
-P(double bankroll)                            0.35%
+E[ending bankroll]             $           1,909.56
+Median ending bankroll         $           1,880.00
+95% range [p2.5 .. p97.5]      $-1,040.12  ..  $ 4,855.12
+P(lose > 25%)                                38.95%
+P(lose > 50%)                                25.55%
+P(double bankroll)                            7.35%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             218.84
-Median max drawdown            $             215.00
-95th pct max drawdown          $             275.00
-99th pct max drawdown          $             310.05
+Mean max drawdown              $             187.90
+Median max drawdown            $             180.00
+95th pct max drawdown          $             240.00
+99th pct max drawdown          $             280.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5106%
-Avg session wagered            $          49,653.08
+RTP                                        99.9456%
+Avg session wagered            $         166,231.48
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13752.1
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -4531,64 +4531,64 @@ Sizer                          Kelly k=0.500 | B0=$2,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      320
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           32.00×
-Buckets at table min                             56
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             87
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                 10
 TC +2                          $                 10
 TC +3                          $                 10
-TC +4                          $                 10
+TC +4                          $                 20
 TC +5                          $                 20
-TC +6                          $                 20
+TC +6                          $                 30
 TC +7                          $                 30
-TC +8                          $                 30
+TC +8                          $                 40
 TC +9                          $                 40
-TC +10                         $                 40
+TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -173.52
-P(finish down)  (end < B0)                   58.70%
-P(ruin)                                       1.75%
+E[profit]  = E[end − B0]       $            +905.64
+P(finish down)  (end < B0)                   33.15%
+P(ruin)                                       7.90%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,826.48
-Median ending bankroll         $           1,827.50
-95% range [p2.5 .. p97.5]      $   114.88  ..  $ 3,505.25
-P(lose > 25%)                                34.45%
-P(lose > 50%)                                15.65%
-P(double bankroll)                            0.60%
+E[ending bankroll]             $           2,905.64
+Median ending bankroll         $           2,927.50
+95% range [p2.5 .. p97.5]      $-1,010.75  ..  $ 6,840.12
+P(lose > 25%)                                24.05%
+P(lose > 50%)                                17.10%
+P(double bankroll)                           29.45%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             269.28
-Median max drawdown            $             255.00
-95th pct max drawdown          $             400.00
-99th pct max drawdown          $             490.00
+Mean max drawdown              $             349.21
+Median max drawdown            $             340.00
+95th pct max drawdown          $             460.25
+99th pct max drawdown          $             550.40
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6663%
-Avg session wagered            $          52,000.47
+RTP                                       100.4557%
+Avg session wagered            $         198,730.00
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13751.2
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -4596,77 +4596,12 @@ Sizer                          Kelly k=0.750 | B0=$2,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      490
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           49.00×
-Buckets at table min                             53
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 10
-TC +2                          $                 10
-TC +3                          $                 20
-TC +4                          $                 20
-TC +5                          $                 30
-TC +6                          $                 40
-TC +7                          $                 50
-TC +8                          $                 50
-TC +9                          $                 60
-TC +10                         $                 60
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -63.07
-P(finish down)  (end < B0)                   53.25%
-P(ruin)                                       2.50%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $           1,936.93
-Median ending bankroll         $           1,925.00
-95% range [p2.5 .. p97.5]      $    19.50  ..  $ 3,895.50
-P(lose > 25%)                                32.85%
-P(lose > 50%)                                18.20%
-P(double bankroll)                            1.90%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $             382.69
-Median max drawdown            $             365.00
-95th pct max drawdown          $             580.25
-99th pct max drawdown          $             710.05
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                        99.8903%
-Avg session wagered            $          57,489.65
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $           2,000.00
-Table min / max                 $10 / $1000
-Ruin mode                                       end
-Sizer                          Kelly k=1.000 | B0=$2,000 | min=$10 / max=$1000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      650
-Median bucket bet              $                 10
-Spread (max / min)                           65.00×
-Buckets at table min                             52
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             85
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -4674,129 +4609,64 @@ TC +1                          $                 10
 TC +2                          $                 10
 TC +3                          $                 20
 TC +4                          $                 30
-TC +5                          $                 40
-TC +6                          $                 50
-TC +7                          $                 60
-TC +8                          $                 70
-TC +9                          $                 80
-TC +10                         $                 90
+TC +5                          $                 30
+TC +6                          $                 40
+TC +7                          $                 50
+TC +8                          $                 60
+TC +9                          $                 60
+TC +10                         $                 70
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -18.06
-P(finish down)  (end < B0)                   50.85%
-P(ruin)                                       3.45%
+E[profit]  = E[end − B0]       $          +1,863.11
+P(finish down)  (end < B0)                   22.70%
+P(ruin)                                       7.35%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,981.94
-Median ending bankroll         $           1,985.00
-95% range [p2.5 .. p97.5]      $  -125.12  ..  $ 4,270.00
-P(lose > 25%)                                33.95%
-P(lose > 50%)                                18.45%
-P(double bankroll)                            3.75%
+E[ending bankroll]             $           3,863.11
+Median ending bankroll         $           3,845.00
+95% range [p2.5 .. p97.5]      $-1,550.25  ..  $ 8,735.25
+P(lose > 25%)                                18.15%
+P(lose > 50%)                                13.40%
+P(double bankroll)                           47.95%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             475.21
-Median max drawdown            $             450.00
-95th pct max drawdown          $             735.25
-99th pct max drawdown          $             930.00
+Mean max drawdown              $             506.18
+Median max drawdown            $             490.00
+95th pct max drawdown          $             670.00
+99th pct max drawdown          $             770.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.9706%
-Avg session wagered            $          61,533.29
+RTP                                       100.7894%
+Avg session wagered            $         236,013.27
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13751.0
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.250
+KELLY BANKROLL REPLAY  —  k = 1.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
-Sizer                          Kelly k=1.250 | B0=$2,000 | min=$10 / max=$1000
+Sizer                          Kelly k=1.000 | B0=$2,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      810
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
-Spread (max / min)                           81.00×
-Buckets at table min                             51
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 10
-TC +2                          $                 10
-TC +3                          $                 30
-TC +4                          $                 40
-TC +5                          $                 50
-TC +6                          $                 60
-TC +7                          $                 80
-TC +8                          $                 90
-TC +9                          $                100
-TC +10                         $                110
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             +66.21
-P(finish down)  (end < B0)                   48.15%
-P(ruin)                                       7.20%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $           2,066.21
-Median ending bankroll         $           2,065.00
-95% range [p2.5 .. p97.5]      $  -645.12  ..  $ 4,860.00
-P(lose > 25%)                                32.55%
-P(lose > 50%)                                21.15%
-P(double bankroll)                            8.10%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $             622.03
-Median max drawdown            $             590.00
-95th pct max drawdown          $             980.00
-99th pct max drawdown          $           1,205.15
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                       100.0983%
-Avg session wagered            $          67,324.09
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.500
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $           2,000.00
-Table min / max                 $10 / $1000
-Ruin mode                                       end
-Sizer                          Kelly k=1.500 | B0=$2,000 | min=$10 / max=$1000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       10  /  $      970
-Median bucket bet              $                 10
-Spread (max / min)                           97.00×
-Buckets at table min                             50
-Buckets at table max                              0
+Spread (max / min)                          100.00×
+Buckets at table min                             84
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -4804,63 +4674,128 @@ TC +1                          $                 10
 TC +2                          $                 20
 TC +3                          $                 30
 TC +4                          $                 40
-TC +5                          $                 60
-TC +6                          $                 70
-TC +7                          $                 90
-TC +8                          $                100
-TC +9                          $                120
-TC +10                         $                130
+TC +5                          $                 50
+TC +6                          $                 60
+TC +7                          $                 60
+TC +8                          $                 80
+TC +9                          $                 80
+TC +10                         $                 90
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +243.86
-P(finish down)  (end < B0)                   43.50%
-P(ruin)                                       6.20%
+E[profit]  = E[end − B0]       $          +2,948.05
+P(finish down)  (end < B0)                   19.80%
+P(ruin)                                       7.15%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           2,243.86
-Median ending bankroll         $           2,245.00
-95% range [p2.5 .. p97.5]      $  -605.12  ..  $ 5,255.00
-P(lose > 25%)                                30.55%
-P(lose > 50%)                                20.30%
-P(double bankroll)                           11.95%
+E[ending bankroll]             $           4,948.05
+Median ending bankroll         $           5,077.50
+95% range [p2.5 .. p97.5]      $-1,525.25  ..  $11,346.62
+P(lose > 25%)                                15.95%
+P(lose > 50%)                                12.95%
+P(double bankroll)                           62.15%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             703.41
-Median max drawdown            $             660.00
-95th pct max drawdown          $           1,115.25
-99th pct max drawdown          $           1,430.20
+Mean max drawdown              $             668.46
+Median max drawdown            $             650.00
+95th pct max drawdown          $             890.00
+99th pct max drawdown          $           1,000.15
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.3366%
-Avg session wagered            $          72,455.88
+RTP                                       101.0569%
+Avg session wagered            $         278,932.78
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13750.7
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.000
+KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
-Sizer                          Kelly k=2.000 | B0=$2,000 | min=$10 / max=$1000
+Sizer                          Kelly k=1.250 | B0=$2,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
 Spread (max / min)                          100.00×
-Buckets at table min                             50
+Buckets at table min                             83
+Buckets at table max                              1
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 10
+TC +2                          $                 20
+TC +3                          $                 30
+TC +4                          $                 50
+TC +5                          $                 60
+TC +6                          $                 70
+TC +7                          $                 80
+TC +8                          $                 90
+TC +9                          $                110
+TC +10                         $                120
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +4,048.27
+P(finish down)  (end < B0)                   15.70%
+P(ruin)                                       7.55%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $           6,048.27
+Median ending bankroll         $           6,032.50
+95% range [p2.5 .. p97.5]      $-2,060.62  ..  $13,980.25
+P(lose > 25%)                                12.85%
+P(lose > 50%)                                10.45%
+P(double bankroll)                           69.10%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $             846.72
+Median max drawdown            $             815.00
+95th pct max drawdown          $           1,130.25
+99th pct max drawdown          $           1,290.40
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.2521%
+Avg session wagered            $         323,323.27
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13750.4
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 1.500
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $           2,000.00
+Table min / max                 $10 / $1000
+Ruin mode                                       end
+Sizer                          Kelly k=1.500 | B0=$2,000 | min=$10 / max=$1000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
+Median bucket bet              $                 10
+Spread (max / min)                          100.00×
+Buckets at table min                             83
 Buckets at table max                              2
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
@@ -4869,51 +4804,116 @@ TC +1                          $                 10
 TC +2                          $                 20
 TC +3                          $                 40
 TC +4                          $                 60
-TC +5                          $                 80
-TC +6                          $                100
-TC +7                          $                120
-TC +8                          $                140
-TC +9                          $                160
-TC +10                         $                170
+TC +5                          $                 70
+TC +6                          $                 80
+TC +7                          $                100
+TC +8                          $                110
+TC +9                          $                130
+TC +10                         $                140
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +323.86
-P(finish down)  (end < B0)                   43.50%
-P(ruin)                                      10.55%
+E[profit]  = E[end − B0]       $          +5,221.02
+P(finish down)  (end < B0)                   13.15%
+P(ruin)                                       6.45%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           2,323.86
-Median ending bankroll         $           2,315.00
-95% range [p2.5 .. p97.5]      $-1,570.38  ..  $ 6,030.37
-P(lose > 25%)                                32.85%
-P(lose > 50%)                                24.45%
-P(double bankroll)                           19.45%
+E[ending bankroll]             $           7,221.02
+Median ending bankroll         $           7,292.50
+95% range [p2.5 .. p97.5]      $-2,790.50  ..  $16,065.37
+P(lose > 25%)                                11.15%
+P(lose > 50%)                                 9.25%
+P(double bankroll)                           75.25%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             956.47
-Median max drawdown            $             900.00
-95th pct max drawdown          $           1,500.25
-99th pct max drawdown          $           1,890.05
+Mean max drawdown              $           1,008.08
+Median max drawdown            $             980.00
+95th pct max drawdown          $           1,345.25
+99th pct max drawdown          $           1,540.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.3917%
-Avg session wagered            $          82,670.83
+RTP                                       101.4523%
+Avg session wagered            $         359,511.20
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13751.4
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 2.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $           2,000.00
+Table min / max                 $10 / $1000
+Ruin mode                                       end
+Sizer                          Kelly k=2.000 | B0=$2,000 | min=$10 / max=$1000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       10  /  $    1,000
+Median bucket bet              $                 10
+Spread (max / min)                          100.00×
+Buckets at table min                             83
+Buckets at table max                              6
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 10
+TC +2                          $                 30
+TC +3                          $                 60
+TC +4                          $                 70
+TC +5                          $                 90
+TC +6                          $                110
+TC +7                          $                130
+TC +8                          $                150
+TC +9                          $                170
+TC +10                         $                180
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +7,148.50
+P(finish down)  (end < B0)                   13.40%
+P(ruin)                                       8.05%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $           9,148.50
+Median ending bankroll         $           9,107.50
+95% range [p2.5 .. p97.5]      $-2,996.00  ..  $21,931.12
+P(lose > 25%)                                12.20%
+P(lose > 50%)                                11.15%
+P(double bankroll)                           79.80%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $           1,341.04
+Median max drawdown            $           1,295.00
+95th pct max drawdown          $           1,770.00
+99th pct max drawdown          $           2,051.25
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.6459%
+Avg session wagered            $         434,321.29
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13750.6
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -4921,64 +4921,64 @@ Sizer                          Kelly k=2.500 | B0=$2,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
 Spread (max / min)                          100.00×
-Buckets at table min                             50
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              7
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 10
-TC +2                          $                 30
-TC +3                          $                 50
-TC +4                          $                 70
-TC +5                          $                100
-TC +6                          $                120
-TC +7                          $                150
-TC +8                          $                170
-TC +9                          $                200
-TC +10                         $                210
+TC +1                          $                 20
+TC +2                          $                 40
+TC +3                          $                 70
+TC +4                          $                 90
+TC +5                          $                120
+TC +6                          $                140
+TC +7                          $                160
+TC +8                          $                190
+TC +9                          $                210
+TC +10                         $                230
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +535.80
-P(finish down)  (end < B0)                   41.70%
-P(ruin)                                      14.25%
+E[profit]  = E[end − B0]       $          +9,561.75
+P(finish down)  (end < B0)                   11.20%
+P(ruin)                                       6.85%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           2,535.80
-Median ending bankroll         $           2,475.00
-95% range [p2.5 .. p97.5]      $-1,950.62  ..  $ 7,380.62
-P(lose > 25%)                                32.75%
-P(lose > 50%)                                25.40%
-P(double bankroll)                           26.60%
+E[ending bankroll]             $          11,561.75
+Median ending bankroll         $          11,600.00
+95% range [p2.5 .. p97.5]      $-3,895.25  ..  $26,896.12
+P(lose > 25%)                                10.00%
+P(lose > 50%)                                 9.10%
+P(double bankroll)                           83.40%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,180.74
-Median max drawdown            $           1,115.00
-95th pct max drawdown          $           1,895.25
-99th pct max drawdown          $           2,450.15
+Mean max drawdown              $           1,694.05
+Median max drawdown            $           1,640.00
+95th pct max drawdown          $           2,265.00
+99th pct max drawdown          $           2,595.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.5701%
-Avg session wagered            $          93,985.89
+RTP                                       101.7849%
+Avg session wagered            $         535,697.18
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13751.2
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -4986,64 +4986,64 @@ Sizer                          Kelly k=3.000 | B0=$2,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
 Spread (max / min)                          100.00×
-Buckets at table min                             49
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              8
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 10
-TC +2                          $                 30
-TC +3                          $                 60
-TC +4                          $                 80
-TC +5                          $                120
-TC +6                          $                150
-TC +7                          $                180
-TC +8                          $                210
-TC +9                          $                240
-TC +10                         $                260
+TC +1                          $                 20
+TC +2                          $                 50
+TC +3                          $                 80
+TC +4                          $                110
+TC +5                          $                140
+TC +6                          $                170
+TC +7                          $                190
+TC +8                          $                230
+TC +9                          $                250
+TC +10                         $                280
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +574.86
-P(finish down)  (end < B0)                   41.90%
-P(ruin)                                      18.50%
+E[profit]  = E[end − B0]       $         +11,167.03
+P(finish down)  (end < B0)                   11.50%
+P(ruin)                                       7.95%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           2,574.86
-Median ending bankroll         $           2,545.00
-95% range [p2.5 .. p97.5]      $-2,911.00  ..  $ 7,961.37
-P(lose > 25%)                                34.60%
-P(lose > 50%)                                28.95%
-P(double bankroll)                           31.10%
+E[ending bankroll]             $          13,167.03
+Median ending bankroll         $          12,997.50
+95% range [p2.5 .. p97.5]      $-5,136.12  ..  $31,156.25
+P(lose > 25%)                                10.65%
+P(lose > 50%)                                 9.90%
+P(double bankroll)                           83.85%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,400.92
-Median max drawdown            $           1,320.00
-95th pct max drawdown          $           2,190.00
-99th pct max drawdown          $           2,700.60
+Mean max drawdown              $           1,982.13
+Median max drawdown            $           1,922.50
+95th pct max drawdown          $           2,610.00
+99th pct max drawdown          $           2,975.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.5455%
-Avg session wagered            $         105,373.46
+RTP                                       101.8154%
+Avg session wagered            $         615,125.65
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 4.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -5051,64 +5051,64 @@ Sizer                          Kelly k=4.000 | B0=$2,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
 Spread (max / min)                          100.00×
-Buckets at table min                             49
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              9
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 10
-TC +2                          $                 40
-TC +3                          $                 80
-TC +4                          $                110
-TC +5                          $                160
-TC +6                          $                190
-TC +7                          $                240
-TC +8                          $                270
-TC +9                          $                320
-TC +10                         $                340
+TC +1                          $                 30
+TC +2                          $                 60
+TC +3                          $                110
+TC +4                          $                150
+TC +5                          $                190
+TC +6                          $                220
+TC +7                          $                260
+TC +8                          $                300
+TC +9                          $                340
+TC +10                         $                370
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,198.30
-P(finish down)  (end < B0)                   37.50%
-P(ruin)                                      19.90%
+E[profit]  = E[end − B0]       $         +15,948.00
+P(finish down)  (end < B0)                   10.95%
+P(ruin)                                       7.80%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           3,198.30
-Median ending bankroll         $           3,117.50
-95% range [p2.5 .. p97.5]      $-4,245.12  ..  $10,611.25
-P(lose > 25%)                                31.95%
-P(lose > 50%)                                27.30%
-P(double bankroll)                           41.25%
+E[ending bankroll]             $          17,948.01
+Median ending bankroll         $          18,165.00
+95% range [p2.5 .. p97.5]      $-6,838.38  ..  $42,780.00
+P(lose > 25%)                                 9.85%
+P(lose > 50%)                                 9.30%
+P(double bankroll)                           86.90%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,866.62
-Median max drawdown            $           1,770.00
-95th pct max drawdown          $           2,930.00
-99th pct max drawdown          $           3,580.75
+Mean max drawdown              $           2,666.61
+Median max drawdown            $           2,590.00
+95th pct max drawdown          $           3,536.25
+99th pct max drawdown          $           4,090.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.9484%
-Avg session wagered            $         126,346.32
+RTP                                       102.0053%
+Avg session wagered            $         795,276.81
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.1
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 5.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -5116,64 +5116,64 @@ Sizer                          Kelly k=5.000 | B0=$2,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
 Spread (max / min)                          100.00×
-Buckets at table min                             49
-Buckets at table max                              4
+Buckets at table min                             82
+Buckets at table max                             16
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 10
-TC +2                          $                 50
-TC +3                          $                100
-TC +4                          $                140
-TC +5                          $                190
-TC +6                          $                240
-TC +7                          $                300
-TC +8                          $                340
-TC +9                          $                400
-TC +10                         $                430
+TC +1                          $                 30
+TC +2                          $                 80
+TC +3                          $                140
+TC +4                          $                180
+TC +5                          $                230
+TC +6                          $                280
+TC +7                          $                320
+TC +8                          $                380
+TC +9                          $                420
+TC +10                         $                460
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,271.10
-P(finish down)  (end < B0)                   39.50%
-P(ruin)                                      24.05%
+E[profit]  = E[end − B0]       $         +20,202.03
+P(finish down)  (end < B0)                   10.30%
+P(ruin)                                       7.90%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           3,271.10
-Median ending bankroll         $           3,162.50
-95% range [p2.5 .. p97.5]      $-5,521.00  ..  $12,609.62
-P(lose > 25%)                                35.40%
-P(lose > 50%)                                31.10%
-P(double bankroll)                           42.55%
+E[ending bankroll]             $          22,202.03
+Median ending bankroll         $          21,962.50
+95% range [p2.5 .. p97.5]      $-7,727.88  ..  $53,290.50
+P(lose > 25%)                                 9.55%
+P(lose > 50%)                                 8.70%
+P(double bankroll)                           87.00%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           2,362.78
-Median max drawdown            $           2,220.00
-95th pct max drawdown          $           3,790.00
-99th pct max drawdown          $           4,830.10
+Mean max drawdown              $           3,341.65
+Median max drawdown            $           3,240.00
+95th pct max drawdown          $           4,490.00
+99th pct max drawdown          $           5,175.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.8474%
-Avg session wagered            $         150,005.37
+RTP                                       102.1079%
+Avg session wagered            $         958,395.66
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13751.9
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 6.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -5181,64 +5181,64 @@ Sizer                          Kelly k=6.000 | B0=$2,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
 Spread (max / min)                          100.00×
-Buckets at table min                             49
-Buckets at table max                              7
+Buckets at table min                             82
+Buckets at table max                             24
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 10
-TC +2                          $                 60
-TC +3                          $                120
-TC +4                          $                170
-TC +5                          $                230
-TC +6                          $                290
-TC +7                          $                360
-TC +8                          $                410
-TC +9                          $                480
-TC +10                         $                510
+TC +1                          $                 40
+TC +2                          $                 90
+TC +3                          $                170
+TC +4                          $                220
+TC +5                          $                280
+TC +6                          $                330
+TC +7                          $                390
+TC +8                          $                450
+TC +9                          $                510
+TC +10                         $                550
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,809.56
-P(finish down)  (end < B0)                   37.00%
-P(ruin)                                      25.35%
+E[profit]  = E[end − B0]       $         +23,525.78
+P(finish down)  (end < B0)                   10.15%
+P(ruin)                                       8.15%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           3,809.55
-Median ending bankroll         $           3,655.00
-95% range [p2.5 .. p97.5]      $-6,910.25  ..  $14,816.12
-P(lose > 25%)                                33.80%
-P(lose > 50%)                                30.95%
-P(double bankroll)                           47.45%
+E[ending bankroll]             $          25,525.78
+Median ending bankroll         $          25,097.50
+95% range [p2.5 .. p97.5]      $-10,630.75  ..  $62,041.00
+P(lose > 25%)                                 9.45%
+P(lose > 50%)                                 8.85%
+P(double bankroll)                           87.85%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           2,809.36
-Median max drawdown            $           2,640.00
-95th pct max drawdown          $           4,555.25
-99th pct max drawdown          $           5,655.25
+Mean max drawdown              $           4,011.93
+Median max drawdown            $           3,870.00
+95th pct max drawdown          $           5,400.00
+99th pct max drawdown          $           6,225.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       101.0569%
-Avg session wagered            $         171,217.86
+RTP                                       102.0874%
+Avg session wagered            $       1,127,015.19
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13751.4
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 7.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $10 / $1000
 Ruin mode                                       end
@@ -5246,60 +5246,60 @@ Sizer                          Kelly k=7.000 | B0=$2,000 | min=$10 / max=$1000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       10  /  $    1,000
 Median bucket bet              $                 10
 Spread (max / min)                          100.00×
-Buckets at table min                             49
-Buckets at table max                              9
+Buckets at table min                             82
+Buckets at table max                             33
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 10
-TC +2                          $                 70
-TC +3                          $                140
-TC +4                          $                200
-TC +5                          $                270
-TC +6                          $                340
-TC +7                          $                420
-TC +8                          $                480
-TC +9                          $                560
-TC +10                         $                600
+TC +1                          $                 40
+TC +2                          $                110
+TC +3                          $                190
+TC +4                          $                260
+TC +5                          $                330
+TC +6                          $                390
+TC +7                          $                450
+TC +8                          $                530
+TC +9                          $                590
+TC +10                         $                640
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +2,077.70
-P(finish down)  (end < B0)                   36.50%
-P(ruin)                                      25.20%
+E[profit]  = E[end − B0]       $         +28,189.84
+P(finish down)  (end < B0)                    9.85%
+P(ruin)                                       8.50%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           4,077.70
-Median ending bankroll         $           4,252.50
-95% range [p2.5 .. p97.5]      $-8,541.38  ..  $16,756.12
-P(lose > 25%)                                33.70%
-P(lose > 50%)                                30.20%
-P(double bankroll)                           51.60%
+E[ending bankroll]             $          30,189.84
+Median ending bankroll         $          30,652.50
+95% range [p2.5 .. p97.5]      $-13,041.62  ..  $72,393.00
+P(lose > 25%)                                 9.40%
+P(lose > 50%)                                 9.10%
+P(double bankroll)                           88.15%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           3,288.66
-Median max drawdown            $           3,077.50
-95th pct max drawdown          $           5,395.00
-99th pct max drawdown          $           6,895.70
+Mean max drawdown              $           4,669.21
+Median max drawdown            $           4,510.00
+95th pct max drawdown          $           6,315.00
+99th pct max drawdown          $           7,065.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       101.0670%
-Avg session wagered            $         194,732.35
+RTP                                       102.1833%
+Avg session wagered            $       1,291,129.32
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.4
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min10_max1000_br2000_replays2000_shoes100.png
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min10_max1000_br2000_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$25 / max$2000  |  B0=$1,000
@@ -5309,7 +5309,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min10_max1000_br2000_
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -5317,11 +5317,11 @@ Sizer                          Kelly k=0.250 | B0=$1,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $       75
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    1,000
 Median bucket bet              $                 25
-Spread (max / min)                            3.00×
-Buckets at table min                             86
+Spread (max / min)                           40.00×
+Buckets at table min                            140
 Buckets at table max                              0
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
@@ -5339,42 +5339,42 @@ TC +10                         $                 25
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -670.75
+E[profit]  = E[end − B0]       $          -1,175.50
 P(finish down)  (end < B0)                   63.85%
-P(ruin)                                      43.15%
+P(ruin)                                      52.30%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             329.25
-Median ending bankroll         $             325.00
-95% range [p2.5 .. p97.5]      $-3,562.50  ..  $ 4,037.81
-P(lose > 25%)                                58.75%
-P(lose > 50%)                                53.85%
-P(double bankroll)                           18.80%
+E[ending bankroll]             $            -175.50
+Median ending bankroll         $            -200.00
+95% range [p2.5 .. p97.5]      $-6,863.12  ..  $ 6,638.12
+P(lose > 25%)                                61.15%
+P(lose > 50%)                                57.95%
+P(double bankroll)                           25.20%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             535.83
-Median max drawdown            $             525.00
-95th pct max drawdown          $             662.50
-99th pct max drawdown          $             725.00
+Mean max drawdown              $             344.43
+Median max drawdown            $             350.00
+95th pct max drawdown          $             400.00
+99th pct max drawdown          $             425.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4545%
-Avg session wagered            $         122,971.47
+RTP                                        99.7013%
+Avg session wagered            $         393,489.83
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.8
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -5382,12 +5382,12 @@ Sizer                          Kelly k=0.500 | B0=$1,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      150
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                            6.00×
-Buckets at table min                             79
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                            115
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -5404,42 +5404,42 @@ TC +10                         $                 25
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -610.32
-P(finish down)  (end < B0)                   63.35%
-P(ruin)                                      42.75%
+E[profit]  = E[end − B0]       $          -1,165.91
+P(finish down)  (end < B0)                   62.75%
+P(ruin)                                      52.10%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             389.68
-Median ending bankroll         $             375.00
-95% range [p2.5 .. p97.5]      $-3,250.31  ..  $ 4,225.62
-P(lose > 25%)                                57.70%
-P(lose > 50%)                                52.50%
-P(double bankroll)                           19.00%
+E[ending bankroll]             $            -165.91
+Median ending bankroll         $            -125.00
+95% range [p2.5 .. p97.5]      $-7,050.00  ..  $ 6,588.44
+P(lose > 25%)                                60.10%
+P(lose > 50%)                                57.60%
+P(double bankroll)                           26.90%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             535.29
-Median max drawdown            $             525.00
-95th pct max drawdown          $             662.50
-99th pct max drawdown          $             712.50
+Mean max drawdown              $             344.74
+Median max drawdown            $             350.00
+95th pct max drawdown          $             400.00
+99th pct max drawdown          $             425.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5038%
-Avg session wagered            $         122,998.77
+RTP                                        99.7038%
+Avg session wagered            $         393,674.97
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13751.2
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -5447,12 +5447,12 @@ Sizer                          Kelly k=0.750 | B0=$1,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      250
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           10.00×
-Buckets at table min                             73
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                            102
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -5469,42 +5469,42 @@ TC +10                         $                 25
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -684.30
-P(finish down)  (end < B0)                   63.60%
-P(ruin)                                      43.55%
+E[profit]  = E[end − B0]       $          -1,070.65
+P(finish down)  (end < B0)                   61.40%
+P(ruin)                                      51.15%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             315.70
-Median ending bankroll         $             362.50
-95% range [p2.5 .. p97.5]      $-3,387.81  ..  $ 4,000.00
-P(lose > 25%)                                58.50%
-P(lose > 50%)                                52.75%
-P(double bankroll)                           19.45%
+E[ending bankroll]             $             -70.65
+Median ending bankroll         $             -68.75
+95% range [p2.5 .. p97.5]      $-6,725.62  ..  $ 6,587.81
+P(lose > 25%)                                59.10%
+P(lose > 50%)                                56.30%
+P(double bankroll)                           27.45%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             535.27
-Median max drawdown            $             525.00
-95th pct max drawdown          $             650.00
-99th pct max drawdown          $             700.00
+Mean max drawdown              $             358.84
+Median max drawdown            $             350.00
+95th pct max drawdown          $             437.50
+99th pct max drawdown          $             475.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4437%
-Avg session wagered            $         123,007.25
+RTP                                        99.7300%
+Avg session wagered            $         396,547.97
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.9
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -5512,12 +5512,12 @@ Sizer                          Kelly k=1.000 | B0=$1,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      325
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           13.00×
-Buckets at table min                             66
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             96
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -5528,48 +5528,48 @@ TC +4                          $                 25
 TC +5                          $                 25
 TC +6                          $                 25
 TC +7                          $                 25
-TC +8                          $                 25
+TC +8                          $                 50
 TC +9                          $                 50
 TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -591.85
-P(finish down)  (end < B0)                   62.15%
-P(ruin)                                      41.05%
+E[profit]  = E[end − B0]       $            -708.12
+P(finish down)  (end < B0)                   57.25%
+P(ruin)                                      46.80%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             408.15
-Median ending bankroll         $             462.50
-95% range [p2.5 .. p97.5]      $-3,412.81  ..  $ 4,112.50
-P(lose > 25%)                                56.50%
-P(lose > 50%)                                50.90%
-P(double bankroll)                           19.85%
+E[ending bankroll]             $             291.88
+Median ending bankroll         $             387.50
+95% range [p2.5 .. p97.5]      $-6,363.12  ..  $ 7,076.56
+P(lose > 25%)                                54.40%
+P(lose > 50%)                                50.80%
+P(double bankroll)                           30.85%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             537.99
-Median max drawdown            $             525.00
-95th pct max drawdown          $             662.50
-99th pct max drawdown          $             725.12
+Mean max drawdown              $             401.67
+Median max drawdown            $             400.00
+95th pct max drawdown          $             500.00
+99th pct max drawdown          $             575.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5198%
-Avg session wagered            $         123,261.08
+RTP                                        99.8249%
+Avg session wagered            $         404,465.18
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -5577,12 +5577,12 @@ Sizer                          Kelly k=1.250 | B0=$1,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      400
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           16.00×
-Buckets at table min                             62
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             93
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -5599,42 +5599,42 @@ TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -604.77
-P(finish down)  (end < B0)                   62.40%
-P(ruin)                                      43.05%
+E[profit]  = E[end − B0]       $            -375.73
+P(finish down)  (end < B0)                   54.10%
+P(ruin)                                      44.10%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             395.23
-Median ending bankroll         $             375.00
-95% range [p2.5 .. p97.5]      $-3,412.81  ..  $ 4,325.00
-P(lose > 25%)                                57.40%
-P(lose > 50%)                                52.55%
-P(double bankroll)                           20.60%
+E[ending bankroll]             $             624.27
+Median ending bankroll         $             568.75
+95% range [p2.5 .. p97.5]      $-6,325.62  ..  $ 7,850.31
+P(lose > 25%)                                51.80%
+P(lose > 50%)                                49.20%
+P(double bankroll)                           35.30%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             550.45
-Median max drawdown            $             537.50
-95th pct max drawdown          $             687.50
-99th pct max drawdown          $             762.50
+Mean max drawdown              $             471.17
+Median max drawdown            $             450.00
+95th pct max drawdown          $             612.50
+99th pct max drawdown          $             700.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5127%
-Avg session wagered            $         124,106.12
+RTP                                        99.9096%
+Avg session wagered            $         415,609.08
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.0
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -5642,12 +5642,12 @@ Sizer                          Kelly k=1.500 | B0=$1,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      475
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           19.00×
-Buckets at table min                             61
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             91
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -5656,50 +5656,50 @@ TC +2                          $                 25
 TC +3                          $                 25
 TC +4                          $                 25
 TC +5                          $                 25
-TC +6                          $                 25
+TC +6                          $                 50
 TC +7                          $                 50
 TC +8                          $                 50
-TC +9                          $                 50
+TC +9                          $                 75
 TC +10                         $                 75
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -586.12
-P(finish down)  (end < B0)                   62.85%
-P(ruin)                                      42.50%
+E[profit]  = E[end − B0]       $            +111.88
+P(finish down)  (end < B0)                   48.55%
+P(ruin)                                      38.90%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             413.88
-Median ending bankroll         $             412.50
-95% range [p2.5 .. p97.5]      $-3,212.81  ..  $ 4,138.12
-P(lose > 25%)                                57.40%
-P(lose > 50%)                                51.10%
-P(double bankroll)                           19.75%
+E[ending bankroll]             $           1,111.88
+Median ending bankroll         $           1,100.00
+95% range [p2.5 .. p97.5]      $-6,175.62  ..  $ 8,562.81
+P(lose > 25%)                                46.15%
+P(lose > 50%)                                43.10%
+P(double bankroll)                           40.45%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             557.61
-Median max drawdown            $             550.00
-95th pct max drawdown          $             712.50
-99th pct max drawdown          $             825.00
+Mean max drawdown              $             546.64
+Median max drawdown            $             525.00
+95th pct max drawdown          $             725.00
+99th pct max drawdown          $             850.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5298%
-Avg session wagered            $         124,644.18
+RTP                                       100.0261%
+Avg session wagered            $         428,935.97
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
+Avg shoes played                             1000.0
+Avg hands played                            13750.9
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -5707,77 +5707,12 @@ Sizer                          Kelly k=2.000 | B0=$1,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      650
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           26.00×
-Buckets at table min                             57
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                 25
-TC +3                          $                 25
-TC +4                          $                 25
-TC +5                          $                 50
-TC +6                          $                 50
-TC +7                          $                 50
-TC +8                          $                 75
-TC +9                          $                 75
-TC +10                         $                 75
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -528.56
-P(finish down)  (end < B0)                   60.05%
-P(ruin)                                      40.75%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $             471.44
-Median ending bankroll         $             525.00
-95% range [p2.5 .. p97.5]      $-3,275.31  ..  $ 4,325.62
-P(lose > 25%)                                54.60%
-P(lose > 50%)                                49.60%
-P(double bankroll)                           22.30%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $             611.74
-Median max drawdown            $             587.50
-95th pct max drawdown          $             825.62
-99th pct max drawdown          $             987.50
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                        99.5857%
-Avg session wagered            $         127,585.67
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.500
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $           1,000.00
-Table min / max                 $25 / $2000
-Ruin mode                                       end
-Sizer                          Kelly k=2.500 | B0=$1,000 | min=$25 / max=$2000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      800
-Median bucket bet              $                 25
-Spread (max / min)                           32.00×
-Buckets at table min                             56
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             89
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -5789,60 +5724,60 @@ TC +5                          $                 50
 TC +6                          $                 50
 TC +7                          $                 75
 TC +8                          $                 75
-TC +9                          $                100
+TC +9                          $                 75
 TC +10                         $                100
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -430.71
-P(finish down)  (end < B0)                   57.90%
-P(ruin)                                      39.05%
+E[profit]  = E[end − B0]       $          +1,012.56
+P(finish down)  (end < B0)                   40.80%
+P(ruin)                                      32.25%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             569.29
-Median ending bankroll         $             587.50
-95% range [p2.5 .. p97.5]      $-3,350.00  ..  $ 4,525.00
-P(lose > 25%)                                53.25%
-P(lose > 50%)                                47.85%
-P(double bankroll)                           25.15%
+E[ending bankroll]             $           2,012.56
+Median ending bankroll         $           1,981.25
+95% range [p2.5 .. p97.5]      $-6,601.25  ..  $10,538.12
+P(lose > 25%)                                39.30%
+P(lose > 50%)                                36.90%
+P(double bankroll)                           49.95%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             673.14
-Median max drawdown            $             637.50
-95th pct max drawdown          $             975.00
-99th pct max drawdown          $           1,162.50
+Mean max drawdown              $             698.51
+Median max drawdown            $             675.00
+95th pct max drawdown          $             925.00
+99th pct max drawdown          $           1,050.87
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6689%
-Avg session wagered            $         130,089.98
+RTP                                       100.2221%
+Avg session wagered            $         455,980.71
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 3.000
+KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
-Sizer                          Kelly k=3.000 | B0=$1,000 | min=$25 / max=$2000
+Sizer                          Kelly k=2.500 | B0=$1,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      975
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           39.00×
-Buckets at table min                             55
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             87
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -5852,62 +5787,62 @@ TC +3                          $                 25
 TC +4                          $                 50
 TC +5                          $                 50
 TC +6                          $                 75
-TC +7                          $                100
+TC +7                          $                 75
 TC +8                          $                100
-TC +9                          $                125
+TC +9                          $                100
 TC +10                         $                125
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -359.13
-P(finish down)  (end < B0)                   56.70%
-P(ruin)                                      38.55%
+E[profit]  = E[end − B0]       $          +2,252.06
+P(finish down)  (end < B0)                   31.85%
+P(ruin)                                      25.00%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             640.87
-Median ending bankroll         $             637.50
-95% range [p2.5 .. p97.5]      $-3,475.31  ..  $ 4,938.75
-P(lose > 25%)                                51.95%
-P(lose > 50%)                                47.65%
-P(double bankroll)                           26.40%
+E[ending bankroll]             $           3,252.06
+Median ending bankroll         $           3,300.00
+95% range [p2.5 .. p97.5]      $-6,488.12  ..  $12,776.56
+P(lose > 25%)                                30.05%
+P(lose > 50%)                                28.35%
+P(double bankroll)                           60.60%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             772.48
-Median max drawdown            $             725.00
-95th pct max drawdown          $           1,138.12
-99th pct max drawdown          $           1,450.00
+Mean max drawdown              $             867.58
+Median max drawdown            $             850.00
+95th pct max drawdown          $           1,137.50
+99th pct max drawdown          $           1,287.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.7319%
-Avg session wagered            $         133,949.92
+RTP                                       100.4538%
+Avg session wagered            $         496,304.14
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13750.5
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 4.000
+KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
-Sizer                          Kelly k=4.000 | B0=$1,000 | min=$25 / max=$2000
+Sizer                          Kelly k=3.000 | B0=$1,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $    1,300
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           52.00×
-Buckets at table min                             53
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             86
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -5916,46 +5851,111 @@ TC +2                          $                 25
 TC +3                          $                 50
 TC +4                          $                 50
 TC +5                          $                 75
+TC +6                          $                 75
+TC +7                          $                100
+TC +8                          $                125
+TC +9                          $                125
+TC +10                         $                150
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +3,227.11
+P(finish down)  (end < B0)                   28.55%
+P(ruin)                                      22.85%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $           4,227.11
+Median ending bankroll         $           4,512.50
+95% range [p2.5 .. p97.5]      $-6,962.50  ..  $14,638.75
+P(lose > 25%)                                26.80%
+P(lose > 50%)                                25.55%
+P(double bankroll)                           65.65%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $           1,021.24
+Median max drawdown            $           1,000.00
+95th pct max drawdown          $           1,350.00
+99th pct max drawdown          $           1,575.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       100.6011%
+Avg session wagered            $         536,828.31
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13751.1
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 4.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $           1,000.00
+Table min / max                 $25 / $2000
+Ruin mode                                       end
+Sizer                          Kelly k=4.000 | B0=$1,000 | min=$25 / max=$2000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
+Median bucket bet              $                 25
+Spread (max / min)                           80.00×
+Buckets at table min                             85
+Buckets at table max                              1
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 25
+TC +2                          $                 25
+TC +3                          $                 50
+TC +4                          $                 75
+TC +5                          $                100
 TC +6                          $                100
 TC +7                          $                125
-TC +8                          $                125
-TC +9                          $                150
+TC +8                          $                150
+TC +9                          $                175
 TC +10                         $                175
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -276.51
-P(finish down)  (end < B0)                   55.00%
-P(ruin)                                      38.30%
+E[profit]  = E[end − B0]       $          +5,107.12
+P(finish down)  (end < B0)                   22.90%
+P(ruin)                                      18.80%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             723.49
-Median ending bankroll         $             700.00
-95% range [p2.5 .. p97.5]      $-4,100.62  ..  $ 5,362.81
-P(lose > 25%)                                51.10%
-P(lose > 50%)                                46.20%
-P(double bankroll)                           30.90%
+E[ending bankroll]             $           6,107.12
+Median ending bankroll         $           6,256.25
+95% range [p2.5 .. p97.5]      $-6,902.81  ..  $19,500.00
+P(lose > 25%)                                21.85%
+P(lose > 50%)                                20.85%
+P(double bankroll)                           72.25%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             994.84
-Median max drawdown            $             937.50
-95th pct max drawdown          $           1,512.50
-99th pct max drawdown          $           1,962.62
+Mean max drawdown              $           1,352.79
+Median max drawdown            $           1,318.75
+95th pct max drawdown          $           1,800.00
+99th pct max drawdown          $           2,050.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.8089%
-Avg session wagered            $         144,685.61
+RTP                                       100.8382%
+Avg session wagered            $         609,280.75
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13750.6
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min25_max2000_br1000_replays2000_shoes100.png
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min25_max2000_br1000_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$25 / max$2000  |  B0=$2,000
@@ -5965,7 +5965,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min25_max2000_br1000_
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -5973,12 +5973,12 @@ Sizer                          Kelly k=0.250 | B0=$2,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      150
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                            6.00×
-Buckets at table min                             79
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                            115
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -5995,42 +5995,42 @@ TC +10                         $                 25
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -543.15
-P(finish down)  (end < B0)                   60.95%
-P(ruin)                                      23.50%
+E[profit]  = E[end − B0]       $          -1,273.24
+P(finish down)  (end < B0)                   64.05%
+P(ruin)                                      41.20%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,456.85
-Median ending bankroll         $           1,450.00
-95% range [p2.5 .. p97.5]      $-2,188.12  ..  $ 5,375.62
-P(lose > 25%)                                51.15%
-P(lose > 50%)                                40.65%
-P(double bankroll)                            9.90%
+E[ending bankroll]             $             726.76
+Median ending bankroll         $             768.75
+95% range [p2.5 .. p97.5]      $-6,265.00  ..  $ 7,425.62
+P(lose > 25%)                                58.60%
+P(lose > 50%)                                52.35%
+P(double bankroll)                           16.20%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             534.80
-Median max drawdown            $             525.00
-95th pct max drawdown          $             662.50
-99th pct max drawdown          $             737.50
+Mean max drawdown              $             344.71
+Median max drawdown            $             350.00
+95th pct max drawdown          $             400.00
+99th pct max drawdown          $             425.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5584%
-Avg session wagered            $         122,998.38
+RTP                                        99.6766%
+Avg session wagered            $         393,669.15
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.4
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -6038,12 +6038,12 @@ Sizer                          Kelly k=0.500 | B0=$2,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      325
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           13.00×
-Buckets at table min                             66
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             96
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -6054,48 +6054,48 @@ TC +4                          $                 25
 TC +5                          $                 25
 TC +6                          $                 25
 TC +7                          $                 25
-TC +8                          $                 25
+TC +8                          $                 50
 TC +9                          $                 50
 TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -693.18
-P(finish down)  (end < B0)                   63.85%
-P(ruin)                                      24.45%
+E[profit]  = E[end − B0]       $            -805.44
+P(finish down)  (end < B0)                   59.10%
+P(ruin)                                      36.75%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,306.82
-Median ending bankroll         $           1,293.75
-95% range [p2.5 .. p97.5]      $-2,512.50  ..  $ 5,062.81
-P(lose > 25%)                                53.95%
-P(lose > 50%)                                43.70%
-P(double bankroll)                            7.40%
+E[ending bankroll]             $           1,194.56
+Median ending bankroll         $           1,187.50
+95% range [p2.5 .. p97.5]      $-6,015.62  ..  $ 7,775.31
+P(lose > 25%)                                53.85%
+P(lose > 50%)                                47.40%
+P(double bankroll)                           20.85%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             538.83
-Median max drawdown            $             525.00
-95th pct max drawdown          $             662.50
-99th pct max drawdown          $             725.00
+Mean max drawdown              $             403.04
+Median max drawdown            $             400.00
+95th pct max drawdown          $             512.50
+99th pct max drawdown          $             575.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4378%
-Avg session wagered            $         123,287.80
+RTP                                        99.8009%
+Avg session wagered            $         404,565.92
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -6103,12 +6103,12 @@ Sizer                          Kelly k=0.750 | B0=$2,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      475
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           19.00×
-Buckets at table min                             61
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             91
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -6117,50 +6117,50 @@ TC +2                          $                 25
 TC +3                          $                 25
 TC +4                          $                 25
 TC +5                          $                 25
-TC +6                          $                 25
+TC +6                          $                 50
 TC +7                          $                 50
 TC +8                          $                 50
-TC +9                          $                 50
+TC +9                          $                 75
 TC +10                         $                 75
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -578.81
-P(finish down)  (end < B0)                   61.15%
-P(ruin)                                      24.30%
+E[profit]  = E[end − B0]       $            +149.59
+P(finish down)  (end < B0)                   47.95%
+P(ruin)                                      29.05%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,421.19
-Median ending bankroll         $           1,381.25
-95% range [p2.5 .. p97.5]      $-2,362.81  ..  $ 5,187.50
-P(lose > 25%)                                51.90%
-P(lose > 50%)                                42.35%
-P(double bankroll)                            9.95%
+E[ending bankroll]             $           2,149.59
+Median ending bankroll         $           2,175.00
+95% range [p2.5 .. p97.5]      $-5,438.75  ..  $ 9,614.06
+P(lose > 25%)                                43.10%
+P(lose > 50%)                                38.50%
+P(double bankroll)                           31.85%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             559.35
-Median max drawdown            $             550.00
-95th pct max drawdown          $             712.50
-99th pct max drawdown          $             825.00
+Mean max drawdown              $             546.53
+Median max drawdown            $             525.00
+95th pct max drawdown          $             725.00
+99th pct max drawdown          $             850.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5356%
-Avg session wagered            $         124,630.99
+RTP                                       100.0349%
+Avg session wagered            $         428,719.88
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13750.8
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -6168,77 +6168,12 @@ Sizer                          Kelly k=1.000 | B0=$2,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      650
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           26.00×
-Buckets at table min                             57
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                 25
-TC +3                          $                 25
-TC +4                          $                 25
-TC +5                          $                 50
-TC +6                          $                 50
-TC +7                          $                 50
-TC +8                          $                 75
-TC +9                          $                 75
-TC +10                         $                 75
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -440.02
-P(finish down)  (end < B0)                   60.50%
-P(ruin)                                      22.40%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $           1,559.97
-Median ending bankroll         $           1,500.00
-95% range [p2.5 .. p97.5]      $-2,588.44  ..  $ 5,775.00
-P(lose > 25%)                                49.95%
-P(lose > 50%)                                38.75%
-P(double bankroll)                           12.70%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $             614.20
-Median max drawdown            $             587.50
-95th pct max drawdown          $             850.00
-99th pct max drawdown          $           1,000.00
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                        99.6552%
-Avg session wagered            $         127,601.66
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.250
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $           2,000.00
-Table min / max                 $25 / $2000
-Ruin mode                                       end
-Sizer                          Kelly k=1.250 | B0=$2,000 | min=$25 / max=$2000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      800
-Median bucket bet              $                 25
-Spread (max / min)                           32.00×
-Buckets at table min                             56
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             89
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -6250,60 +6185,60 @@ TC +5                          $                 50
 TC +6                          $                 50
 TC +7                          $                 75
 TC +8                          $                 75
-TC +9                          $                100
+TC +9                          $                 75
 TC +10                         $                100
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -445.62
-P(finish down)  (end < B0)                   57.95%
-P(ruin)                                      23.05%
+E[profit]  = E[end − B0]       $          +1,049.79
+P(finish down)  (end < B0)                   40.00%
+P(ruin)                                      23.25%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,554.38
-Median ending bankroll         $           1,562.50
-95% range [p2.5 .. p97.5]      $-2,488.12  ..  $ 5,525.62
-P(lose > 25%)                                49.20%
-P(lose > 50%)                                39.25%
-P(double bankroll)                           11.85%
+E[ending bankroll]             $           3,049.79
+Median ending bankroll         $           3,000.00
+95% range [p2.5 .. p97.5]      $-5,550.31  ..  $11,337.81
+P(lose > 25%)                                34.95%
+P(lose > 50%)                                30.50%
+P(double bankroll)                           41.25%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             673.36
-Median max drawdown            $             643.75
-95th pct max drawdown          $             962.50
-99th pct max drawdown          $           1,225.00
+Mean max drawdown              $             698.98
+Median max drawdown            $             675.00
+95th pct max drawdown          $             925.00
+99th pct max drawdown          $           1,025.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6575%
-Avg session wagered            $         130,093.58
+RTP                                       100.2302%
+Avg session wagered            $         455,985.51
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13750.2
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.500
+KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
-Sizer                          Kelly k=1.500 | B0=$2,000 | min=$25 / max=$2000
+Sizer                          Kelly k=1.250 | B0=$2,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      975
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           39.00×
-Buckets at table min                             55
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             87
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -6313,62 +6248,62 @@ TC +3                          $                 25
 TC +4                          $                 50
 TC +5                          $                 50
 TC +6                          $                 75
-TC +7                          $                100
+TC +7                          $                 75
 TC +8                          $                100
-TC +9                          $                125
+TC +9                          $                100
 TC +10                         $                125
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -413.52
-P(finish down)  (end < B0)                   57.90%
-P(ruin)                                      23.10%
+E[profit]  = E[end − B0]       $          +2,294.84
+P(finish down)  (end < B0)                   32.35%
+P(ruin)                                      19.35%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,586.47
-Median ending bankroll         $           1,562.50
-95% range [p2.5 .. p97.5]      $-2,712.50  ..  $ 5,912.81
-P(lose > 25%)                                48.55%
-P(lose > 50%)                                39.55%
-P(double bankroll)                           13.30%
+E[ending bankroll]             $           4,294.84
+Median ending bankroll         $           4,237.50
+95% range [p2.5 .. p97.5]      $-5,881.88  ..  $13,412.81
+P(lose > 25%)                                28.50%
+P(lose > 50%)                                24.80%
+P(double bankroll)                           52.35%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             774.56
-Median max drawdown            $             737.50
-95th pct max drawdown          $           1,150.00
-99th pct max drawdown          $           1,450.12
+Mean max drawdown              $             863.11
+Median max drawdown            $             837.50
+95th pct max drawdown          $           1,138.12
+99th pct max drawdown          $           1,300.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6916%
-Avg session wagered            $         134,096.96
+RTP                                       100.4621%
+Avg session wagered            $         496,663.72
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
+Avg shoes played                             1000.0
+Avg hands played                            13751.0
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.000
+KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
-Sizer                          Kelly k=2.000 | B0=$2,000 | min=$25 / max=$2000
+Sizer                          Kelly k=1.500 | B0=$2,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $    1,300
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           52.00×
-Buckets at table min                             53
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             86
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -6377,63 +6312,63 @@ TC +2                          $                 25
 TC +3                          $                 50
 TC +4                          $                 50
 TC +5                          $                 75
-TC +6                          $                100
-TC +7                          $                125
+TC +6                          $                 75
+TC +7                          $                100
 TC +8                          $                125
-TC +9                          $                150
-TC +10                         $                175
+TC +9                          $                125
+TC +10                         $                150
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -236.29
-P(finish down)  (end < B0)                   54.20%
-P(ruin)                                      25.05%
+E[profit]  = E[end − B0]       $          +3,157.84
+P(finish down)  (end < B0)                   28.55%
+P(ruin)                                      18.30%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,763.71
-Median ending bankroll         $           1,662.50
-95% range [p2.5 .. p97.5]      $-3,138.75  ..  $ 6,825.31
-P(lose > 25%)                                47.05%
-P(lose > 50%)                                38.95%
-P(double bankroll)                           19.80%
+E[ending bankroll]             $           5,157.84
+Median ending bankroll         $           5,300.00
+95% range [p2.5 .. p97.5]      $-6,312.81  ..  $16,225.31
+P(lose > 25%)                                26.15%
+P(lose > 50%)                                23.30%
+P(double bankroll)                           58.40%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,016.46
-Median max drawdown            $             962.50
-95th pct max drawdown          $           1,575.00
-99th pct max drawdown          $           1,950.25
+Mean max drawdown              $           1,021.03
+Median max drawdown            $           1,000.00
+95th pct max drawdown          $           1,325.62
+99th pct max drawdown          $           1,638.37
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.8366%
-Avg session wagered            $         144,629.29
+RTP                                       100.5882%
+Avg session wagered            $         536,833.12
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13751.7
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.500
+KELLY BANKROLL REPLAY  —  k = 2.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
-Sizer                          Kelly k=2.500 | B0=$2,000 | min=$25 / max=$2000
+Sizer                          Kelly k=2.000 | B0=$2,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $    1,625
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           65.00×
-Buckets at table min                             52
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             85
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -6442,50 +6377,115 @@ TC +2                          $                 25
 TC +3                          $                 50
 TC +4                          $                 75
 TC +5                          $                100
-TC +6                          $                125
+TC +6                          $                100
+TC +7                          $                125
+TC +8                          $                150
+TC +9                          $                175
+TC +10                         $                175
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +5,316.58
+P(finish down)  (end < B0)                   22.10%
+P(ruin)                                      14.35%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $           7,316.58
+Median ending bankroll         $           7,437.50
+95% range [p2.5 .. p97.5]      $-5,916.56  ..  $20,500.62
+P(lose > 25%)                                19.80%
+P(lose > 50%)                                17.35%
+P(double bankroll)                           67.80%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $           1,346.56
+Median max drawdown            $           1,325.00
+95th pct max drawdown          $           1,800.00
+99th pct max drawdown          $           2,025.12
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       100.8723%
+Avg session wagered            $         609,494.29
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13750.9
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 2.500
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $           2,000.00
+Table min / max                 $25 / $2000
+Ruin mode                                       end
+Sizer                          Kelly k=2.500 | B0=$2,000 | min=$25 / max=$2000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
+Median bucket bet              $                 25
+Spread (max / min)                           80.00×
+Buckets at table min                             84
+Buckets at table max                              1
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 25
+TC +2                          $                 50
+TC +3                          $                 75
+TC +4                          $                100
+TC +5                          $                125
+TC +6                          $                150
 TC +7                          $                150
-TC +8                          $                175
+TC +8                          $                200
 TC +9                          $                200
 TC +10                         $                225
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             +42.08
-P(finish down)  (end < B0)                   48.80%
-P(ruin)                                      22.65%
+E[profit]  = E[end − B0]       $          +7,529.18
+P(finish down)  (end < B0)                   18.50%
+P(ruin)                                      11.85%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           2,042.08
-Median ending bankroll         $           2,062.50
-95% range [p2.5 .. p97.5]      $-3,539.06  ..  $ 7,488.12
-P(lose > 25%)                                42.20%
-P(lose > 50%)                                34.90%
-P(double bankroll)                           24.20%
+E[ending bankroll]             $           9,529.17
+Median ending bankroll         $           9,412.50
+95% range [p2.5 .. p97.5]      $-6,412.50  ..  $25,675.31
+P(lose > 25%)                                16.65%
+P(lose > 50%)                                14.90%
+P(double bankroll)                           74.30%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,192.09
-Median max drawdown            $           1,112.50
-95th pct max drawdown          $           1,888.12
-99th pct max drawdown          $           2,425.12
+Mean max drawdown              $           1,683.89
+Median max drawdown            $           1,650.00
+95th pct max drawdown          $           2,238.12
+99th pct max drawdown          $           2,475.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.0274%
-Avg session wagered            $         153,648.78
+RTP                                       101.0797%
+Avg session wagered            $         697,357.64
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
+Avg shoes played                             1000.0
+Avg hands played                            13750.6
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -6493,76 +6493,11 @@ Sizer                          Kelly k=3.000 | B0=$2,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $    1,950
-Median bucket bet              $                 25
-Spread (max / min)                           78.00×
-Buckets at table min                             52
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                 25
-TC +3                          $                 50
-TC +4                          $                 75
-TC +5                          $                125
-TC +6                          $                150
-TC +7                          $                175
-TC +8                          $                200
-TC +9                          $                250
-TC +10                         $                250
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +133.62
-P(finish down)  (end < B0)                   48.25%
-P(ruin)                                      24.85%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $           2,133.62
-Median ending bankroll         $           2,093.75
-95% range [p2.5 .. p97.5]      $-4,087.50  ..  $ 8,400.62
-P(lose > 25%)                                42.65%
-P(lose > 50%)                                36.50%
-P(double bankroll)                           27.30%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $           1,434.29
-Median max drawdown            $           1,350.00
-95th pct max drawdown          $           2,313.12
-99th pct max drawdown          $           2,825.12
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                       100.0825%
-Avg session wagered            $         162,019.80
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 4.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $           2,000.00
-Table min / max                 $25 / $2000
-Ruin mode                                       end
-Sizer                          Kelly k=4.000 | B0=$2,000 | min=$25 / max=$2000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
 Spread (max / min)                           80.00×
-Buckets at table min                             50
+Buckets at table min                             84
 Buckets at table max                              2
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
@@ -6570,48 +6505,113 @@ CALCULATED BET BY TC (integer TC +1 .. +10)
 TC +1                          $                 25
 TC +2                          $                 50
 TC +3                          $                 75
-TC +4                          $                125
+TC +4                          $                100
 TC +5                          $                150
-TC +6                          $                200
-TC +7                          $                250
-TC +8                          $                275
-TC +9                          $                325
-TC +10                         $                350
+TC +6                          $                175
+TC +7                          $                200
+TC +8                          $                225
+TC +9                          $                250
+TC +10                         $                275
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +631.60
-P(finish down)  (end < B0)                   43.75%
-P(ruin)                                      26.50%
+E[profit]  = E[end − B0]       $          +9,676.66
+P(finish down)  (end < B0)                   15.75%
+P(ruin)                                      11.10%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           2,631.60
-Median ending bankroll         $           2,562.50
-95% range [p2.5 .. p97.5]      $-5,200.31  ..  $10,700.62
-P(lose > 25%)                                39.20%
-P(lose > 50%)                                34.90%
-P(double bankroll)                           36.40%
+E[ending bankroll]             $          11,676.66
+Median ending bankroll         $          11,981.25
+95% range [p2.5 .. p97.5]      $-7,063.75  ..  $30,525.31
+P(lose > 25%)                                14.10%
+P(lose > 50%)                                12.70%
+P(double bankroll)                           79.00%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,935.45
-Median max drawdown            $           1,850.00
-95th pct max drawdown          $           3,025.00
-99th pct max drawdown          $           3,787.75
+Mean max drawdown              $           2,001.58
+Median max drawdown            $           1,950.00
+95th pct max drawdown          $           2,650.00
+99th pct max drawdown          $           3,000.12
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.3388%
-Avg session wagered            $         186,434.83
+RTP                                       101.2575%
+Avg session wagered            $         769,513.56
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.1
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min25_max2000_br2000_replays2000_shoes100.png
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 4.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $           2,000.00
+Table min / max                 $25 / $2000
+Ruin mode                                       end
+Sizer                          Kelly k=4.000 | B0=$2,000 | min=$25 / max=$2000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
+Median bucket bet              $                 25
+Spread (max / min)                           80.00×
+Buckets at table min                             83
+Buckets at table max                              6
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 25
+TC +2                          $                 75
+TC +3                          $                100
+TC +4                          $                150
+TC +5                          $                175
+TC +6                          $                225
+TC +7                          $                250
+TC +8                          $                300
+TC +9                          $                325
+TC +10                         $                375
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $         +13,692.84
+P(finish down)  (end < B0)                   14.15%
+P(ruin)                                      11.35%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $          15,692.84
+Median ending bankroll         $          15,731.25
+95% range [p2.5 .. p97.5]      $-8,475.94  ..  $40,362.50
+P(lose > 25%)                                13.40%
+P(lose > 50%)                                12.45%
+P(double bankroll)                           81.60%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $           2,689.75
+Median max drawdown            $           2,587.50
+95th pct max drawdown          $           3,625.62
+99th pct max drawdown          $           4,352.50
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.4631%
+Avg session wagered            $         935,881.57
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13752.6
+======================================================================
+
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min25_max2000_br2000_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$25 / max$2000  |  B0=$5,000
@@ -6621,7 +6621,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min25_max2000_br2000_
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -6629,12 +6629,12 @@ Sizer                          Kelly k=0.250 | B0=$5,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      400
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           16.00×
-Buckets at table min                             62
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             93
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -6651,42 +6651,42 @@ TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -556.21
-P(finish down)  (end < B0)                   61.35%
-P(ruin)                                       1.15%
+E[profit]  = E[end − B0]       $            -422.88
+P(finish down)  (end < B0)                   56.20%
+P(ruin)                                       9.10%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           4,443.79
-Median ending bankroll         $           4,462.50
-95% range [p2.5 .. p97.5]      $   560.31  ..  $ 8,262.81
-P(lose > 25%)                                34.95%
-P(lose > 50%)                                15.35%
-P(double bankroll)                            0.10%
+E[ending bankroll]             $           4,577.12
+Median ending bankroll         $           4,481.25
+95% range [p2.5 .. p97.5]      $-2,300.31  ..  $11,400.94
+P(lose > 25%)                                40.85%
+P(lose > 50%)                                27.10%
+P(double bankroll)                            6.75%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             548.99
-Median max drawdown            $             537.50
-95th pct max drawdown          $             687.50
-99th pct max drawdown          $             787.50
+Mean max drawdown              $             471.08
+Median max drawdown            $             450.00
+95th pct max drawdown          $             625.00
+99th pct max drawdown          $             700.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5519%
-Avg session wagered            $         124,117.39
+RTP                                        99.8983%
+Avg session wagered            $         415,630.47
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
+Avg shoes played                             1000.0
+Avg hands played                            13750.8
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -6694,64 +6694,64 @@ Sizer                          Kelly k=0.500 | B0=$5,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      800
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           32.00×
-Buckets at table min                             56
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             87
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                 25
 TC +2                          $                 25
 TC +3                          $                 25
-TC +4                          $                 25
+TC +4                          $                 50
 TC +5                          $                 50
-TC +6                          $                 50
+TC +6                          $                 75
 TC +7                          $                 75
-TC +8                          $                 75
+TC +8                          $                100
 TC +9                          $                100
-TC +10                         $                100
+TC +10                         $                125
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -440.50
-P(finish down)  (end < B0)                   57.15%
-P(ruin)                                       1.50%
+E[profit]  = E[end − B0]       $          +2,267.40
+P(finish down)  (end < B0)                   31.70%
+P(ruin)                                       6.70%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           4,559.50
-Median ending bankroll         $           4,612.50
-95% range [p2.5 .. p97.5]      $   524.38  ..  $ 8,425.00
-P(lose > 25%)                                33.50%
-P(lose > 50%)                                16.60%
-P(double bankroll)                            0.45%
+E[ending bankroll]             $           7,267.40
+Median ending bankroll         $           7,393.75
+95% range [p2.5 .. p97.5]      $-2,352.50  ..  $16,738.44
+P(lose > 25%)                                23.10%
+P(lose > 50%)                                15.80%
+P(double bankroll)                           28.25%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             677.51
-Median max drawdown            $             650.00
-95th pct max drawdown          $             987.50
-99th pct max drawdown          $           1,262.62
+Mean max drawdown              $             865.10
+Median max drawdown            $             850.00
+95th pct max drawdown          $           1,137.50
+99th pct max drawdown          $           1,350.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6612%
-Avg session wagered            $         130,034.57
+RTP                                       100.4568%
+Avg session wagered            $         496,398.47
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.6
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -6759,77 +6759,12 @@ Sizer                          Kelly k=0.750 | B0=$5,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $    1,225
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           49.00×
-Buckets at table min                             53
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                 25
-TC +3                          $                 50
-TC +4                          $                 50
-TC +5                          $                 75
-TC +6                          $                100
-TC +7                          $                125
-TC +8                          $                125
-TC +9                          $                150
-TC +10                         $                150
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -210.14
-P(finish down)  (end < B0)                   54.00%
-P(ruin)                                       2.90%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $           4,789.86
-Median ending bankroll         $           4,762.50
-95% range [p2.5 .. p97.5]      $  -137.50  ..  $10,012.81
-P(lose > 25%)                                34.90%
-P(lose > 50%)                                18.80%
-P(double bankroll)                            2.55%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $             968.62
-Median max drawdown            $             925.00
-95th pct max drawdown          $           1,475.00
-99th pct max drawdown          $           1,800.37
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                        99.8537%
-Avg session wagered            $         143,659.96
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $           5,000.00
-Table min / max                 $25 / $2000
-Ruin mode                                       end
-Sizer                          Kelly k=1.000 | B0=$5,000 | min=$25 / max=$2000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $    1,625
-Median bucket bet              $                 25
-Spread (max / min)                           65.00×
-Buckets at table min                             52
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             85
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -6837,51 +6772,116 @@ TC +1                          $                 25
 TC +2                          $                 25
 TC +3                          $                 50
 TC +4                          $                 75
-TC +5                          $                100
-TC +6                          $                125
+TC +5                          $                 75
+TC +6                          $                100
+TC +7                          $                125
+TC +8                          $                150
+TC +9                          $                150
+TC +10                         $                175
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +4,935.04
+P(finish down)  (end < B0)                   21.25%
+P(ruin)                                       6.10%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $           9,935.04
+Median ending bankroll         $           9,856.25
+95% range [p2.5 .. p97.5]      $-2,538.12  ..  $23,013.44
+P(lose > 25%)                                16.85%
+P(lose > 50%)                                12.00%
+P(double bankroll)                           49.25%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $           1,272.28
+Median max drawdown            $           1,237.50
+95th pct max drawdown          $           1,700.00
+99th pct max drawdown          $           1,950.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       100.8367%
+Avg session wagered            $         589,794.26
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13751.2
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 1.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $           5,000.00
+Table min / max                 $25 / $2000
+Ruin mode                                       end
+Sizer                          Kelly k=1.000 | B0=$5,000 | min=$25 / max=$2000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
+Median bucket bet              $                 25
+Spread (max / min)                           80.00×
+Buckets at table min                             84
+Buckets at table max                              1
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 25
+TC +2                          $                 50
+TC +3                          $                 75
+TC +4                          $                100
+TC +5                          $                125
+TC +6                          $                150
 TC +7                          $                150
-TC +8                          $                175
+TC +8                          $                200
 TC +9                          $                200
 TC +10                         $                225
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -143.06
-P(finish down)  (end < B0)                   51.15%
-P(ruin)                                       4.60%
+E[profit]  = E[end − B0]       $          +7,329.74
+P(finish down)  (end < B0)                   18.45%
+P(ruin)                                       6.75%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           4,856.94
-Median ending bankroll         $           4,937.50
-95% range [p2.5 .. p97.5]      $  -775.62  ..  $10,275.62
-P(lose > 25%)                                33.80%
-P(lose > 50%)                                19.30%
-P(double bankroll)                            2.95%
+E[ending bankroll]             $          12,329.74
+Median ending bankroll         $          12,318.75
+95% range [p2.5 .. p97.5]      $-3,876.88  ..  $28,914.06
+P(lose > 25%)                                15.65%
+P(lose > 50%)                                11.75%
+P(double bankroll)                           61.30%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,190.92
-Median max drawdown            $           1,137.50
-95th pct max drawdown          $           1,825.62
-99th pct max drawdown          $           2,325.00
+Mean max drawdown              $           1,682.16
+Median max drawdown            $           1,637.50
+95th pct max drawdown          $           2,225.00
+99th pct max drawdown          $           2,575.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.9069%
-Avg session wagered            $         153,724.64
+RTP                                       101.0517%
+Avg session wagered            $         696,919.88
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13751.4
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -6889,64 +6889,64 @@ Sizer                          Kelly k=1.250 | B0=$5,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
 Spread (max / min)                           80.00×
-Buckets at table min                             51
-Buckets at table max                              1
+Buckets at table min                             83
+Buckets at table max                              2
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                 25
-TC +2                          $                 25
+TC +2                          $                 50
 TC +3                          $                 75
-TC +4                          $                100
-TC +5                          $                125
-TC +6                          $                150
+TC +4                          $                125
+TC +5                          $                150
+TC +6                          $                175
 TC +7                          $                200
 TC +8                          $                225
-TC +9                          $                250
-TC +10                         $                275
+TC +9                          $                275
+TC +10                         $                300
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +253.79
-P(finish down)  (end < B0)                   47.10%
-P(ruin)                                       6.10%
+E[profit]  = E[end − B0]       $         +10,134.59
+P(finish down)  (end < B0)                   15.45%
+P(ruin)                                       6.45%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           5,253.79
-Median ending bankroll         $           5,200.00
-95% range [p2.5 .. p97.5]      $-1,262.81  ..  $12,400.31
-P(lose > 25%)                                33.25%
-P(lose > 50%)                                21.85%
-P(double bankroll)                            8.65%
+E[ending bankroll]             $          15,134.59
+Median ending bankroll         $          15,087.50
+95% range [p2.5 .. p97.5]      $-3,342.81  ..  $34,590.00
+P(lose > 25%)                                12.65%
+P(lose > 50%)                                10.45%
+P(double bankroll)                           68.65%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,540.05
-Median max drawdown            $           1,462.50
-95th pct max drawdown          $           2,400.00
-99th pct max drawdown          $           2,975.12
+Mean max drawdown              $           2,108.89
+Median max drawdown            $           2,037.50
+95th pct max drawdown          $           2,825.00
+99th pct max drawdown          $           3,226.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.1510%
-Avg session wagered            $         168,094.11
+RTP                                       101.2533%
+Avg session wagered            $         808,647.53
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13750.9
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -6954,77 +6954,12 @@ Sizer                          Kelly k=1.500 | B0=$5,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
 Spread (max / min)                           80.00×
-Buckets at table min                             50
-Buckets at table max                              1
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                 50
-TC +3                          $                 75
-TC +4                          $                100
-TC +5                          $                150
-TC +6                          $                175
-TC +7                          $                225
-TC +8                          $                250
-TC +9                          $                300
-TC +10                         $                325
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +419.17
-P(finish down)  (end < B0)                   45.55%
-P(ruin)                                       8.05%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $           5,419.17
-Median ending bankroll         $           5,418.75
-95% range [p2.5 .. p97.5]      $-2,363.44  ..  $12,938.12
-P(lose > 25%)                                33.45%
-P(lose > 50%)                                21.85%
-P(double bankroll)                           11.85%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $           1,784.17
-Median max drawdown            $           1,687.50
-95th pct max drawdown          $           2,837.50
-99th pct max drawdown          $           3,450.00
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                       100.2314%
-Avg session wagered            $         181,142.84
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $           5,000.00
-Table min / max                 $25 / $2000
-Ruin mode                                       end
-Sizer                          Kelly k=2.000 | B0=$5,000 | min=$25 / max=$2000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $    2,000
-Median bucket bet              $                 25
-Spread (max / min)                           80.00×
-Buckets at table min                             50
-Buckets at table max                              2
+Buckets at table min                             83
+Buckets at table max                              3
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -7032,51 +6967,116 @@ TC +1                          $                 25
 TC +2                          $                 50
 TC +3                          $                100
 TC +4                          $                150
-TC +5                          $                200
-TC +6                          $                250
-TC +7                          $                300
-TC +8                          $                350
-TC +9                          $                400
-TC +10                         $                425
+TC +5                          $                175
+TC +6                          $                200
+TC +7                          $                250
+TC +8                          $                275
+TC +9                          $                325
+TC +10                         $                350
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +802.36
-P(finish down)  (end < B0)                   44.05%
-P(ruin)                                      11.35%
+E[profit]  = E[end − B0]       $         +12,654.63
+P(finish down)  (end < B0)                   13.85%
+P(ruin)                                       7.30%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           5,802.36
-Median ending bankroll         $           5,725.00
-95% range [p2.5 .. p97.5]      $-3,862.50  ..  $15,089.69
-P(lose > 25%)                                32.75%
-P(lose > 50%)                                23.60%
-P(double bankroll)                           19.25%
+E[ending bankroll]             $          17,654.63
+Median ending bankroll         $          17,412.50
+95% range [p2.5 .. p97.5]      $-5,350.94  ..  $41,138.75
+P(lose > 25%)                                11.95%
+P(lose > 50%)                                10.10%
+P(double bankroll)                           73.65%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           2,366.93
-Median max drawdown            $           2,237.50
-95th pct max drawdown          $           3,675.00
-99th pct max drawdown          $           4,450.00
+Mean max drawdown              $           2,537.76
+Median max drawdown            $           2,456.25
+95th pct max drawdown          $           3,375.00
+99th pct max drawdown          $           3,825.25
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.3881%
-Avg session wagered            $         206,766.80
+RTP                                       101.4068%
+Avg session wagered            $         899,538.28
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13751.2
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 2.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $           5,000.00
+Table min / max                 $25 / $2000
+Ruin mode                                       end
+Sizer                          Kelly k=2.000 | B0=$5,000 | min=$25 / max=$2000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
+Median bucket bet              $                 25
+Spread (max / min)                           80.00×
+Buckets at table min                             83
+Buckets at table max                              7
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 25
+TC +2                          $                 75
+TC +3                          $                150
+TC +4                          $                175
+TC +5                          $                225
+TC +6                          $                275
+TC +7                          $                325
+TC +8                          $                375
+TC +9                          $                425
+TC +10                         $                450
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $         +17,463.16
+P(finish down)  (end < B0)                   13.55%
+P(ruin)                                       8.10%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $          22,463.16
+Median ending bankroll         $          22,712.50
+95% range [p2.5 .. p97.5]      $-8,737.81  ..  $52,107.19
+P(lose > 25%)                                11.55%
+P(lose > 50%)                                10.45%
+P(double bankroll)                           79.35%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $           3,355.27
+Median max drawdown            $           3,250.00
+95th pct max drawdown          $           4,475.00
+99th pct max drawdown          $           5,100.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.6061%
+Avg session wagered            $       1,087,331.11
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13750.7
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -7084,64 +7084,64 @@ Sizer                          Kelly k=2.500 | B0=$5,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
 Spread (max / min)                           80.00×
-Buckets at table min                             50
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              8
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                 75
-TC +3                          $                125
-TC +4                          $                175
-TC +5                          $                250
-TC +6                          $                300
-TC +7                          $                375
-TC +8                          $                425
-TC +9                          $                500
-TC +10                         $                525
+TC +1                          $                 50
+TC +2                          $                100
+TC +3                          $                175
+TC +4                          $                225
+TC +5                          $                300
+TC +6                          $                350
+TC +7                          $                400
+TC +8                          $                475
+TC +9                          $                525
+TC +10                         $                575
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,446.19
-P(finish down)  (end < B0)                   39.95%
-P(ruin)                                      14.05%
+E[profit]  = E[end − B0]       $         +23,567.53
+P(finish down)  (end < B0)                   11.65%
+P(ruin)                                       6.80%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           6,446.19
-Median ending bankroll         $           6,493.75
-95% range [p2.5 .. p97.5]      $-5,475.62  ..  $17,851.25
-P(lose > 25%)                                31.40%
-P(lose > 50%)                                24.70%
-P(double bankroll)                           26.75%
+E[ending bankroll]             $          28,567.53
+Median ending bankroll         $          28,375.00
+95% range [p2.5 .. p97.5]      $-10,305.31  ..  $66,577.19
+P(lose > 25%)                                10.50%
+P(lose > 50%)                                 9.15%
+P(double bankroll)                           82.60%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           2,956.63
-Median max drawdown            $           2,787.50
-95th pct max drawdown          $           4,725.62
-99th pct max drawdown          $           5,887.75
+Mean max drawdown              $           4,200.11
+Median max drawdown            $           4,062.50
+95th pct max drawdown          $           5,650.62
+99th pct max drawdown          $           6,487.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.6151%
-Avg session wagered            $         235,119.46
+RTP                                       101.7624%
+Avg session wagered            $       1,337,243.80
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13751.0
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -7149,64 +7149,64 @@ Sizer                          Kelly k=3.000 | B0=$5,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
 Spread (max / min)                           80.00×
-Buckets at table min                             49
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              9
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                 75
-TC +3                          $                150
-TC +4                          $                200
-TC +5                          $                300
-TC +6                          $                375
-TC +7                          $                450
-TC +8                          $                525
-TC +9                          $                600
-TC +10                         $                650
+TC +1                          $                 50
+TC +2                          $                125
+TC +3                          $                200
+TC +4                          $                275
+TC +5                          $                350
+TC +6                          $                425
+TC +7                          $                475
+TC +8                          $                575
+TC +9                          $                625
+TC +10                         $                700
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,680.87
-P(finish down)  (end < B0)                   41.00%
-P(ruin)                                      16.20%
+E[profit]  = E[end − B0]       $         +28,720.97
+P(finish down)  (end < B0)                   10.95%
+P(ruin)                                       7.90%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           6,680.87
-Median ending bankroll         $           6,825.00
-95% range [p2.5 .. p97.5]      $-7,325.62  ..  $20,776.87
-P(lose > 25%)                                33.70%
-P(lose > 50%)                                27.65%
-P(double bankroll)                           30.85%
+E[ending bankroll]             $          33,720.97
+Median ending bankroll         $          33,675.00
+95% range [p2.5 .. p97.5]      $-13,604.38  ..  $80,166.25
+P(lose > 25%)                                 9.95%
+P(lose > 50%)                                 9.20%
+P(double bankroll)                           84.60%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           3,526.78
-Median max drawdown            $           3,325.00
-95th pct max drawdown          $           5,737.50
-99th pct max drawdown          $           6,963.12
+Mean max drawdown              $           5,025.49
+Median max drawdown            $           4,850.00
+95th pct max drawdown          $           6,750.00
+99th pct max drawdown          $           8,150.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.6362%
-Avg session wagered            $         264,208.47
+RTP                                       101.8647%
+Avg session wagered            $       1,540,217.86
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.1
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 4.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -7214,60 +7214,60 @@ Sizer                          Kelly k=4.000 | B0=$5,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
 Spread (max / min)                           80.00×
-Buckets at table min                             49
-Buckets at table max                              4
+Buckets at table min                             82
+Buckets at table max                             16
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                100
-TC +3                          $                200
-TC +4                          $                275
-TC +5                          $                400
-TC +6                          $                475
-TC +7                          $                600
-TC +8                          $                675
-TC +9                          $                800
-TC +10                         $                850
+TC +1                          $                 75
+TC +2                          $                150
+TC +3                          $                275
+TC +4                          $                375
+TC +5                          $                475
+TC +6                          $                550
+TC +7                          $                650
+TC +8                          $                750
+TC +9                          $                850
+TC +10                         $                925
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +2,478.42
-P(finish down)  (end < B0)                   39.05%
-P(ruin)                                      19.60%
+E[profit]  = E[end − B0]       $         +39,475.25
+P(finish down)  (end < B0)                    9.80%
+P(ruin)                                       7.75%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           7,478.42
-Median ending bankroll         $           7,431.25
-95% range [p2.5 .. p97.5]      $-10,275.00  ..  $25,113.75
-P(lose > 25%)                                33.90%
-P(lose > 50%)                                28.25%
-P(double bankroll)                           38.10%
+E[ending bankroll]             $          44,475.25
+Median ending bankroll         $          43,706.25
+95% range [p2.5 .. p97.5]      $-17,443.12  ..  $105,320.94
+P(lose > 25%)                                 9.30%
+P(lose > 50%)                                 8.85%
+P(double bankroll)                           86.75%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           4,686.45
-Median max drawdown            $           4,450.00
-95th pct max drawdown          $           7,425.62
-99th pct max drawdown          $           9,375.12
+Mean max drawdown              $           6,704.03
+Median max drawdown            $           6,475.00
+95th pct max drawdown          $           8,925.00
+99th pct max drawdown          $          10,400.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.7844%
-Avg session wagered            $         315,981.34
+RTP                                       101.9846%
+Avg session wagered            $       1,989,067.77
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.2
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min25_max2000_br5000_replays2000_shoes100.png
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min25_max2000_br5000_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$25 / max$2000  |  B0=$10,000
@@ -7277,7 +7277,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min25_max2000_br5000_
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -7285,64 +7285,64 @@ Sizer                          Kelly k=0.250 | B0=$10,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $      800
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
-Spread (max / min)                           32.00×
-Buckets at table min                             56
-Buckets at table max                              0
+Spread (max / min)                           80.00×
+Buckets at table min                             87
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                 25
 TC +2                          $                 25
 TC +3                          $                 25
-TC +4                          $                 25
+TC +4                          $                 50
 TC +5                          $                 50
-TC +6                          $                 50
+TC +6                          $                 75
 TC +7                          $                 75
-TC +8                          $                 75
+TC +8                          $                100
 TC +9                          $                100
-TC +10                         $                100
+TC +10                         $                125
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -401.41
-P(finish down)  (end < B0)                   55.80%
-P(ruin)                                       0.00%
+E[profit]  = E[end − B0]       $          +2,257.24
+P(finish down)  (end < B0)                   32.15%
+P(ruin)                                       0.80%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           9,598.59
-Median ending bankroll         $           9,706.25
-95% range [p2.5 .. p97.5]      $ 5,223.75  ..  $13,750.00
-P(lose > 25%)                                16.60%
-P(lose > 50%)                                 2.05%
-P(double bankroll)                            0.00%
+E[ending bankroll]             $          12,257.24
+Median ending bankroll         $          12,325.00
+95% range [p2.5 .. p97.5]      $ 2,437.50  ..  $21,700.62
+P(lose > 25%)                                16.75%
+P(lose > 50%)                                 6.90%
+P(double bankroll)                            5.60%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $             671.91
-Median max drawdown            $             637.50
-95th pct max drawdown          $             987.50
-99th pct max drawdown          $           1,200.00
+Mean max drawdown              $             864.44
+Median max drawdown            $             837.50
+95th pct max drawdown          $           1,125.00
+99th pct max drawdown          $           1,350.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6914%
-Avg session wagered            $         130,072.15
+RTP                                       100.4546%
+Avg session wagered            $         496,488.48
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.8
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -7350,76 +7350,11 @@ Sizer                          Kelly k=0.500 | B0=$10,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       25  /  $    1,625
-Median bucket bet              $                 25
-Spread (max / min)                           65.00×
-Buckets at table min                             52
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                 25
-TC +3                          $                 50
-TC +4                          $                 75
-TC +5                          $                100
-TC +6                          $                125
-TC +7                          $                150
-TC +8                          $                175
-TC +9                          $                200
-TC +10                         $                225
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -38.32
-P(finish down)  (end < B0)                   49.75%
-P(ruin)                                       0.00%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $           9,961.68
-Median ending bankroll         $          10,000.00
-95% range [p2.5 .. p97.5]      $ 4,074.69  ..  $15,950.62
-P(lose > 25%)                                19.90%
-P(lose > 50%)                                 4.45%
-P(double bankroll)                            0.00%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $           1,194.83
-Median max drawdown            $           1,137.50
-95th pct max drawdown          $           1,862.50
-99th pct max drawdown          $           2,275.12
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                        99.9751%
-Avg session wagered            $         153,869.12
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 0.750
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $          10,000.00
-Table min / max                 $25 / $2000
-Ruin mode                                       end
-Sizer                          Kelly k=0.750 | B0=$10,000 | min=$25 / max=$2000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
 Spread (max / min)                           80.00×
-Buckets at table min                             50
+Buckets at table min                             84
 Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
@@ -7428,64 +7363,64 @@ TC +1                          $                 25
 TC +2                          $                 50
 TC +3                          $                 75
 TC +4                          $                100
-TC +5                          $                150
-TC +6                          $                175
-TC +7                          $                225
-TC +8                          $                250
-TC +9                          $                300
-TC +10                         $                325
+TC +5                          $                125
+TC +6                          $                150
+TC +7                          $                150
+TC +8                          $                200
+TC +9                          $                200
+TC +10                         $                225
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +617.44
-P(finish down)  (end < B0)                   43.75%
-P(ruin)                                       0.20%
+E[profit]  = E[end − B0]       $          +7,421.49
+P(finish down)  (end < B0)                   18.95%
+P(ruin)                                       1.60%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          10,617.44
-Median ending bankroll         $          10,568.75
-95% range [p2.5 .. p97.5]      $ 3,036.25  ..  $18,300.62
-P(lose > 25%)                                21.45%
-P(lose > 50%)                                 7.50%
-P(double bankroll)                            0.80%
+E[ending bankroll]             $          17,421.49
+Median ending bankroll         $          17,550.00
+95% range [p2.5 .. p97.5]      $ 1,771.88  ..  $33,588.12
+P(lose > 25%)                                12.10%
+P(lose > 50%)                                 7.00%
+P(double bankroll)                           37.85%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,793.58
-Median max drawdown            $           1,687.50
-95th pct max drawdown          $           2,800.00
-99th pct max drawdown          $           3,650.12
+Mean max drawdown              $           1,675.70
+Median max drawdown            $           1,625.00
+95th pct max drawdown          $           2,225.00
+99th pct max drawdown          $           2,575.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.3398%
-Avg session wagered            $         181,683.69
+RTP                                       101.0649%
+Avg session wagered            $         696,942.00
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.6
+Avg shoes played                             1000.0
+Avg hands played                            13750.8
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.000
+KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
-Sizer                          Kelly k=1.000 | B0=$10,000 | min=$25 / max=$2000
+Sizer                          Kelly k=0.750 | B0=$10,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
 Spread (max / min)                           80.00×
-Buckets at table min                             50
-Buckets at table max                              2
+Buckets at table min                             83
+Buckets at table max                              3
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -7493,51 +7428,116 @@ TC +1                          $                 25
 TC +2                          $                 50
 TC +3                          $                100
 TC +4                          $                150
-TC +5                          $                200
-TC +6                          $                250
-TC +7                          $                300
-TC +8                          $                350
-TC +9                          $                400
-TC +10                         $                425
+TC +5                          $                175
+TC +6                          $                200
+TC +7                          $                250
+TC +8                          $                275
+TC +9                          $                325
+TC +10                         $                350
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +942.09
-P(finish down)  (end < B0)                   41.60%
-P(ruin)                                       1.80%
+E[profit]  = E[end − B0]       $         +12,933.24
+P(finish down)  (end < B0)                   14.35%
+P(ruin)                                       2.90%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          10,942.09
-Median ending bankroll         $          10,981.25
-95% range [p2.5 .. p97.5]      $ 1,011.25  ..  $20,763.44
-P(lose > 25%)                                24.15%
-P(lose > 50%)                                10.50%
-P(double bankroll)                            3.55%
+E[ending bankroll]             $          22,933.24
+Median ending bankroll         $          22,406.25
+95% range [p2.5 .. p97.5]      $  -539.37  ..  $46,463.75
+P(lose > 25%)                                10.10%
+P(lose > 50%)                                 6.10%
+P(double bankroll)                           58.35%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           2,378.99
-Median max drawdown            $           2,237.50
-95th pct max drawdown          $           3,800.00
-99th pct max drawdown          $           4,750.12
+Mean max drawdown              $           2,525.97
+Median max drawdown            $           2,450.00
+95th pct max drawdown          $           3,375.00
+99th pct max drawdown          $           3,900.12
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.4569%
-Avg session wagered            $         206,187.23
+RTP                                       101.4388%
+Avg session wagered            $         898,907.24
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13750.4
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 1.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $          10,000.00
+Table min / max                 $25 / $2000
+Ruin mode                                       end
+Sizer                          Kelly k=1.000 | B0=$10,000 | min=$25 / max=$2000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       25  /  $    2,000
+Median bucket bet              $                 25
+Spread (max / min)                           80.00×
+Buckets at table min                             83
+Buckets at table max                              7
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 25
+TC +2                          $                 75
+TC +3                          $                150
+TC +4                          $                175
+TC +5                          $                225
+TC +6                          $                275
+TC +7                          $                325
+TC +8                          $                375
+TC +9                          $                425
+TC +10                         $                450
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $         +17,601.71
+P(finish down)  (end < B0)                   12.95%
+P(ruin)                                       3.40%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $          27,601.71
+Median ending bankroll         $          27,725.00
+95% range [p2.5 .. p97.5]      $-2,386.87  ..  $58,977.50
+P(lose > 25%)                                 9.70%
+P(lose > 50%)                                 6.75%
+P(double bankroll)                           66.85%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $           3,362.72
+Median max drawdown            $           3,237.50
+95th pct max drawdown          $           4,512.50
+99th pct max drawdown          $           5,675.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.6226%
+Avg session wagered            $       1,084,768.79
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13751.4
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -7545,64 +7545,64 @@ Sizer                          Kelly k=1.250 | B0=$10,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
 Spread (max / min)                           80.00×
-Buckets at table min                             50
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              8
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                 75
-TC +3                          $                125
-TC +4                          $                175
-TC +5                          $                250
-TC +6                          $                300
-TC +7                          $                375
-TC +8                          $                425
-TC +9                          $                500
-TC +10                         $                525
+TC +1                          $                 50
+TC +2                          $                100
+TC +3                          $                175
+TC +4                          $                225
+TC +5                          $                300
+TC +6                          $                350
+TC +7                          $                400
+TC +8                          $                475
+TC +9                          $                525
+TC +10                         $                575
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,596.74
-P(finish down)  (end < B0)                   38.55%
-P(ruin)                                       2.45%
+E[profit]  = E[end − B0]       $         +23,707.59
+P(finish down)  (end < B0)                   11.15%
+P(ruin)                                       4.00%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          11,596.74
-Median ending bankroll         $          11,581.25
-95% range [p2.5 .. p97.5]      $   172.81  ..  $23,187.50
-P(lose > 25%)                                24.35%
-P(lose > 50%)                                13.10%
-P(double bankroll)                            7.75%
+E[ending bankroll]             $          33,707.59
+Median ending bankroll         $          33,906.25
+95% range [p2.5 .. p97.5]      $-5,476.56  ..  $72,242.19
+P(lose > 25%)                                 8.95%
+P(lose > 50%)                                 6.85%
+P(double bankroll)                           76.70%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           2,979.76
-Median max drawdown            $           2,775.00
-95th pct max drawdown          $           4,850.00
-99th pct max drawdown          $           5,975.50
+Mean max drawdown              $           4,186.69
+Median max drawdown            $           4,050.00
+95th pct max drawdown          $           5,637.50
+99th pct max drawdown          $           6,350.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.6788%
-Avg session wagered            $         235,235.54
+RTP                                       101.7723%
+Avg session wagered            $       1,337,639.23
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
+Avg shoes played                             1000.0
+Avg hands played                            13750.8
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -7610,64 +7610,64 @@ Sizer                          Kelly k=1.500 | B0=$10,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
 Spread (max / min)                           80.00×
-Buckets at table min                             49
-Buckets at table max                              2
+Buckets at table min                             82
+Buckets at table max                              9
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                 75
-TC +3                          $                150
-TC +4                          $                200
-TC +5                          $                300
-TC +6                          $                375
-TC +7                          $                450
-TC +8                          $                525
-TC +9                          $                600
-TC +10                         $                650
+TC +1                          $                 50
+TC +2                          $                125
+TC +3                          $                200
+TC +4                          $                275
+TC +5                          $                350
+TC +6                          $                425
+TC +7                          $                475
+TC +8                          $                575
+TC +9                          $                625
+TC +10                         $                700
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,679.36
-P(finish down)  (end < B0)                   39.70%
-P(ruin)                                       4.55%
+E[profit]  = E[end − B0]       $         +28,618.35
+P(finish down)  (end < B0)                   10.80%
+P(ruin)                                       4.35%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          11,679.36
-Median ending bankroll         $          11,800.00
-95% range [p2.5 .. p97.5]      $-1,740.94  ..  $24,676.56
-P(lose > 25%)                                26.50%
-P(lose > 50%)                                15.80%
-P(double bankroll)                           10.70%
+E[ending bankroll]             $          38,618.35
+Median ending bankroll         $          38,193.75
+95% range [p2.5 .. p97.5]      $-3,912.81  ..  $84,752.50
+P(lose > 25%)                                 8.50%
+P(lose > 50%)                                 6.70%
+P(double bankroll)                           77.90%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           3,515.24
-Median max drawdown            $           3,325.00
-95th pct max drawdown          $           5,625.00
-99th pct max drawdown          $           7,175.25
+Mean max drawdown              $           5,003.26
+Median max drawdown            $           4,825.00
+95th pct max drawdown          $           6,725.00
+99th pct max drawdown          $           7,700.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.6351%
-Avg session wagered            $         264,405.65
+RTP                                       101.8568%
+Avg session wagered            $       1,541,262.02
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
+Avg shoes played                             1000.0
+Avg hands played                            13751.0
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -7675,64 +7675,64 @@ Sizer                          Kelly k=2.000 | B0=$10,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
 Spread (max / min)                           80.00×
-Buckets at table min                             49
-Buckets at table max                              4
+Buckets at table min                             82
+Buckets at table max                             16
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                100
-TC +3                          $                200
-TC +4                          $                275
-TC +5                          $                400
-TC +6                          $                475
-TC +7                          $                600
-TC +8                          $                675
-TC +9                          $                800
-TC +10                         $                850
+TC +1                          $                 75
+TC +2                          $                150
+TC +3                          $                275
+TC +4                          $                375
+TC +5                          $                475
+TC +6                          $                550
+TC +7                          $                650
+TC +8                          $                750
+TC +9                          $                850
+TC +10                         $                925
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +2,513.09
-P(finish down)  (end < B0)                   39.15%
-P(ruin)                                       8.60%
+E[profit]  = E[end − B0]       $         +39,113.04
+P(finish down)  (end < B0)                   10.05%
+P(ruin)                                       5.75%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          12,513.09
-Median ending bankroll         $          12,725.00
-95% range [p2.5 .. p97.5]      $-5,550.00  ..  $30,679.37
-P(lose > 25%)                                29.25%
-P(lose > 50%)                                21.20%
-P(double bankroll)                           21.40%
+E[ending bankroll]             $          49,113.04
+Median ending bankroll         $          48,537.50
+95% range [p2.5 .. p97.5]      $-13,700.62  ..  $111,473.12
+P(lose > 25%)                                 8.65%
+P(lose > 50%)                                 7.50%
+P(double bankroll)                           82.95%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           4,734.60
-Median max drawdown            $           4,475.00
-95th pct max drawdown          $           7,551.25
-99th pct max drawdown          $           9,325.00
+Mean max drawdown              $           6,690.19
+Median max drawdown            $           6,475.00
+95th pct max drawdown          $           8,950.00
+99th pct max drawdown          $          10,225.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.7913%
-Avg session wagered            $         317,586.31
+RTP                                       101.9654%
+Avg session wagered            $       1,990,075.32
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
+Avg shoes played                             1000.0
+Avg hands played                            13751.1
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -7740,64 +7740,64 @@ Sizer                          Kelly k=2.500 | B0=$10,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
 Spread (max / min)                           80.00×
-Buckets at table min                             49
-Buckets at table max                              7
+Buckets at table min                             82
+Buckets at table max                             24
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                125
-TC +3                          $                250
-TC +4                          $                350
-TC +5                          $                475
-TC +6                          $                600
-TC +7                          $                750
-TC +8                          $                850
-TC +9                          $              1,000
-TC +10                         $              1,075
+TC +1                          $                 75
+TC +2                          $                200
+TC +3                          $                350
+TC +4                          $                450
+TC +5                          $                575
+TC +6                          $                700
+TC +7                          $                800
+TC +8                          $                950
+TC +9                          $              1,050
+TC +10                         $              1,150
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +3,643.06
-P(finish down)  (end < B0)                   37.65%
-P(ruin)                                      11.25%
+E[profit]  = E[end − B0]       $         +49,781.48
+P(finish down)  (end < B0)                   11.55%
+P(ruin)                                       6.45%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          13,643.06
-Median ending bankroll         $          13,487.50
-95% range [p2.5 .. p97.5]      $-8,653.75  ..  $35,740.62
-P(lose > 25%)                                29.30%
-P(lose > 50%)                                22.30%
-P(double bankroll)                           29.45%
+E[ending bankroll]             $          59,781.48
+Median ending bankroll         $          59,950.00
+95% range [p2.5 .. p97.5]      $-18,307.81  ..  $136,839.06
+P(lose > 25%)                                 9.95%
+P(lose > 50%)                                 8.50%
+P(double bankroll)                           84.05%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           5,759.84
-Median max drawdown            $           5,400.00
-95th pct max drawdown          $           8,962.50
-99th pct max drawdown          $          11,700.38
+Mean max drawdown              $           8,327.62
+Median max drawdown            $           8,075.00
+95th pct max drawdown          $          11,150.00
+99th pct max drawdown          $          12,700.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.9731%
-Avg session wagered            $         374,388.60
+RTP                                       102.0810%
+Avg session wagered            $       2,392,210.19
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -7805,64 +7805,64 @@ Sizer                          Kelly k=3.000 | B0=$10,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
 Spread (max / min)                           80.00×
-Buckets at table min                             49
-Buckets at table max                             10
+Buckets at table min                             82
+Buckets at table max                             36
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                150
-TC +3                          $                300
-TC +4                          $                425
-TC +5                          $                575
-TC +6                          $                725
-TC +7                          $                900
-TC +8                          $              1,025
-TC +9                          $              1,200
-TC +10                         $              1,275
+TC +1                          $                100
+TC +2                          $                225
+TC +3                          $                425
+TC +4                          $                550
+TC +5                          $                700
+TC +6                          $                825
+TC +7                          $                975
+TC +8                          $              1,125
+TC +9                          $              1,275
+TC +10                         $              1,375
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +4,649.11
-P(finish down)  (end < B0)                   35.45%
-P(ruin)                                      14.60%
+E[profit]  = E[end − B0]       $         +59,980.29
+P(finish down)  (end < B0)                    9.95%
+P(ruin)                                       6.85%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          14,649.11
-Median ending bankroll         $          14,762.50
-95% range [p2.5 .. p97.5]      $-11,867.81  ..  $41,267.50
-P(lose > 25%)                                29.20%
-P(lose > 50%)                                23.55%
-P(double bankroll)                           34.75%
+E[ending bankroll]             $          69,980.29
+Median ending bankroll         $          70,956.25
+95% range [p2.5 .. p97.5]      $-22,007.50  ..  $166,944.37
+P(lose > 25%)                                 9.15%
+P(lose > 50%)                                 8.60%
+P(double bankroll)                           85.10%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           6,983.27
-Median max drawdown            $           6,637.50
-95th pct max drawdown          $          10,903.12
-99th pct max drawdown          $          13,900.00
+Mean max drawdown              $           9,869.98
+Median max drawdown            $           9,562.50
+95th pct max drawdown          $          13,066.87
+99th pct max drawdown          $          15,226.75
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       101.0851%
-Avg session wagered            $         428,459.53
+RTP                                       102.1332%
+Avg session wagered            $       2,811,690.42
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13751.4
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 4.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $25 / $2000
 Ruin mode                                       end
@@ -7870,60 +7870,60 @@ Sizer                          Kelly k=4.000 | B0=$10,000 | min=$25 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       25  /  $    2,000
 Median bucket bet              $                 25
 Spread (max / min)                           80.00×
-Buckets at table min                             49
-Buckets at table max                             15
+Buckets at table min                             82
+Buckets at table max                             46
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 25
-TC +2                          $                200
-TC +3                          $                400
-TC +4                          $                575
-TC +5                          $                775
-TC +6                          $                975
-TC +7                          $              1,200
-TC +8                          $              1,375
-TC +9                          $              1,600
-TC +10                         $              1,700
+TC +1                          $                125
+TC +2                          $                325
+TC +3                          $                550
+TC +4                          $                725
+TC +5                          $                925
+TC +6                          $              1,100
+TC +7                          $              1,300
+TC +8                          $              1,500
+TC +9                          $              1,675
+TC +10                         $              1,850
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +6,195.21
-P(finish down)  (end < B0)                   36.55%
-P(ruin)                                      18.85%
+E[profit]  = E[end − B0]       $         +79,144.70
+P(finish down)  (end < B0)                   10.35%
+P(ruin)                                       7.60%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          16,195.21
-Median ending bankroll         $          16,281.25
-95% range [p2.5 .. p97.5]      $-19,700.31  ..  $51,280.31
-P(lose > 25%)                                31.50%
-P(lose > 50%)                                27.30%
-P(double bankroll)                           42.25%
+E[ending bankroll]             $          89,144.70
+Median ending bankroll         $          88,231.25
+95% range [p2.5 .. p97.5]      $-28,079.38  ..  $208,791.56
+P(lose > 25%)                                 9.40%
+P(lose > 50%)                                 8.75%
+P(double bankroll)                           86.15%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           9,244.97
-Median max drawdown            $           8,762.50
-95th pct max drawdown          $          14,625.62
-99th pct max drawdown          $          17,262.88
+Mean max drawdown              $          12,344.13
+Median max drawdown            $          12,100.00
+95th pct max drawdown          $          16,001.87
+99th pct max drawdown          $          18,125.25
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       101.1560%
-Avg session wagered            $         535,928.87
+RTP                                       102.1808%
+Avg session wagered            $       3,629,132.59
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13750.8
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min25_max2000_br10000_replays2000_shoes100.png
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min25_max2000_br10000_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$50 / max$2000  |  B0=$1,000
@@ -7933,7 +7933,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min25_max2000_br10000
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -7941,11 +7941,11 @@ Sizer                          Kelly k=0.250 | B0=$1,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      100
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    1,000
 Median bucket bet              $                 50
-Spread (max / min)                            2.00×
-Buckets at table min                             87
+Spread (max / min)                           20.00×
+Buckets at table min                            146
 Buckets at table max                              0
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
@@ -7963,42 +7963,42 @@ TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,122.88
-P(finish down)  (end < B0)                   61.25%
-P(ruin)                                      51.40%
+E[profit]  = E[end − B0]       $          -2,304.32
+P(finish down)  (end < B0)                   62.45%
+P(ruin)                                      58.20%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $            -122.88
-Median ending bankroll         $            -125.00
-95% range [p2.5 .. p97.5]      $-8,001.25  ..  $ 7,400.62
-P(lose > 25%)                                58.10%
-P(lose > 50%)                                55.75%
-P(double bankroll)                           29.75%
+E[ending bankroll]             $          -1,304.33
+Median ending bankroll         $          -1,375.00
+95% range [p2.5 .. p97.5]      $-14,525.62  ..  $11,903.75
+P(lose > 25%)                                61.15%
+P(lose > 50%)                                60.20%
+P(double bankroll)                           32.70%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,068.31
-Median max drawdown            $           1,050.00
-95th pct max drawdown          $           1,301.25
-99th pct max drawdown          $           1,450.00
+Mean max drawdown              $             686.54
+Median max drawdown            $             675.00
+95th pct max drawdown          $             800.00
+99th pct max drawdown          $             850.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5435%
-Avg session wagered            $         245,983.21
+RTP                                        99.7072%
+Avg session wagered            $         786,985.71
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13751.2
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8006,12 +8006,12 @@ Sizer                          Kelly k=0.500 | B0=$1,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      150
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                            3.00×
-Buckets at table min                             86
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                            140
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8028,42 +8028,42 @@ TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,319.11
-P(finish down)  (end < B0)                   63.85%
-P(ruin)                                      53.85%
+E[profit]  = E[end − B0]       $          -2,472.36
+P(finish down)  (end < B0)                   64.95%
+P(ruin)                                      58.80%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $            -319.11
-Median ending bankroll         $            -300.00
-95% range [p2.5 .. p97.5]      $-7,750.00  ..  $ 6,850.62
-P(lose > 25%)                                60.75%
-P(lose > 50%)                                58.15%
-P(double bankroll)                           27.55%
+E[ending bankroll]             $          -1,472.36
+Median ending bankroll         $          -1,437.50
+95% range [p2.5 .. p97.5]      $-14,375.00  ..  $11,375.00
+P(lose > 25%)                                63.40%
+P(lose > 50%)                                61.70%
+P(double bankroll)                           28.75%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,072.26
-Median max drawdown            $           1,050.00
-95th pct max drawdown          $           1,300.00
-99th pct max drawdown          $           1,450.00
+Mean max drawdown              $             688.31
+Median max drawdown            $             700.00
+95th pct max drawdown          $             800.00
+99th pct max drawdown          $             850.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4637%
-Avg session wagered            $         245,964.00
+RTP                                        99.6858%
+Avg session wagered            $         786,910.38
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13750.4
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8071,12 +8071,12 @@ Sizer                          Kelly k=0.750 | B0=$1,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      250
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                            5.00×
-Buckets at table min                             84
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                            132
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8093,42 +8093,42 @@ TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,251.50
-P(finish down)  (end < B0)                   62.35%
-P(ruin)                                      52.05%
+E[profit]  = E[end − B0]       $          -2,569.06
+P(finish down)  (end < B0)                   63.85%
+P(ruin)                                      59.40%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $            -251.50
-Median ending bankroll         $            -200.00
-95% range [p2.5 .. p97.5]      $-8,325.62  ..  $ 7,426.25
-P(lose > 25%)                                60.00%
-P(lose > 50%)                                57.00%
-P(double bankroll)                           28.80%
+E[ending bankroll]             $          -1,569.06
+Median ending bankroll         $          -1,575.00
+95% range [p2.5 .. p97.5]      $-15,075.62  ..  $12,051.87
+P(lose > 25%)                                62.55%
+P(lose > 50%)                                61.45%
+P(double bankroll)                           31.45%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,069.46
-Median max drawdown            $           1,050.00
-95th pct max drawdown          $           1,325.00
-99th pct max drawdown          $           1,450.00
+Mean max drawdown              $             686.36
+Median max drawdown            $             700.00
+95th pct max drawdown          $             800.00
+99th pct max drawdown          $             850.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4912%
-Avg session wagered            $         245,961.79
+RTP                                        99.6735%
+Avg session wagered            $         786,892.61
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8136,12 +8136,12 @@ Sizer                          Kelly k=1.000 | B0=$1,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      300
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                            6.00×
-Buckets at table min                             79
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                            115
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8158,42 +8158,42 @@ TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,250.00
-P(finish down)  (end < B0)                   62.65%
-P(ruin)                                      53.45%
+E[profit]  = E[end − B0]       $          -2,239.80
+P(finish down)  (end < B0)                   63.65%
+P(ruin)                                      58.20%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $            -250.00
-Median ending bankroll         $            -250.00
-95% range [p2.5 .. p97.5]      $-7,675.00  ..  $ 7,475.00
-P(lose > 25%)                                60.65%
-P(lose > 50%)                                58.50%
-P(double bankroll)                           28.45%
+E[ending bankroll]             $          -1,239.80
+Median ending bankroll         $          -1,200.00
+95% range [p2.5 .. p97.5]      $-14,000.62  ..  $11,900.00
+P(lose > 25%)                                62.00%
+P(lose > 50%)                                60.70%
+P(double bankroll)                           31.40%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,062.16
-Median max drawdown            $           1,050.00
-95th pct max drawdown          $           1,300.00
-99th pct max drawdown          $           1,450.00
+Mean max drawdown              $             686.59
+Median max drawdown            $             675.00
+95th pct max drawdown          $             800.00
+99th pct max drawdown          $             850.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4918%
-Avg session wagered            $         245,961.52
+RTP                                        99.7155%
+Avg session wagered            $         787,213.91
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13750.8
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8201,12 +8201,12 @@ Sizer                          Kelly k=1.250 | B0=$1,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      400
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                            8.00×
-Buckets at table min                             78
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                            107
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8223,42 +8223,42 @@ TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,295.85
-P(finish down)  (end < B0)                   62.45%
-P(ruin)                                      53.65%
+E[profit]  = E[end − B0]       $          -2,446.18
+P(finish down)  (end < B0)                   63.20%
+P(ruin)                                      58.00%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $            -295.85
-Median ending bankroll         $            -325.00
-95% range [p2.5 .. p97.5]      $-7,950.00  ..  $ 7,500.62
-P(lose > 25%)                                60.25%
-P(lose > 50%)                                57.95%
-P(double bankroll)                           28.00%
+E[ending bankroll]             $          -1,446.17
+Median ending bankroll         $          -1,412.50
+95% range [p2.5 .. p97.5]      $-14,901.88  ..  $12,000.00
+P(lose > 25%)                                61.75%
+P(lose > 50%)                                60.10%
+P(double bankroll)                           30.50%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,070.80
-Median max drawdown            $           1,050.00
-95th pct max drawdown          $           1,325.00
-99th pct max drawdown          $           1,400.00
+Mean max drawdown              $             694.41
+Median max drawdown            $             700.00
+95th pct max drawdown          $             800.00
+99th pct max drawdown          $             875.25
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4733%
-Avg session wagered            $         246,018.27
+RTP                                        99.6900%
+Avg session wagered            $         788,980.07
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13752.5
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8266,12 +8266,12 @@ Sizer                          Kelly k=1.500 | B0=$1,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      500
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           10.00×
-Buckets at table min                             73
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                            102
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8288,42 +8288,42 @@ TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,259.95
-P(finish down)  (end < B0)                   63.45%
-P(ruin)                                      53.35%
+E[profit]  = E[end − B0]       $          -2,099.86
+P(finish down)  (end < B0)                   62.30%
+P(ruin)                                      55.85%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $            -259.95
-Median ending bankroll         $            -275.00
-95% range [p2.5 .. p97.5]      $-7,601.88  ..  $ 7,201.87
-P(lose > 25%)                                61.30%
-P(lose > 50%)                                58.00%
-P(double bankroll)                           27.75%
+E[ending bankroll]             $          -1,099.86
+Median ending bankroll         $            -862.50
+95% range [p2.5 .. p97.5]      $-14,350.00  ..  $12,275.62
+P(lose > 25%)                                60.75%
+P(lose > 50%)                                58.90%
+P(double bankroll)                           32.70%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,073.12
-Median max drawdown            $           1,050.00
-95th pct max drawdown          $           1,325.00
-99th pct max drawdown          $           1,450.25
+Mean max drawdown              $             717.92
+Median max drawdown            $             700.00
+95th pct max drawdown          $             850.00
+99th pct max drawdown          $             950.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4880%
-Avg session wagered            $         246,079.94
+RTP                                        99.7352%
+Avg session wagered            $         793,086.26
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.2
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8331,12 +8331,12 @@ Sizer                          Kelly k=2.000 | B0=$1,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      650
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           13.00×
-Buckets at table min                             66
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                             96
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8347,48 +8347,48 @@ TC +4                          $                 50
 TC +5                          $                 50
 TC +6                          $                 50
 TC +7                          $                 50
-TC +8                          $                 50
+TC +8                          $                100
 TC +9                          $                100
 TC +10                         $                100
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,286.22
-P(finish down)  (end < B0)                   62.75%
-P(ruin)                                      52.35%
+E[profit]  = E[end − B0]       $          -1,542.60
+P(finish down)  (end < B0)                   58.40%
+P(ruin)                                      52.65%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $            -286.23
-Median ending bankroll         $            -187.50
-95% range [p2.5 .. p97.5]      $-7,650.62  ..  $ 7,125.00
-P(lose > 25%)                                60.00%
-P(lose > 50%)                                57.10%
-P(double bankroll)                           27.60%
+E[ending bankroll]             $            -542.60
+Median ending bankroll         $            -437.50
+95% range [p2.5 .. p97.5]      $-14,677.50  ..  $13,675.62
+P(lose > 25%)                                56.85%
+P(lose > 50%)                                55.15%
+P(double bankroll)                           35.20%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,077.26
-Median max drawdown            $           1,050.00
-95th pct max drawdown          $           1,325.00
-99th pct max drawdown          $           1,500.00
+Mean max drawdown              $             806.16
+Median max drawdown            $             800.00
+95th pct max drawdown          $           1,000.00
+99th pct max drawdown          $           1,150.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4783%
-Avg session wagered            $         246,525.33
+RTP                                        99.8093%
+Avg session wagered            $         808,973.97
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13751.0
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8396,12 +8396,12 @@ Sizer                          Kelly k=2.500 | B0=$1,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      800
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           16.00×
-Buckets at table min                             62
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                             93
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8418,42 +8418,42 @@ TC +10                         $                100
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,139.17
-P(finish down)  (end < B0)                   60.65%
-P(ruin)                                      52.00%
+E[profit]  = E[end − B0]       $            -600.44
+P(finish down)  (end < B0)                   53.45%
+P(ruin)                                      48.90%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $            -139.18
-Median ending bankroll         $            -175.00
-95% range [p2.5 .. p97.5]      $-7,875.00  ..  $ 7,325.00
-P(lose > 25%)                                58.80%
-P(lose > 50%)                                56.80%
-P(double bankroll)                           28.95%
+E[ending bankroll]             $             399.56
+Median ending bankroll         $             237.50
+95% range [p2.5 .. p97.5]      $-14,103.75  ..  $14,626.87
+P(lose > 25%)                                52.20%
+P(lose > 50%)                                51.30%
+P(double bankroll)                           41.55%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,094.62
-Median max drawdown            $           1,075.00
-95th pct max drawdown          $           1,350.00
-99th pct max drawdown          $           1,525.00
+Mean max drawdown              $             940.95
+Median max drawdown            $             900.00
+95th pct max drawdown          $           1,200.00
+99th pct max drawdown          $           1,400.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5411%
-Avg session wagered            $         248,238.12
+RTP                                        99.9278%
+Avg session wagered            $         831,240.85
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13750.9
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8461,12 +8461,12 @@ Sizer                          Kelly k=3.000 | B0=$1,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      950
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           19.00×
-Buckets at table min                             61
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                             91
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8475,50 +8475,50 @@ TC +2                          $                 50
 TC +3                          $                 50
 TC +4                          $                 50
 TC +5                          $                 50
-TC +6                          $                 50
+TC +6                          $                100
 TC +7                          $                100
 TC +8                          $                100
-TC +9                          $                100
+TC +9                          $                150
 TC +10                         $                150
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,165.81
-P(finish down)  (end < B0)                   62.85%
-P(ruin)                                      52.75%
+E[profit]  = E[end − B0]       $            +479.70
+P(finish down)  (end < B0)                   47.55%
+P(ruin)                                      42.70%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $            -165.81
-Median ending bankroll         $            -175.00
-95% range [p2.5 .. p97.5]      $-7,500.62  ..  $ 7,500.00
-P(lose > 25%)                                60.15%
-P(lose > 50%)                                57.55%
-P(double bankroll)                           28.80%
+E[ending bankroll]             $           1,479.70
+Median ending bankroll         $           1,350.00
+95% range [p2.5 .. p97.5]      $-13,704.38  ..  $16,677.50
+P(lose > 25%)                                46.10%
+P(lose > 50%)                                44.95%
+P(double bankroll)                           46.85%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,116.92
-Median max drawdown            $           1,100.00
-95th pct max drawdown          $           1,425.00
-99th pct max drawdown          $           1,650.00
+Mean max drawdown              $           1,094.97
+Median max drawdown            $           1,050.00
+95th pct max drawdown          $           1,450.00
+99th pct max drawdown          $           1,600.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5323%
-Avg session wagered            $         249,258.52
+RTP                                       100.0559%
+Avg session wagered            $         857,960.89
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13752.0
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 4.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           1,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8526,12 +8526,12 @@ Sizer                          Kelly k=4.000 | B0=$1,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $    1,300
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           26.00×
-Buckets at table min                             57
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                             89
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8541,45 +8541,45 @@ TC +3                          $                 50
 TC +4                          $                 50
 TC +5                          $                100
 TC +6                          $                100
-TC +7                          $                100
+TC +7                          $                150
 TC +8                          $                150
 TC +9                          $                150
-TC +10                         $                150
+TC +10                         $                200
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -883.50
-P(finish down)  (end < B0)                   58.00%
-P(ruin)                                      49.00%
+E[profit]  = E[end − B0]       $          +1,771.12
+P(finish down)  (end < B0)                   41.75%
+P(ruin)                                      37.05%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             116.50
-Median ending bankroll         $             137.50
-95% range [p2.5 .. p97.5]      $-7,700.62  ..  $ 7,901.87
-P(lose > 25%)                                55.95%
-P(lose > 50%)                                53.50%
-P(double bankroll)                           32.65%
+E[ending bankroll]             $           2,771.12
+Median ending bankroll         $           2,625.00
+95% range [p2.5 .. p97.5]      $-13,450.62  ..  $19,275.62
+P(lose > 25%)                                40.25%
+P(lose > 50%)                                39.05%
+P(double bankroll)                           53.30%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,219.81
-Median max drawdown            $           1,175.00
-95th pct max drawdown          $           1,650.00
-99th pct max drawdown          $           1,950.00
+Mean max drawdown              $           1,398.85
+Median max drawdown            $           1,350.00
+95th pct max drawdown          $           1,850.00
+99th pct max drawdown          $           2,126.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6539%
-Avg session wagered            $         255,255.69
+RTP                                       100.1942%
+Avg session wagered            $         911,895.78
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
+Avg shoes played                             1000.0
+Avg hands played                            13751.8
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min50_max2000_br1000_replays2000_shoes100.png
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min50_max2000_br1000_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$50 / max$2000  |  B0=$2,000
@@ -8589,7 +8589,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min50_max2000_br1000_
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8597,12 +8597,12 @@ Sizer                          Kelly k=0.250 | B0=$2,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      150
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                            3.00×
-Buckets at table min                             86
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                            140
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8619,42 +8619,42 @@ TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,136.46
-P(finish down)  (end < B0)                   61.30%
-P(ruin)                                      41.10%
+E[profit]  = E[end − B0]       $          -2,686.03
+P(finish down)  (end < B0)                   65.75%
+P(ruin)                                      53.85%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             863.54
-Median ending bankroll         $             900.00
-95% range [p2.5 .. p97.5]      $-6,650.62  ..  $ 8,650.00
-P(lose > 25%)                                56.30%
-P(lose > 50%)                                50.90%
-P(double bankroll)                           20.55%
+E[ending bankroll]             $            -686.02
+Median ending bankroll         $            -662.50
+95% range [p2.5 .. p97.5]      $-14,025.62  ..  $12,554.37
+P(lose > 25%)                                62.65%
+P(lose > 50%)                                59.35%
+P(double bankroll)                           24.30%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,068.92
-Median max drawdown            $           1,050.00
-95th pct max drawdown          $           1,300.00
-99th pct max drawdown          $           1,450.00
+Mean max drawdown              $             686.95
+Median max drawdown            $             700.00
+95th pct max drawdown          $             800.00
+99th pct max drawdown          $             850.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5379%
-Avg session wagered            $         245,946.60
+RTP                                        99.6587%
+Avg session wagered            $         786,950.70
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13752.1
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8662,12 +8662,12 @@ Sizer                          Kelly k=0.500 | B0=$2,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      300
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                            6.00×
-Buckets at table min                             79
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                            115
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8684,42 +8684,42 @@ TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,234.78
-P(finish down)  (end < B0)                   61.40%
-P(ruin)                                      41.70%
+E[profit]  = E[end − B0]       $          -2,341.19
+P(finish down)  (end < B0)                   61.85%
+P(ruin)                                      51.60%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             765.23
-Median ending bankroll         $             862.50
-95% range [p2.5 .. p97.5]      $-6,876.88  ..  $ 7,926.25
-P(lose > 25%)                                56.35%
-P(lose > 50%)                                51.05%
-P(double bankroll)                           19.25%
+E[ending bankroll]             $            -341.19
+Median ending bankroll         $            -262.50
+95% range [p2.5 .. p97.5]      $-13,475.00  ..  $12,750.62
+P(lose > 25%)                                59.50%
+P(lose > 50%)                                56.60%
+P(double bankroll)                           26.10%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,073.76
-Median max drawdown            $           1,050.00
-95th pct max drawdown          $           1,325.00
-99th pct max drawdown          $           1,475.00
+Mean max drawdown              $             690.42
+Median max drawdown            $             700.00
+95th pct max drawdown          $             800.00
+99th pct max drawdown          $             850.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4980%
-Avg session wagered            $         245,963.89
+RTP                                        99.7026%
+Avg session wagered            $         787,287.00
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8727,12 +8727,12 @@ Sizer                          Kelly k=0.750 | B0=$2,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      500
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           10.00×
-Buckets at table min                             73
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                            102
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8749,42 +8749,42 @@ TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,169.03
-P(finish down)  (end < B0)                   61.65%
-P(ruin)                                      42.55%
+E[profit]  = E[end − B0]       $          -2,132.57
+P(finish down)  (end < B0)                   61.35%
+P(ruin)                                      50.75%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             830.98
-Median ending bankroll         $             750.00
-95% range [p2.5 .. p97.5]      $-6,627.50  ..  $ 8,500.62
-P(lose > 25%)                                56.55%
-P(lose > 50%)                                51.95%
-P(double bankroll)                           20.10%
+E[ending bankroll]             $            -132.57
+Median ending bankroll         $             -50.00
+95% range [p2.5 .. p97.5]      $-13,953.12  ..  $13,125.00
+P(lose > 25%)                                59.15%
+P(lose > 50%)                                56.20%
+P(double bankroll)                           27.60%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,071.45
-Median max drawdown            $           1,050.00
-95th pct max drawdown          $           1,300.00
-99th pct max drawdown          $           1,450.00
+Mean max drawdown              $             715.58
+Median max drawdown            $             700.00
+95th pct max drawdown          $             850.00
+99th pct max drawdown          $             950.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5249%
-Avg session wagered            $         246,078.98
+RTP                                        99.7311%
+Avg session wagered            $         793,136.54
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13750.5
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8792,12 +8792,12 @@ Sizer                          Kelly k=1.000 | B0=$2,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      650
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           13.00×
-Buckets at table min                             66
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                             96
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8808,48 +8808,48 @@ TC +4                          $                 50
 TC +5                          $                 50
 TC +6                          $                 50
 TC +7                          $                 50
-TC +8                          $                 50
+TC +8                          $                100
 TC +9                          $                100
 TC +10                         $                100
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,268.89
-P(finish down)  (end < B0)                   61.35%
-P(ruin)                                      42.00%
+E[profit]  = E[end − B0]       $          -1,596.04
+P(finish down)  (end < B0)                   57.40%
+P(ruin)                                      46.75%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             731.11
-Median ending bankroll         $             800.00
-95% range [p2.5 .. p97.5]      $-6,650.62  ..  $ 7,701.25
-P(lose > 25%)                                56.45%
-P(lose > 50%)                                51.35%
-P(double bankroll)                           20.05%
+E[ending bankroll]             $             403.96
+Median ending bankroll         $             737.50
+95% range [p2.5 .. p97.5]      $-14,175.62  ..  $13,650.62
+P(lose > 25%)                                54.60%
+P(lose > 50%)                                51.80%
+P(double bankroll)                           31.35%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,082.09
-Median max drawdown            $           1,075.00
-95th pct max drawdown          $           1,350.00
-99th pct max drawdown          $           1,500.00
+Mean max drawdown              $             799.46
+Median max drawdown            $             775.00
+95th pct max drawdown          $           1,000.00
+99th pct max drawdown          $           1,150.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4854%
-Avg session wagered            $         246,563.16
+RTP                                        99.8027%
+Avg session wagered            $         808,957.46
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.4
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8857,12 +8857,12 @@ Sizer                          Kelly k=1.250 | B0=$2,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      800
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           16.00×
-Buckets at table min                             62
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                             93
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8879,42 +8879,42 @@ TC +10                         $                100
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,191.64
-P(finish down)  (end < B0)                   60.95%
-P(ruin)                                      41.15%
+E[profit]  = E[end − B0]       $            -714.05
+P(finish down)  (end < B0)                   53.15%
+P(ruin)                                      42.15%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             808.36
-Median ending bankroll         $             937.50
-95% range [p2.5 .. p97.5]      $-7,100.62  ..  $ 8,375.00
-P(lose > 25%)                                56.15%
-P(lose > 50%)                                50.60%
-P(double bankroll)                           20.25%
+E[ending bankroll]             $           1,285.95
+Median ending bankroll         $           1,412.50
+95% range [p2.5 .. p97.5]      $-13,827.50  ..  $15,775.00
+P(lose > 25%)                                50.35%
+P(lose > 50%)                                48.00%
+P(double bankroll)                           36.45%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,099.67
-Median max drawdown            $           1,075.00
-95th pct max drawdown          $           1,375.00
-99th pct max drawdown          $           1,575.25
+Mean max drawdown              $             947.50
+Median max drawdown            $             925.00
+95th pct max drawdown          $           1,226.25
+99th pct max drawdown          $           1,400.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5200%
-Avg session wagered            $         248,236.54
+RTP                                        99.9141%
+Avg session wagered            $         831,171.55
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13750.7
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8922,12 +8922,12 @@ Sizer                          Kelly k=1.500 | B0=$2,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      950
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           19.00×
-Buckets at table min                             61
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                             91
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -8936,50 +8936,50 @@ TC +2                          $                 50
 TC +3                          $                 50
 TC +4                          $                 50
 TC +5                          $                 50
-TC +6                          $                 50
+TC +6                          $                100
 TC +7                          $                100
 TC +8                          $                100
-TC +9                          $                100
+TC +9                          $                150
 TC +10                         $                150
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,125.41
-P(finish down)  (end < B0)                   61.10%
-P(ruin)                                      42.90%
+E[profit]  = E[end − B0]       $            +364.84
+P(finish down)  (end < B0)                   48.90%
+P(ruin)                                      38.55%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             874.59
-Median ending bankroll         $             825.00
-95% range [p2.5 .. p97.5]      $-6,701.25  ..  $ 8,676.25
-P(lose > 25%)                                56.45%
-P(lose > 50%)                                51.35%
-P(double bankroll)                           22.50%
+E[ending bankroll]             $           2,364.84
+Median ending bankroll         $           2,312.50
+95% range [p2.5 .. p97.5]      $-13,575.62  ..  $17,353.75
+P(lose > 25%)                                45.95%
+P(lose > 50%)                                43.20%
+P(double bankroll)                           42.30%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,119.58
-Median max drawdown            $           1,100.00
-95th pct max drawdown          $           1,400.00
-99th pct max drawdown          $           1,650.00
+Mean max drawdown              $           1,094.80
+Median max drawdown            $           1,050.00
+95th pct max drawdown          $           1,450.00
+99th pct max drawdown          $           1,701.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5486%
-Avg session wagered            $         249,303.79
+RTP                                       100.0425%
+Avg session wagered            $         857,797.72
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
+Avg shoes played                             1000.0
+Avg hands played                            13752.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -8987,77 +8987,12 @@ Sizer                          Kelly k=2.000 | B0=$2,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $    1,300
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           26.00×
-Buckets at table min                             57
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 50
-TC +2                          $                 50
-TC +3                          $                 50
-TC +4                          $                 50
-TC +5                          $                100
-TC +6                          $                100
-TC +7                          $                100
-TC +8                          $                150
-TC +9                          $                150
-TC +10                         $                150
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,052.28
-P(finish down)  (end < B0)                   58.70%
-P(ruin)                                      41.20%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $             947.73
-Median ending bankroll         $           1,000.00
-95% range [p2.5 .. p97.5]      $-6,950.62  ..  $ 8,851.87
-P(lose > 25%)                                54.90%
-P(lose > 50%)                                49.85%
-P(double bankroll)                           23.40%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $           1,227.28
-Median max drawdown            $           1,175.00
-95th pct max drawdown          $           1,700.00
-99th pct max drawdown          $           2,025.00
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                        99.5878%
-Avg session wagered            $         255,267.41
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.500
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $           2,000.00
-Table min / max                 $50 / $2000
-Ruin mode                                       end
-Sizer                          Kelly k=2.500 | B0=$2,000 | min=$50 / max=$2000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $    1,600
-Median bucket bet              $                 50
-Spread (max / min)                           32.00×
-Buckets at table min                             56
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                             89
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -9069,60 +9004,60 @@ TC +5                          $                100
 TC +6                          $                100
 TC +7                          $                150
 TC +8                          $                150
-TC +9                          $                200
+TC +9                          $                150
 TC +10                         $                200
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,058.50
-P(finish down)  (end < B0)                   61.00%
-P(ruin)                                      40.70%
+E[profit]  = E[end − B0]       $          +2,128.60
+P(finish down)  (end < B0)                   40.40%
+P(ruin)                                      31.45%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $             941.50
-Median ending bankroll         $             975.00
-95% range [p2.5 .. p97.5]      $-7,350.62  ..  $ 9,600.00
-P(lose > 25%)                                55.80%
-P(lose > 50%)                                50.30%
-P(double bankroll)                           23.00%
+E[ending bankroll]             $           4,128.60
+Median ending bankroll         $           3,875.00
+95% range [p2.5 .. p97.5]      $-12,977.50  ..  $21,577.50
+P(lose > 25%)                                37.80%
+P(lose > 50%)                                35.50%
+P(double bankroll)                           49.55%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,360.62
-Median max drawdown            $           1,275.00
-95th pct max drawdown          $           2,000.00
-99th pct max drawdown          $           2,550.00
+Mean max drawdown              $           1,396.78
+Median max drawdown            $           1,350.00
+95th pct max drawdown          $           1,850.00
+99th pct max drawdown          $           2,100.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5929%
-Avg session wagered            $         260,005.83
+RTP                                       100.2334%
+Avg session wagered            $         912,052.28
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.8
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 3.000
+KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
-Sizer                          Kelly k=3.000 | B0=$2,000 | min=$50 / max=$2000
+Sizer                          Kelly k=2.500 | B0=$2,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $    1,950
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           39.00×
-Buckets at table min                             55
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                             87
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -9132,61 +9067,61 @@ TC +3                          $                 50
 TC +4                          $                100
 TC +5                          $                100
 TC +6                          $                150
-TC +7                          $                200
+TC +7                          $                150
 TC +8                          $                200
-TC +9                          $                250
+TC +9                          $                200
 TC +10                         $                250
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -729.33
-P(finish down)  (end < B0)                   56.10%
-P(ruin)                                      39.40%
+E[profit]  = E[end − B0]       $          +4,514.90
+P(finish down)  (end < B0)                   32.65%
+P(ruin)                                      25.20%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,270.67
-Median ending bankroll         $           1,287.50
-95% range [p2.5 .. p97.5]      $-7,700.62  ..  $10,025.62
-P(lose > 25%)                                51.90%
-P(lose > 50%)                                47.85%
-P(double bankroll)                           28.15%
+E[ending bankroll]             $           6,514.90
+Median ending bankroll         $           6,462.50
+95% range [p2.5 .. p97.5]      $-12,306.25  ..  $25,725.62
+P(lose > 25%)                                30.35%
+P(lose > 50%)                                28.50%
+P(double bankroll)                           59.90%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,569.80
-Median max drawdown            $           1,500.00
-95th pct max drawdown          $           2,400.00
-99th pct max drawdown          $           2,850.25
+Mean max drawdown              $           1,726.89
+Median max drawdown            $           1,675.00
+95th pct max drawdown          $           2,275.00
+99th pct max drawdown          $           2,650.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.7279%
-Avg session wagered            $         268,073.34
+RTP                                       100.4546%
+Avg session wagered            $         993,221.29
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.1
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 4.000
+KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           2,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
-Sizer                          Kelly k=4.000 | B0=$2,000 | min=$50 / max=$2000
+Sizer                          Kelly k=3.000 | B0=$2,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
 Spread (max / min)                           40.00×
-Buckets at table min                             53
+Buckets at table min                             86
 Buckets at table max                              2
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
@@ -9196,46 +9131,111 @@ TC +2                          $                 50
 TC +3                          $                100
 TC +4                          $                100
 TC +5                          $                150
+TC +6                          $                150
+TC +7                          $                200
+TC +8                          $                250
+TC +9                          $                250
+TC +10                         $                300
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +6,846.40
+P(finish down)  (end < B0)                   26.70%
+P(ruin)                                      21.30%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $           8,846.40
+Median ending bankroll         $           9,100.00
+95% range [p2.5 .. p97.5]      $-12,626.25  ..  $30,701.25
+P(lose > 25%)                                25.30%
+P(lose > 50%)                                23.85%
+P(double bankroll)                           67.00%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $           2,043.79
+Median max drawdown            $           2,000.00
+95th pct max drawdown          $           2,700.00
+99th pct max drawdown          $           3,050.25
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       100.6380%
+Avg session wagered            $       1,073,114.95
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13751.8
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 4.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $           2,000.00
+Table min / max                 $50 / $2000
+Ruin mode                                       end
+Sizer                          Kelly k=4.000 | B0=$2,000 | min=$50 / max=$2000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
+Median bucket bet              $                 50
+Spread (max / min)                           40.00×
+Buckets at table min                             85
+Buckets at table max                              7
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 50
+TC +2                          $                 50
+TC +3                          $                100
+TC +4                          $                150
+TC +5                          $                200
 TC +6                          $                200
 TC +7                          $                250
-TC +8                          $                250
-TC +9                          $                300
+TC +8                          $                300
+TC +9                          $                350
 TC +10                         $                350
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -472.21
-P(finish down)  (end < B0)                   53.25%
-P(ruin)                                      38.10%
+E[profit]  = E[end − B0]       $         +11,009.30
+P(finish down)  (end < B0)                   21.20%
+P(ruin)                                      16.75%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           1,527.79
-Median ending bankroll         $           1,625.00
-95% range [p2.5 .. p97.5]      $-7,775.62  ..  $10,825.62
-P(lose > 25%)                                48.85%
-P(lose > 50%)                                44.20%
-P(double bankroll)                           30.80%
+E[ending bankroll]             $          13,009.30
+Median ending bankroll         $          13,087.50
+95% range [p2.5 .. p97.5]      $-13,827.50  ..  $40,031.25
+P(lose > 25%)                                19.85%
+P(lose > 50%)                                18.85%
+P(double bankroll)                           75.00%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           2,013.15
-Median max drawdown            $           1,900.00
-95th pct max drawdown          $           3,125.00
-99th pct max drawdown          $           3,975.50
+Mean max drawdown              $           2,701.62
+Median max drawdown            $           2,625.00
+95th pct max drawdown          $           3,600.00
+99th pct max drawdown          $           4,075.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.8370%
-Avg session wagered            $         289,655.56
+RTP                                       100.9036%
+Avg session wagered            $       1,218,381.80
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.6
+Avg shoes played                             1000.0
+Avg hands played                            13750.8
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min50_max2000_br2000_replays2000_shoes100.png
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min50_max2000_br2000_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$50 / max$2000  |  B0=$5,000
@@ -9245,7 +9245,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min50_max2000_br2000_
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -9253,12 +9253,12 @@ Sizer                          Kelly k=0.250 | B0=$5,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      400
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                            8.00×
-Buckets at table min                             78
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                            107
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -9275,42 +9275,42 @@ TC +10                         $                 50
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,332.85
-P(finish down)  (end < B0)                   63.15%
-P(ruin)                                      17.05%
+E[profit]  = E[end − B0]       $          -2,414.57
+P(finish down)  (end < B0)                   63.70%
+P(ruin)                                      35.10%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           3,667.15
-Median ending bankroll         $           3,700.00
-95% range [p2.5 .. p97.5]      $-3,600.00  ..  $11,450.00
-P(lose > 25%)                                50.35%
-P(lose > 50%)                                38.05%
-P(double bankroll)                            5.05%
+E[ending bankroll]             $           2,585.43
+Median ending bankroll         $           2,650.00
+95% range [p2.5 .. p97.5]      $-10,627.50  ..  $15,751.87
+P(lose > 25%)                                55.90%
+P(lose > 50%)                                49.25%
+P(double bankroll)                           13.65%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,076.94
-Median max drawdown            $           1,050.00
-95th pct max drawdown          $           1,325.00
-99th pct max drawdown          $           1,475.00
+Mean max drawdown              $             697.66
+Median max drawdown            $             700.00
+95th pct max drawdown          $             800.00
+99th pct max drawdown          $             900.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4581%
-Avg session wagered            $         245,980.21
+RTP                                        99.6939%
+Avg session wagered            $         788,877.80
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.0
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -9318,12 +9318,12 @@ Sizer                          Kelly k=0.500 | B0=$5,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      800
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           16.00×
-Buckets at table min                             62
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                             93
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -9340,42 +9340,42 @@ TC +10                         $                100
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,102.51
-P(finish down)  (end < B0)                   60.15%
-P(ruin)                                      15.95%
+E[profit]  = E[end − B0]       $            -556.56
+P(finish down)  (end < B0)                   53.35%
+P(ruin)                                      25.70%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           3,897.49
-Median ending bankroll         $           3,825.00
-95% range [p2.5 .. p97.5]      $-3,800.62  ..  $11,250.62
-P(lose > 25%)                                49.15%
-P(lose > 50%)                                36.60%
-P(double bankroll)                            5.85%
+E[ending bankroll]             $           4,443.44
+Median ending bankroll         $           4,375.00
+95% range [p2.5 .. p97.5]      $-9,328.75  ..  $18,976.87
+P(lose > 25%)                                45.65%
+P(lose > 50%)                                38.05%
+P(double bankroll)                           21.35%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,097.50
-Median max drawdown            $           1,075.00
-95th pct max drawdown          $           1,375.00
-99th pct max drawdown          $           1,525.00
+Mean max drawdown              $             945.46
+Median max drawdown            $             900.00
+95th pct max drawdown          $           1,250.00
+99th pct max drawdown          $           1,425.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5558%
-Avg session wagered            $         248,186.17
+RTP                                        99.9330%
+Avg session wagered            $         831,103.34
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13750.5
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -9383,77 +9383,12 @@ Sizer                          Kelly k=0.750 | B0=$5,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $    1,200
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           24.00×
-Buckets at table min                             58
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 50
-TC +2                          $                 50
-TC +3                          $                 50
-TC +4                          $                 50
-TC +5                          $                 50
-TC +6                          $                100
-TC +7                          $                100
-TC +8                          $                150
-TC +9                          $                150
-TC +10                         $                150
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,044.70
-P(finish down)  (end < B0)                   59.30%
-P(ruin)                                      16.85%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $           3,955.30
-Median ending bankroll         $           4,050.00
-95% range [p2.5 .. p97.5]      $-4,350.00  ..  $11,726.25
-P(lose > 25%)                                47.35%
-P(lose > 50%)                                35.50%
-P(double bankroll)                            6.10%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $           1,185.41
-Median max drawdown            $           1,150.00
-95th pct max drawdown          $           1,625.00
-99th pct max drawdown          $           2,050.00
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                        99.5867%
-Avg session wagered            $         252,744.88
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $           5,000.00
-Table min / max                 $50 / $2000
-Ruin mode                                       end
-Sizer                          Kelly k=1.000 | B0=$5,000 | min=$50 / max=$2000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $    1,600
-Median bucket bet              $                 50
-Spread (max / min)                           32.00×
-Buckets at table min                             56
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                             89
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -9463,61 +9398,61 @@ TC +3                          $                 50
 TC +4                          $                 50
 TC +5                          $                100
 TC +6                          $                100
-TC +7                          $                150
+TC +7                          $                100
 TC +8                          $                150
-TC +9                          $                200
-TC +10                         $                200
+TC +9                          $                150
+TC +10                         $                150
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -816.12
-P(finish down)  (end < B0)                   57.60%
-P(ruin)                                      15.30%
+E[profit]  = E[end − B0]       $          +1,616.61
+P(finish down)  (end < B0)                   42.45%
+P(ruin)                                      21.55%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           4,183.88
-Median ending bankroll         $           4,225.00
-95% range [p2.5 .. p97.5]      $-3,800.62  ..  $11,926.25
-P(lose > 25%)                                45.20%
-P(lose > 50%)                                33.65%
-P(double bankroll)                            7.90%
+E[ending bankroll]             $           6,616.61
+Median ending bankroll         $           6,625.00
+95% range [p2.5 .. p97.5]      $-9,951.25  ..  $23,325.00
+P(lose > 25%)                                36.60%
+P(lose > 50%)                                31.20%
+P(double bankroll)                           33.85%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,350.60
+Mean max drawdown              $           1,319.83
 Median max drawdown            $           1,275.00
-95th pct max drawdown          $           1,950.00
-99th pct max drawdown          $           2,500.25
+95th pct max drawdown          $           1,776.25
+99th pct max drawdown          $           2,150.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6862%
-Avg session wagered            $         260,046.40
+RTP                                       100.1793%
+Avg session wagered            $         901,391.32
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.6
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.250
+KELLY BANKROLL REPLAY  —  k = 1.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
-Sizer                          Kelly k=1.250 | B0=$5,000 | min=$50 / max=$2000
+Sizer                          Kelly k=1.000 | B0=$5,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
 Spread (max / min)                           40.00×
-Buckets at table min                             54
+Buckets at table min                             87
 Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
@@ -9528,62 +9463,62 @@ TC +3                          $                 50
 TC +4                          $                100
 TC +5                          $                100
 TC +6                          $                150
-TC +7                          $                200
+TC +7                          $                150
 TC +8                          $                200
-TC +9                          $                250
+TC +9                          $                200
 TC +10                         $                250
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -538.09
-P(finish down)  (end < B0)                   55.15%
-P(ruin)                                      15.55%
+E[profit]  = E[end − B0]       $          +4,552.18
+P(finish down)  (end < B0)                   31.80%
+P(ruin)                                      16.75%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           4,461.91
-Median ending bankroll         $           4,425.00
-95% range [p2.5 .. p97.5]      $-4,125.00  ..  $13,376.87
-P(lose > 25%)                                43.15%
-P(lose > 50%)                                32.45%
-P(double bankroll)                           11.25%
+E[ending bankroll]             $           9,552.17
+Median ending bankroll         $           9,262.50
+95% range [p2.5 .. p97.5]      $-9,050.62  ..  $28,850.62
+P(lose > 25%)                                27.25%
+P(lose > 50%)                                23.60%
+P(double bankroll)                           47.65%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,593.10
-Median max drawdown            $           1,500.00
-95th pct max drawdown          $           2,425.00
-99th pct max drawdown          $           3,100.25
+Mean max drawdown              $           1,729.81
+Median max drawdown            $           1,700.00
+95th pct max drawdown          $           2,275.00
+99th pct max drawdown          $           2,600.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.8028%
-Avg session wagered            $         272,835.15
+RTP                                       100.4586%
+Avg session wagered            $         992,729.04
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.9
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.500
+KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
-Sizer                          Kelly k=1.500 | B0=$5,000 | min=$50 / max=$2000
+Sizer                          Kelly k=1.250 | B0=$5,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
 Spread (max / min)                           40.00×
-Buckets at table min                             53
-Buckets at table max                              1
+Buckets at table min                             86
+Buckets at table max                              2
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -9592,63 +9527,63 @@ TC +2                          $                 50
 TC +3                          $                100
 TC +4                          $                100
 TC +5                          $                150
-TC +6                          $                200
-TC +7                          $                250
+TC +6                          $                150
+TC +7                          $                200
 TC +8                          $                250
-TC +9                          $                300
+TC +9                          $                250
 TC +10                         $                300
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -420.39
-P(finish down)  (end < B0)                   52.95%
-P(ruin)                                      18.85%
+E[profit]  = E[end − B0]       $          +6,791.60
+P(finish down)  (end < B0)                   27.40%
+P(ruin)                                      15.35%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           4,579.61
-Median ending bankroll         $           4,575.00
-95% range [p2.5 .. p97.5]      $-4,975.62  ..  $14,375.00
-P(lose > 25%)                                42.85%
-P(lose > 50%)                                33.70%
-P(double bankroll)                           14.00%
+E[ending bankroll]             $          11,791.60
+Median ending bankroll         $          11,512.50
+95% range [p2.5 .. p97.5]      $-9,639.38  ..  $34,851.87
+P(lose > 25%)                                23.50%
+P(lose > 50%)                                20.15%
+P(double bankroll)                           55.70%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,938.84
-Median max drawdown            $           1,850.00
-95th pct max drawdown          $           2,950.00
-99th pct max drawdown          $           3,800.00
+Mean max drawdown              $           2,116.78
+Median max drawdown            $           2,050.00
+95th pct max drawdown          $           2,800.00
+99th pct max drawdown          $           3,325.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.8538%
-Avg session wagered            $         287,568.34
+RTP                                       100.6305%
+Avg session wagered            $       1,077,126.69
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13751.0
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.000
+KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
-Sizer                          Kelly k=2.000 | B0=$5,000 | min=$50 / max=$2000
+Sizer                          Kelly k=1.500 | B0=$5,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
 Spread (max / min)                           40.00×
-Buckets at table min                             52
-Buckets at table max                              2
+Buckets at table min                             85
+Buckets at table max                              4
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -9656,51 +9591,116 @@ TC +1                          $                 50
 TC +2                          $                 50
 TC +3                          $                100
 TC +4                          $                150
-TC +5                          $                200
-TC +6                          $                250
+TC +5                          $                150
+TC +6                          $                200
+TC +7                          $                250
+TC +8                          $                300
+TC +9                          $                300
+TC +10                         $                350
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +9,677.58
+P(finish down)  (end < B0)                   23.60%
+P(ruin)                                      13.50%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $          14,677.58
+Median ending bankroll         $          14,825.00
+95% range [p2.5 .. p97.5]      $-10,376.88  ..  $39,725.62
+P(lose > 25%)                                20.10%
+P(lose > 50%)                                17.35%
+P(double bankroll)                           63.55%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $           2,548.14
+Median max drawdown            $           2,500.00
+95th pct max drawdown          $           3,300.00
+99th pct max drawdown          $           3,725.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       100.8201%
+Avg session wagered            $       1,180,085.62
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13750.4
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 2.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $           5,000.00
+Table min / max                 $50 / $2000
+Ruin mode                                       end
+Sizer                          Kelly k=2.000 | B0=$5,000 | min=$50 / max=$2000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
+Median bucket bet              $                 50
+Spread (max / min)                           40.00×
+Buckets at table min                             84
+Buckets at table max                              7
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 50
+TC +2                          $                100
+TC +3                          $                150
+TC +4                          $                200
+TC +5                          $                250
+TC +6                          $                300
 TC +7                          $                300
-TC +8                          $                350
+TC +8                          $                400
 TC +9                          $                400
 TC +10                         $                450
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $             -24.09
-P(finish down)  (end < B0)                   50.25%
-P(ruin)                                      19.10%
+E[profit]  = E[end − B0]       $         +15,047.83
+P(finish down)  (end < B0)                   18.35%
+P(ruin)                                      10.95%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           4,975.91
-Median ending bankroll         $           4,925.00
-95% range [p2.5 .. p97.5]      $-6,076.88  ..  $16,252.50
-P(lose > 25%)                                41.20%
-P(lose > 50%)                                33.30%
-P(double bankroll)                           18.50%
+E[ending bankroll]             $          20,047.83
+Median ending bankroll         $          20,412.50
+95% range [p2.5 .. p97.5]      $-12,625.00  ..  $51,053.75
+P(lose > 25%)                                16.70%
+P(lose > 50%)                                14.70%
+P(double bankroll)                           72.95%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           2,385.86
-Median max drawdown            $           2,250.00
-95th pct max drawdown          $           3,700.00
-99th pct max drawdown          $           4,501.50
+Mean max drawdown              $           3,356.50
+Median max drawdown            $           3,250.00
+95th pct max drawdown          $           4,475.00
+99th pct max drawdown          $           5,375.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.9922%
-Avg session wagered            $         307,662.78
+RTP                                       101.0797%
+Avg session wagered            $       1,393,712.84
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
+Avg shoes played                             1000.0
+Avg hands played                            13752.2
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -9708,64 +9708,64 @@ Sizer                          Kelly k=2.500 | B0=$5,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
 Spread (max / min)                           40.00×
-Buckets at table min                             51
-Buckets at table max                              2
+Buckets at table min                             83
+Buckets at table max                              8
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                 50
-TC +2                          $                 50
+TC +2                          $                100
 TC +3                          $                150
-TC +4                          $                200
-TC +5                          $                250
-TC +6                          $                300
+TC +4                          $                250
+TC +5                          $                300
+TC +6                          $                350
 TC +7                          $                400
 TC +8                          $                450
-TC +9                          $                500
-TC +10                         $                550
+TC +9                          $                550
+TC +10                         $                600
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +583.38
-P(finish down)  (end < B0)                   45.05%
-P(ruin)                                      20.65%
+E[profit]  = E[end − B0]       $         +19,314.69
+P(finish down)  (end < B0)                   17.30%
+P(ruin)                                      11.65%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           5,583.38
-Median ending bankroll         $           5,687.50
-95% range [p2.5 .. p97.5]      $-7,201.25  ..  $18,552.50
-P(lose > 25%)                                38.70%
-P(lose > 50%)                                32.10%
-P(double bankroll)                           25.70%
+E[ending bankroll]             $          24,314.69
+Median ending bankroll         $          24,025.00
+95% range [p2.5 .. p97.5]      $-14,931.88  ..  $64,205.62
+P(lose > 25%)                                15.80%
+P(lose > 50%)                                14.50%
+P(double bankroll)                           76.00%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           3,046.38
-Median max drawdown            $           2,875.00
-95th pct max drawdown          $           4,800.00
-99th pct max drawdown          $           6,150.00
+Mean max drawdown              $           4,245.56
+Median max drawdown            $           4,150.00
+95th pct max drawdown          $           5,651.25
+99th pct max drawdown          $           6,350.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.1737%
-Avg session wagered            $         335,863.10
+RTP                                       101.1956%
+Avg session wagered            $       1,615,505.95
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
+Avg shoes played                             1000.0
+Avg hands played                            13751.7
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $           5,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -9773,77 +9773,12 @@ Sizer                          Kelly k=3.000 | B0=$5,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
 Spread (max / min)                           40.00×
-Buckets at table min                             50
-Buckets at table max                              2
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 50
-TC +2                          $                100
-TC +3                          $                150
-TC +4                          $                200
-TC +5                          $                300
-TC +6                          $                350
-TC +7                          $                450
-TC +8                          $                500
-TC +9                          $                600
-TC +10                         $                650
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,034.36
-P(finish down)  (end < B0)                   44.85%
-P(ruin)                                      20.95%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $           6,034.36
-Median ending bankroll         $           5,812.50
-95% range [p2.5 .. p97.5]      $-8,825.00  ..  $21,325.62
-P(lose > 25%)                                38.45%
-P(lose > 50%)                                31.80%
-P(double bankroll)                           29.00%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $           3,516.86
-Median max drawdown            $           3,325.00
-95th pct max drawdown          $           5,550.00
-99th pct max drawdown          $           6,900.75
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                       100.2859%
-Avg session wagered            $         361,841.69
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 4.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $           5,000.00
-Table min / max                 $50 / $2000
-Ruin mode                                       end
-Sizer                          Kelly k=4.000 | B0=$5,000 | min=$50 / max=$2000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $    2,000
-Median bucket bet              $                 50
-Spread (max / min)                           40.00×
-Buckets at table min                             50
-Buckets at table max                              4
+Buckets at table min                             83
+Buckets at table max                              9
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -9851,47 +9786,112 @@ TC +1                          $                 50
 TC +2                          $                100
 TC +3                          $                200
 TC +4                          $                300
-TC +5                          $                400
-TC +6                          $                500
-TC +7                          $                600
-TC +8                          $                700
-TC +9                          $                800
-TC +10                         $                850
+TC +5                          $                350
+TC +6                          $                400
+TC +7                          $                500
+TC +8                          $                550
+TC +9                          $                650
+TC +10                         $                700
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,784.94
-P(finish down)  (end < B0)                   41.70%
-P(ruin)                                      23.95%
+E[profit]  = E[end − B0]       $         +25,932.92
+P(finish down)  (end < B0)                   14.30%
+P(ruin)                                      10.50%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           6,784.94
-Median ending bankroll         $           6,900.00
-95% range [p2.5 .. p97.5]      $-12,277.50  ..  $26,328.12
-P(lose > 25%)                                37.15%
-P(lose > 50%)                                32.60%
-P(double bankroll)                           36.30%
+E[ending bankroll]             $          30,932.92
+Median ending bankroll         $          31,962.50
+95% range [p2.5 .. p97.5]      $-17,703.12  ..  $76,570.62
+P(lose > 25%)                                13.00%
+P(lose > 50%)                                11.80%
+P(double bankroll)                           80.45%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           4,827.21
-Median max drawdown            $           4,525.00
-95th pct max drawdown          $           7,650.00
-99th pct max drawdown          $           9,950.00
+Mean max drawdown              $           5,065.62
+Median max drawdown            $           4,900.00
+95th pct max drawdown          $           6,775.00
+99th pct max drawdown          $           8,075.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.4315%
-Avg session wagered            $         413,660.83
+RTP                                       101.4447%
+Avg session wagered            $       1,795,082.62
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
+Avg shoes played                             1000.0
+Avg hands played                            13751.9
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min50_max2000_br5000_replays2000_shoes100.png
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 4.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $           5,000.00
+Table min / max                 $50 / $2000
+Ruin mode                                       end
+Sizer                          Kelly k=4.000 | B0=$5,000 | min=$50 / max=$2000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
+Median bucket bet              $                 50
+Spread (max / min)                           40.00×
+Buckets at table min                             83
+Buckets at table max                             17
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 50
+TC +2                          $                150
+TC +3                          $                300
+TC +4                          $                350
+TC +5                          $                450
+TC +6                          $                550
+TC +7                          $                650
+TC +8                          $                750
+TC +9                          $                850
+TC +10                         $                900
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $         +35,146.64
+P(finish down)  (end < B0)                   12.20%
+P(ruin)                                       9.35%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $          40,146.64
+Median ending bankroll         $          40,237.50
+95% range [p2.5 .. p97.5]      $-18,189.38  ..  $98,682.50
+P(lose > 25%)                                11.55%
+P(lose > 50%)                                10.90%
+P(double bankroll)                           84.50%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $           6,681.16
+Median max drawdown            $           6,500.00
+95th pct max drawdown          $           9,025.00
+99th pct max drawdown          $          10,250.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.6186%
+Avg session wagered            $       2,171,457.52
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13751.6
+======================================================================
+
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min50_max2000_br5000_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$50 / max$2000  |  B0=$10,000
@@ -9901,7 +9901,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min50_max2000_br5000_
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -9909,12 +9909,12 @@ Sizer                          Kelly k=0.250 | B0=$10,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $      800
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           16.00×
-Buckets at table min                             62
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                             93
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -9931,42 +9931,42 @@ TC +10                         $                100
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,143.01
-P(finish down)  (end < B0)                   61.30%
-P(ruin)                                       1.00%
+E[profit]  = E[end − B0]       $            -522.24
+P(finish down)  (end < B0)                   52.65%
+P(ruin)                                      10.00%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           8,856.99
-Median ending bankroll         $           8,937.50
-95% range [p2.5 .. p97.5]      $ 1,274.38  ..  $16,525.62
-P(lose > 25%)                                35.30%
-P(lose > 50%)                                15.80%
-P(double bankroll)                            0.05%
+E[ending bankroll]             $           9,477.76
+Median ending bankroll         $           9,500.00
+95% range [p2.5 .. p97.5]      $-4,625.62  ..  $23,430.00
+P(lose > 25%)                                39.05%
+P(lose > 50%)                                26.25%
+P(double bankroll)                            7.70%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,094.84
-Median max drawdown            $           1,075.00
-95th pct max drawdown          $           1,375.00
-99th pct max drawdown          $           1,500.00
+Mean max drawdown              $             936.60
+Median max drawdown            $             900.00
+95th pct max drawdown          $           1,226.25
+99th pct max drawdown          $           1,400.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5396%
-Avg session wagered            $         248,283.98
+RTP                                        99.9372%
+Avg session wagered            $         831,240.29
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -9974,64 +9974,64 @@ Sizer                          Kelly k=0.500 | B0=$10,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $    1,600
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
-Spread (max / min)                           32.00×
-Buckets at table min                             56
-Buckets at table max                              0
+Spread (max / min)                           40.00×
+Buckets at table min                             87
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                 50
 TC +2                          $                 50
 TC +3                          $                 50
-TC +4                          $                 50
+TC +4                          $                100
 TC +5                          $                100
-TC +6                          $                100
+TC +6                          $                150
 TC +7                          $                150
-TC +8                          $                150
+TC +8                          $                200
 TC +9                          $                200
-TC +10                         $                200
+TC +10                         $                250
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -908.96
-P(finish down)  (end < B0)                   58.55%
-P(ruin)                                       1.50%
+E[profit]  = E[end − B0]       $          +4,605.54
+P(finish down)  (end < B0)                   31.70%
+P(ruin)                                       7.05%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           9,091.04
-Median ending bankroll         $           9,037.50
-95% range [p2.5 .. p97.5]      $   922.50  ..  $17,075.00
-P(lose > 25%)                                35.20%
-P(lose > 50%)                                16.50%
-P(double bankroll)                            0.35%
+E[ending bankroll]             $          14,605.54
+Median ending bankroll         $          14,825.00
+95% range [p2.5 .. p97.5]      $-4,526.25  ..  $33,075.62
+P(lose > 25%)                                23.30%
+P(lose > 50%)                                15.55%
+P(double bankroll)                           27.90%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           1,356.54
-Median max drawdown            $           1,275.00
-95th pct max drawdown          $           1,975.00
-99th pct max drawdown          $           2,450.00
+Mean max drawdown              $           1,735.79
+Median max drawdown            $           1,700.00
+95th pct max drawdown          $           2,275.00
+99th pct max drawdown          $           2,575.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6504%
-Avg session wagered            $         260,019.50
+RTP                                       100.4639%
+Avg session wagered            $         992,764.05
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13750.6
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -10039,77 +10039,12 @@ Sizer                          Kelly k=0.750 | B0=$10,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
 Spread (max / min)                           40.00×
-Buckets at table min                             53
-Buckets at table max                              1
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 50
-TC +2                          $                 50
-TC +3                          $                100
-TC +4                          $                100
-TC +5                          $                150
-TC +6                          $                200
-TC +7                          $                250
-TC +8                          $                250
-TC +9                          $                300
-TC +10                         $                300
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -320.21
-P(finish down)  (end < B0)                   51.60%
-P(ruin)                                       2.70%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $           9,679.79
-Median ending bankroll         $           9,775.00
-95% range [p2.5 .. p97.5]      $   -51.87  ..  $19,025.00
-P(lose > 25%)                                32.45%
-P(lose > 50%)                                18.65%
-P(double bankroll)                            1.30%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $           1,933.47
-Median max drawdown            $           1,825.00
-95th pct max drawdown          $           3,000.00
-99th pct max drawdown          $           3,700.00
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                        99.8887%
-Avg session wagered            $         287,730.75
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $          10,000.00
-Table min / max                 $50 / $2000
-Ruin mode                                       end
-Sizer                          Kelly k=1.000 | B0=$10,000 | min=$50 / max=$2000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $    2,000
-Median bucket bet              $                 50
-Spread (max / min)                           40.00×
-Buckets at table min                             52
-Buckets at table max                              2
+Buckets at table min                             85
+Buckets at table max                              4
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -10117,51 +10052,116 @@ TC +1                          $                 50
 TC +2                          $                 50
 TC +3                          $                100
 TC +4                          $                150
-TC +5                          $                200
-TC +6                          $                250
+TC +5                          $                150
+TC +6                          $                200
+TC +7                          $                250
+TC +8                          $                300
+TC +9                          $                300
+TC +10                         $                350
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $          +9,568.48
+P(finish down)  (end < B0)                   22.35%
+P(ruin)                                       7.40%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $          19,568.47
+Median ending bankroll         $          19,625.00
+95% range [p2.5 .. p97.5]      $-5,150.00  ..  $44,301.25
+P(lose > 25%)                                17.80%
+P(lose > 50%)                                13.95%
+P(double bankroll)                           48.90%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $           2,529.14
+Median max drawdown            $           2,450.00
+95th pct max drawdown          $           3,300.00
+99th pct max drawdown          $           3,850.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       100.8114%
+Avg session wagered            $       1,179,297.69
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 1.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $          10,000.00
+Table min / max                 $50 / $2000
+Ruin mode                                       end
+Sizer                          Kelly k=1.000 | B0=$10,000 | min=$50 / max=$2000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
+Median bucket bet              $                 50
+Spread (max / min)                           40.00×
+Buckets at table min                             84
+Buckets at table max                              7
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 50
+TC +2                          $                100
+TC +3                          $                150
+TC +4                          $                200
+TC +5                          $                250
+TC +6                          $                300
 TC +7                          $                300
-TC +8                          $                350
+TC +8                          $                400
 TC +9                          $                400
 TC +10                         $                450
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -145.86
-P(finish down)  (end < B0)                   51.55%
-P(ruin)                                       4.20%
+E[profit]  = E[end − B0]       $         +15,197.81
+P(finish down)  (end < B0)                   17.90%
+P(ruin)                                       7.20%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           9,854.14
-Median ending bankroll         $           9,750.00
-95% range [p2.5 .. p97.5]      $-1,075.62  ..  $20,600.00
-P(lose > 25%)                                34.20%
-P(lose > 50%)                                19.25%
-P(double bankroll)                            3.55%
+E[ending bankroll]             $          25,197.81
+Median ending bankroll         $          24,925.00
+95% range [p2.5 .. p97.5]      $-8,626.25  ..  $57,603.12
+P(lose > 25%)                                14.00%
+P(lose > 50%)                                11.55%
+P(double bankroll)                           61.35%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           2,365.09
-Median max drawdown            $           2,225.00
-95th pct max drawdown          $           3,725.00
-99th pct max drawdown          $           4,650.50
+Mean max drawdown              $           3,360.97
+Median max drawdown            $           3,250.00
+95th pct max drawdown          $           4,452.50
+99th pct max drawdown          $           5,150.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.9525%
-Avg session wagered            $         306,972.83
+RTP                                       101.0906%
+Avg session wagered            $       1,393,579.18
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13750.6
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -10169,64 +10169,64 @@ Sizer                          Kelly k=1.250 | B0=$10,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
 Spread (max / min)                           40.00×
-Buckets at table min                             51
-Buckets at table max                              2
+Buckets at table min                             83
+Buckets at table max                              8
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                 50
-TC +2                          $                 50
+TC +2                          $                100
 TC +3                          $                150
-TC +4                          $                200
-TC +5                          $                250
-TC +6                          $                300
+TC +4                          $                250
+TC +5                          $                300
+TC +6                          $                350
 TC +7                          $                400
 TC +8                          $                450
-TC +9                          $                500
-TC +10                         $                550
+TC +9                          $                550
+TC +10                         $                600
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +604.54
-P(finish down)  (end < B0)                   46.50%
-P(ruin)                                       6.15%
+E[profit]  = E[end − B0]       $         +20,457.10
+P(finish down)  (end < B0)                   15.85%
+P(ruin)                                       7.25%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          10,604.54
-Median ending bankroll         $          10,575.00
-95% range [p2.5 .. p97.5]      $-2,803.12  ..  $24,550.62
-P(lose > 25%)                                33.55%
-P(lose > 50%)                                21.30%
-P(double bankroll)                            8.70%
+E[ending bankroll]             $          30,457.10
+Median ending bankroll         $          31,050.00
+95% range [p2.5 .. p97.5]      $-10,350.62  ..  $70,459.37
+P(lose > 25%)                                13.60%
+P(lose > 50%)                                11.30%
+P(double bankroll)                           69.75%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           3,073.07
-Median max drawdown            $           2,925.00
-95th pct max drawdown          $           4,725.00
-99th pct max drawdown          $           5,775.50
+Mean max drawdown              $           4,261.34
+Median max drawdown            $           4,125.00
+95th pct max drawdown          $           5,675.00
+99th pct max drawdown          $           6,850.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.1799%
-Avg session wagered            $         336,123.59
+RTP                                       101.2655%
+Avg session wagered            $       1,616,527.07
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13752.2
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -10234,77 +10234,12 @@ Sizer                          Kelly k=1.500 | B0=$10,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
 Spread (max / min)                           40.00×
-Buckets at table min                             50
-Buckets at table max                              2
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                 50
-TC +2                          $                100
-TC +3                          $                150
-TC +4                          $                200
-TC +5                          $                300
-TC +6                          $                350
-TC +7                          $                450
-TC +8                          $                500
-TC +9                          $                600
-TC +10                         $                650
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +656.90
-P(finish down)  (end < B0)                   46.45%
-P(ruin)                                       8.30%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $          10,656.90
-Median ending bankroll         $          10,625.00
-95% range [p2.5 .. p97.5]      $-4,500.62  ..  $25,677.50
-P(lose > 25%)                                34.15%
-P(lose > 50%)                                23.30%
-P(double bankroll)                           10.95%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $           3,588.43
-Median max drawdown            $           3,375.00
-95th pct max drawdown          $           5,751.25
-99th pct max drawdown          $           7,050.25
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                       100.1814%
-Avg session wagered            $         362,128.15
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $          10,000.00
-Table min / max                 $50 / $2000
-Ruin mode                                       end
-Sizer                          Kelly k=2.000 | B0=$10,000 | min=$50 / max=$2000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $       50  /  $    2,000
-Median bucket bet              $                 50
-Spread (max / min)                           40.00×
-Buckets at table min                             50
-Buckets at table max                              4
+Buckets at table min                             83
+Buckets at table max                              9
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -10312,51 +10247,116 @@ TC +1                          $                 50
 TC +2                          $                100
 TC +3                          $                200
 TC +4                          $                300
-TC +5                          $                400
-TC +6                          $                500
-TC +7                          $                600
-TC +8                          $                700
-TC +9                          $                800
-TC +10                         $                850
+TC +5                          $                350
+TC +6                          $                400
+TC +7                          $                500
+TC +8                          $                550
+TC +9                          $                650
+TC +10                         $                700
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,304.14
-P(finish down)  (end < B0)                   44.85%
-P(ruin)                                      12.80%
+E[profit]  = E[end − B0]       $         +25,661.89
+P(finish down)  (end < B0)                   14.05%
+P(ruin)                                       6.60%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          11,304.14
-Median ending bankroll         $          11,162.50
-95% range [p2.5 .. p97.5]      $-8,079.38  ..  $30,226.87
-P(lose > 25%)                                35.50%
-P(lose > 50%)                                27.00%
-P(double bankroll)                           19.20%
+E[ending bankroll]             $          35,661.89
+Median ending bankroll         $          35,525.00
+95% range [p2.5 .. p97.5]      $-11,627.50  ..  $82,427.50
+P(lose > 25%)                                12.10%
+P(lose > 50%)                                 9.70%
+P(double bankroll)                           74.40%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           4,797.07
-Median max drawdown            $           4,550.00
-95th pct max drawdown          $           7,725.00
-99th pct max drawdown          $           9,650.00
+Mean max drawdown              $           5,018.41
+Median max drawdown            $           4,875.00
+95th pct max drawdown          $           6,601.25
+99th pct max drawdown          $           7,650.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.3158%
-Avg session wagered            $         412,967.96
+RTP                                       101.4295%
+Avg session wagered            $       1,795,110.54
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13750.6
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 2.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $          10,000.00
+Table min / max                 $50 / $2000
+Ruin mode                                       end
+Sizer                          Kelly k=2.000 | B0=$10,000 | min=$50 / max=$2000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $       50  /  $    2,000
+Median bucket bet              $                 50
+Spread (max / min)                           40.00×
+Buckets at table min                             83
+Buckets at table max                             17
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                 50
+TC +2                          $                150
+TC +3                          $                300
+TC +4                          $                350
+TC +5                          $                450
+TC +6                          $                550
+TC +7                          $                650
+TC +8                          $                750
+TC +9                          $                850
+TC +10                         $                900
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $         +35,384.97
+P(finish down)  (end < B0)                   13.25%
+P(ruin)                                       8.25%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $          45,384.97
+Median ending bankroll         $          46,325.00
+95% range [p2.5 .. p97.5]      $-17,305.62  ..  $105,752.50
+P(lose > 25%)                                11.95%
+P(lose > 50%)                                10.30%
+P(double bankroll)                           79.30%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $           6,624.44
+Median max drawdown            $           6,400.00
+95th pct max drawdown          $           8,750.00
+99th pct max drawdown          $          10,250.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.6315%
+Avg session wagered            $       2,168,830.99
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13751.8
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -10364,64 +10364,64 @@ Sizer                          Kelly k=2.500 | B0=$10,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
 Spread (max / min)                           40.00×
-Buckets at table min                             50
-Buckets at table max                              7
+Buckets at table min                             82
+Buckets at table max                             25
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 50
-TC +2                          $                150
-TC +3                          $                250
-TC +4                          $                350
-TC +5                          $                500
-TC +6                          $                600
-TC +7                          $                750
-TC +8                          $                850
-TC +9                          $              1,000
-TC +10                         $              1,050
+TC +1                          $                100
+TC +2                          $                200
+TC +3                          $                350
+TC +4                          $                450
+TC +5                          $                600
+TC +6                          $                700
+TC +7                          $                800
+TC +8                          $                950
+TC +9                          $              1,050
+TC +10                         $              1,150
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +2,675.78
-P(finish down)  (end < B0)                   41.60%
-P(ruin)                                      14.60%
+E[profit]  = E[end − B0]       $         +47,230.93
+P(finish down)  (end < B0)                   10.90%
+P(ruin)                                       6.85%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          12,675.77
-Median ending bankroll         $          12,925.00
-95% range [p2.5 .. p97.5]      $-10,876.25  ..  $35,128.12
-P(lose > 25%)                                33.40%
-P(lose > 50%)                                25.60%
-P(double bankroll)                           27.75%
+E[ending bankroll]             $          57,230.93
+Median ending bankroll         $          56,575.00
+95% range [p2.5 .. p97.5]      $-15,205.00  ..  $134,626.25
+P(lose > 25%)                                 9.95%
+P(lose > 50%)                                 8.75%
+P(double bankroll)                           83.40%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           5,948.51
-Median max drawdown            $           5,675.00
-95th pct max drawdown          $           9,476.25
-99th pct max drawdown          $          11,750.00
+Mean max drawdown              $           8,350.23
+Median max drawdown            $           8,125.00
+95th pct max drawdown          $          11,100.00
+99th pct max drawdown          $          12,800.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.5696%
-Avg session wagered            $         469,738.38
+RTP                                       101.7665%
+Avg session wagered            $       2,673,753.42
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
+Avg shoes played                             1000.0
+Avg hands played                            13750.9
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -10429,64 +10429,64 @@ Sizer                          Kelly k=3.000 | B0=$10,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
 Spread (max / min)                           40.00×
-Buckets at table min                             49
-Buckets at table max                             10
+Buckets at table min                             82
+Buckets at table max                             36
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 50
-TC +2                          $                150
-TC +3                          $                300
-TC +4                          $                400
-TC +5                          $                600
-TC +6                          $                750
-TC +7                          $                900
-TC +8                          $              1,050
-TC +9                          $              1,200
-TC +10                         $              1,300
+TC +1                          $                100
+TC +2                          $                250
+TC +3                          $                400
+TC +4                          $                550
+TC +5                          $                700
+TC +6                          $                850
+TC +7                          $                950
+TC +8                          $              1,150
+TC +9                          $              1,250
+TC +10                         $              1,400
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +3,048.00
-P(finish down)  (end < B0)                   42.05%
-P(ruin)                                      18.10%
+E[profit]  = E[end − B0]       $         +57,829.40
+P(finish down)  (end < B0)                   11.55%
+P(ruin)                                       8.15%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          13,048.00
-Median ending bankroll         $          12,787.50
-95% range [p2.5 .. p97.5]      $-14,660.62  ..  $41,100.62
-P(lose > 25%)                                34.45%
-P(lose > 50%)                                28.65%
-P(double bankroll)                           31.70%
+E[ending bankroll]             $          67,829.40
+Median ending bankroll         $          67,850.00
+95% range [p2.5 .. p97.5]      $-25,511.88  ..  $161,101.88
+P(lose > 25%)                                10.80%
+P(lose > 50%)                                 9.70%
+P(double bankroll)                           84.50%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           7,008.20
-Median max drawdown            $           6,650.00
-95th pct max drawdown          $          11,027.50
-99th pct max drawdown          $          13,900.25
+Mean max drawdown              $           9,866.34
+Median max drawdown            $           9,587.50
+95th pct max drawdown          $          13,052.50
+99th pct max drawdown          $          14,501.75
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.5777%
-Avg session wagered            $         527,616.20
+RTP                                       101.8796%
+Avg session wagered            $       3,076,628.83
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 4.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $50 / $2000
 Ruin mode                                       end
@@ -10494,60 +10494,60 @@ Sizer                          Kelly k=4.000 | B0=$10,000 | min=$50 / max=$2000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $       50  /  $    2,000
 Median bucket bet              $                 50
 Spread (max / min)                           40.00×
-Buckets at table min                             49
-Buckets at table max                             15
+Buckets at table min                             82
+Buckets at table max                             46
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                 50
-TC +2                          $                200
-TC +3                          $                400
-TC +4                          $                550
-TC +5                          $                800
-TC +6                          $                950
-TC +7                          $              1,200
-TC +8                          $              1,350
-TC +9                          $              1,600
-TC +10                         $              1,700
+TC +1                          $                150
+TC +2                          $                300
+TC +3                          $                550
+TC +4                          $                750
+TC +5                          $                950
+TC +6                          $              1,100
+TC +7                          $              1,300
+TC +8                          $              1,500
+TC +9                          $              1,700
+TC +10                         $              1,850
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +5,262.55
-P(finish down)  (end < B0)                   38.25%
-P(ruin)                                      19.05%
+E[profit]  = E[end − B0]       $         +76,290.05
+P(finish down)  (end < B0)                   11.45%
+P(ruin)                                       9.20%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          15,262.55
-Median ending bankroll         $          15,725.00
-95% range [p2.5 .. p97.5]      $-20,477.50  ..  $50,428.75
-P(lose > 25%)                                33.15%
-P(lose > 50%)                                28.30%
-P(double bankroll)                           40.80%
+E[ending bankroll]             $          86,290.05
+Median ending bankroll         $          87,262.50
+95% range [p2.5 .. p97.5]      $-34,933.12  ..  $207,581.87
+P(lose > 25%)                                10.80%
+P(lose > 50%)                                10.20%
+P(double bankroll)                           84.95%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           9,294.94
-Median max drawdown            $           8,850.00
-95th pct max drawdown          $          14,650.00
-99th pct max drawdown          $          17,800.50
+Mean max drawdown              $          12,449.91
+Median max drawdown            $          12,187.50
+95th pct max drawdown          $          16,428.75
+99th pct max drawdown          $          18,250.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.8323%
-Avg session wagered            $         632,286.44
+RTP                                       101.9376%
+Avg session wagered            $       3,937,380.00
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13751.0
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min50_max2000_br10000_replays2000_shoes100.png
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min50_max2000_br10000_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$100 / max$5000  |  B0=$10,000
@@ -10557,7 +10557,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min50_max2000_br10000
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -10565,12 +10565,12 @@ Sizer                          Kelly k=0.250 | B0=$10,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $      100  /  $      800
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
-Spread (max / min)                            8.00×
-Buckets at table min                             78
-Buckets at table max                              0
+Spread (max / min)                           50.00×
+Buckets at table min                            107
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -10587,42 +10587,42 @@ TC +10                         $                100
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -2,491.20
-P(finish down)  (end < B0)                   62.75%
-P(ruin)                                      16.95%
+E[profit]  = E[end − B0]       $          -4,576.75
+P(finish down)  (end < B0)                   63.45%
+P(ruin)                                      34.05%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           7,508.80
-Median ending bankroll         $           7,450.00
-95% range [p2.5 .. p97.5]      $-7,552.50  ..  $22,500.00
-P(lose > 25%)                                50.30%
-P(lose > 50%)                                37.45%
-P(double bankroll)                            5.10%
+E[ending bankroll]             $           5,423.25
+Median ending bankroll         $           5,350.00
+95% range [p2.5 .. p97.5]      $-19,655.00  ..  $30,851.25
+P(lose > 25%)                                56.55%
+P(lose > 50%)                                48.95%
+P(double bankroll)                           13.50%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           2,136.97
-Median max drawdown            $           2,100.00
-95th pct max drawdown          $           2,650.00
-99th pct max drawdown          $           2,950.00
+Mean max drawdown              $           1,395.10
+Median max drawdown            $           1,400.00
+95th pct max drawdown          $           1,600.00
+99th pct max drawdown          $           1,800.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.4936%
-Avg session wagered            $         491,957.35
+RTP                                        99.7100%
+Avg session wagered            $       1,577,971.82
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
+Avg shoes played                             1000.0
+Avg hands played                            13751.2
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -10630,12 +10630,12 @@ Sizer                          Kelly k=0.500 | B0=$10,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $      100  /  $    1,600
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
-Spread (max / min)                           16.00×
-Buckets at table min                             62
-Buckets at table max                              0
+Spread (max / min)                           50.00×
+Buckets at table min                             93
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -10652,42 +10652,42 @@ TC +10                         $                200
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -2,247.68
-P(finish down)  (end < B0)                   61.65%
-P(ruin)                                      16.60%
+E[profit]  = E[end − B0]       $            -846.98
+P(finish down)  (end < B0)                   52.35%
+P(ruin)                                      27.30%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           7,752.32
-Median ending bankroll         $           7,600.00
-95% range [p2.5 .. p97.5]      $-7,750.00  ..  $23,151.25
-P(lose > 25%)                                49.05%
-P(lose > 50%)                                36.00%
-P(double bankroll)                            6.05%
+E[ending bankroll]             $           9,153.02
+Median ending bankroll         $           9,075.00
+95% range [p2.5 .. p97.5]      $-19,700.00  ..  $37,407.50
+P(lose > 25%)                                45.35%
+P(lose > 50%)                                38.75%
+P(double bankroll)                           22.90%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           2,189.85
-Median max drawdown            $           2,150.00
-95th pct max drawdown          $           2,700.00
-99th pct max drawdown          $           3,050.00
+Mean max drawdown              $           1,886.70
+Median max drawdown            $           1,800.00
+95th pct max drawdown          $           2,500.00
+99th pct max drawdown          $           2,800.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.5472%
-Avg session wagered            $         496,417.72
+RTP                                        99.9490%
+Avg session wagered            $       1,662,182.93
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -10695,77 +10695,12 @@ Sizer                          Kelly k=0.750 | B0=$10,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $      100  /  $    2,400
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
-Spread (max / min)                           24.00×
-Buckets at table min                             58
-Buckets at table max                              0
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $                100
-TC +3                          $                100
-TC +4                          $                100
-TC +5                          $                100
-TC +6                          $                200
-TC +7                          $                200
-TC +8                          $                300
-TC +9                          $                300
-TC +10                         $                300
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -2,061.45
-P(finish down)  (end < B0)                   60.50%
-P(ruin)                                      16.40%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $           7,938.55
-Median ending bankroll         $           8,025.00
-95% range [p2.5 .. p97.5]      $-8,101.25  ..  $23,802.50
-P(lose > 25%)                                47.55%
-P(lose > 50%)                                34.40%
-P(double bankroll)                            6.90%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $           2,381.97
-Median max drawdown            $           2,300.00
-95th pct max drawdown          $           3,200.00
-99th pct max drawdown          $           3,850.00
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                        99.5924%
-Avg session wagered            $         505,738.67
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $          10,000.00
-Table min / max                 $100 / $5000
-Ruin mode                                       end
-Sizer                          Kelly k=1.000 | B0=$10,000 | min=$100 / max=$5000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $      100  /  $    3,200
-Median bucket bet              $                100
-Spread (max / min)                           32.00×
-Buckets at table min                             56
-Buckets at table max                              0
+Spread (max / min)                           50.00×
+Buckets at table min                             89
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -10775,62 +10710,62 @@ TC +3                          $                100
 TC +4                          $                100
 TC +5                          $                200
 TC +6                          $                200
-TC +7                          $                300
+TC +7                          $                200
 TC +8                          $                300
-TC +9                          $                400
-TC +10                         $                400
+TC +9                          $                300
+TC +10                         $                300
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,635.45
-P(finish down)  (end < B0)                   57.80%
-P(ruin)                                      15.05%
+E[profit]  = E[end − B0]       $          +3,820.88
+P(finish down)  (end < B0)                   41.55%
+P(ruin)                                      20.25%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           8,364.55
-Median ending bankroll         $           8,450.00
-95% range [p2.5 .. p97.5]      $-7,106.25  ..  $24,151.25
-P(lose > 25%)                                45.20%
-P(lose > 50%)                                34.05%
-P(double bankroll)                            6.75%
+E[ending bankroll]             $          13,820.88
+Median ending bankroll         $          13,500.00
+95% range [p2.5 .. p97.5]      $-19,650.00  ..  $46,708.75
+P(lose > 25%)                                35.65%
+P(lose > 50%)                                30.05%
+P(double bankroll)                           35.05%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           2,685.70
+Mean max drawdown              $           2,625.30
 Median max drawdown            $           2,550.00
-95th pct max drawdown          $           3,950.00
-99th pct max drawdown          $           4,850.00
+95th pct max drawdown          $           3,500.00
+99th pct max drawdown          $           4,100.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.6855%
-Avg session wagered            $         519,970.60
+RTP                                       100.2119%
+Avg session wagered            $       1,802,738.88
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.250
+KELLY BANKROLL REPLAY  —  k = 1.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
-Sizer                          Kelly k=1.250 | B0=$10,000 | min=$100 / max=$5000
+Sizer                          Kelly k=1.000 | B0=$10,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $      100  /  $    4,100
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
-Spread (max / min)                           41.00×
-Buckets at table min                             54
-Buckets at table max                              0
+Spread (max / min)                           50.00×
+Buckets at table min                             87
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -10840,62 +10775,62 @@ TC +3                          $                100
 TC +4                          $                200
 TC +5                          $                200
 TC +6                          $                300
-TC +7                          $                400
+TC +7                          $                300
 TC +8                          $                400
-TC +9                          $                500
+TC +9                          $                400
 TC +10                         $                500
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,010.77
-P(finish down)  (end < B0)                   54.45%
-P(ruin)                                      15.85%
+E[profit]  = E[end − B0]       $          +8,356.77
+P(finish down)  (end < B0)                   33.05%
+P(ruin)                                      17.90%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           8,989.23
-Median ending bankroll         $           8,900.00
-95% range [p2.5 .. p97.5]      $-8,500.00  ..  $26,506.25
-P(lose > 25%)                                43.40%
-P(lose > 50%)                                32.85%
-P(double bankroll)                           10.90%
+E[ending bankroll]             $          18,356.78
+Median ending bankroll         $          18,150.00
+95% range [p2.5 .. p97.5]      $-22,052.50  ..  $58,810.00
+P(lose > 25%)                                29.20%
+P(lose > 50%)                                25.60%
+P(double bankroll)                           46.30%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           3,230.05
-Median max drawdown            $           3,050.00
-95th pct max drawdown          $           5,100.00
-99th pct max drawdown          $           6,100.00
+Mean max drawdown              $           3,472.50
+Median max drawdown            $           3,400.00
+95th pct max drawdown          $           4,500.00
+99th pct max drawdown          $           5,401.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.8148%
-Avg session wagered            $         545,838.85
+RTP                                       100.4208%
+Avg session wagered            $       1,985,850.18
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.500
+KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
-Sizer                          Kelly k=1.500 | B0=$10,000 | min=$100 / max=$5000
+Sizer                          Kelly k=1.250 | B0=$10,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $      100  /  $    4,900
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
-Spread (max / min)                           49.00×
-Buckets at table min                             53
-Buckets at table max                              0
+Spread (max / min)                           50.00×
+Buckets at table min                             86
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -10904,62 +10839,62 @@ TC +2                          $                100
 TC +3                          $                200
 TC +4                          $                200
 TC +5                          $                300
-TC +6                          $                400
-TC +7                          $                500
+TC +6                          $                300
+TC +7                          $                400
 TC +8                          $                500
-TC +9                          $                600
+TC +9                          $                500
 TC +10                         $                600
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -658.02
-P(finish down)  (end < B0)                   51.65%
-P(ruin)                                      17.80%
+E[profit]  = E[end − B0]       $         +14,091.40
+P(finish down)  (end < B0)                   26.50%
+P(ruin)                                      15.00%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           9,341.98
-Median ending bankroll         $           9,550.00
-95% range [p2.5 .. p97.5]      $-9,300.00  ..  $28,900.00
-P(lose > 25%)                                41.80%
-P(lose > 50%)                                31.90%
-P(double bankroll)                           13.60%
+E[ending bankroll]             $          24,091.40
+Median ending bankroll         $          24,725.00
+95% range [p2.5 .. p97.5]      $-19,955.00  ..  $68,855.00
+P(lose > 25%)                                23.45%
+P(lose > 50%)                                20.40%
+P(double bankroll)                           58.95%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           3,836.53
-Median max drawdown            $           3,600.00
-95th pct max drawdown          $           5,850.00
-99th pct max drawdown          $           7,300.50
+Mean max drawdown              $           4,232.77
+Median max drawdown            $           4,100.00
+95th pct max drawdown          $           5,600.00
+99th pct max drawdown          $           6,450.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.8855%
-Avg session wagered            $         574,813.10
+RTP                                       100.6542%
+Avg session wagered            $       2,153,993.48
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13750.0
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.000
+KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
-Sizer                          Kelly k=2.000 | B0=$10,000 | min=$100 / max=$5000
+Sizer                          Kelly k=1.500 | B0=$10,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             52
+Buckets at table min                             85
 Buckets at table max                              2
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
@@ -10968,51 +10903,116 @@ TC +1                          $                100
 TC +2                          $                100
 TC +3                          $                200
 TC +4                          $                300
-TC +5                          $                400
-TC +6                          $                500
+TC +5                          $                300
+TC +6                          $                400
+TC +7                          $                500
+TC +8                          $                600
+TC +9                          $                600
+TC +10                         $                700
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $         +17,747.33
+P(finish down)  (end < B0)                   25.10%
+P(ruin)                                      14.80%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $          27,747.33
+Median ending bankroll         $          27,400.00
+95% range [p2.5 .. p97.5]      $-25,203.75  ..  $80,557.50
+P(lose > 25%)                                22.60%
+P(lose > 50%)                                19.80%
+P(double bankroll)                           60.20%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $           5,081.88
+Median max drawdown            $           4,950.00
+95th pct max drawdown          $           6,700.00
+99th pct max drawdown          $           7,450.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       100.7523%
+Avg session wagered            $       2,358,925.33
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13750.9
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 2.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $          10,000.00
+Table min / max                 $100 / $5000
+Ruin mode                                       end
+Sizer                          Kelly k=2.000 | B0=$10,000 | min=$100 / max=$5000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $      100  /  $    5,000
+Median bucket bet              $                100
+Spread (max / min)                           50.00×
+Buckets at table min                             84
+Buckets at table max                              7
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                100
+TC +2                          $                200
+TC +3                          $                300
+TC +4                          $                400
+TC +5                          $                500
+TC +6                          $                600
 TC +7                          $                600
-TC +8                          $                700
+TC +8                          $                800
 TC +9                          $                800
 TC +10                         $                900
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            -154.80
-P(finish down)  (end < B0)                   50.75%
-P(ruin)                                      19.65%
+E[profit]  = E[end − B0]       $         +30,742.22
+P(finish down)  (end < B0)                   17.95%
+P(ruin)                                      11.30%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $           9,845.20
-Median ending bankroll         $           9,850.00
-95% range [p2.5 .. p97.5]      $-12,306.25  ..  $32,250.00
-P(lose > 25%)                                41.40%
-P(lose > 50%)                                34.45%
-P(double bankroll)                           18.45%
+E[ending bankroll]             $          40,742.22
+Median ending bankroll         $          39,375.00
+95% range [p2.5 .. p97.5]      $-21,151.25  ..  $105,153.75
+P(lose > 25%)                                16.25%
+P(lose > 50%)                                14.65%
+P(double bankroll)                           72.60%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           4,802.15
-Median max drawdown            $           4,500.00
-95th pct max drawdown          $           7,650.00
-99th pct max drawdown          $           9,701.50
+Mean max drawdown              $           6,735.75
+Median max drawdown            $           6,500.00
+95th pct max drawdown          $           9,000.00
+99th pct max drawdown          $          10,304.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.9748%
-Avg session wagered            $         614,264.22
+RTP                                       101.1024%
+Avg session wagered            $       2,788,560.42
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -11020,64 +11020,64 @@ Sizer                          Kelly k=2.500 | B0=$10,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             51
-Buckets at table max                              2
+Buckets at table min                             83
+Buckets at table max                              7
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                100
-TC +2                          $                100
+TC +2                          $                200
 TC +3                          $                300
-TC +4                          $                400
-TC +5                          $                500
-TC +6                          $                600
+TC +4                          $                500
+TC +5                          $                600
+TC +6                          $                700
 TC +7                          $                800
 TC +8                          $                900
-TC +9                          $              1,000
-TC +10                         $              1,100
+TC +9                          $              1,100
+TC +10                         $              1,200
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $            +936.17
-P(finish down)  (end < B0)                   47.55%
-P(ruin)                                      20.60%
+E[profit]  = E[end − B0]       $         +40,104.05
+P(finish down)  (end < B0)                   16.90%
+P(ruin)                                      11.05%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          10,936.17
-Median ending bankroll         $          10,950.00
-95% range [p2.5 .. p97.5]      $-15,003.75  ..  $38,002.50
-P(lose > 25%)                                40.40%
-P(lose > 50%)                                33.20%
-P(double bankroll)                           24.50%
+E[ending bankroll]             $          50,104.05
+Median ending bankroll         $          50,500.00
+95% range [p2.5 .. p97.5]      $-32,317.50  ..  $126,753.75
+P(lose > 25%)                                15.25%
+P(lose > 50%)                                13.75%
+P(double bankroll)                           76.35%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           6,115.48
-Median max drawdown            $           5,850.00
-95th pct max drawdown          $           9,600.00
-99th pct max drawdown          $          12,301.00
+Mean max drawdown              $           8,476.50
+Median max drawdown            $           8,250.00
+95th pct max drawdown          $          11,100.00
+99th pct max drawdown          $          12,801.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.1395%
-Avg session wagered            $         671,276.55
+RTP                                       101.2399%
+Avg session wagered            $       3,234,481.08
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13750.6
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          10,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -11085,77 +11085,12 @@ Sizer                          Kelly k=3.000 | B0=$10,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             50
-Buckets at table max                              2
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $                200
-TC +3                          $                300
-TC +4                          $                400
-TC +5                          $                600
-TC +6                          $                700
-TC +7                          $                900
-TC +8                          $              1,000
-TC +9                          $              1,200
-TC +10                         $              1,300
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,643.15
-P(finish down)  (end < B0)                   45.45%
-P(ruin)                                      23.05%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $          11,643.15
-Median ending bankroll         $          11,700.00
-95% range [p2.5 .. p97.5]      $-17,750.00  ..  $42,350.00
-P(lose > 25%)                                38.90%
-P(lose > 50%)                                33.35%
-P(double bankroll)                           28.00%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $           7,192.07
-Median max drawdown            $           6,800.00
-95th pct max drawdown          $          11,400.00
-99th pct max drawdown          $          14,401.00
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                       100.2260%
-Avg session wagered            $         727,195.28
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 4.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $          10,000.00
-Table min / max                 $100 / $5000
-Ruin mode                                       end
-Sizer                          Kelly k=4.000 | B0=$10,000 | min=$100 / max=$5000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $      100  /  $    5,000
-Median bucket bet              $                100
-Spread (max / min)                           50.00×
-Buckets at table min                             50
-Buckets at table max                              2
+Buckets at table min                             83
+Buckets at table max                              8
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -11163,47 +11098,112 @@ TC +1                          $                100
 TC +2                          $                200
 TC +3                          $                400
 TC +4                          $                600
-TC +5                          $                800
-TC +6                          $              1,000
-TC +7                          $              1,200
-TC +8                          $              1,400
-TC +9                          $              1,600
-TC +10                         $              1,700
+TC +5                          $                700
+TC +6                          $                800
+TC +7                          $              1,000
+TC +8                          $              1,100
+TC +9                          $              1,300
+TC +10                         $              1,400
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,814.88
-P(finish down)  (end < B0)                   46.70%
-P(ruin)                                      27.65%
+E[profit]  = E[end − B0]       $         +51,540.15
+P(finish down)  (end < B0)                   14.00%
+P(ruin)                                       9.80%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          11,814.88
-Median ending bankroll         $          11,750.00
-95% range [p2.5 .. p97.5]      $-26,752.50  ..  $50,308.75
-P(lose > 25%)                                41.65%
-P(lose > 50%)                                36.15%
-P(double bankroll)                           34.00%
+E[ending bankroll]             $          61,540.15
+Median ending bankroll         $          61,475.00
+95% range [p2.5 .. p97.5]      $-35,452.50  ..  $155,056.25
+P(lose > 25%)                                13.00%
+P(lose > 50%)                                11.90%
+P(double bankroll)                           80.05%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           9,653.20
-Median max drawdown            $           9,200.00
-95th pct max drawdown          $          15,000.00
-99th pct max drawdown          $          18,709.00
+Mean max drawdown              $          10,000.50
+Median max drawdown            $           9,700.00
+95th pct max drawdown          $          13,152.50
+99th pct max drawdown          $          15,402.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.2200%
-Avg session wagered            $         824,895.07
+RTP                                       101.4350%
+Avg session wagered            $       3,591,625.08
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.4
+Avg shoes played                             1000.0
+Avg hands played                            13750.7
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min100_max5000_br10000_replays2000_shoes100.png
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 4.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $          10,000.00
+Table min / max                 $100 / $5000
+Ruin mode                                       end
+Sizer                          Kelly k=4.000 | B0=$10,000 | min=$100 / max=$5000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $      100  /  $    5,000
+Median bucket bet              $                100
+Spread (max / min)                           50.00×
+Buckets at table min                             83
+Buckets at table max                              9
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                100
+TC +2                          $                300
+TC +3                          $                600
+TC +4                          $                700
+TC +5                          $                900
+TC +6                          $              1,100
+TC +7                          $              1,300
+TC +8                          $              1,500
+TC +9                          $              1,700
+TC +10                         $              1,800
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $         +67,620.52
+P(finish down)  (end < B0)                   14.05%
+P(ruin)                                      10.95%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $          77,620.52
+Median ending bankroll         $          79,025.00
+95% range [p2.5 .. p97.5]      $-49,960.00  ..  $197,103.75
+P(lose > 25%)                                13.15%
+P(lose > 50%)                                12.60%
+P(double bankroll)                           81.95%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $          13,452.20
+Median max drawdown            $          13,000.00
+95th pct max drawdown          $          18,000.00
+99th pct max drawdown          $          21,759.50
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.5571%
+Avg session wagered            $       4,342,752.80
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13751.2
+======================================================================
+
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min100_max5000_br10000_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$100 / max$5000  |  B0=$50,000
@@ -11213,7 +11213,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min100_max5000_br1000
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          50,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -11221,64 +11221,64 @@ Sizer                          Kelly k=0.250 | B0=$50,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $      100  /  $    4,100
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
-Spread (max / min)                           41.00×
-Buckets at table min                             54
-Buckets at table max                              0
+Spread (max / min)                           50.00×
+Buckets at table min                             86
+Buckets at table max                              1
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                100
 TC +2                          $                100
-TC +3                          $                100
+TC +3                          $                200
 TC +4                          $                200
-TC +5                          $                200
+TC +5                          $                300
 TC +6                          $                300
 TC +7                          $                400
-TC +8                          $                400
+TC +8                          $                500
 TC +9                          $                500
-TC +10                         $                500
+TC +10                         $                600
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          -1,177.92
-P(finish down)  (end < B0)                   55.35%
-P(ruin)                                       0.00%
+E[profit]  = E[end − B0]       $         +13,787.98
+P(finish down)  (end < B0)                   26.75%
+P(ruin)                                       0.25%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          48,822.07
-Median ending bankroll         $          48,700.00
-95% range [p2.5 .. p97.5]      $30,897.50  ..  $66,551.25
-P(lose > 25%)                                10.75%
-P(lose > 50%)                                 0.35%
-P(double bankroll)                            0.00%
+E[ending bankroll]             $          63,787.97
+Median ending bankroll         $          63,800.00
+95% range [p2.5 .. p97.5]      $20,248.75  ..  $109,202.50
+P(lose > 25%)                                11.30%
+P(lose > 50%)                                 3.85%
+P(double bankroll)                            5.10%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           3,227.30
-Median max drawdown            $           3,050.00
-95th pct max drawdown          $           4,900.00
-99th pct max drawdown          $           5,950.00
+Mean max drawdown              $           4,228.73
+Median max drawdown            $           4,100.00
+95th pct max drawdown          $           5,650.00
+99th pct max drawdown          $           6,600.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                        99.7843%
-Avg session wagered            $         546,042.40
+RTP                                       100.6398%
+Avg session wagered            $       2,155,014.08
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13750.7
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          50,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -11286,64 +11286,64 @@ Sizer                          Kelly k=0.500 | B0=$50,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             51
-Buckets at table max                              2
+Buckets at table min                             83
+Buckets at table max                              7
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                100
-TC +2                          $                100
+TC +2                          $                200
 TC +3                          $                300
-TC +4                          $                400
-TC +5                          $                500
-TC +6                          $                600
+TC +4                          $                500
+TC +5                          $                600
+TC +6                          $                700
 TC +7                          $                800
 TC +8                          $                900
-TC +9                          $              1,000
-TC +10                         $              1,100
+TC +9                          $              1,100
+TC +10                         $              1,200
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,429.90
-P(finish down)  (end < B0)                   46.40%
-P(ruin)                                       0.00%
+E[profit]  = E[end − B0]       $         +39,943.90
+P(finish down)  (end < B0)                   15.70%
+P(ruin)                                       0.90%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          51,429.90
-Median ending bankroll         $          51,500.00
-95% range [p2.5 .. p97.5]      $25,647.50  ..  $78,051.25
-P(lose > 25%)                                15.05%
-P(lose > 50%)                                 2.20%
-P(double bankroll)                            0.05%
+E[ending bankroll]             $          89,943.90
+Median ending bankroll         $          89,975.00
+95% range [p2.5 .. p97.5]      $10,893.75  ..  $168,607.50
+P(lose > 25%)                                 9.25%
+P(lose > 50%)                                 5.10%
+P(double bankroll)                           39.40%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           6,117.75
-Median max drawdown            $           5,825.00
-95th pct max drawdown          $           9,500.00
-99th pct max drawdown          $          12,800.50
+Mean max drawdown              $           8,541.60
+Median max drawdown            $           8,250.00
+95th pct max drawdown          $          11,500.00
+99th pct max drawdown          $          13,700.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.2126%
-Avg session wagered            $         672,492.57
+RTP                                       101.2357%
+Avg session wagered            $       3,232,581.52
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.0
+Avg shoes played                             1000.0
+Avg hands played                            13751.8
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          50,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -11351,77 +11351,12 @@ Sizer                          Kelly k=0.750 | B0=$50,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             50
-Buckets at table max                              2
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $                200
-TC +3                          $                400
-TC +4                          $                500
-TC +5                          $                700
-TC +6                          $                900
-TC +7                          $              1,100
-TC +8                          $              1,300
-TC +9                          $              1,500
-TC +10                         $              1,600
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +2,383.32
-P(finish down)  (end < B0)                   45.50%
-P(ruin)                                       0.20%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $          52,383.32
-Median ending bankroll         $          52,075.00
-95% range [p2.5 .. p97.5]      $17,690.00  ..  $88,106.25
-P(lose > 25%)                                21.45%
-P(lose > 50%)                                 6.30%
-P(double bankroll)                            0.60%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $           8,746.30
-Median max drawdown            $           8,300.00
-95th pct max drawdown          $          13,602.50
-99th pct max drawdown          $          16,450.50
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                       100.2984%
-Avg session wagered            $         798,623.55
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 1.000
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $          50,000.00
-Table min / max                 $100 / $5000
-Ruin mode                                       end
-Sizer                          Kelly k=1.000 | B0=$50,000 | min=$100 / max=$5000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $      100  /  $    5,000
-Median bucket bet              $                100
-Spread (max / min)                           50.00×
-Buckets at table min                             50
-Buckets at table max                              4
+Buckets at table min                             83
+Buckets at table max                              9
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
@@ -11429,51 +11364,116 @@ TC +1                          $                100
 TC +2                          $                300
 TC +3                          $                500
 TC +4                          $                700
-TC +5                          $              1,000
-TC +6                          $              1,200
-TC +7                          $              1,500
-TC +8                          $              1,700
-TC +9                          $              2,000
-TC +10                         $              2,100
+TC +5                          $                900
+TC +6                          $              1,000
+TC +7                          $              1,200
+TC +8                          $              1,400
+TC +9                          $              1,600
+TC +10                         $              1,700
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +4,975.27
-P(finish down)  (end < B0)                   42.15%
-P(ruin)                                       1.10%
+E[profit]  = E[end − B0]       $         +63,596.75
+P(finish down)  (end < B0)                   13.25%
+P(ruin)                                       2.45%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          54,975.28
-Median ending bankroll         $          54,900.00
-95% range [p2.5 .. p97.5]      $ 9,245.00  ..  $103,303.75
-P(lose > 25%)                                23.55%
-P(lose > 50%)                                10.25%
-P(double bankroll)                            3.10%
+E[ending bankroll]             $         113,596.75
+Median ending bankroll         $         114,800.00
+95% range [p2.5 .. p97.5]      $   496.25  ..  $231,153.75
+P(lose > 25%)                                 9.90%
+P(lose > 50%)                                 6.65%
+P(double bankroll)                           59.00%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          11,897.12
-Median max drawdown            $          11,200.00
-95th pct max drawdown          $          18,752.50
-99th pct max drawdown          $          24,203.00
+Mean max drawdown              $          12,427.33
+Median max drawdown            $          12,100.00
+95th pct max drawdown          $          16,800.00
+99th pct max drawdown          $          19,200.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.5289%
-Avg session wagered            $         940,678.20
+RTP                                       101.5183%
+Avg session wagered            $       4,188,580.38
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.6
+Avg shoes played                             1000.0
+Avg hands played                            13751.7
+======================================================================
+
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 1.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $          50,000.00
+Table min / max                 $100 / $5000
+Ruin mode                                       end
+Sizer                          Kelly k=1.000 | B0=$50,000 | min=$100 / max=$5000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $      100  /  $    5,000
+Median bucket bet              $                100
+Spread (max / min)                           50.00×
+Buckets at table min                             82
+Buckets at table max                             16
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $                200
+TC +2                          $                400
+TC +3                          $                700
+TC +4                          $                900
+TC +5                          $              1,200
+TC +6                          $              1,400
+TC +7                          $              1,600
+TC +8                          $              1,900
+TC +9                          $              2,100
+TC +10                         $              2,300
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $         +93,515.68
+P(finish down)  (end < B0)                   12.10%
+P(ruin)                                       3.95%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $         143,515.67
+Median ending bankroll         $         148,425.00
+95% range [p2.5 .. p97.5]      $-13,500.00  ..  $291,101.25
+P(lose > 25%)                                 8.90%
+P(lose > 50%)                                 6.80%
+P(double bankroll)                           71.20%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $          16,827.42
+Median max drawdown            $          16,275.00
+95th pct max drawdown          $          22,650.00
+99th pct max drawdown          $          27,119.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.7493%
+Avg session wagered            $       5,345,929.92
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13751.7
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          50,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -11481,64 +11481,64 @@ Sizer                          Kelly k=1.250 | B0=$50,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             49
-Buckets at table max                              7
+Buckets at table min                             82
+Buckets at table max                             24
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $                300
-TC +3                          $                600
-TC +4                          $                900
-TC +5                          $              1,200
-TC +6                          $              1,500
-TC +7                          $              1,900
-TC +8                          $              2,100
-TC +9                          $              2,500
-TC +10                         $              2,700
+TC +1                          $                200
+TC +2                          $                500
+TC +3                          $                900
+TC +4                          $              1,200
+TC +5                          $              1,500
+TC +6                          $              1,700
+TC +7                          $              2,000
+TC +8                          $              2,400
+TC +9                          $              2,600
+TC +10                         $              2,900
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +7,155.30
-P(finish down)  (end < B0)                   39.70%
-P(ruin)                                       2.40%
+E[profit]  = E[end − B0]       $        +122,041.10
+P(finish down)  (end < B0)                   11.05%
+P(ruin)                                       4.25%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          57,155.30
-Median ending bankroll         $          57,275.00
-95% range [p2.5 .. p97.5]      $   641.25  ..  $114,511.25
-P(lose > 25%)                                24.00%
-P(lose > 50%)                                13.10%
-P(double bankroll)                            6.80%
+E[ending bankroll]             $         172,041.10
+Median ending bankroll         $         170,525.00
+95% range [p2.5 .. p97.5]      $-20,480.00  ..  $363,256.25
+P(lose > 25%)                                 8.85%
+P(lose > 50%)                                 7.00%
+P(double bankroll)                           76.55%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          14,977.88
-Median max drawdown            $          14,100.00
-95th pct max drawdown          $          23,900.00
-99th pct max drawdown          $          29,900.00
+Mean max drawdown              $          20,977.38
+Median max drawdown            $          20,400.00
+95th pct max drawdown          $          28,400.00
+99th pct max drawdown          $          32,600.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.6588%
-Avg session wagered            $       1,086,033.75
+RTP                                       101.8929%
+Avg session wagered            $       6,447,335.08
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.2
+Avg shoes played                             1000.0
+Avg hands played                            13751.9
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          50,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -11546,64 +11546,64 @@ Sizer                          Kelly k=1.500 | B0=$50,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             49
-Buckets at table max                             10
+Buckets at table min                             82
+Buckets at table max                             36
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $                400
-TC +3                          $                800
-TC +4                          $              1,100
-TC +5                          $              1,500
-TC +6                          $              1,800
-TC +7                          $              2,300
-TC +8                          $              2,600
-TC +9                          $              3,000
-TC +10                         $              3,200
+TC +1                          $                200
+TC +2                          $                600
+TC +3                          $              1,000
+TC +4                          $              1,400
+TC +5                          $              1,700
+TC +6                          $              2,100
+TC +7                          $              2,400
+TC +8                          $              2,800
+TC +9                          $              3,200
+TC +10                         $              3,500
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +7,989.60
-P(finish down)  (end < B0)                   41.05%
-P(ruin)                                       4.85%
+E[profit]  = E[end − B0]       $        +149,104.90
+P(finish down)  (end < B0)                   10.40%
+P(ruin)                                       4.45%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          57,989.60
-Median ending bankroll         $          57,075.00
-95% range [p2.5 .. p97.5]      $-12,301.25  ..  $127,360.00
-P(lose > 25%)                                28.65%
-P(lose > 50%)                                17.60%
-P(double bankroll)                           12.00%
+E[ending bankroll]             $         199,104.90
+Median ending bankroll         $         198,775.00
+95% range [p2.5 .. p97.5]      $-33,576.25  ..  $427,271.25
+P(lose > 25%)                                 8.60%
+P(lose > 50%)                                 6.90%
+P(double bankroll)                           79.40%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          17,670.35
-Median max drawdown            $          16,800.00
-95th pct max drawdown          $          27,605.00
-99th pct max drawdown          $          33,850.00
+Mean max drawdown              $          24,748.78
+Median max drawdown            $          24,100.00
+95th pct max drawdown          $          32,800.00
+99th pct max drawdown          $          38,411.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.6472%
-Avg session wagered            $       1,234,542.25
+RTP                                       102.0077%
+Avg session wagered            $       7,426,802.10
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.7
+Avg shoes played                             1000.0
+Avg hands played                            13751.9
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          50,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -11611,64 +11611,64 @@ Sizer                          Kelly k=2.000 | B0=$50,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             49
-Buckets at table max                             15
+Buckets at table min                             82
+Buckets at table max                             46
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $                500
-TC +3                          $              1,000
-TC +4                          $              1,400
-TC +5                          $              1,900
-TC +6                          $              2,400
-TC +7                          $              3,000
-TC +8                          $              3,400
-TC +9                          $              4,000
-TC +10                         $              4,300
+TC +1                          $                300
+TC +2                          $                800
+TC +3                          $              1,400
+TC +4                          $              1,800
+TC +5                          $              2,300
+TC +6                          $              2,800
+TC +7                          $              3,200
+TC +8                          $              3,800
+TC +9                          $              4,200
+TC +10                         $              4,600
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $         +12,942.88
-P(finish down)  (end < B0)                   37.30%
-P(ruin)                                       8.05%
+E[profit]  = E[end − B0]       $        +190,898.48
+P(finish down)  (end < B0)                   10.45%
+P(ruin)                                       5.65%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          62,942.88
-Median ending bankroll         $          64,550.00
-95% range [p2.5 .. p97.5]      $-26,228.75  ..  $151,450.00
-P(lose > 25%)                                28.50%
-P(lose > 50%)                                20.60%
-P(double bankroll)                           20.45%
+E[ending bankroll]             $         240,898.48
+Median ending bankroll         $         240,875.00
+95% range [p2.5 .. p97.5]      $-56,083.75  ..  $531,677.50
+P(lose > 25%)                                 8.90%
+P(lose > 50%)                                 7.75%
+P(double bankroll)                           81.95%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          23,075.72
-Median max drawdown            $          21,800.00
-95th pct max drawdown          $          37,002.50
-99th pct max drawdown          $          44,600.00
+Mean max drawdown              $          31,011.25
+Median max drawdown            $          30,500.00
+95th pct max drawdown          $          40,405.00
+99th pct max drawdown          $          45,001.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.8665%
-Avg session wagered            $       1,493,621.00
+RTP                                       102.0123%
+Avg session wagered            $       9,486,751.88
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.3
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          50,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -11676,64 +11676,64 @@ Sizer                          Kelly k=2.500 | B0=$50,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             49
-Buckets at table max                             20
+Buckets at table min                             82
+Buckets at table max                             50
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $                600
-TC +3                          $              1,300
-TC +4                          $              1,800
-TC +5                          $              2,400
-TC +6                          $              3,000
-TC +7                          $              3,800
-TC +8                          $              4,300
+TC +1                          $                400
+TC +2                          $              1,000
+TC +3                          $              1,700
+TC +4                          $              2,300
+TC +5                          $              2,900
+TC +6                          $              3,500
+TC +7                          $              4,100
+TC +8                          $              4,700
 TC +9                          $              5,000
 TC +10                         $              5,000
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $         +17,112.17
-P(finish down)  (end < B0)                   38.05%
-P(ruin)                                      10.95%
+E[profit]  = E[end − B0]       $        +225,153.25
+P(finish down)  (end < B0)                   11.45%
+P(ruin)                                       7.50%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          67,112.18
-Median ending bankroll         $          67,500.00
-95% range [p2.5 .. p97.5]      $-46,001.25  ..  $173,508.75
-P(lose > 25%)                                29.20%
-P(lose > 50%)                                21.65%
-P(double bankroll)                           27.70%
+E[ending bankroll]             $         275,153.25
+Median ending bankroll         $         278,625.00
+95% range [p2.5 .. p97.5]      $-85,927.50  ..  $645,337.50
+P(lose > 25%)                                10.35%
+P(lose > 50%)                                 9.40%
+P(double bankroll)                           82.75%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          28,889.40
-Median max drawdown            $          27,300.00
-95th pct max drawdown          $          45,110.00
-99th pct max drawdown          $          55,301.00
+Mean max drawdown              $          35,403.20
+Median max drawdown            $          34,700.00
+95th pct max drawdown          $          45,352.50
+99th pct max drawdown          $          50,650.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.9712%
-Avg session wagered            $       1,761,984.52
+RTP                                       101.9843%
+Avg session wagered            $      11,346,656.93
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          50,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -11741,64 +11741,64 @@ Sizer                          Kelly k=3.000 | B0=$50,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             49
-Buckets at table max                             24
+Buckets at table min                             82
+Buckets at table max                             53
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $                800
-TC +3                          $              1,500
-TC +4                          $              2,100
-TC +5                          $              2,900
-TC +6                          $              3,600
-TC +7                          $              4,500
+TC +1                          $                500
+TC +2                          $              1,200
+TC +3                          $              2,100
+TC +4                          $              2,800
+TC +5                          $              3,500
+TC +6                          $              4,200
+TC +7                          $              4,900
 TC +8                          $              5,000
 TC +9                          $              5,000
 TC +10                         $              5,000
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $         +20,611.15
-P(finish down)  (end < B0)                   38.20%
-P(ruin)                                      14.05%
+E[profit]  = E[end − B0]       $        +266,566.90
+P(finish down)  (end < B0)                    9.65%
+P(ruin)                                       6.50%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          70,611.15
-Median ending bankroll         $          71,200.00
-95% range [p2.5 .. p97.5]      $-54,258.75  ..  $200,808.75
-P(lose > 25%)                                31.50%
-P(lose > 50%)                                24.65%
-P(double bankroll)                           32.50%
+E[ending bankroll]             $         316,566.90
+Median ending bankroll         $         315,775.00
+95% range [p2.5 .. p97.5]      $-101,808.75  ..  $721,102.50
+P(lose > 25%)                                 8.80%
+P(lose > 50%)                                 8.05%
+P(double bankroll)                           84.95%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          32,914.65
-Median max drawdown            $          31,500.00
-95th pct max drawdown          $          49,500.00
-99th pct max drawdown          $          59,751.50
+Mean max drawdown              $          38,436.75
+Median max drawdown            $          37,725.00
+95th pct max drawdown          $          48,800.00
+99th pct max drawdown          $          53,400.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       101.0148%
-Avg session wagered            $       2,031,038.90
+RTP                                       102.0376%
+Avg session wagered            $      13,082,096.57
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.5
+Avg shoes played                             1000.0
+Avg hands played                            13752.1
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 4.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $          50,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -11806,21 +11806,21 @@ Sizer                          Kelly k=4.000 | B0=$50,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             49
-Buckets at table max                             27
+Buckets at table min                             82
+Buckets at table max                             57
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $              1,000
-TC +3                          $              2,000
-TC +4                          $              2,800
-TC +5                          $              3,900
-TC +6                          $              4,800
+TC +1                          $                600
+TC +2                          $              1,600
+TC +3                          $              2,800
+TC +4                          $              3,700
+TC +5                          $              4,700
+TC +6                          $              5,000
 TC +7                          $              5,000
 TC +8                          $              5,000
 TC +9                          $              5,000
@@ -11828,38 +11828,38 @@ TC +10                         $              5,000
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $         +26,907.67
-P(finish down)  (end < B0)                   37.05%
-P(ruin)                                      16.80%
+E[profit]  = E[end − B0]       $        +308,427.28
+P(finish down)  (end < B0)                   10.25%
+P(ruin)                                       7.65%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $          76,907.68
-Median ending bankroll         $          75,800.00
-95% range [p2.5 .. p97.5]      $-83,967.50  ..  $233,271.25
-P(lose > 25%)                                31.10%
-P(lose > 50%)                                26.25%
-P(double bankroll)                           39.00%
+E[ending bankroll]             $         358,427.28
+Median ending bankroll         $         363,325.00
+95% range [p2.5 .. p97.5]      $-136,538.75  ..  $839,228.75
+P(lose > 25%)                                 9.45%
+P(lose > 50%)                                 8.85%
+P(double bankroll)                           85.60%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          40,676.32
-Median max drawdown            $          39,200.00
-95th pct max drawdown          $          61,002.50
-99th pct max drawdown          $          71,908.00
+Mean max drawdown              $          42,805.62
+Median max drawdown            $          42,100.00
+95th pct max drawdown          $          54,000.00
+99th pct max drawdown          $          57,200.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       101.0908%
-Avg session wagered            $       2,466,878.85
+RTP                                       101.9641%
+Avg session wagered            $      15,703,215.75
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13750.9
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min100_max5000_br50000_replays2000_shoes100.png
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min100_max5000_br50000_replays2000_shoes1000.png
 
 ######################################################################
 # REGIME: min$100 / max$5000  |  B0=$100,000
@@ -11869,7 +11869,7 @@ Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min100_max5000_br5000
 KELLY BANKROLL REPLAY  —  k = 0.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $         100,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -11877,64 +11877,64 @@ Sizer                          Kelly k=0.250 | B0=$100,000 | min=$100 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             51
-Buckets at table max                              2
+Buckets at table min                             83
+Buckets at table max                              7
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
 TC +1                          $                100
-TC +2                          $                100
+TC +2                          $                200
 TC +3                          $                300
-TC +4                          $                400
-TC +5                          $                500
-TC +6                          $                600
+TC +4                          $                500
+TC +5                          $                600
+TC +6                          $                700
 TC +7                          $                800
 TC +8                          $                900
-TC +9                          $              1,000
-TC +10                         $              1,100
+TC +9                          $              1,100
+TC +10                         $              1,200
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +1,237.17
-P(finish down)  (end < B0)                   46.35%
+E[profit]  = E[end − B0]       $         +40,313.50
+P(finish down)  (end < B0)                   16.75%
 P(ruin)                                       0.00%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $         101,237.18
-Median ending bankroll         $         101,225.00
-95% range [p2.5 .. p97.5]      $75,000.00  ..  $128,302.50
-P(lose > 25%)                                 2.45%
-P(lose > 50%)                                 0.00%
-P(double bankroll)                            0.00%
+E[ending bankroll]             $         140,313.50
+Median ending bankroll         $         141,000.00
+95% range [p2.5 .. p97.5]      $59,548.75  ..  $217,662.50
+P(lose > 25%)                                 6.00%
+P(lose > 50%)                                 1.60%
+P(double bankroll)                            7.95%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $           6,156.23
-Median max drawdown            $           5,850.00
-95th pct max drawdown          $           9,700.00
-99th pct max drawdown          $          11,902.00
+Mean max drawdown              $           8,507.83
+Median max drawdown            $           8,250.00
+95th pct max drawdown          $          11,302.50
+99th pct max drawdown          $          12,750.50
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.1839%
-Avg session wagered            $         672,726.38
+RTP                                       101.2466%
+Avg session wagered            $       3,233,985.45
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.8
+Avg shoes played                             1000.0
+Avg hands played                            13751.1
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $         100,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -11942,64 +11942,64 @@ Sizer                          Kelly k=0.500 | B0=$100,000 | min=$100 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             50
-Buckets at table max                              4
+Buckets at table min                             82
+Buckets at table max                             16
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $                300
-TC +3                          $                500
-TC +4                          $                700
-TC +5                          $              1,000
-TC +6                          $              1,200
-TC +7                          $              1,500
-TC +8                          $              1,700
-TC +9                          $              2,000
-TC +10                         $              2,100
+TC +1                          $                200
+TC +2                          $                400
+TC +3                          $                700
+TC +4                          $                900
+TC +5                          $              1,200
+TC +6                          $              1,400
+TC +7                          $              1,600
+TC +8                          $              1,900
+TC +9                          $              2,100
+TC +10                         $              2,300
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +5,237.30
-P(finish down)  (end < B0)                   42.20%
-P(ruin)                                       0.00%
+E[profit]  = E[end − B0]       $         +93,859.55
+P(finish down)  (end < B0)                   11.35%
+P(ruin)                                       0.80%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $         105,237.30
-Median ending bankroll         $         105,025.00
-95% range [p2.5 .. p97.5]      $61,645.00  ..  $153,351.25
-P(lose > 25%)                                 9.05%
-P(lose > 50%)                                 0.65%
-P(double bankroll)                            0.00%
+E[ending bankroll]             $         193,859.55
+Median ending bankroll         $         193,525.00
+95% range [p2.5 .. p97.5]      $40,182.50  ..  $340,317.50
+P(lose > 25%)                                 6.10%
+P(lose > 50%)                                 3.45%
+P(double bankroll)                           46.90%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          11,809.02
-Median max drawdown            $          11,200.00
-95th pct max drawdown          $          18,950.00
-99th pct max drawdown          $          23,300.50
+Mean max drawdown              $          16,797.42
+Median max drawdown            $          16,275.00
+95th pct max drawdown          $          22,500.00
+99th pct max drawdown          $          29,000.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.5595%
-Avg session wagered            $         936,048.28
+RTP                                       101.7544%
+Avg session wagered            $       5,349,988.97
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 0.750
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $         100,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -12007,64 +12007,64 @@ Sizer                          Kelly k=0.750 | B0=$100,000 | min=$100 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             49
-Buckets at table max                             10
+Buckets at table min                             82
+Buckets at table max                             36
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $                400
-TC +3                          $                800
-TC +4                          $              1,100
-TC +5                          $              1,500
-TC +6                          $              1,800
-TC +7                          $              2,300
-TC +8                          $              2,600
-TC +9                          $              3,000
-TC +10                         $              3,200
+TC +1                          $                200
+TC +2                          $                600
+TC +3                          $              1,000
+TC +4                          $              1,400
+TC +5                          $              1,700
+TC +6                          $              2,100
+TC +7                          $              2,400
+TC +8                          $              2,800
+TC +9                          $              3,200
+TC +10                         $              3,500
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $          +9,650.50
-P(finish down)  (end < B0)                   38.15%
-P(ruin)                                       0.05%
+E[profit]  = E[end − B0]       $        +146,388.17
+P(finish down)  (end < B0)                   10.50%
+P(ruin)                                       2.20%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $         109,650.50
-Median ending bankroll         $         109,675.00
-95% range [p2.5 .. p97.5]      $38,891.25  ..  $179,860.00
-P(lose > 25%)                                15.55%
+E[ending bankroll]             $         246,388.17
+Median ending bankroll         $         248,500.00
+95% range [p2.5 .. p97.5]      $ 3,742.50  ..  $468,771.25
+P(lose > 25%)                                 6.90%
 P(lose > 50%)                                 4.90%
-P(double bankroll)                            0.60%
+P(double bankroll)                           65.15%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          17,789.67
-Median max drawdown            $          16,900.00
-95th pct max drawdown          $          28,110.00
-99th pct max drawdown          $          35,103.00
+Mean max drawdown              $          24,940.40
+Median max drawdown            $          24,400.00
+95th pct max drawdown          $          33,500.00
+99th pct max drawdown          $          38,400.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.7811%
-Avg session wagered            $       1,235,460.00
+RTP                                       101.9722%
+Avg session wagered            $       7,422,507.88
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13750.6
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $         100,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -12072,64 +12072,64 @@ Sizer                          Kelly k=1.000 | B0=$100,000 | min=$100 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             49
-Buckets at table max                             15
+Buckets at table min                             82
+Buckets at table max                             46
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $                500
-TC +3                          $              1,000
-TC +4                          $              1,400
-TC +5                          $              1,900
-TC +6                          $              2,400
-TC +7                          $              3,000
-TC +8                          $              3,400
-TC +9                          $              4,000
-TC +10                         $              4,300
+TC +1                          $                300
+TC +2                          $                800
+TC +3                          $              1,400
+TC +4                          $              1,800
+TC +5                          $              2,300
+TC +6                          $              2,800
+TC +7                          $              3,200
+TC +8                          $              3,800
+TC +9                          $              4,200
+TC +10                         $              4,600
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $         +12,431.65
-P(finish down)  (end < B0)                   39.00%
-P(ruin)                                       0.90%
+E[profit]  = E[end − B0]       $        +192,130.58
+P(finish down)  (end < B0)                   10.85%
+P(ruin)                                       2.50%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $         112,431.65
-Median ending bankroll         $         111,825.00
-95% range [p2.5 .. p97.5]      $22,348.75  ..  $199,558.75
-P(lose > 25%)                                20.10%
-P(lose > 50%)                                 8.70%
-P(double bankroll)                            2.45%
+E[ending bankroll]             $         292,130.58
+Median ending bankroll         $         292,750.00
+95% range [p2.5 .. p97.5]      $ 1,383.75  ..  $592,041.25
+P(lose > 25%)                                 7.70%
+P(lose > 50%)                                 5.90%
+P(double bankroll)                           72.45%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          23,059.75
-Median max drawdown            $          21,525.00
-95th pct max drawdown          $          37,552.50
-99th pct max drawdown          $          47,102.00
+Mean max drawdown              $          30,866.30
+Median max drawdown            $          30,200.00
+95th pct max drawdown          $          40,600.00
+99th pct max drawdown          $          45,800.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       100.8322%
-Avg session wagered            $       1,493,854.70
+RTP                                       102.0266%
+Avg session wagered            $       9,480,656.53
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.1
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.250
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $         100,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -12137,64 +12137,64 @@ Sizer                          Kelly k=1.250 | B0=$100,000 | min=$100 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             49
-Buckets at table max                             20
+Buckets at table min                             82
+Buckets at table max                             50
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $                600
-TC +3                          $              1,300
-TC +4                          $              1,800
-TC +5                          $              2,400
-TC +6                          $              3,000
-TC +7                          $              3,800
-TC +8                          $              4,300
+TC +1                          $                400
+TC +2                          $              1,000
+TC +3                          $              1,700
+TC +4                          $              2,300
+TC +5                          $              2,900
+TC +6                          $              3,500
+TC +7                          $              4,100
+TC +8                          $              4,700
 TC +9                          $              5,000
 TC +10                         $              5,000
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $         +17,854.50
-P(finish down)  (end < B0)                   38.75%
-P(ruin)                                       1.85%
+E[profit]  = E[end − B0]       $        +227,889.80
+P(finish down)  (end < B0)                   11.10%
+P(ruin)                                       3.80%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $         117,854.50
-Median ending bankroll         $         115,650.00
-95% range [p2.5 .. p97.5]      $ 7,081.25  ..  $230,275.00
-P(lose > 25%)                                22.50%
-P(lose > 50%)                                11.55%
-P(double bankroll)                            7.60%
+E[ending bankroll]             $         327,889.80
+Median ending bankroll         $         320,200.00
+95% range [p2.5 .. p97.5]      $-26,105.00  ..  $694,573.75
+P(lose > 25%)                                 8.60%
+P(lose > 50%)                                 6.55%
+P(double bankroll)                           75.85%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          28,577.22
-Median max drawdown            $          27,200.00
-95th pct max drawdown          $          43,605.00
-99th pct max drawdown          $          54,500.50
+Mean max drawdown              $          35,417.03
+Median max drawdown            $          34,600.00
+95th pct max drawdown          $          45,850.00
+99th pct max drawdown          $          48,803.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       101.0143%
-Avg session wagered            $       1,760,204.82
+RTP                                       102.0049%
+Avg session wagered            $      11,366,604.65
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 1.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $         100,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -12202,64 +12202,64 @@ Sizer                          Kelly k=1.500 | B0=$100,000 | min=$100 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             49
-Buckets at table max                             24
+Buckets at table min                             82
+Buckets at table max                             53
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $                800
-TC +3                          $              1,500
-TC +4                          $              2,100
-TC +5                          $              2,900
-TC +6                          $              3,600
-TC +7                          $              4,500
+TC +1                          $                500
+TC +2                          $              1,200
+TC +3                          $              2,100
+TC +4                          $              2,800
+TC +5                          $              3,500
+TC +6                          $              4,200
+TC +7                          $              4,900
 TC +8                          $              5,000
 TC +9                          $              5,000
 TC +10                         $              5,000
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $         +22,690.83
-P(finish down)  (end < B0)                   35.45%
-P(ruin)                                       3.15%
+E[profit]  = E[end − B0]       $        +272,363.75
+P(finish down)  (end < B0)                   10.05%
+P(ruin)                                       3.80%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $         122,690.82
-Median ending bankroll         $         123,425.00
-95% range [p2.5 .. p97.5]      $-5,227.50  ..  $252,141.25
-P(lose > 25%)                                23.45%
-P(lose > 50%)                                13.35%
-P(double bankroll)                           11.50%
+E[ending bankroll]             $         372,363.75
+Median ending bankroll         $         374,500.00
+95% range [p2.5 .. p97.5]      $-33,901.25  ..  $785,673.75
+P(lose > 25%)                                 7.70%
+P(lose > 50%)                                 6.30%
+P(double bankroll)                           78.95%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          33,375.05
-Median max drawdown            $          31,900.00
-95th pct max drawdown          $          50,855.00
-99th pct max drawdown          $          63,301.50
+Mean max drawdown              $          38,859.82
+Median max drawdown            $          38,125.00
+95th pct max drawdown          $          49,600.00
+99th pct max drawdown          $          53,908.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       101.1168%
-Avg session wagered            $       2,031,750.05
+RTP                                       102.0780%
+Avg session wagered            $      13,107,261.47
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
+Avg shoes played                             1000.0
+Avg hands played                            13751.5
 ======================================================================
 
 ======================================================================
 KELLY BANKROLL REPLAY  —  k = 2.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $         100,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
@@ -12267,85 +12267,20 @@ Sizer                          Kelly k=2.000 | B0=$100,000 | min=$100 / max=$500
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             49
-Buckets at table max                             27
+Buckets at table min                             82
+Buckets at table max                             57
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $              1,000
-TC +3                          $              2,000
-TC +4                          $              2,800
-TC +5                          $              3,900
-TC +6                          $              4,800
-TC +7                          $              5,000
-TC +8                          $              5,000
-TC +9                          $              5,000
-TC +10                         $              5,000
-
-USER PRIORITIES
-----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $         +29,694.55
-P(finish down)  (end < B0)                   36.90%
-P(ruin)                                       5.65%
-
-BANKROLL DISTRIBUTION
-----------------------------------------------------------------------
-E[ending bankroll]             $         129,694.55
-Median ending bankroll         $         130,375.00
-95% range [p2.5 .. p97.5]      $-27,353.75  ..  $297,822.50
-P(lose > 25%)                                26.25%
-P(lose > 50%)                                15.85%
-P(double bankroll)                           18.55%
-
-DRAWDOWN DISTRIBUTION
-----------------------------------------------------------------------
-Mean max drawdown              $          40,149.25
-Median max drawdown            $          38,925.00
-95th pct max drawdown          $          58,600.00
-99th pct max drawdown          $          68,200.00
-
-RETURN TO PLAYER
-----------------------------------------------------------------------
-RTP                                       101.1992%
-Avg session wagered            $       2,476,288.05
-
-SESSION STATS
-----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.1
-======================================================================
-
-======================================================================
-KELLY BANKROLL REPLAY  —  k = 2.500
-======================================================================
-Replays                                       2,000
-Shoes per session                               100
-Starting bankroll (B0)         $         100,000.00
-Table min / max                 $100 / $5000
-Ruin mode                                       end
-Sizer                          Kelly k=2.500 | B0=$100,000 | min=$100 / max=$5000
-
-CALCULATED BET SPREAD (EV grid, per TC step, clipped)
-----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
-Bet min / max                  $      100  /  $    5,000
-Median bucket bet              $                100
-Spread (max / min)                           50.00×
-Buckets at table min                             49
-Buckets at table max                             30
-
-CALCULATED BET BY TC (integer TC +1 .. +10)
-----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $              1,300
-TC +3                          $              2,500
-TC +4                          $              3,500
-TC +5                          $              4,900
+TC +1                          $                600
+TC +2                          $              1,600
+TC +3                          $              2,800
+TC +4                          $              3,700
+TC +5                          $              4,700
 TC +6                          $              5,000
 TC +7                          $              5,000
 TC +8                          $              5,000
@@ -12354,62 +12289,62 @@ TC +10                         $              5,000
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $         +30,857.30
-P(finish down)  (end < B0)                   38.25%
-P(ruin)                                       8.00%
+E[profit]  = E[end − B0]       $        +319,551.17
+P(finish down)  (end < B0)                    9.90%
+P(ruin)                                       4.30%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $         130,857.30
-Median ending bankroll         $         133,375.00
-95% range [p2.5 .. p97.5]      $-56,400.00  ..  $310,325.00
-P(lose > 25%)                                28.25%
-P(lose > 50%)                                19.70%
-P(double bankroll)                           23.25%
+E[ending bankroll]             $         419,551.17
+Median ending bankroll         $         419,850.00
+95% range [p2.5 .. p97.5]      $-58,578.75  ..  $901,135.00
+P(lose > 25%)                                 8.25%
+P(lose > 50%)                                 6.45%
+P(double bankroll)                           81.15%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          45,277.47
-Median max drawdown            $          43,800.00
-95th pct max drawdown          $          66,900.00
-99th pct max drawdown          $          76,300.00
+Mean max drawdown              $          42,634.80
+Median max drawdown            $          41,800.00
+95th pct max drawdown          $          53,500.00
+99th pct max drawdown          $          57,200.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       101.0606%
-Avg session wagered            $       2,909,553.17
+RTP                                       102.0357%
+Avg session wagered            $      15,697,745.78
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4305.9
+Avg shoes played                             1000.0
+Avg hands played                            13750.8
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 3.000
+KELLY BANKROLL REPLAY  —  k = 2.500
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $         100,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
-Sizer                          Kelly k=3.000 | B0=$100,000 | min=$100 / max=$5000
+Sizer                          Kelly k=2.500 | B0=$100,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             49
-Buckets at table max                             32
+Buckets at table min                             82
+Buckets at table max                             59
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $              1,600
-TC +3                          $              3,000
-TC +4                          $              4,200
+TC +1                          $                800
+TC +2                          $              2,000
+TC +3                          $              3,500
+TC +4                          $              4,600
 TC +5                          $              5,000
 TC +6                          $              5,000
 TC +7                          $              5,000
@@ -12419,61 +12354,61 @@ TC +10                         $              5,000
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $         +33,313.82
-P(finish down)  (end < B0)                   37.90%
-P(ruin)                                      10.65%
+E[profit]  = E[end − B0]       $        +322,777.97
+P(finish down)  (end < B0)                   11.85%
+P(ruin)                                       6.20%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $         133,313.83
-Median ending bankroll         $         132,350.00
-95% range [p2.5 .. p97.5]      $-70,513.75  ..  $346,725.00
-P(lose > 25%)                                29.75%
-P(lose > 50%)                                22.50%
-P(double bankroll)                           26.75%
+E[ending bankroll]             $         422,777.97
+Median ending bankroll         $         423,475.00
+95% range [p2.5 .. p97.5]      $-108,495.00  ..  $961,171.25
+P(lose > 25%)                                10.30%
+P(lose > 50%)                                 8.90%
+P(double bankroll)                           79.05%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          50,464.70
-Median max drawdown            $          48,450.00
-95th pct max drawdown          $          73,000.00
-99th pct max drawdown          $          88,405.00
+Mean max drawdown              $          45,390.90
+Median max drawdown            $          44,650.00
+95th pct max drawdown          $          56,100.00
+99th pct max drawdown          $          59,800.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       101.0103%
-Avg session wagered            $       3,297,282.67
+RTP                                       101.8101%
+Avg session wagered            $      17,832,380.65
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.7
+Avg shoes played                             1000.0
+Avg hands played                            13750.8
 ======================================================================
 
 ======================================================================
-KELLY BANKROLL REPLAY  —  k = 4.000
+KELLY BANKROLL REPLAY  —  k = 3.000
 ======================================================================
 Replays                                       2,000
-Shoes per session                               100
+Shoes per session                             1,000
 Starting bankroll (B0)         $         100,000.00
 Table min / max                 $100 / $5000
 Ruin mode                                       end
-Sizer                          Kelly k=4.000 | B0=$100,000 | min=$100 / max=$5000
+Sizer                          Kelly k=3.000 | B0=$100,000 | min=$100 / max=$5000
 
 CALCULATED BET SPREAD (EV grid, per TC step, clipped)
 ----------------------------------------------------------------------
-TC range (CSV grid)                -21.5 ..     +22.0
+TC range (CSV grid)                -36.0 ..     +37.5
 Bet min / max                  $      100  /  $    5,000
 Median bucket bet              $                100
 Spread (max / min)                           50.00×
-Buckets at table min                             49
-Buckets at table max                             33
+Buckets at table min                             82
+Buckets at table max                             60
 
 CALCULATED BET BY TC (integer TC +1 .. +10)
 ----------------------------------------------------------------------
-TC +1                          $                100
-TC +2                          $              2,100
-TC +3                          $              4,000
+TC +1                          $                900
+TC +2                          $              2,300
+TC +3                          $              4,200
 TC +4                          $              5,000
 TC +5                          $              5,000
 TC +6                          $              5,000
@@ -12484,39 +12419,104 @@ TC +10                         $              5,000
 
 USER PRIORITIES
 ----------------------------------------------------------------------
-E[profit]  = E[end − B0]       $         +40,833.20
-P(finish down)  (end < B0)                   36.70%
-P(ruin)                                      12.95%
+E[profit]  = E[end − B0]       $        +333,629.20
+P(finish down)  (end < B0)                   13.20%
+P(ruin)                                       7.50%
 
 BANKROLL DISTRIBUTION
 ----------------------------------------------------------------------
-E[ending bankroll]             $         140,833.20
-Median ending bankroll         $         141,100.00
-95% range [p2.5 .. p97.5]      $-99,887.50  ..  $384,056.25
-P(lose > 25%)                                30.65%
-P(lose > 50%)                                23.65%
-P(double bankroll)                           32.20%
+E[ending bankroll]             $         433,629.20
+Median ending bankroll         $         429,900.00
+95% range [p2.5 .. p97.5]      $-127,411.25  ..  $1,001,452.50
+P(lose > 25%)                                11.50%
+P(lose > 50%)                                 9.85%
+P(double bankroll)                           77.65%
 
 DRAWDOWN DISTRIBUTION
 ----------------------------------------------------------------------
-Mean max drawdown              $          54,929.72
-Median max drawdown            $          53,200.00
-95th pct max drawdown          $          78,900.00
-99th pct max drawdown          $          91,409.00
+Mean max drawdown              $          47,052.32
+Median max drawdown            $          46,275.00
+95th pct max drawdown          $          58,300.00
+99th pct max drawdown          $          63,606.00
 
 RETURN TO PLAYER
 ----------------------------------------------------------------------
-RTP                                       101.0600%
-Avg session wagered            $       3,852,330.27
+RTP                                       101.7258%
+Avg session wagered            $      19,332,378.32
 
 SESSION STATS
 ----------------------------------------------------------------------
-Avg shoes played                              100.0
-Avg hands played                             4306.3
+Avg shoes played                             1000.0
+Avg hands played                            13751.4
 ======================================================================
 
-Figure saved to: kelly_matrix_hilo_6d75pen_h17/kelly_sweep_min100_max5000_br100000_replays2000_shoes100.png
+======================================================================
+KELLY BANKROLL REPLAY  —  k = 4.000
+======================================================================
+Replays                                       2,000
+Shoes per session                             1,000
+Starting bankroll (B0)         $         100,000.00
+Table min / max                 $100 / $5000
+Ruin mode                                       end
+Sizer                          Kelly k=4.000 | B0=$100,000 | min=$100 / max=$5000
+
+CALCULATED BET SPREAD (EV grid, per TC step, clipped)
+----------------------------------------------------------------------
+TC range (CSV grid)                -36.0 ..     +37.5
+Bet min / max                  $      100  /  $    5,000
+Median bucket bet              $                100
+Spread (max / min)                           50.00×
+Buckets at table min                             82
+Buckets at table max                             62
+
+CALCULATED BET BY TC (integer TC +1 .. +10)
+----------------------------------------------------------------------
+TC +1                          $              1,300
+TC +2                          $              3,100
+TC +3                          $              5,000
+TC +4                          $              5,000
+TC +5                          $              5,000
+TC +6                          $              5,000
+TC +7                          $              5,000
+TC +8                          $              5,000
+TC +9                          $              5,000
+TC +10                         $              5,000
+
+USER PRIORITIES
+----------------------------------------------------------------------
+E[profit]  = E[end − B0]       $        +369,852.17
+P(finish down)  (end < B0)                   12.45%
+P(ruin)                                       6.60%
+
+BANKROLL DISTRIBUTION
+----------------------------------------------------------------------
+E[ending bankroll]             $         469,852.17
+Median ending bankroll         $         475,975.00
+95% range [p2.5 .. p97.5]      $-148,391.25  ..  $1,086,681.25
+P(lose > 25%)                                10.95%
+P(lose > 50%)                                 9.50%
+P(double bankroll)                           79.85%
+
+DRAWDOWN DISTRIBUTION
+----------------------------------------------------------------------
+Mean max drawdown              $          49,336.70
+Median max drawdown            $          48,500.00
+95th pct max drawdown          $          60,000.00
+99th pct max drawdown          $          66,300.00
+
+RETURN TO PLAYER
+----------------------------------------------------------------------
+RTP                                       101.7061%
+Avg session wagered            $      21,678,421.90
+
+SESSION STATS
+----------------------------------------------------------------------
+Avg shoes played                             1000.0
+Avg hands played                            13751.0
+======================================================================
+
+Figure saved to: kelly_matrix_hilo_2d70pen_h17_ruin-end/kelly_sweep_min100_max5000_br100000_replays2000_shoes1000.png
 
 Summary data saved to:
-  kelly_matrix_hilo_6d75pen_h17/summary.csv
-  kelly_matrix_hilo_6d75pen_h17/summary.json
+  kelly_matrix_hilo_2d70pen_h17_ruin-end/summary.csv
+  kelly_matrix_hilo_2d70pen_h17_ruin-end/summary.json

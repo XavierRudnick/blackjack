@@ -5,7 +5,7 @@ Kelly Sweep Matrix — parallel multi-regime bankroll replay.
 Sweeps a hard-coded matrix of (table_min, table_max, bankroll) regimes against
 a per-regime Kelly grid, all driven off a single strategy EV CSV + shoe trace.
 Ruin mode is selectable via --ruin-mode (anytime|end, default anytime);
-bankroll-thresholds are fixed at "0.9,0.75,0.5,0.25,0.1".
+end-bankroll percentiles are exported for reconstructing outcome ranges.
 
 Loads the shoe library + EV table once, then dispatches all
 (bankroll, kelly) jobs to a multiprocessing Pool. On Linux the workers inherit
@@ -17,6 +17,10 @@ Usage:
         --ev-csv data/ev_per_tc_data/evPerTC/HiLoStrategy/ev_per_tc_HiLoStrategy_6deck_70pen_H17_DAS_NoRAS_NoSurrender_3to2.csv \
         --shoes 100 --replays 10000 \
         --output kelly_matrix_hilo_6d75pen_h17
+
+The matrix summary JSON is named ``{stem}_shoes{N}_ruin-{anytime|end}.json``
+(``stem`` is the output folder name with trailing ``_ruin-*`` and legacy
+``_shoes*_replay*`` segments removed so shoes/ruin appear once).
 """
 
 from __future__ import annotations
@@ -26,6 +30,7 @@ import csv
 import json
 import multiprocessing as mp
 import os
+import re
 import sys
 import time
 from dataclasses import dataclass, fields as dc_fields
@@ -53,7 +58,17 @@ from bankroll_replay_kelly import (  # noqa: E402
 
 # ── fixed configuration ────────────────────────────────────────────────────────
 
-THRESHOLDS: tuple[float, ...] = (0.9, 0.75, 0.5, 0.25,0.1)
+def _unique_sorted(values: tuple[float, ...]) -> tuple[float, ...]:
+    return tuple(sorted(set(float(v) for v in values)))
+
+
+END_BANKROLL_PERCENTILES: tuple[float, ...] = _unique_sorted(
+    (0.001,0.01, 0.025, 0.975, 0.99,0.999)
+    + tuple(i / 100.0 for i in range(5, 100, 5))
+)
+
+# The matrix report uses percentile bankrolls instead of P(end < fraction * B0).
+THRESHOLDS: tuple[float, ...] = ()
 
 KELLY_LOW = (0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 7.0)
 KELLY_MID = (0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0, 2.5, 3.0, 4.0)
@@ -122,7 +137,13 @@ def _run_job(job: Job) -> tuple[JobKey, KellySummary]:
     results: list[ReplayResult] = []
     for _ in range(job.num_replays):
         results.append(replay_once(_LIB, sizer, config, rng))
-    summary = compute_kelly_summary(results, job.key.bankroll, job.key.kelly, THRESHOLDS)
+    summary = compute_kelly_summary(
+        results,
+        job.key.bankroll,
+        job.key.kelly,
+        THRESHOLDS,
+        END_BANKROLL_PERCENTILES,
+    )
     return job.key, summary
 
 
@@ -163,6 +184,37 @@ def _figure_path(out_dir: Path, table_min: float, table_max: float,
         / f"kelly_sweep_min{int(table_min)}_max{int(table_max)}"
           f"_br{int(bankroll)}_replays{int(num_replays)}_shoes{int(shoes_target)}.png"
     )
+
+
+def _output_dir_with_ruin_mode(out_dir: Path, ruin_mode: str) -> Path:
+    suffix = f"_ruin-{ruin_mode}"
+    if out_dir.name.endswith(suffix):
+        return out_dir
+    return out_dir.with_name(f"{out_dir.name}{suffix}")
+
+
+def _canonical_matrix_stem(dirname: str) -> str:
+    """Strip trailing folder decorations so the JSON basename is not redundant.
+
+    Removes a trailing ``_ruin-anytime`` / ``_ruin-end`` suffix, then a trailing
+    ``_shoes{N}_replay...`` segment (legacy output folder names) so the file
+    name carries ``shoes`` / ``ruin`` once.
+    """
+    name = dirname
+    for suf in ("_ruin-anytime", "_ruin-end"):
+        if name.endswith(suf):
+            name = name[: -len(suf)]
+            break
+    m = re.match(r"^(.+)_shoes(\d+)_replay(\d+k?)$", name, re.IGNORECASE)
+    if m:
+        name = m.group(1)
+    return name
+
+
+def matrix_summary_json_name(dirname: str, shoes_target: int, ruin_mode: str) -> str:
+    """Full matrix summary filename: ``{stem}_shoes{N}_ruin-{mode}.json``."""
+    stem = _canonical_matrix_stem(dirname)
+    return f"{stem}_shoes{int(shoes_target)}_ruin-{ruin_mode}.json"
 
 
 def _plot_kelly_sweep_titled(
@@ -216,7 +268,36 @@ def _plot_kelly_sweep_titled(
     print(f"\nFigure saved to: {out_path}")
 
 
-def _summary_row(key: JobKey, s: KellySummary) -> dict:
+def _kelly_spread_for_job(key: JobKey, ev_table: KellyEVTable) -> dict:
+    """Serialize the practical Kelly spread for integer TC +1 through +10."""
+    sizer = KellySizer(
+        table=ev_table,
+        kelly=key.kelly,
+        start_bankroll=key.bankroll,
+        table_min=key.table_min,
+        table_max=key.table_max,
+    )
+    return {
+        f"tc_{tc}": float(sizer.bet_for_tc(float(tc)))
+        for tc in range(1, 11)
+    }
+
+
+def _end_bankroll_percentiles(s: KellySummary) -> list[dict]:
+    """Inverse-CDF points useful for plotting the outcome range."""
+    b0 = s.base.start_bankroll
+    return [
+        {
+            "percentile": float(prob * 100.0),
+            "probability": float(prob),
+            "end_bankroll": float(bankroll),
+            "end_profit": float(bankroll - b0),
+        }
+        for prob, bankroll in zip(s.percentile_probs, s.percentile_bankrolls)
+    ]
+
+
+def _summary_row(key: JobKey, s: KellySummary, ev_table: KellyEVTable) -> dict:
     """Flatten one job's summary into a single row of plain Python scalars."""
     row: dict = {
         "table_min": key.table_min,
@@ -229,8 +310,8 @@ def _summary_row(key: JobKey, s: KellySummary) -> dict:
         if f.name in ("num_replays", "start_bankroll"):
             continue
         row[f.name] = getattr(s.base, f.name)
-    for frac, prob in zip(s.threshold_fractions, s.threshold_probs):
-        row[f"prob_end_below_{frac:g}xB0"] = prob
+    row["bet_spread"] = _kelly_spread_for_job(key, ev_table)
+    row["end_bankroll_percentiles"] = _end_bankroll_percentiles(s)
     return row
 
 
@@ -239,16 +320,28 @@ def _write_summary_data(
     rows: list[dict],
     meta: dict,
 ) -> None:
-    """Emit summary.csv + summary.json with all per-job fields."""
+    """Emit summary.csv + ``{stem}_shoes{N}_ruin-{mode}.json`` with all per-job fields."""
     csv_path = out_dir / "summary.csv"
-    json_path = out_dir / "summary.json"
+    json_path = out_dir / matrix_summary_json_name(
+        out_dir.name,
+        int(meta["shoes_per_session"]),
+        str(meta["ruin_mode"]),
+    )
+    json_only_keys = {
+        "bet_spread",
+        "end_bankroll_percentiles",
+    }
 
     if rows:
+        csv_rows = [
+            {k: v for k, v in r.items() if k not in json_only_keys}
+            for r in rows
+        ]
         # Union of all keys, but stable order: take first row's keys, then
         # append any extras from later rows (different threshold counts etc).
         seen: set[str] = set()
         ordered: list[str] = []
-        for r in rows:
+        for r in csv_rows:
             for k in r.keys():
                 if k not in seen:
                     seen.add(k)
@@ -256,7 +349,7 @@ def _write_summary_data(
         with open(csv_path, "w", newline="") as fh:
             w = csv.DictWriter(fh, fieldnames=ordered)
             w.writeheader()
-            for r in rows:
+            for r in csv_rows:
                 w.writerow(r)
 
     with open(json_path, "w", encoding="utf-8") as fh:
@@ -331,8 +424,10 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--replays", type=int, required=True, dest="num_replays",
                    help="Monte Carlo replays per (bankroll, kelly) job.")
     p.add_argument("--output", required=True,
-                   help="Output folder (created if missing). Receives PNGs, "
-                        "session_log.md, summary.csv, summary.json.")
+                   help="Output folder base name. The selected ruin mode is "
+                        "appended before creation. Receives PNGs, "
+                        "session_log.md, summary.csv, and a matrix JSON named "
+                        "{stem}_shoes{N}_ruin-{anytime|end}.json.")
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--max-shoes", type=int, default=None)
     p.add_argument("--min-hands-per-tc", type=int, default=0)
@@ -423,7 +518,7 @@ def _run(args: argparse.Namespace) -> None:
             )
             for k in kelly_grid:
                 key = JobKey(table_min, table_max, br, k)
-                summary_rows.append(_summary_row(key, results[key]))
+                summary_rows.append(_summary_row(key, results[key], ev_table))
 
     meta = {
         "trace": args.trace,
@@ -431,7 +526,7 @@ def _run(args: argparse.Namespace) -> None:
         "shoes_per_session": args.shoes_target,
         "num_replays": args.num_replays,
         "ruin_mode": args.ruin_mode,
-        "thresholds": list(THRESHOLDS),
+        "percentiles": list(END_BANKROLL_PERCENTILES),
         "seed": args.seed,
         "min_hands_per_tc": args.min_hands_per_tc,
         "max_shoes": args.max_shoes,
@@ -445,6 +540,7 @@ def _run(args: argparse.Namespace) -> None:
 
 def main() -> None:
     args = parse_args()
+    args.output = str(_output_dir_with_ruin_mode(Path(args.output), args.ruin_mode))
 
     out_dir = Path(args.output)
     out_dir.mkdir(parents=True, exist_ok=True)

@@ -24,6 +24,7 @@ public:
     void setUnitSize(float kellyFraction) override;
     void updateCount(Card card) override;
     float getTrueCount() override;
+    float getBettingTrueCount() override;
     bool shouldAcceptInsurance() override;
 };
 

@@ -15,7 +15,6 @@ public:
     virtual void setUnitSize(float kellyFraction) = 0;
     virtual void updateCount(Card card) = 0;
     virtual float getTrueCount() = 0;
-    virtual float getBettingTrueCount() = 0;
     virtual bool shouldAcceptInsurance() = 0;
     virtual ~Player() = default;
 };

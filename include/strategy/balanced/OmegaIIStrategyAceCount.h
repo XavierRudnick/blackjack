@@ -5,9 +5,10 @@
 #include "Deck.h"
 #include "action.h"
 #include "CountingStrategy.h"
+#include "BettingTrueCountStrategy.h"
 #include "BasicStrategy.h"
 
-class OmegaIIStrategyAceCount : public CountingStrategy { //in docs note deck size is counted 100% accuratly in half size increments
+class OmegaIIStrategyAceCount : public CountingStrategy, public BettingTrueCountStrategy { //in docs note deck size is counted 100% accuratly in half size increments
     private:
         float true_count = 0;       // ace-adjusted TC — used only for getBetSize()
         float raw_true_count = 0;   // raw TC (running_count / decks_left) — used for strategy decisions

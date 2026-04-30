@@ -968,62 +968,30 @@ void runHella(){
 
 int main(){
 
-    
+   
+    // runEvenBetEvPerTcSims(6, 12500000, 0.75f, std::make_unique<ZenCountStrategy>(6), true, true, false, false, true,
+    // "data/ev_per_tc_data/evPerTC/ZenCountStrategy/ev_per_tc_ZenCountStrategy_6deck_75pen_H17_DAS_NoRAS_NoSurrender_3to2.csv");
 
-    // runEvenBetEvPerTcSims(6, 17500000, 0.55f, std::make_unique<OmegaIIStrategyAceCount>(6), true, true, false, false, true,
-    // "data/ev_per_tc_data/evPerTC/OmegaIIStrategyAceCount/ev_per_tc_OmegaIIStrategyAceCount_6deck_55pen_H17_DAS_NoRAS_NoSurrender_3to2.csv");
+  
     // return 0;
 
-    runRTPsims(6, 10000, 0.75f, std::make_unique<HiLoStrategy>(6));
-    return 0;
+
+
+    // runRTPsims(2, 10000, 0.75f, std::make_unique<HiLoStrategy>(2));
+    // return 0;
     //runHella();
 
     // Shoe trace library generation — fixed 1-unit bet, portable base traces
     // // Adjust numShoes for the size of the dataset you want.
     // // 6-deck, 75% pen, H17, DAS, no RAS, no surrender, 3:2
-    // runShoeTraceSim(2, 2500000, 0.50f,
-    //     std::make_unique<ZenCountStrategy>(2),
-    //     /*bj3to2=*/true, /*dealerHits17=*/true,
-    //     /*das=*/true, /*ras=*/false, /*surrender=*/false,
-    //     "stats/shoetraces",
-    //     /*compress=*/true);
+    runShoeTraceSim(2, 2500000, 0.80f,
+        std::make_unique<ZenCountStrategy>(2),
+        /*bj3to2=*/true, /*dealerHits17=*/true,
+        /*das=*/true, /*ras=*/false, /*surrender=*/false,
+        "stats/shoetraces",
+        /*compress=*/true);
 
-    // runShoeTraceSim(2, 2500000, 0.60f,
-    //     std::make_unique<ZenCountStrategy>(2),
-    //     /*bj3to2=*/true, /*dealerHits17=*/true,
-    //     /*das=*/true, /*ras=*/false, /*surrender=*/false,
-    //     "stats/shoetraces",
-    //     /*compress=*/true);
-
-    // runShoeTraceSim(2, 2500000, 0.70f,
-    //     std::make_unique<ZenCountStrategy>(2),
-    //     /*bj3to2=*/true, /*dealerHits17=*/true,
-    //     /*das=*/true, /*ras=*/false, /*surrender=*/false,
-    //     "stats/shoetraces",
-    //     /*compress=*/true);
-
-    // runShoeTraceSim(6, 1000000, 0.55f,
-    //     std::make_unique<ZenCountStrategy>(6),
-    //     /*bj3to2=*/true, /*dealerHits17=*/true,
-    //     /*das=*/true, /*ras=*/false, /*surrender=*/false,
-    //     "stats/shoetraces",
-    //     /*compress=*/true);
-
-    // runShoeTraceSim(6, 1000000, 0.65f,
-    //     std::make_unique<ZenCountStrategy>(6),
-    //     /*bj3to2=*/true, /*dealerHits17=*/true,
-    //     /*das=*/true, /*ras=*/false, /*surrender=*/false,
-    //     "stats/shoetraces",
-    //     /*compress=*/true);
-
-    // runShoeTraceSim(6, 1000000, 0.75f,
-    //     std::make_unique<ZenCountStrategy>(6),
-    //     /*bj3to2=*/true, /*dealerHits17=*/true,
-    //     /*das=*/true, /*ras=*/false, /*surrender=*/false,
-    //     "stats/shoetraces",
-    //     /*compress=*/true);
-
-    // return 0;
+     return 0;
 
     // // Increase counts for tighter CSVs (millions of shoes is typical for deviation work).
     // int numDecks = 6;

@@ -18,9 +18,12 @@ Usage:
         --shoes 100 --replays 10000 \
         --output kelly_matrix_hilo_6d75pen_h17
 
-The matrix summary JSON is named ``{stem}_shoes{N}_ruin-{anytime|end}.json``
-(``stem`` is the output folder name with trailing ``_ruin-*`` and legacy
-``_shoes*_replay*`` segments removed so shoes/ruin appear once).
+The matrix summary JSON is named ``{stem}_shoes{N}_ruin-{anytime|end}.json``.
+``stem`` is derived from the output directory path: trailing ``_ruin-*`` and
+legacy ``_shoes*_replay*`` are stripped; a trailing ``_shoes{N}`` in the folder
+name is removed so ``shoes`` is not doubled; if the folder is only
+``shoes{N}_ruin-*``, parent segments below ``kelly_matrix`` are joined
+(e.g. ``HiLoStrategy_6deck_55pen``).
 """
 
 from __future__ import annotations
@@ -193,13 +196,46 @@ def _output_dir_with_ruin_mode(out_dir: Path, ruin_mode: str) -> Path:
     return out_dir.with_name(f"{out_dir.name}{suffix}")
 
 
-def _canonical_matrix_stem(dirname: str) -> str:
-    """Strip trailing folder decorations so the JSON basename is not redundant.
+def _canonical_matrix_stem_from_out_dir(out_dir: Path) -> str:
+    """Strip folder decorations so ``{stem}_shoes{N}_ruin-*.json`` is not redundant.
 
-    Removes a trailing ``_ruin-anytime`` / ``_ruin-end`` suffix, then a trailing
-    ``_shoes{N}_replay...`` segment (legacy output folder names) so the file
-    name carries ``shoes`` / ``ruin`` once.
+    Removes a trailing ``_ruin-anytime`` / ``_ruin-end`` from the leaf name,
+    then a legacy ``..._shoes{N}_replay...`` segment. If the leaf is only
+    ``shoes{N}``, joins parent directory names up to (but not including)
+    ``kelly_matrix``. Otherwise strips a trailing ``_shoes{N}`` from the leaf
+    so session length appears once in the filename.
     """
+    name = out_dir.name
+    for suf in ("_ruin-anytime", "_ruin-end"):
+        if name.endswith(suf):
+            name = name[: -len(suf)]
+            break
+    m = re.match(r"^(.+)_shoes(\d+)_replay(\d+k?)$", name, re.IGNORECASE)
+    if m:
+        name = m.group(1)
+    if re.fullmatch(r"shoes\d+", name, re.IGNORECASE):
+        parts: list[str] = []
+        p = out_dir.parent
+        while p.name and p.name != ".":
+            if p.name == "kelly_matrix":
+                break
+            parts.append(p.name)
+            p = p.parent
+        return "_".join(reversed(parts)) if parts else "matrix"
+    m2 = re.match(r"^(.+)_shoes\d+$", name, re.IGNORECASE)
+    if m2:
+        name = m2.group(1)
+    return name
+
+
+def matrix_summary_json_name(out_dir: Path, shoes_target: int, ruin_mode: str) -> str:
+    """Full matrix summary filename: ``{stem}_shoes{N}_ruin-{mode}.json``."""
+    stem = _canonical_matrix_stem_from_out_dir(out_dir)
+    return f"{stem}_shoes{int(shoes_target)}_ruin-{ruin_mode}.json"
+
+
+def _canonical_matrix_stem_dirname_only(dirname: str) -> str:
+    """Older stem rule (leaf directory name only); kept for legacy JSON detection."""
     name = dirname
     for suf in ("_ruin-anytime", "_ruin-end"):
         if name.endswith(suf):
@@ -211,10 +247,16 @@ def _canonical_matrix_stem(dirname: str) -> str:
     return name
 
 
-def matrix_summary_json_name(dirname: str, shoes_target: int, ruin_mode: str) -> str:
-    """Full matrix summary filename: ``{stem}_shoes{N}_ruin-{mode}.json``."""
-    stem = _canonical_matrix_stem(dirname)
-    return f"{stem}_shoes{int(shoes_target)}_ruin-{ruin_mode}.json"
+def matrix_summary_json_paths_for_skip(
+    out_dir: Path, shoes_target: int, ruin_mode: str
+) -> tuple[Path, Path]:
+    """Return ``(current_name, legacy_name)`` for skip-if-exists (paths may be identical)."""
+    current = out_dir / matrix_summary_json_name(out_dir, shoes_target, ruin_mode)
+    legacy = out_dir / (
+        f"{_canonical_matrix_stem_dirname_only(out_dir.name)}"
+        f"_shoes{int(shoes_target)}_ruin-{ruin_mode}.json"
+    )
+    return current, legacy
 
 
 def _plot_kelly_sweep_titled(
@@ -323,7 +365,7 @@ def _write_summary_data(
     """Emit summary.csv + ``{stem}_shoes{N}_ruin-{mode}.json`` with all per-job fields."""
     csv_path = out_dir / "summary.csv"
     json_path = out_dir / matrix_summary_json_name(
-        out_dir.name,
+        out_dir,
         int(meta["shoes_per_session"]),
         str(meta["ruin_mode"]),
     )

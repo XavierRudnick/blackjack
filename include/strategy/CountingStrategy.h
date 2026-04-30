@@ -16,7 +16,6 @@ class CountingStrategy {
         virtual void setUnitSize(float kellyFraction) = 0;
 
         virtual float getTrueCount() const = 0;
-        virtual float getBettingTrueCount() const { return getTrueCount(); }
         virtual float getDecksLeft() const = 0;
         virtual float getRunningCount() const = 0;
         

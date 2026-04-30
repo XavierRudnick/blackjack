@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "Deck.h"
 #include "MonteCarloScenario.h"
+#include "BettingTrueCountStrategy.h"
 
 #include <algorithm>
 #include <cmath>
@@ -131,13 +132,13 @@ bool Engine::playHandImpl(){
 void Engine::playHand(){
     player->updateDeckStrategySize(deck->getSize());
 
-    handTrueCount = roundTrueCount(player->getBettingTrueCount());
+    handTrueCount = roundTrueCount(getBettingTrueCountFor(*player->getStrategy()));
     currentHandBetTotal = 0.0;
 
     // Capture pre-hand state for shoe tracing
     const bool doTrace = (traceBuffer != nullptr);
     const double bankrollBefore = bankroll.getBalance();
-    const float  bettingTC = player->getBettingTrueCount();
+    const float  bettingTC = getBettingTrueCountFor(*player->getStrategy());
     const int    deckNow = deck->getSize();
 
     if (doTrace) {

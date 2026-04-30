@@ -1,4 +1,5 @@
 #include "CSVKellyBetSizer.h"
+#include "BettingTrueCountStrategy.h"
 
 #include <algorithm>
 #include <cmath>
@@ -156,7 +157,7 @@ CSVKellyBetSizer::CSVKellyBetSizer(std::unique_ptr<CountingStrategy> inner,
 }
 
 int CSVKellyBetSizer::getBetSize() {
-    const float tc = inner_->getBettingTrueCount();
+    const float tc = getBettingTrueCountFor(*inner_);
     return betForTrueCount(tc);
 }
 

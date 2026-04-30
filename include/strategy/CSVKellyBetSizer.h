@@ -31,7 +31,6 @@ public:
     void reset(int deckSize) override { inner_->reset(deckSize); }
 
     float getTrueCount() const override { return inner_->getTrueCount(); }
-    float getBettingTrueCount() const override { return inner_->getBettingTrueCount(); }
     float getDecksLeft() const override { return inner_->getDecksLeft(); }
     float getRunningCount() const override { return inner_->getRunningCount(); }
 

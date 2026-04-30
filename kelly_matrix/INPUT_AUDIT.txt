@@ -1,0 +1,20 @@
+Kelly matrix input audit (strategy x decks x pen), rules H17_DAS_NoRAS_NoSurrender_3to2.
+
+Missing EV CSV (4):
+  data/ev_per_tc_data/evPerTC/NoStrategy/ev_per_tc_NoStrategy_6deck_55pen_H17_DAS_NoRAS_NoSurrender_3to2.csv
+  data/ev_per_tc_data/evPerTC/NoStrategy/ev_per_tc_NoStrategy_6deck_65pen_H17_DAS_NoRAS_NoSurrender_3to2.csv
+  data/ev_per_tc_data/evPerTC/NoStrategy/ev_per_tc_NoStrategy_6deck_75pen_H17_DAS_NoRAS_NoSurrender_3to2.csv
+  data/ev_per_tc_data/evPerTC/ZenCountStrategy/ev_per_tc_ZenCountStrategy_6deck_75pen_H17_DAS_NoRAS_NoSurrender_3to2.csv
+
+Missing shoe trace .csv.zst (1):
+  stats/shoetraces/hand_traces_ZenCountStrategy_2deck_80pen_H17_DAS_NoRAS_NoSurrender_3to2.csv.zst
+
+Generate gaps (C++): from repo root,
+  BLACKJACK_KELLY_MATRIX=ev_gaps ./blackjack
+  BLACKJACK_KELLY_MATRIX=trace_gaps ./blackjack
+Full shoe-trace grid (28 files): BLACKJACK_KELLY_MATRIX=traces_all ./blackjack  (long run)
+Prior Omega-only traces: BLACKJACK_KELLY_MATRIX=legacy_omega_traces ./blackjack
+
+Sweep all cells: python3 ai_analysis_scripts/run_kelly_matrix_batch.py
+  (replay counts are hardcoded in that script by deck count and shoes/session.)
+(Use --continue-on-missing only while inputs are still being generated.)

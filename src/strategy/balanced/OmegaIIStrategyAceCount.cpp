@@ -16,9 +16,9 @@ void OmegaIIStrategyAceCount::recomputeTrueCountFromState() {
         return;
     }
     raw_true_count = running_count / num_decks_left;
-    const float expectedAcesSeen = (initial_decks - num_decks_left) * 4.0f;
-    const float aceAdjustment = 2.0f * (expectedAcesSeen - static_cast<float>(ace_seen));
-    true_count = (running_count + aceAdjustment) / num_decks_left;
+    const int excess_aces =
+        (static_cast<int>(std::round((initial_decks - num_decks_left) * 4.0f)) - ace_seen) * 2;
+    true_count = (running_count + static_cast<float>(excess_aces)) / num_decks_left;
 }
 
 int OmegaIIStrategyAceCount::getBetSize() {

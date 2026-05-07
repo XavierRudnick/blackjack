@@ -15,3 +15,5 @@ build/
 *.gitignore
 
 stats/
+
+shoetraces/

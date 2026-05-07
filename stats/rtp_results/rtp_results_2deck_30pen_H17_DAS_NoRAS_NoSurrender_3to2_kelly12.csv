@@ -1,9 +1,0 @@
-Strategy,Decks,Penetration,DealerRule,DAS,RAS,Surrender,BlackjackPayout,Iterations,RTP,HouseEdge%,AvgWallet,AvgMoneyBet,NetPer1000,Duration_s
-HiLoStrategy,2,0.3,H17,DAS,NoRAS,NoSurrender,3to2,50000,0.994601,0.5399,49998.96,193.41,-269.96,0
-MentorStrategy,2,0.30,H17,DAS,NoRAS,NoSurrender,3to2,50000,0.995139,0.4861,49999.06,193.07,-243.04,0
-RAPCStrategy,2,0.30,H17,DAS,NoRAS,NoSurrender,3to2,50000,0.997437,0.2563,49999.51,192.13,-128.17,0
-WongHalvesStrategy,2,0.30,H17,DAS,NoRAS,NoSurrender,3to2,50000,1.001106,-0.1106,50000.21,186.41,55.32,0
-ZenCountStrategy,2,0.30,H17,DAS,NoRAS,NoSurrender,3to2,50000,0.996680,0.3320,49999.36,193.75,-166.00,0
-R14Strategy,2,0.30,H17,DAS,NoRAS,NoSurrender,3to2,50000,0.998047,0.1953,49999.62,195.81,-97.67,0
-RPCStrategy,2,0.30,H17,DAS,NoRAS,NoSurrender,3to2,50000,1.001890,-0.1890,50000.37,193.68,94.49,0
-OmegaIIStrategy,2,0.30,H17,DAS,NoRAS,NoSurrender,3to2,50000,0.999610,0.0390,49999.93,192.34,-19.50,0

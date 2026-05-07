@@ -474,23 +474,32 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
 
         std::ostringstream evFilename;
         evFilename << evDir << "/ev_per_tc_" << strategyName << "_" << numDecksUsed << "deck_"
-                   << static_cast<int>(deckPenetration * 100) << "pen_" << H17Str << "_"
+                   << static_cast<int>(deckPenetration * 100.0f + 0.5f) << "pen_" << H17Str << "_"
                    << (allowDoubleAfterSplit ? "DAS" : "NoDAS") << "_"
                    << (allowReSplitAces ? "RAS" : "NoRAS") << "_"
                    << (surrender ? "Surrender" : "NoSurrender") << "_"
                    << (blackJackPayout3to2 ? "3to2" : "6to5") << ".csv";
 
+        int totalHandsPlayed = 0;
+        for (const auto& entry : EVperTC) {
+            totalHandsPlayed += entry.second.handsPlayed;
+        }
+
         std::ofstream evFile(evFilename.str());
-        evFile << "TrueCount,HandsPlayed,TotalMoneyWagered,TotalPayout,EVPerDollar,StdErrorPerDollar" << std::endl;
+        evFile << "TrueCount,HandsPlayed,TotalMoneyWagered,TotalPayout,EVPerDollar,StdErrorPerDollar,HandsPlayedPct" << std::endl;
         for (const auto& entry : EVperTC) {
             const float trueCount = entry.first;
             const ActionStats& stats = entry.second;
+            const double handsPlayedPct = totalHandsPlayed > 0
+                ? (static_cast<double>(stats.handsPlayed) * 100.0 / totalHandsPlayed)
+                : 0.0;
             evFile << std::fixed << std::setprecision(1) << trueCount << ","
                    << stats.handsPlayed << ","
                    << std::fixed << std::setprecision(6) << stats.totalMoneyWagered << ","
                    << std::fixed << std::setprecision(6) << stats.totalPayout << ","
                    << std::fixed << std::setprecision(6) << stats.getEV() << ","
-                   << std::fixed << std::setprecision(6) << stats.getStdError()
+                   << std::fixed << std::setprecision(6) << stats.getStdError() << ","
+                   << std::fixed << std::setprecision(6) << handsPlayedPct
                    << std::endl;
         }
     }
@@ -544,7 +553,7 @@ void runEvenBetEvPerTcSims(int numDecksUsed, int iterations, float deckPenetrati
         std::chrono::high_resolution_clock::now() - start_time).count();
     std::cout << "  Even-bet EV/TC finished in " << duration << "s" << std::endl;
 
-    // Root may be a directory (…/evPerTC → …/evPerTC/StrategyName/ev_per_tc_even1unit_*.csv)
+    // Root may be a directory (.../evPerTC -> .../evPerTC/StrategyName/ev_per_tc_*.csv)
     // or a full output .csv path (create parent dirs only; write that file).
     fs::path rootPath(evPerTcOutputRoot);
     fs::path outCsvPath;
@@ -557,8 +566,8 @@ void runEvenBetEvPerTcSims(int numDecksUsed, int iterations, float deckPenetrati
         std::string evDir = evPerTcOutputRoot + "/" + strategyName;
         parentDir = fs::path(evDir);
         std::ostringstream evFilename;
-        evFilename << evDir << "/ev_per_tc_even1unit_" << strategyName << "_" << numDecksUsed << "deck_"
-                   << static_cast<int>(deckPenetration * 100) << "pen_" << H17Str << "_"
+        evFilename << evDir << "/ev_per_tc_" << strategyName << "_" << numDecksUsed << "deck_"
+                   << static_cast<int>(deckPenetration * 100.0f + 0.5f) << "pen_" << H17Str << "_"
                    << (allowDoubleAfterSplit ? "DAS" : "NoDAS") << "_"
                    << (allowReSplitAces ? "RAS" : "NoRAS") << "_"
                    << (surrender ? "Surrender" : "NoSurrender") << "_"
@@ -569,20 +578,30 @@ void runEvenBetEvPerTcSims(int numDecksUsed, int iterations, float deckPenetrati
     if (!parentDir.empty()) {
         fs::create_directories(parentDir);
     }
+
+    int totalHandsPlayed = 0;
+    for (const auto& entry : EVperTC) {
+        totalHandsPlayed += entry.second.handsPlayed;
+    }
+
     std::ofstream evFile(outCsvPath.string());
-    evFile << "TrueCount,HandsPlayed,TotalMoneyWagered,TotalPayout,EVPerDollar,StdErrorPerDollar" << std::endl;
+    evFile << "TrueCount,HandsPlayed,TotalMoneyWagered,TotalPayout,EVPerDollar,StdErrorPerDollar,HandsPlayedPct" << std::endl;
     for (const auto& entry : EVperTC) {
         const float trueCount = entry.first;
         const ActionStats& stats = entry.second;
+        const double handsPlayedPct = totalHandsPlayed > 0
+            ? (static_cast<double>(stats.handsPlayed) * 100.0 / totalHandsPlayed)
+            : 0.0;
         evFile << std::fixed << std::setprecision(1) << trueCount << ","
                << stats.handsPlayed << ","
                << std::fixed << std::setprecision(6) << stats.totalMoneyWagered << ","
                << std::fixed << std::setprecision(6) << stats.totalPayout << ","
                << std::fixed << std::setprecision(6) << stats.getEV() << ","
-               << std::fixed << std::setprecision(6) << stats.getStdError()
+               << std::fixed << std::setprecision(6) << stats.getStdError() << ","
+               << std::fixed << std::setprecision(6) << handsPlayedPct
                << std::endl;
     }
-    std::cout << "  Wrote even-bet EV per TC → " << outCsvPath.string() << std::endl;
+    std::cout << "  Wrote even-bet EV per TC -> " << outCsvPath.string() << std::endl;
 }
 
 // Run RTP simulations for all strategies and save to CSV
@@ -967,13 +986,97 @@ void runHella(){
 }
 
 int main(){
+    int deckSize[] = {2,4,6,8};
+    int evPerTcIterations[] = {50000000,25000000,17000000,12500000};
+    float allPenetrations[] = {0.3f,.35f,0.4f,0.45f,0.5f,0.55f,0.60f,0.65f,0.7f,0.75f,0.80f};
+    float sixDeckPenetrations[] = {0.75f,0.80f};
 
-   
+    const size_t num_threads = 10;
+    const std::string evPerTcOutputRoot = "data/ev_per_tc_data/evPerTC";
+
+    std::cout << "Using up to " << num_threads << " thread(s)" << std::endl;
+
+    struct EvPerTcJob {
+        int decks;
+        int iterations;
+        float penetration;
+        std::function<std::unique_ptr<CountingStrategy>(int)> makeStrategy;
+    };
+
+    std::vector<EvPerTcJob> jobs;
+
+    // Full EV-per-TC grid for no-count/basic-strategy baseline.
+    std::vector<std::thread> workers;
+    workers.reserve(num_threads);
+    for (size_t i = 0; i < std::size(deckSize); ++i) {
+        const int ds = deckSize[i];
+        for (float pen : allPenetrations) {
+            jobs.push_back({
+                ds,
+                evPerTcIterations[i],
+                pen,
+                [](int decks) {
+                    return std::make_unique<NoStrategy>(static_cast<float>(decks));
+                }
+            });
+        }
+    }
+
+    // Focused 6-deck 75%/80% EV-per-TC grid for every counting strategy.
+    std::vector<std::function<std::unique_ptr<CountingStrategy>(int)>> strategyFactories = {
+        [](int decks) { return std::make_unique<HiLoStrategy>(decks); },
+        [](int decks) { return std::make_unique<MentorStrategy>(decks); },
+        [](int decks) { return std::make_unique<RPCStrategy>(decks); },
+        [](int decks) { return std::make_unique<RAPCStrategy>(decks); },
+        [](int decks) { return std::make_unique<ZenCountStrategy>(decks); },
+        [](int decks) { return std::make_unique<R14Strategy>(decks); },
+        [](int decks) { return std::make_unique<OmegaIIStrategy>(decks); },
+        [](int decks) { return std::make_unique<OmegaIIStrategyAceCount>(static_cast<float>(decks)); },
+        [](int decks) { return std::make_unique<WongHalvesStrategy>(decks); }
+    };
+
+    for (const auto& makeStrategy : strategyFactories) {
+        for (float pen : sixDeckPenetrations) {
+            jobs.push_back({
+                6,
+                evPerTcIterations[2],
+                pen,
+                makeStrategy
+            });
+        }
+    }
+
+    std::cout << "Queued " << jobs.size() << " EV-per-TC job(s)" << std::endl;
+
+    for (const auto& job : jobs) {
+        workers.emplace_back([job, &evPerTcOutputRoot]() {
+            runEvenBetEvPerTcSims(job.decks, job.iterations, job.penetration,
+                job.makeStrategy(job.decks),
+                true, true, false, false, true,
+                evPerTcOutputRoot);
+        });
+
+        if (workers.size() >= num_threads) {
+            for (auto& t : workers) {
+                t.join();
+            }
+            workers.clear();
+        }
+    }
+
+    for (auto& t : workers) {
+        t.join();
+    }
+
+
+
+     
+
     // runEvenBetEvPerTcSims(6, 12500000, 0.75f, std::make_unique<ZenCountStrategy>(6), true, true, false, false, true,
     // "data/ev_per_tc_data/evPerTC/ZenCountStrategy/ev_per_tc_ZenCountStrategy_6deck_75pen_H17_DAS_NoRAS_NoSurrender_3to2.csv");
 
   
-    // return 0;
+     return 0;
 
 
 
@@ -984,16 +1087,16 @@ int main(){
     // Shoe trace library generation — fixed 1-unit bet, portable base traces
     // // Adjust numShoes for the size of the dataset you want.
     // // 6-deck, 75% pen, H17, DAS, no RAS, no surrender, 3:2
-    runShoeTraceSim(2, 2500000, 0.80f,
-        std::make_unique<ZenCountStrategy>(2),
-        /*bj3to2=*/true, /*dealerHits17=*/true,
-        /*das=*/true, /*ras=*/false, /*surrender=*/false,
-        "stats/shoetraces",
-        /*compress=*/true);
+    // runShoeTraceSim(2, 2500000, 0.80f,
+    //     std::make_unique<ZenCountStrategy>(2),
+    //     /*bj3to2=*/true, /*dealerHits17=*/true,
+    //     /*das=*/true, /*ras=*/false, /*surrender=*/false,
+    //     "stats/shoetraces",
+    //     /*compress=*/true);
 
-     return 0;
+    //  return 0;
 
-    // // Increase counts for tighter CSVs (millions of shoes is typical for deviation work).
+    // Increase counts for tighter CSVs (millions of shoes is typical for deviation work).
     // int numDecks = 6;
     // float deckPenetration = 0.75f;
     // long long monteIterations = 60'000'000LL;

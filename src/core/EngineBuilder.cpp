@@ -158,6 +158,11 @@ EngineBuilder& EngineBuilder::setEVperTC(std::map<float,ActionStats>& values) {
     return *this;
 }
 
+EngineBuilder& EngineBuilder::useFixedUnitBet(bool enable) {
+    gameConfig.useFixedUnitBet = enable;
+    return *this;
+}
+
 Engine EngineBuilder::build(Player* player) {
     Engine engine(gameConfig, *deck, player, eventBus, EVresults, EVperTC);
     return engine;

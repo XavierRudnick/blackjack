@@ -60,17 +60,20 @@ def weighted_linear_fit(tc: np.ndarray, ev: np.ndarray,
 def parse_filename(filepath: str) -> dict:
     """Extract strategy and deck info from filename."""
     filename = os.path.basename(filepath)
-    
-    # Pattern: ev_per_tc_{Strategy}_{N}deck_{pen}pen_...
-    pattern = r'ev_per_tc_(\w+Strategy)_(\d+)deck_(\d+)pen'
+
+    # Pattern: ev_per_tc_[even1unit_]{Strategy}_{N}deck_{pen}pen_...
+    # (non-greedy strategy slug so names like OmegaIIStrategyAceCount match)
+    pattern = r'ev_per_tc_(?:even1unit_)?(.+?)_(\d+)deck_(\d+)pen'
     match = re.search(pattern, filename)
-    
+
     if match:
-        strategy = match.group(1).replace('Strategy', '')
+        raw = match.group(1)
+        # Legacy filenames used *Strategy; strip suffix for compact labels when present
+        strategy = raw.replace('Strategy', '', 1) if raw.endswith('Strategy') else raw
         decks = f"{match.group(2)}deck"
         pen = f"{match.group(3)}pen"
         return {'strategy': strategy, 'decks': decks, 'pen': pen}
-    
+
     return {'strategy': 'Unknown', 'decks': 'Unknown', 'pen': 'Unknown'}
 
 

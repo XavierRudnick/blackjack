@@ -1,0 +1,15 @@
+Pilot (HiLoStrategy 6deck 55pen, --shoes 10, --replays 150, --ruin-mode anytime,
+project .venv Python, ~12 logical workers inside bankroll_replay_kelly_sweep.py):
+
+  Wall time ~10 s for one sweep invocation (~188 parallel Kelly jobs x 150 replays).
+
+Scaling to --replays 10000 (same shoes=10): ~10 s * (10000/150) ≈ 670 s ≈ 11 min per invocation.
+
+Full matrix: 168 invocations => ~31 h at that rate if each cell matches the pilot cost.
+Longer --shoes (100, 1000) increases replay work linearly in shoes per session.
+
+Use: .venv/bin/python ai_analysis_scripts/run_kelly_matrix_batch.py
+  (batch uses hardcoded --replays by shoes/decks; see matrix_replays() in run_kelly_matrix_batch.py.)
+
+Workers: the hardcoded override of --workers was removed; pass --workers on the sweep
+script if you lower it to run several batch processes in parallel without oversubscribing.

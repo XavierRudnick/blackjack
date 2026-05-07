@@ -1,0 +1,21 @@
+Kelly matrix sweep output layout (bankroll_replay_kelly_sweep.py)
+
+Each run passes --output to a base path WITHOUT a _ruin-* suffix; the script
+appends _ruin-anytime or _ruin-end to the directory name.
+
+Pattern:
+  kelly_matrix/<StrategyName>/<N>deck_<PP>pen/shoes<SESSION>/_ruin-<mode>/
+
+Example bases (you pass these as --output):
+  kelly_matrix/HiLoStrategy/6deck_55pen/shoes10
+  kelly_matrix/HiLoStrategy/6deck_55pen/shoes100
+  kelly_matrix/HiLoStrategy/6deck_55pen/shoes1000
+
+Resulting directories after a run with --ruin-mode anytime:
+  kelly_matrix/HiLoStrategy/6deck_55pen/shoes10_ruin-anytime/
+
+Contents per directory: session_log.md, summary.csv, PNGs per regime,
+  and <canonical_stem>_shoes<N>_ruin-<mode>.json (see script docstring).
+
+Batch driver: ai_analysis_scripts/run_kelly_matrix_batch.py
+  (uses .venv/bin/python when present — same as other analysis scripts needing numpy.)

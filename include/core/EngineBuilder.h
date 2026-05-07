@@ -1,6 +1,7 @@
 #ifndef ENGINEBUILDER_H
 #define ENGINEBUILDER_H
 
+#include <memory>
 #include "Engine.h"
 #include "GameConfig.h"
 #include "MonteCarloScenario.h"
@@ -55,6 +56,7 @@ class EngineBuilder {
         EngineBuilder& setMonteCarloScenarios(const std::vector<MonteCarloScenario>& scenarios);
 
         EngineBuilder& setEVperTC(std::map<float,ActionStats>& values);
+        EngineBuilder& useFixedUnitBet(bool enable = true);
 
         Engine build(Player* player);
 };

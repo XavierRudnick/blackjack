@@ -25,10 +25,11 @@ class Deck{
         Deck clone() const;
         void reset();
 
-        // Set a deterministic RNG seed for reproducible shuffles.
         static void setSeed(std::uint32_t seed);
-        // Restore non-deterministic RNG seeding.
         static void clearSeed();
+
+        const std::vector<Card>& getDeckCards() const;
+        void restoreDeckCards(const std::vector<Card>& deckCards);
 
         void shuffle();
 };

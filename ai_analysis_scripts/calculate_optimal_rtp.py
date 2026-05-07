@@ -16,7 +16,7 @@ MIN_HANDS = 500_000
 # Derived values
 unitSize = (BR * kelly * evPerTC) / avgVol
 interceptUnit = (BR * kelly * evIntercept) / avgVol
-csv_file = "/home/xav/blackjack/data/ev_per_tc_data/stats_evpertc_accurate/evPerTC/HiLoStrategy/ev_per_tc_HiLoStrategy_2deck_80pen_H17_DAS_NoRAS_NoSurrender_3to2.csv"
+csv_file = "/home/xav/Projects/blackjack/data/ev_per_tc_data/evPerTC/HiLoStrategy/ev_per_tc_HiLoStrategy_2deck_80pen_H17_DAS_NoRAS_NoSurrender_3to2.csv"
 rows = []
 
 with open(csv_file, 'r') as f:

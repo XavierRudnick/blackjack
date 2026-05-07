@@ -1,9 +1,12 @@
 #include "Engine.h"
 #include "Deck.h"
 #include "MonteCarloScenario.h"
+#include "BettingTrueCountStrategy.h"
 
 #include <algorithm>
 #include <cmath>
+#include <stdexcept>
+#include <utility>
 
 static float roundTrueCount(float value) {
     return std::round(value * 2.0f) / 2.0f;
@@ -17,13 +20,13 @@ Engine::Engine(
     std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& EVresults,
     std::map<float,ActionStats>* EVperTC
 )
-    : bankroll(gameConfig.wallet), 
-    config(gameConfig), 
-    deck(std::move(deck)), 
-    player(player),
-    EVperTC(EVperTC ? EVperTC : &EVperTCStorage),
-    reporter(eventBus, gameConfig.emitEvents),
-    fixedEngine(config.monteCarloActions,EVresults,gameConfig)
+    : bankroll(gameConfig.wallet),
+      config(gameConfig),
+      deck(std::move(deck)),
+      player(player),
+      EVperTC(EVperTC ? EVperTC : &EVperTCStorage),
+      reporter(eventBus, gameConfig.emitEvents),
+      fixedEngine(config.monteCarloActions, EVresults, gameConfig)
 {
     config.penetrationThreshold = (1-config.penetrationThreshold) * config.numDecks * Deck::NUM_CARDS_IN_DECK;
     player->setUnitSize(config.kellyFraction);
@@ -44,29 +47,26 @@ static bool hasInsuranceScenarios(const GameConfig& config) {
 }
 
 std::pair<double, double> Engine::runner(){  
-    while (deck->getSize() > config.penetrationThreshold ){
+    while (deck->getSize() > config.penetrationThreshold && bankroll.getBalance() > 25.0){
         playHand();
+
     }  
     return {bankroll.getBalance(), bankroll.getTotalMoneyBet()};
 }
 
-FixedEngine Engine::runnerMonte(){  
+FixedEngine Engine::runnerMonte(){
     while (deck->getSize() > config.penetrationThreshold ){
         playHand();
-    }  
+    }
     return {fixedEngine};
 }
 
-void Engine::playHand(){
-    player->updateDeckStrategySize(deck->getSize());
+bool Engine::playHandImpl(){
     std::vector<Hand> hands;
-
-    handTrueCount = roundTrueCount(player->getTrueCount());
-    currentHandBetTotal = 0.0;
 
     try {
 
-    int bet = player->getBetSize();
+    int bet = config.useFixedUnitBet ? 1 : player->getBetSize();
     bankroll.withdraw(bet);
     bankroll.addTotalBet(bet);
     currentHandBetTotal += bet;
@@ -89,13 +89,13 @@ void Engine::playHand(){
             fixedEngine.calculateEV(*player, *deck, dealer, user, player->getTrueCount(), cardValues);
         }
     }
-    
+
     // Handle multi-scenario mode for insurance
     if (config.enabelMontiCarlo && hasInsuranceScenarios(config) && dealer.getCards().front().getRank() == Rank::Ace) {
         const std::pair<int, int> cardValues{user.getScore(), dealer.getCards().front().getValue()};
         const bool isSoftHand = user.isHandSoft();
         const bool canSplit = user.checkCanSplit();
-        
+
         for (const auto& scenario : config.monteCarloScenarios) {
             if (scenario.isInsuranceScenario && scenario.appliesTo(cardValues.first, cardValues.second, isSoftHand, canSplit)) {
                 fixedEngine.calculateEVForScenario(*player, *deck, dealer, user, player->getTrueCount(), cardValues, scenario);
@@ -105,15 +105,16 @@ void Engine::playHand(){
 
     reporter.reportHand(dealer, "Dealer (showing)", true);
     if (handleInsurancePhase(dealer,user)){
-        return;
+        return true;
     }
     else if (dealerRobberyHandler(dealer,user)){
-        return;
+        return true;
     }
     else{
         hands = user_play(dealer,user);
         evaluateHands(dealer,hands);
     }
+    return true;
     }
     catch (const std::runtime_error& err) {
         const std::string msg = err.what();
@@ -122,9 +123,52 @@ void Engine::playHand(){
             bankroll.addTotalBet(-currentHandBetTotal);
             *deck = Deck(config.numDecks);
             player->getStrategy()->reset(config.numDecks);
-            return;
+            return false;
         }
         throw;
+    }
+}
+
+void Engine::playHand(){
+    player->updateDeckStrategySize(deck->getSize());
+
+    handTrueCount = roundTrueCount(getBettingTrueCountFor(*player->getStrategy()));
+    currentHandBetTotal = 0.0;
+
+    // Capture pre-hand state for shoe tracing
+    const bool doTrace = (traceBuffer != nullptr);
+    const double bankrollBefore = bankroll.getBalance();
+    const float  bettingTC = getBettingTrueCountFor(*player->getStrategy());
+    const int    deckNow = deck->getSize();
+
+    if (doTrace) {
+        traceHandSplitCount    = 0;
+        traceHandDoubleCount   = 0;
+        traceHandInsuranceTaken = false;
+        traceHandSurrendered    = false;
+        traceShoeHandNumber++;
+    }
+
+    const bool completed = playHandImpl();
+
+    if (doTrace && completed) {
+        HandTrace tr;
+        tr.shoe_id     = traceShoeId;
+        tr.ruleset_id  = traceRulesetId;
+        tr.strategy_id = traceStrategyId;
+        tr.hand_number_in_shoe       = traceShoeHandNumber;
+        tr.shoe_progress_before_hand = roundShoeProgress(
+            static_cast<float>(traceInitialDeckSize - deckNow)
+            / static_cast<float>(traceInitialDeckSize));
+        tr.true_count_bucket     = bucketTC(bettingTC);
+        tr.total_money_committed = currentHandBetTotal;
+        tr.net_profit            = bankroll.getBalance() - bankrollBefore;
+        tr.split_count     = traceHandSplitCount;
+        tr.double_count    = traceHandDoubleCount;
+        tr.insurance_taken = traceHandInsuranceTaken;
+        tr.surrendered     = traceHandSurrendered;
+        tr.outcome_code    = computeHandOutcomeCode(tr);
+        traceBuffer->emplace_back(tr);
     }
 }
 
@@ -244,18 +288,18 @@ void Engine::play_hand(Hand& dealer, Hand& user, std::vector<Hand>& hands, bool 
             fixedEngine.calculateEV(*player, *deck, dealer, user, player->getTrueCount(), cardValues);
         }
     }
-    
+
     // Handle multi-scenario mode for non-insurance scenarios
     if (config.enabelMontiCarlo && !config.monteCarloScenarios.empty()) {
         const bool isSoftHand = user.isHandSoft();
         const bool canSplit = user.checkCanSplit();
-        
+
         for (const auto& scenario : config.monteCarloScenarios) {
             // Skip insurance scenarios (handled in playHand before insurance phase)
             if (scenario.isInsuranceScenario) {
                 continue;
             }
-            
+
             if (scenario.appliesTo(cardValues.first, cardValues.second, isSoftHand, canSplit)) {
                 fixedEngine.calculateEVForScenario(*player, *deck, dealer, user, player->getTrueCount(), cardValues, scenario);
             }
@@ -349,6 +393,8 @@ bool Engine::resolveInsurance(bool accepted, Hand& dealer, Hand& user) {
 }
 
 bool Engine::handleInsuranceAccepted(Hand& dealer, Hand& user) {
+    traceHandInsuranceTaken = true;
+
     bool dealerHasBlackjack = dealer.dealerHiddenTen();
     bool playerHasBlackjack = user.isBlackjack();
 
@@ -448,6 +494,8 @@ bool Engine::doubleHandler(Hand& user, std::vector<Hand>& hands, std::string han
         return hitHandler(user, hands, handLabel);
     }
 
+    traceHandDoubleCount++;
+
     // Deduct additional bet
     bankroll.withdraw(user.getBetSize());
     bankroll.addTotalBet(user.getBetSize());
@@ -464,6 +512,8 @@ bool Engine::doubleHandler(Hand& user, std::vector<Hand>& hands, std::string han
 }
 
 bool Engine::splitHandler(Hand& user, Hand& dealer, std::vector<Hand>& hands, std::string handLabel, bool has_split_aces,bool has_split){
+    traceHandSplitCount++;
+
      // Check if we're splitting Aces
     bool splitting_aces = (user.peekFrontCard() == Rank::Ace);
 
@@ -513,10 +563,32 @@ bool Engine::splitHandler(Hand& user, Hand& dealer, std::vector<Hand>& hands, st
 }
 
 bool Engine::surrenderHandler(Hand& user, std::vector<Hand>& hands, std::string handLabel){
+    traceHandSurrendered = true;
 
     bankroll.deposit(static_cast<double>(user.getBetSize()) * SURRENDERMULTIPLIER);
     (*EVperTC)[handTrueCount].addResult(user.getBetSize() * (SURRENDERMULTIPLIER - 1.0), user.getBetSize());
     reporter.reportAction(Action::Surrender, user, handLabel);
     reporter.reportStats(bankroll, *player->getStrategy());
     return true;
+}
+
+std::vector<HandTrace> Engine::runnerShoeTrace(
+    uint64_t shoe_id,
+    const std::string& ruleset_id,
+    const std::string& strategy_id)
+{
+    std::vector<HandTrace> traces;
+    traceBuffer          = &traces;
+    traceShoeId          = shoe_id;
+    traceRulesetId       = ruleset_id;
+    traceStrategyId      = strategy_id;
+    traceShoeHandNumber  = 0;
+    traceInitialDeckSize = deck->getSize();
+
+    while (deck->getSize() > config.penetrationThreshold) {
+        playHand();
+    }
+
+    traceBuffer = nullptr;
+    return traces;
 }

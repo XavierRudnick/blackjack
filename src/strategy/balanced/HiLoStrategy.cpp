@@ -24,6 +24,28 @@ int HiLoStrategy::getBetSize() {
     int bet = std::round((unitSize * effectiveTC + interceptUnit) / (float)MIN_BET) * MIN_BET; // Round to nearest MIN_BET
     bet = std::max(MIN_BET, bet);
     return std::min(getMaxBet(), bet);
+
+    // float tc_bucketed = std::round(true_count * 2.0f) / 2.0f;  // match trace bucket
+    // int count = static_cast<int>(std::ceil(tc_bucketed));
+    // if (count <= 0) {
+    //     return MIN_BET;
+    // }
+    // if (count == 1) {
+    //     return 100;
+    // }
+    // if (count == 2) {
+    //     return 200;
+    // }
+    // if (count == 3) {
+    //     return 300;
+    // }
+    // if (count == 4) {
+    //     return 400;
+    // }
+    // if (count == 5) {
+    //     return 600;
+    // }
+    // return 1000;
 }
 
 void HiLoStrategy::setUnitSize(float inputKellyFraction) {

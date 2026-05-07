@@ -1,0 +1,2 @@
+Strategy,Decks,Penetration,DealerRule,DAS,RAS,Surrender,BlackjackPayout,Iterations,RTP,HouseEdge%,AvgWallet,AvgMoneyBet,NetPer1000,Duration_s
+OmegaIIStrategyAceCount,6,0.75,H17,DAS,NoRAS,NoSurrender,3to2,3000000,1.011071,-1.1071,50040.28,3638.49,553.57,47

@@ -17,7 +17,8 @@ CORE_SOURCES = \
     src/core/EngineBuilder.cpp \
     src/core/GameReporter.cpp \
     src/core/Bankroll.cpp \
-    src/core/FixedEngine.cpp
+    src/core/FixedEngine.cpp \
+    src/core/HandTrace.cpp
 
 STRATEGY_SOURCES = \
     $(wildcard src/strategy/*.cpp src/strategy/balanced/*.cpp src/strategy/unbalanced/*.cpp)

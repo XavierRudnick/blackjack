@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 #include <map>
+#include <cstdint>
 #include "Deck.h"
 #include "Hand.h"
 #include "CountingStrategy.h"
@@ -18,6 +19,7 @@
 #include "GameReporter.h"
 #include "FixedEngine.h"
 #include "GameConfig.h"
+#include "HandTrace.h"
 
 class Engine{
 
@@ -27,13 +29,18 @@ public:
         const GameConfig& gameConfig, //pass by reference to avoid copy
         Deck deck,
         Player* player,
-        EventBus* eventBus, // not owned can be nullptr
+        EventBus* eventBus,
         std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& EVresults,
         std::map<float,ActionStats>* EVperTC
     );
 
     std::pair<double, double> runner();
     FixedEngine runnerMonte();
+    std::vector<HandTrace> runnerShoeTrace(
+        uint64_t shoe_id,
+        const std::string& ruleset_id,
+        const std::string& strategy_id
+    );
 
 private:
     Bankroll bankroll;
@@ -52,6 +59,20 @@ private:
     float handTrueCount = 0.0f;
     double currentHandBetTotal = 0.0;
 
+    // Shoe trace state
+    std::vector<HandTrace>* traceBuffer      = nullptr;
+    int      traceShoeHandNumber             = 0;
+    int      traceInitialDeckSize            = 0;
+    uint64_t traceShoeId                     = 0;
+    std::string traceRulesetId;
+    std::string traceStrategyId;
+
+    // Per-hand counters (reset at start of each hand)
+    int  traceHandSplitCount   = 0;
+    int  traceHandDoubleCount  = 0;
+    bool traceHandInsuranceTaken = false;
+    bool traceHandSurrendered    = false;
+
     //hand evaluation logic
     std::vector<int> getPlayerScores(std::vector<Hand>& hands);
     bool didHandsBust(std::vector<int> scores);
@@ -69,6 +90,7 @@ private:
 
     //game logic
     void playHand();
+    bool playHandImpl();  // inner hand logic; returns false if aborted due to deck exhaustion
 
     bool handleInsurancePhase(Hand& dealer, Hand& user);
     bool canOfferInsurance(Hand& dealer);

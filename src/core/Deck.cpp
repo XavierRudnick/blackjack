@@ -98,3 +98,11 @@ void Deck::clearSeed() {
     gDeterministicSeedEnabled.store(false, std::memory_order_release);
     gRngEpoch.fetch_add(1u, std::memory_order_acq_rel);
 }
+
+const std::vector<Card>& Deck::getDeckCards() const{
+    return deck;
+}
+
+void Deck::restoreDeckCards(const std::vector<Card>& deckCards){
+    deck = deckCards;
+}

@@ -1,5 +1,6 @@
 *.o
 *.out
+*.png
 blackjack
 .vscode/
 # Temporary and backup files
@@ -11,3 +12,8 @@ CMakeFiles/
 CMakeCache.txt
 # Build folders
 build/
+*.gitignore
+
+stats/
+
+shoetraces/

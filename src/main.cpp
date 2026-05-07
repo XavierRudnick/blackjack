@@ -1,4 +1,6 @@
+#include <algorithm>
 #include <cstdlib>
+#include <memory>
 #include <iostream>
 #include <set>
 #include <fstream>
@@ -20,9 +22,11 @@
 #include <sstream>
 #include <functional>
 #include "LoggingCountingStrategy.h"
+#include "CSVKellyBetSizer.h"
 #include "FixedEngine.h"
 #include "MentorStrategy.h"
 #include "OmegaIIStrategy.h"
+#include "OmegaIIStrategyAceCount.h"
 #include "R14Strategy.h"
 #include "WongHalvesStrategy.h"
 #include "RPCStrategy.h"
@@ -66,37 +70,62 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
     EventBus& bus = EventBus::getInstance();
     //bus.detachAll();
     //bus.registerObserver(&consoleObserver, {EventType::CardsDealt, EventType::ActionTaken, EventType::RoundEnded, EventType::GameStats});
-
+    int losses = 0;
     Deck deck(numDecksUsed);
-    BotPlayer robot(false, std::move(strategy)); 
+    float lowest = 1000000;
 
     auto start_time = std::chrono::high_resolution_clock::now();
+    int bankroll = 100000;
+
+    // Fixed-B0 μ/σ² Kelly sizing from the EV CSV (matches Python bankroll_replay_kelly.py).
+    const std::string evCsvPath = strategy->defaultEvCsvPath(numDecksUsed, deckPenetration,
+                                                             /*h17=*/true, /*das=*/true,
+                                                             /*ras=*/false, /*surrender=*/false,
+                                                             /*bj3to2=*/true);
+    auto sizer = std::make_unique<CSVKellyBetSizer>(std::move(strategy), evCsvPath,
+                                                    static_cast<double>(bankroll), 1.0f);
+    BotPlayer robot(false, std::move(sizer));
+
+    // Engine::runner halts a shoe early when its internal bankroll drops below
+    // $25 (src/core/Engine.cpp). To match the Python replay (which plays through
+    // negative bankrolls), give the engine a huge cushion and track the real
+    // bankroll as a delta. Bet sizes are unaffected: the Kelly sizer captured B0
+    // at construction and never reads engine balance.
+    const double cushion = 1'000'000'000.0;
 
     for (int i = 0; i < iterations; i++){
-        deck.reset();
-        robot.resetCount(numDecksUsed);
+        std::pair<double, double> profit = {static_cast<double>(bankroll), 0};
+        for (int j = 0; j < 100; j++){
 
-        std::pair<double, double> profit = {50000, 0};
+            deck.reset();
+            robot.resetCount(numDecksUsed);
 
-        Engine hiLoEngine = EngineBuilder()
-                                    .withEventBus(&bus)
-                                    .setDeckSize(numDecksUsed)
-                                    .setDeck(deck)
-                                    .setPenetrationThreshold(deckPenetration)
-                                    .setInitialWallet(50000)
-                                    .setKellyRisk(0.75f)
-                                    .enableEvents(false)
-                                    .with3To2Payout(true)
-                                    .withH17Rules(true)
-                                    .allowDoubleAfterSplit(true)
-                                    .allowReSplitAces(false)
-                                    .build(&robot);
-        profit = hiLoEngine.runner();
-
-        if (i % 10000000 == 0 && i != 0){
-            std::cout  << "Completed " << i << " / " << iterations << " iterations." <<std::endl;
+            Engine hiLoEngine = EngineBuilder()
+                                        .withEventBus(&bus)
+                                        .setDeckSize(numDecksUsed)
+                                        .setDeck(deck)
+                                        .setPenetrationThreshold(deckPenetration)
+                                        .setInitialWallet(cushion + profit.first)
+                                        .setKellyRisk(1.0f)
+                                        .enableEvents(false)
+                                        .with3To2Payout(true)
+                                        .withH17Rules(true)
+                                        .allowDoubleAfterSplit(true)
+                                        .allowReSplitAces(false)
+                                        .build(&robot);
+            auto end_profit = hiLoEngine.runner();
+            profit.second += end_profit.second;
+            profit.first = end_profit.first - cushion;
         }
 
+        if (profit.first < lowest){
+            lowest = profit.first;
+        }
+    
+        if (i % 1000 == 0 && i != 0){
+            std::cout  << "Completed " << i << " / " << iterations << " iterations." <<std::endl;
+        }
+            
         gameStats.first += profit.first;
         gameStats.second += profit.second;
     } 
@@ -107,16 +136,17 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
 
     double average = gameStats.first / iterations;
     double avgMoneyBet = gameStats.second / iterations;
-    double diff = average-50000;
-    double normal =  50000.0 / avgMoneyBet;
+    double diff = average-bankroll;
+    double normal =  bankroll / avgMoneyBet;
     double money_lost_per = diff * normal;
-    double rtp = (50000+money_lost_per) /50000;
-
+    double rtp = (bankroll+money_lost_per) /bankroll;
+    std::cout << "lose br rate " << (float)losses/iterations << std::endl;
     std::cout << "Average after " << iterations << " rounds: " << average << std::endl;
     std::cout << "Average money bet: " << avgMoneyBet << std::endl;
     std::cout << "Difference: " << diff << std::endl;
     std::cout << "Money gained/lost per 1000$ " << money_lost_per << "$" << std::endl;
     std::cout << "RTP " << rtp << std::endl;
+    std::cout << "Lowest bankroll: " << lowest << std::endl;
 }
 
 // // Legacy single-action simulation (kept for backward compatibility)
@@ -180,10 +210,12 @@ void runRTPsims(int numDecksUsed, int iterations, float deckPenetration,std::uni
 // }
 
 // Unified multi-scenario simulation - tracks ALL action comparisons in a single simulation pass
-void runUnifiedMonteSims(int numDecksUsed, int iterations, float deckPenetration,
+void runUnifiedMonteSims(int numDecksUsed, long long iterations, float deckPenetration,
     std::unique_ptr<CountingStrategy> strategy,
     const std::vector<MonteCarloScenario>& scenarios,
-    bool blackJackPayout3to2, bool dealerHits17, bool allowDoubleAfterSplit, bool allowReSplitAces) {
+    bool blackJackPayout3to2, bool dealerHits17, bool allowDoubleAfterSplit, bool allowReSplitAces,
+    const std::string& statsOutputDirectory = "stats",
+    bool useFixedUnitBetForHands = false) {
 
     EventBus& bus = EventBus::getInstance();
     Deck deck(numDecksUsed);
@@ -191,15 +223,20 @@ void runUnifiedMonteSims(int numDecksUsed, int iterations, float deckPenetration
     std::string strategyName = strategy->getName();
     std::string H17Str = dealerHits17 ? "H17" : "S17";
     
+    fs::create_directories(statsOutputDirectory);
+
     std::cout << "Running unified simulation for strategy " << strategyName << " (" << H17Str << ")" << std::endl;
     std::cout << "  Tracking " << scenarios.size() << " scenario(s) simultaneously" << std::endl;
+    if (useFixedUnitBetForHands) {
+        std::cout << "  Using fixed 1-unit bets for Monte Carlo hands (EV normalization)" << std::endl;
+    }
     
     BotPlayer robot(false, std::move(strategy)); 
     FixedEngine fixedEngineTotal;
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
-    for (int i = 0; i < iterations; i++){
+    for (long long i = 0; i < iterations; ++i) {
         deck.reset();
         robot.resetCount(numDecksUsed);
 
@@ -217,20 +254,25 @@ void runUnifiedMonteSims(int numDecksUsed, int iterations, float deckPenetration
                             .enableMontiCarlo(true)
                             .setMonteCarloScenarios(scenarios)
                             .setEVActions(EVresults)
+                            .useFixedUnitBet(useFixedUnitBetForHands)
                             .build(&robot);
 
         FixedEngine fixedEngine = engine.runnerMonte();
         fixedEngineTotal.merge(fixedEngine);
 
-        if (i % 50000000 == 0 && i != 0){
-            std::cout  << "  Completed " << i << " / " << iterations << " iterations. Time: " << std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - start_time).count() << "s. Strategy: " << strategyName << std::endl;
+        if (i % 50000000 == 0 && i != 0) {
+            std::cout << "  Completed " << i << " / " << iterations << " iterations. Time: "
+                      << std::chrono::duration_cast<std::chrono::seconds>(
+                             std::chrono::high_resolution_clock::now() - start_time)
+                             .count()
+                      << "s. Strategy: " << strategyName << std::endl;
         }
     }
     
     // Save results for each scenario to separate CSV files
     for (const auto& scenario : scenarios) {
         std::ostringstream filename;
-        filename << "stats/" << strategyName << "_" << scenario.name << "_" << numDecksUsed << "_" << H17Str << ".csv";
+        filename << statsOutputDirectory << "/" << strategyName << "_" << scenario.name << "_" << numDecksUsed << "_" << H17Str << ".csv";
         fixedEngineTotal.saveScenarioResults(scenario.name, filename.str());
         std::cout << "  Saved " << scenario.name << " to " << filename.str() << std::endl;
     }
@@ -248,11 +290,9 @@ std::vector<MonteCarloScenario> createAllScenarios() {
     MonteCarloScenario insuranceScenario;
     insuranceScenario.name = "InsuranceAccept_vs_Decline";
     insuranceScenario.actions = {Action::InsuranceAccept, Action::InsuranceDecline};
-    insuranceScenario.cardValues = {
-        {21,11}, {20,11}, {19,11}, {18,11}, {17,11}, {16,11}, {15,11},
-        {14,11}, {13,11}, {12,11}, {11,11}, {10,11}, {9,11}, {8,11},
-        {7,11}, {6,11}, {5,11}, {4,11}, {3,11}, {2,11}
-    };
+    for (int ps = 21; ps >= 2; --ps) {
+        insuranceScenario.addCardValue(ps, 11);
+    }
     insuranceScenario.allowSoftHands = true;  // Insurance allows soft hands
     insuranceScenario.requirePair = false;
     insuranceScenario.isInsuranceScenario = true;
@@ -262,9 +302,12 @@ std::vector<MonteCarloScenario> createAllScenarios() {
     MonteCarloScenario hitVsStandScenario;
     hitVsStandScenario.name = "Hit_vs_Stand";
     hitVsStandScenario.actions = {Action::Hit, Action::Stand};
-    hitVsStandScenario.cardValues = {
-        {16, 10}, {15, 10}, {12, 3}, {12, 2}, {13, 2}, {13, 3}
-    };
+    hitVsStandScenario.addCardValue(16, 10);
+    hitVsStandScenario.addCardValue(15, 10);
+    hitVsStandScenario.addCardValue(12, 3);
+    hitVsStandScenario.addCardValue(12, 2);
+    hitVsStandScenario.addCardValue(13, 2);
+    hitVsStandScenario.addCardValue(13, 3);
     hitVsStandScenario.allowSoftHands = false;  // Hard hands only
     hitVsStandScenario.requirePair = false;
     hitVsStandScenario.isInsuranceScenario = false;
@@ -274,10 +317,8 @@ std::vector<MonteCarloScenario> createAllScenarios() {
     MonteCarloScenario splitVsStandScenario;
     splitVsStandScenario.name = "Split_vs_Stand_Pair10s";
     splitVsStandScenario.actions = {Action::Split, Action::Stand};
-    splitVsStandScenario.cardValues = {
-        {20, 5},  // Pair of 10s vs 5
-        {20, 6},  // Pair of 10s vs 6
-    };
+    splitVsStandScenario.addCardValue(20, 5);
+    splitVsStandScenario.addCardValue(20, 6);
     splitVsStandScenario.allowSoftHands = false;
     splitVsStandScenario.requirePair = true;  // Only trigger when hand is a splittable pair
     splitVsStandScenario.isInsuranceScenario = false;
@@ -287,9 +328,11 @@ std::vector<MonteCarloScenario> createAllScenarios() {
     MonteCarloScenario hitVsDoubleScenario;
     hitVsDoubleScenario.name = "Hit_vs_Double";
     hitVsDoubleScenario.actions = {Action::Hit, Action::Double};
-    hitVsDoubleScenario.cardValues = {
-        {10, 10}, {10, 11}, {11, 11}, {9, 2}, {9, 7}
-    };
+    hitVsDoubleScenario.addCardValue(10, 10);
+    hitVsDoubleScenario.addCardValue(10, 11);
+    hitVsDoubleScenario.addCardValue(11, 11);
+    hitVsDoubleScenario.addCardValue(9, 2);
+    hitVsDoubleScenario.addCardValue(9, 7);
     hitVsDoubleScenario.allowSoftHands = false;
     hitVsDoubleScenario.requirePair = false;
     hitVsDoubleScenario.isInsuranceScenario = false;
@@ -299,9 +342,13 @@ std::vector<MonteCarloScenario> createAllScenarios() {
     MonteCarloScenario surrenderVsHitScenario;
     surrenderVsHitScenario.name = "Surrender_vs_Hit";
     surrenderVsHitScenario.actions = {Action::Surrender, Action::Hit};
-    surrenderVsHitScenario.cardValues = {
-        {15, 9}, {15, 10}, {14, 10}, {15, 11}, {16, 9}, {16, 10}, {16, 11}
-    };
+    surrenderVsHitScenario.addCardValue(15, 9);
+    surrenderVsHitScenario.addCardValue(15, 10);
+    surrenderVsHitScenario.addCardValue(14, 10);
+    surrenderVsHitScenario.addCardValue(15, 11);
+    surrenderVsHitScenario.addCardValue(16, 9);
+    surrenderVsHitScenario.addCardValue(16, 10);
+    surrenderVsHitScenario.addCardValue(16, 11);
     surrenderVsHitScenario.allowSoftHands = false;
     surrenderVsHitScenario.requirePair = false;
     surrenderVsHitScenario.isInsuranceScenario = false;
@@ -321,6 +368,7 @@ auto createStrategies(int numDecksUsed) {
     strategies.push_back(std::make_unique<ZenCountStrategy>(numDecksUsed));
     strategies.push_back(std::make_unique<R14Strategy>(numDecksUsed));
     strategies.push_back(std::make_unique<OmegaIIStrategy>(numDecksUsed));
+    strategies.push_back(std::make_unique<OmegaIIStrategyAceCount>(static_cast<float>(numDecksUsed)));
     strategies.push_back(std::make_unique<WongHalvesStrategy>(numDecksUsed));
     return strategies;
 }
@@ -329,12 +377,21 @@ auto createStrategies(int numDecksUsed) {
 void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetration, 
     std::unique_ptr<CountingStrategy> strategy, bool dealerHits17,
     bool allowDoubleAfterSplit, bool allowReSplitAces, bool surrender, bool blackJackPayout3to2,
-    float kellyFraction, std::ofstream& resultsFile, std::mutex& fileMutex) {
+    float kellyFraction, double initialWallet, std::ofstream& resultsFile, std::mutex& fileMutex,
+    const std::string& evPerTcOutputRoot = "stats/evPerTC") {
 
     std::pair<double, double> gameStats = {0, 0};
     EventBus& bus = EventBus::getInstance();
     Deck deck(numDecksUsed);
-    BotPlayer robot(false, std::move(strategy)); 
+
+    // Fixed-B0 μ/σ² Kelly sizing from the EV CSV. B0 = initialWallet, k = kellyFraction.
+    const std::string evCsvPath = strategy->defaultEvCsvPath(numDecksUsed, deckPenetration,
+                                                             dealerHits17, allowDoubleAfterSplit,
+                                                             allowReSplitAces, surrender,
+                                                             blackJackPayout3to2);
+    auto sizer = std::make_unique<CSVKellyBetSizer>(std::move(strategy), evCsvPath,
+                                                    initialWallet, kellyFraction);
+    BotPlayer robot(false, std::move(sizer));
     std::string strategyName = robot.getStrategy()->getName();
     std::map<float,ActionStats> EVperTC;
 
@@ -344,14 +401,14 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
         deck.reset();
         robot.resetCount(numDecksUsed);
 
-        std::pair<double, double> profit = {50000, 0};
+        std::pair<double, double> profit = {initialWallet, 0};
 
         Engine engine = EngineBuilder()
                             .withEventBus(&bus)
                             .setDeckSize(numDecksUsed)
                             .setDeck(deck)
                             .setPenetrationThreshold(deckPenetration)
-                            .setInitialWallet(50000)
+                            .setInitialWallet(initialWallet)
                             .setKellyRisk(kellyFraction)
                             .enableEvents(false)
                             .with3To2Payout(blackJackPayout3to2)
@@ -376,10 +433,10 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
 
     double average = gameStats.first / iterations;
     double avgMoneyBet = gameStats.second / iterations;
-    double diff = average - 50000;
-    double normal = 50000.0 / avgMoneyBet;
+    double diff = average - initialWallet;
+    double normal = initialWallet / avgMoneyBet;
     double money_lost_per = diff * normal;
-    double rtp = (50000 + money_lost_per) / 50000;
+    double rtp = (initialWallet + money_lost_per) / initialWallet;
     double houseEdge = (1.0 - rtp) * 100; // percentage
 
     std::string H17Str = dealerHits17 ? "H17" : "S17";
@@ -411,30 +468,140 @@ void runRTPsimsWithResults(int numDecksUsed, int iterations, float deckPenetrati
     std::cout << "  Net gain/loss per $1000 wagered: $" << std::fixed << std::setprecision(2) << money_lost_per << std::endl;
     std::cout << "  Duration: " << duration.count() << "s" << std::endl << std::endl;
 
-    std::string evDir = "stats/evPerTC/" + strategyName;
-    fs::create_directories(evDir);
+    if (!evPerTcOutputRoot.empty()) {
+        std::string evDir = evPerTcOutputRoot + "/" + strategyName;
+        fs::create_directories(evDir);
 
-    std::ostringstream evFilename;
-    evFilename << evDir << "/ev_per_tc_" << strategyName << "_" << numDecksUsed << "deck_"
-               << static_cast<int>(deckPenetration * 100) << "pen_" << H17Str << "_"
-               << (allowDoubleAfterSplit ? "DAS" : "NoDAS") << "_"
-               << (allowReSplitAces ? "RAS" : "NoRAS") << "_"
-               << (surrender ? "Surrender" : "NoSurrender") << "_"
-               << (blackJackPayout3to2 ? "3to2" : "6to5") << ".csv";
+        std::ostringstream evFilename;
+        evFilename << evDir << "/ev_per_tc_" << strategyName << "_" << numDecksUsed << "deck_"
+                   << static_cast<int>(deckPenetration * 100.0f + 0.5f) << "pen_" << H17Str << "_"
+                   << (allowDoubleAfterSplit ? "DAS" : "NoDAS") << "_"
+                   << (allowReSplitAces ? "RAS" : "NoRAS") << "_"
+                   << (surrender ? "Surrender" : "NoSurrender") << "_"
+                   << (blackJackPayout3to2 ? "3to2" : "6to5") << ".csv";
 
-    std::ofstream evFile(evFilename.str());
-    evFile << "TrueCount,HandsPlayed,TotalMoneyWagered,TotalPayout,EVPerDollar,StdErrorPerDollar" << std::endl;
+        int totalHandsPlayed = 0;
+        for (const auto& entry : EVperTC) {
+            totalHandsPlayed += entry.second.handsPlayed;
+        }
+
+        std::ofstream evFile(evFilename.str());
+        evFile << "TrueCount,HandsPlayed,TotalMoneyWagered,TotalPayout,EVPerDollar,StdErrorPerDollar,HandsPlayedPct" << std::endl;
+        for (const auto& entry : EVperTC) {
+            const float trueCount = entry.first;
+            const ActionStats& stats = entry.second;
+            const double handsPlayedPct = totalHandsPlayed > 0
+                ? (static_cast<double>(stats.handsPlayed) * 100.0 / totalHandsPlayed)
+                : 0.0;
+            evFile << std::fixed << std::setprecision(1) << trueCount << ","
+                   << stats.handsPlayed << ","
+                   << std::fixed << std::setprecision(6) << stats.totalMoneyWagered << ","
+                   << std::fixed << std::setprecision(6) << stats.totalPayout << ","
+                   << std::fixed << std::setprecision(6) << stats.getEV() << ","
+                   << std::fixed << std::setprecision(6) << stats.getStdError() << ","
+                   << std::fixed << std::setprecision(6) << handsPlayedPct
+                   << std::endl;
+        }
+    }
+}
+
+// Full-shoe EV per true count using a fixed 1-unit main wager (strategy bet sizing ignored).
+void runEvenBetEvPerTcSims(int numDecksUsed, int iterations, float deckPenetration,
+    std::unique_ptr<CountingStrategy> strategy, bool dealerHits17,
+    bool allowDoubleAfterSplit, bool allowReSplitAces, bool surrender, bool blackJackPayout3to2,
+    const std::string& evPerTcOutputRoot) {
+
+    EventBus& bus = EventBus::getInstance();
+    Deck deck(numDecksUsed);
+    BotPlayer robot(false, std::move(strategy));
+    std::string strategyName = robot.getStrategy()->getName();
+    std::map<float, ActionStats> EVperTC;
+    std::string H17Str = dealerHits17 ? "H17" : "S17";
+
+    std::cout << "Even-bet (1 unit) EV-per-TC simulation: " << strategyName << " (" << H17Str << ")" << std::endl;
+
+    auto start_time = std::chrono::high_resolution_clock::now();
+
+    for (int i = 0; i < iterations; ++i) {
+        deck.reset();
+        robot.resetCount(numDecksUsed);
+
+        Engine engine = EngineBuilder()
+                            .withEventBus(&bus)
+                            .setDeckSize(numDecksUsed)
+                            .setDeck(deck)
+                            .setPenetrationThreshold(deckPenetration)
+                            .setInitialWallet(1'000'000'000.0)
+                            .setKellyRisk(0.5f)
+                            .enableEvents(false)
+                            .with3To2Payout(blackJackPayout3to2)
+                            .withH17Rules(dealerHits17)
+                            .allowDoubleAfterSplit(allowDoubleAfterSplit)
+                            .allowReSplitAces(allowReSplitAces)
+                            .allowSurrender(surrender)
+                            .setEVperTC(EVperTC)
+                            .useFixedUnitBet(true)
+                            .build(&robot);
+        engine.runner();
+
+        if (i % 50000 == 0 && i != 0) {
+            std::cout << "  " << strategyName << " even-bet EV/TC: " << i << " / " << iterations << " shoes" << std::endl;
+        }
+    }
+
+    auto duration = std::chrono::duration_cast<std::chrono::seconds>(
+        std::chrono::high_resolution_clock::now() - start_time).count();
+    std::cout << "  Even-bet EV/TC finished in " << duration << "s" << std::endl;
+
+    // Root may be a directory (.../evPerTC -> .../evPerTC/StrategyName/ev_per_tc_*.csv)
+    // or a full output .csv path (create parent dirs only; write that file).
+    fs::path rootPath(evPerTcOutputRoot);
+    fs::path outCsvPath;
+    fs::path parentDir;
+
+    if (rootPath.extension() == ".csv") {
+        outCsvPath = rootPath;
+        parentDir = outCsvPath.parent_path();
+    } else {
+        std::string evDir = evPerTcOutputRoot + "/" + strategyName;
+        parentDir = fs::path(evDir);
+        std::ostringstream evFilename;
+        evFilename << evDir << "/ev_per_tc_" << strategyName << "_" << numDecksUsed << "deck_"
+                   << static_cast<int>(deckPenetration * 100.0f + 0.5f) << "pen_" << H17Str << "_"
+                   << (allowDoubleAfterSplit ? "DAS" : "NoDAS") << "_"
+                   << (allowReSplitAces ? "RAS" : "NoRAS") << "_"
+                   << (surrender ? "Surrender" : "NoSurrender") << "_"
+                   << (blackJackPayout3to2 ? "3to2" : "6to5") << ".csv";
+        outCsvPath = fs::path(evFilename.str());
+    }
+
+    if (!parentDir.empty()) {
+        fs::create_directories(parentDir);
+    }
+
+    int totalHandsPlayed = 0;
+    for (const auto& entry : EVperTC) {
+        totalHandsPlayed += entry.second.handsPlayed;
+    }
+
+    std::ofstream evFile(outCsvPath.string());
+    evFile << "TrueCount,HandsPlayed,TotalMoneyWagered,TotalPayout,EVPerDollar,StdErrorPerDollar,HandsPlayedPct" << std::endl;
     for (const auto& entry : EVperTC) {
         const float trueCount = entry.first;
         const ActionStats& stats = entry.second;
+        const double handsPlayedPct = totalHandsPlayed > 0
+            ? (static_cast<double>(stats.handsPlayed) * 100.0 / totalHandsPlayed)
+            : 0.0;
         evFile << std::fixed << std::setprecision(1) << trueCount << ","
                << stats.handsPlayed << ","
                << std::fixed << std::setprecision(6) << stats.totalMoneyWagered << ","
                << std::fixed << std::setprecision(6) << stats.totalPayout << ","
                << std::fixed << std::setprecision(6) << stats.getEV() << ","
-               << std::fixed << std::setprecision(6) << stats.getStdError()
+               << std::fixed << std::setprecision(6) << stats.getStdError() << ","
+               << std::fixed << std::setprecision(6) << handsPlayedPct
                << std::endl;
     }
+    std::cout << "  Wrote even-bet EV per TC -> " << outCsvPath.string() << std::endl;
 }
 
 // Run RTP simulations for all strategies and save to CSV
@@ -462,8 +629,7 @@ void runAllRTPSimulations(int numDecksUsed, float deckPenetration, int iteration
     std::cout << "Results will be saved to: " << filename << std::endl << std::endl;
     
     auto strategies = createStrategies(numDecksUsed);
-    const size_t num_threads = std::min(static_cast<size_t>(4), strategies.size());
-    
+    const size_t num_threads = strategies.size();
     std::cout << "Running with " << num_threads << " thread(s)" << std::endl << std::endl;
     
     std::vector<std::thread> workers;
@@ -473,7 +639,7 @@ void runAllRTPSimulations(int numDecksUsed, float deckPenetration, int iteration
         workers.emplace_back([&, strat = std::move(strategy), kellyFraction]() mutable {
             runRTPsimsWithResults(numDecksUsed, iterations, deckPenetration,
                 std::move(strat), dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
-                surrender, blackJackPayout3to2, kellyFraction, resultsFile, fileMutex);
+                surrender, blackJackPayout3to2, kellyFraction, 50000.0, resultsFile, fileMutex);
         });
         
         if (workers.size() >= num_threads) {
@@ -507,7 +673,7 @@ void setUpUnifiedSims(int numDecksUsed, float deckPenetration, int iterations, b
               << ", Iterations: " << iterations << std::endl;
     std::cout << "Tracking " << scenarios.size() << " scenarios per simulation:" << std::endl;
     for (const auto& scenario : scenarios) {
-        std::cout << "  - " << scenario.name << " (" << scenario.cardValues.size() << " card value pairs)" << std::endl;
+        std::cout << "  - " << scenario.name << " (" << scenario.activeCellCount() << " card value pairs)" << std::endl;
     }
     std::cout << std::endl;
     
@@ -544,7 +710,125 @@ void setUpUnifiedSims(int numDecksUsed, float deckPenetration, int iterations, b
     std::cout << "\n=== UNIFIED SIMULATIONS COMPLETE (" << H17Str << ") ===" << std::endl;
 }
 
-int main(){
+static std::string buildRulesetId(int numDecks, float penetration, bool dealerHits17,
+    bool das, bool ras, bool surrender, bool bj3to2) {
+    std::ostringstream ss;
+    ss << numDecks << "deck_"
+       << static_cast<int>(penetration * 100) << "pen_"
+       << (dealerHits17 ? "H17" : "S17") << "_"
+       << (das ? "DAS" : "NoDAS") << "_"
+       << (ras ? "RAS" : "NoRAS") << "_"
+       << (surrender ? "Surrender" : "NoSurrender") << "_"
+       << (bj3to2 ? "3to2" : "6to5");
+    return ss.str();
+}
+
+void runShoeTraceSim(
+    int numDecks, int numShoes, float penetration,
+    std::unique_ptr<CountingStrategy> strategy,
+    bool bj3to2, bool dealerHits17, bool das, bool ras, bool surrender,
+    const std::string& outputDir,
+    bool compress = true)
+{
+    std::string strategyName = strategy->getName();
+    std::string rulesetId = buildRulesetId(numDecks, penetration, dealerHits17,
+                                            das, ras, surrender, bj3to2);
+
+    fs::create_directories(outputDir);
+    std::string traceFile = outputDir + "/hand_traces_" + strategyName
+                          + "_" + rulesetId + (compress ? ".csv.zst" : ".csv");
+
+    FILE* fp = nullptr;
+    if (compress) {
+        std::string cmd = "zstd -q -o " + traceFile;
+        fp = popen(cmd.c_str(), "w");
+    } else {
+        fp = fopen(traceFile.c_str(), "w");
+    }
+    if (!fp) {
+        std::cerr << "Failed to open output: " << traceFile << "\n";
+        return;
+    }
+
+    // outcome_code: 0=loss, 1=push, 2=win, 3=blackjack_win,
+    //               4=double_win, 5=double_loss, 6=split_net_win, 7=split_net_loss
+    fprintf(fp, "shoe_id,hand_number_in_shoe,shoe_progress_before_hand,"
+                "tc_bucket,total_money_committed,net_profit,outcome_code,"
+                "split_count,double_count,insurance_taken\n");
+
+    EventBus& bus = EventBus::getInstance();
+    Deck deck(numDecks);
+    BotPlayer robot(false, std::move(strategy));
+
+    auto start_time = std::chrono::high_resolution_clock::now();
+
+    for (int i = 0; i < numShoes; i++) {
+        deck.reset();
+        robot.resetCount(numDecks);
+
+        Engine engine = EngineBuilder()
+            .withEventBus(&bus)
+            .setDeckSize(numDecks)
+            .setDeck(deck)
+            .setPenetrationThreshold(penetration)
+            .setInitialWallet(1'000'000)
+            .enableEvents(false)
+            .with3To2Payout(bj3to2)
+            .withH17Rules(dealerHits17)
+            .allowDoubleAfterSplit(das)
+            .allowReSplitAces(ras)
+            .allowSurrender(surrender)
+            .useFixedUnitBet(true)
+            .build(&robot);
+
+        auto traces = engine.runnerShoeTrace(static_cast<uint64_t>(i), rulesetId, strategyName);
+
+        for (const auto& tr : traces) {
+            fprintf(fp, "%llu,%d,%.2f,%.1f,%.2f,%.2f,%d,%d,%d,%d\n",
+                (unsigned long long)tr.shoe_id,
+                tr.hand_number_in_shoe,
+                tr.shoe_progress_before_hand,
+                tr.true_count_bucket,
+                tr.total_money_committed,
+                tr.net_profit,
+                tr.outcome_code,
+                tr.split_count,
+                tr.double_count,
+                (tr.insurance_taken ? 1 : 0));
+        }
+
+        if (i % 10000 == 0 && i != 0) {
+            auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(
+                std::chrono::high_resolution_clock::now() - start_time).count();
+            std::cout << "  Shoe trace: " << i << "/" << numShoes
+                      << " shoes, " << elapsed << "s elapsed\n";
+        }
+    }
+
+    compress ? pclose(fp) : fclose(fp);
+    auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(
+        std::chrono::high_resolution_clock::now() - start_time).count();
+    std::cout << "Saved " << numShoes << " shoes → " << traceFile
+              << " (" << elapsed << "s)\n";
+}
+
+// Produces deviation Monte Carlo CSVs, even-bet EV-per-TC, and Kelly-sized RTP for one counting strategy.
+// Output paths include strategy name, deck count, and penetration (percent) so runs stay identifiable.
+void collectStrategyDeviationEvRtpDataset(
+    int numDecks,
+    float deckPenetration,
+    std::function<std::unique_ptr<CountingStrategy>()> makeStrategy,
+    long long monteIterations,
+    int evPerTcIterations,
+    int rtpIterations,
+    float kellyFraction,
+    bool dealerHits17,
+    bool allowDoubleAfterSplit,
+    bool allowReSplitAces,
+    bool surrender,
+    bool blackJackPayout3to2,
+    double initialBankroll)
+{
     if (const char* seedEnv = std::getenv("BLACKJACK_SEED")) {
         try {
             const auto parsed = std::stoul(seedEnv);
@@ -559,69 +843,77 @@ int main(){
         Deck::clearSeed();
     }
 
-    runRTPsims(2, 50000000, 0.80f, std::make_unique<HiLoStrategy>(2));
-    return 0;
-    // Re-run unified Monte Carlo deviations for previously broken strategies
-    // int deckSize[] = {2,6};
-    // int rtpIterations[] = {2000000000, 600000000};
-    // float deckPenetration[] = {0.65f,0.80f};
-    // int monteCarloIterations = 600000000;
-    // bool blackJackPayout3to2 = true;
-    // bool allowDoubleAfterSplit = true;
-    // bool allowReSplitAces = true;
+    auto strategyForName = makeStrategy();
+    const std::string strategyName = strategyForName->getName();
+
+    const int penPct = static_cast<int>(deckPenetration * 100.0f + 0.5f);
+    const std::string H17Str = dealerHits17 ? "H17" : "S17";
+    const std::string dasStr = allowDoubleAfterSplit ? "DAS" : "NoDAS";
+    const std::string rasStr = allowReSplitAces ? "RAS" : "NoRAS";
+    const std::string surStr = surrender ? "Surrender" : "NoSurrender";
+    const std::string bjStr = blackJackPayout3to2 ? "3to2" : "6to5";
+    const long long bankrollTag = static_cast<long long>(initialBankroll + 0.5);
+
+    std::cout << "\n=== " << strategyName << " data collection (" << numDecks << " deck, "
+              << penPct << "% pen, " << H17Str << ") ===\n";
+    std::cout << "Monte Carlo shoes: " << monteIterations << "\n";
+    std::cout << "Even-bet EV/TC shoes: " << evPerTcIterations << "\n";
+    std::cout << "RTP shoes (Kelly bet, $" << bankrollTag << " start): " << rtpIterations
+              << ", kellyFraction=" << kellyFraction << "\n\n";
+
+    const std::string deviationDir = "data/deviation_data/stats_" + strategyName + "_"
+        + std::to_string(numDecks) + "deck_" + std::to_string(penPct) + "pen";
+    fs::create_directories(deviationDir);
+
     // std::vector<MonteCarloScenario> scenarios = createAllScenarios();
+    // runUnifiedMonteSims(numDecks, monteIterations, deckPenetration,
+    //     std::move(strategyForName),
+    //     scenarios, blackJackPayout3to2, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
+    //     deviationDir, true);
 
-    // std::cout << "\n=== DEVIATION MONTE CARLO (BROKEN STRATEGIES) ===" << std::endl;
-    // std::cout << "Decks: " << "2" << ", Penetration: " << deckPenetration[0]
-    //           << ", Iterations: " << monteCarloIterations << std::endl;
-    
-    // for (int i = 0; i < sizeof(deckSize)/sizeof(deckSize[0]); ++i) {
-    //     int numDecksUsed = deckSize[i];
-    //     std::cout << "\n--- Running simulations for " << numDecksUsed << " decks ---" << std::endl;
-    //     std::vector<std::unique_ptr<CountingStrategy>> strategiesH17;
-    //     strategiesH17.push_back(std::make_unique<MentorStrategy>(numDecksUsed));
-    //     strategiesH17.push_back(std::make_unique<OmegaIIStrategy>(numDecksUsed));
-    //     strategiesH17.push_back(std::make_unique<R14Strategy>(numDecksUsed));
-    //     strategiesH17.push_back(std::make_unique<WongHalvesStrategy>(numDecksUsed));
+    runEvenBetEvPerTcSims(numDecks, evPerTcIterations, deckPenetration,
+        makeStrategy(),
+        dealerHits17, allowDoubleAfterSplit, allowReSplitAces, surrender, blackJackPayout3to2,
+        "data/ev_per_tc_data/evPerTC");
 
-    //     std::vector<std::unique_ptr<CountingStrategy>> strategiesS17;
-    //     strategiesS17.push_back(std::make_unique<MentorStrategy>(numDecksUsed));
-    //     strategiesS17.push_back(std::make_unique<OmegaIIStrategy>(numDecksUsed));
-    //     strategiesS17.push_back(std::make_unique<R14Strategy>(numDecksUsed));
-    //     strategiesS17.push_back(std::make_unique<WongHalvesStrategy>(numDecksUsed));
+    const std::string rtpDir = "data/rtp_data";
+    fs::create_directories(rtpDir);
+    const int kellyPct = static_cast<int>(kellyFraction * 100.0f + 0.5f);
+    const std::string rtpPath = rtpDir + "/rtp_results_" + strategyName + "_"
+        + std::to_string(numDecks) + "deck_" + std::to_string(penPct) + "pen_"
+        + H17Str + "_" + dasStr + "_" + rasStr + "_" + surStr + "_" + bjStr + "_kelly"
+        + std::to_string(kellyPct) + "_bankroll" + std::to_string(bankrollTag) + ".csv";
+    std::ofstream rtpFile(rtpPath);
+    rtpFile << "Strategy,Decks,Penetration,DealerRule,DAS,RAS,Surrender,BlackjackPayout,Iterations,RTP,HouseEdge%,AvgWallet,AvgMoneyBet,NetPer1000,Duration_s" << std::endl;
+    std::mutex rtpMutex;
+    runRTPsimsWithResults(numDecks, rtpIterations, deckPenetration,
+        makeStrategy(),
+        dealerHits17, allowDoubleAfterSplit, allowReSplitAces, surrender, blackJackPayout3to2,
+        kellyFraction, initialBankroll, rtpFile, rtpMutex,
+        ""); // EV/TC from Kelly run omitted (even-bet file is the reference EV curve)
 
-    //     const size_t num_threads = 8;
-    //     std::vector<std::thread> workers;
-    //     workers.reserve(num_threads);
+    rtpFile.close();
+    std::cout << "RTP summary written to " << rtpPath << std::endl;
+    std::cout << "=== " << strategyName << " data collection complete ===\n" << std::endl;
+}
 
-    //     bool H17 = true;
-    //     bool S17 = false;
+void runHella(){
 
-    //     for (auto& strategy : strategiesH17) {
-    //         workers.emplace_back([&, strat = std::move(strategy), H17]() mutable {
-    //             runUnifiedMonteSims(numDecksUsed, rtpIterations[i], deckPenetration[i],
-    //                 std::move(strat), scenarios,
-    //                 blackJackPayout3to2, H17, allowDoubleAfterSplit, allowReSplitAces);
-    //         });
+    auto start_time = std::chrono::high_resolution_clock::now();
 
-    //         workers.emplace_back([&, strat = std::move(strategiesS17.back()), S17]() mutable {
-    //             runUnifiedMonteSims(numDecksUsed, rtpIterations[i], deckPenetration[i],
-    //                 std::move(strat), scenarios,
-    //                 blackJackPayout3to2, S17, allowDoubleAfterSplit, allowReSplitAces);
-    //         });
-    //         strategiesS17.pop_back();
-    //     }
-
-    //     for (auto& t : workers) {
-    //         t.join();
-    //     }
-
-    //     workers.clear();
-
-    //     // Recreate strategies for the next ruleset run
-    //     strategiesH17.clear();
-    //     strategiesS17.clear();
-    // }
+    if (const char* seedEnv = std::getenv("BLACKJACK_SEED")) {
+        try {
+            const auto parsed = std::stoul(seedEnv);
+            Deck::setSeed(static_cast<std::uint32_t>(parsed));
+            std::cout << "Using deterministic deck seed: " << parsed << std::endl;
+        } catch (const std::exception&) {
+            std::cerr << "Invalid BLACKJACK_SEED value '" << seedEnv
+                      << "'. Falling back to non-deterministic RNG." << std::endl;
+            Deck::clearSeed();
+        }
+    } else {
+        Deck::clearSeed();
+    }
 
     // Configuration for RTP simulations (using 2-deck with updated deviations)
     int numDecksUsed = 2;
@@ -635,13 +927,13 @@ int main(){
     std::cout << "Configuration: " << numDecksUsed << " deck(s), " 
               << (deckPenetration * 100) << "% penetration" << std::endl;
     std::cout << "========================================\n" << std::endl;
-    bool dealerHits17[] = {true, false};
+    bool dealerHits17[] = {true};
     bool DAS[] = {true};
     bool RAS[] = {false};
     bool SurrenderAllowed[] = {false};
     bool blackJackPayout3to2[] = {true};
     int deckSize[] = {2,4,6,8};
-    int rtpIterations[] = {50000000,25000000,17000000,12500000};
+    int rtpIterations[] = {50000,25000,17000,12500};
     float penetrations[] = {0.3f,0.4f,0.5f,0.60f,0.7f,0.80f}; //0.7f, 0.75f,0.80f
     float kellyFractions[] = {0.125f,0.25f,0.5f,0.75f};
 
@@ -676,6 +968,11 @@ int main(){
             }   
         }
     }
+
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
+    std::cout << "Simulation time for " << duration.count() / 1000000.0 << " seconds." << std::endl;
+
     
     std::cout << "\n========================================" << std::endl;
     std::cout << "ALL RTP SIMULATIONS COMPLETE" << std::endl;
@@ -685,6 +982,138 @@ int main(){
     // int monteCarloIterations = 600000000;
     // setUpUnifiedSims(numDecksUsed, deckPenetration, monteCarloIterations, true);   // H17
     // setUpUnifiedSims(numDecksUsed, deckPenetration, monteCarloIterations, false);  // S17
-    
-    return 0;
+    return;
+}
+
+int main(){
+    int deckSize[] = {2,4,6,8};
+    int evPerTcIterations[] = {50000000,25000000,17000000,12500000};
+    float allPenetrations[] = {0.3f,.35f,0.4f,0.45f,0.5f,0.55f,0.60f,0.65f,0.7f,0.75f,0.80f};
+    float sixDeckPenetrations[] = {0.75f,0.80f};
+
+    const size_t num_threads = 10;
+    const std::string evPerTcOutputRoot = "data/ev_per_tc_data/evPerTC";
+
+    std::cout << "Using up to " << num_threads << " thread(s)" << std::endl;
+
+    struct EvPerTcJob {
+        int decks;
+        int iterations;
+        float penetration;
+        std::function<std::unique_ptr<CountingStrategy>(int)> makeStrategy;
+    };
+
+    std::vector<EvPerTcJob> jobs;
+
+    // Full EV-per-TC grid for no-count/basic-strategy baseline.
+    std::vector<std::thread> workers;
+    workers.reserve(num_threads);
+    for (size_t i = 0; i < std::size(deckSize); ++i) {
+        const int ds = deckSize[i];
+        for (float pen : allPenetrations) {
+            jobs.push_back({
+                ds,
+                evPerTcIterations[i],
+                pen,
+                [](int decks) {
+                    return std::make_unique<NoStrategy>(static_cast<float>(decks));
+                }
+            });
+        }
+    }
+
+    // Focused 6-deck 75%/80% EV-per-TC grid for every counting strategy.
+    std::vector<std::function<std::unique_ptr<CountingStrategy>(int)>> strategyFactories = {
+        [](int decks) { return std::make_unique<HiLoStrategy>(decks); },
+        [](int decks) { return std::make_unique<MentorStrategy>(decks); },
+        [](int decks) { return std::make_unique<RPCStrategy>(decks); },
+        [](int decks) { return std::make_unique<RAPCStrategy>(decks); },
+        [](int decks) { return std::make_unique<ZenCountStrategy>(decks); },
+        [](int decks) { return std::make_unique<R14Strategy>(decks); },
+        [](int decks) { return std::make_unique<OmegaIIStrategy>(decks); },
+        [](int decks) { return std::make_unique<OmegaIIStrategyAceCount>(static_cast<float>(decks)); },
+        [](int decks) { return std::make_unique<WongHalvesStrategy>(decks); }
+    };
+
+    for (const auto& makeStrategy : strategyFactories) {
+        for (float pen : sixDeckPenetrations) {
+            jobs.push_back({
+                6,
+                evPerTcIterations[2],
+                pen,
+                makeStrategy
+            });
+        }
+    }
+
+    std::cout << "Queued " << jobs.size() << " EV-per-TC job(s)" << std::endl;
+
+    for (const auto& job : jobs) {
+        workers.emplace_back([job, &evPerTcOutputRoot]() {
+            runEvenBetEvPerTcSims(job.decks, job.iterations, job.penetration,
+                job.makeStrategy(job.decks),
+                true, true, false, false, true,
+                evPerTcOutputRoot);
+        });
+
+        if (workers.size() >= num_threads) {
+            for (auto& t : workers) {
+                t.join();
+            }
+            workers.clear();
+        }
+    }
+
+    for (auto& t : workers) {
+        t.join();
+    }
+
+
+
+     
+
+    // runEvenBetEvPerTcSims(6, 12500000, 0.75f, std::make_unique<ZenCountStrategy>(6), true, true, false, false, true,
+    // "data/ev_per_tc_data/evPerTC/ZenCountStrategy/ev_per_tc_ZenCountStrategy_6deck_75pen_H17_DAS_NoRAS_NoSurrender_3to2.csv");
+
+  
+     return 0;
+
+
+
+    // runRTPsims(2, 10000, 0.75f, std::make_unique<HiLoStrategy>(2));
+    // return 0;
+    //runHella();
+
+    // Shoe trace library generation — fixed 1-unit bet, portable base traces
+    // // Adjust numShoes for the size of the dataset you want.
+    // // 6-deck, 75% pen, H17, DAS, no RAS, no surrender, 3:2
+    // runShoeTraceSim(2, 2500000, 0.80f,
+    //     std::make_unique<ZenCountStrategy>(2),
+    //     /*bj3to2=*/true, /*dealerHits17=*/true,
+    //     /*das=*/true, /*ras=*/false, /*surrender=*/false,
+    //     "stats/shoetraces",
+    //     /*compress=*/true);
+
+    //  return 0;
+
+    // Increase counts for tighter CSVs (millions of shoes is typical for deviation work).
+    // int numDecks = 6;
+    // float deckPenetration = 0.75f;
+    // long long monteIterations = 60'000'000LL;
+    // int evPerTcIterations = 10'000'000;
+    // int rtpIterations = 3'000'000;
+    // float kellyFraction = 0.75f;
+    // bool dealerHits17 = true;
+    // bool allowDoubleAfterSplit = true;
+    // bool allowReSplitAces = false;
+    // bool surrender = false;
+    // bool blackJackPayout3to2 = true;
+    // double initialBankroll = 50'000.0;
+    // collectStrategyDeviationEvRtpDataset(numDecks, deckPenetration,
+    //     [numDecks]() { return std::make_unique<OmegaIIStrategyAceCount>(static_cast<float>(numDecks)); },
+    //     monteIterations, evPerTcIterations,
+    //     rtpIterations, kellyFraction, dealerHits17, allowDoubleAfterSplit, allowReSplitAces,
+    //     surrender, blackJackPayout3to2, initialBankroll);
+
+    // return 0;
 }

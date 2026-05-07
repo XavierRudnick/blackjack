@@ -27,7 +27,7 @@ void FixedEngine::calculateEV(Player& player, Deck& deck, Hand& dealer, Hand& us
     }
 }
 
-void FixedEngine::calculateEVForScenario(Player& player, Deck& deck, Hand& dealer, Hand& user, float trueCount, 
+void FixedEngine::calculateEVForScenario(Player& player, Deck& deck, Hand& dealer, Hand& user, float trueCount,
                                           std::pair<int,int> cardValues, const MonteCarloScenario& scenario) {
     for (Action forcedAction : scenario.actions) {
         Hand simDealer = dealer;
@@ -64,7 +64,7 @@ void FixedEngine::playForcedHand(Player& player, Deck& deck, Hand& dealer, Hand&
             case Action::Double:
                 game_over = doubleHandler(deck,user,hands,has_split);
                 break;
-            case Action::Split: 
+            case Action::Split:
                 game_over = splitHandler(player, deck, user, dealer, hands, has_split, has_split_aces, trueCount);
                 break;
             case Action::InsuranceAccept:
@@ -78,7 +78,7 @@ void FixedEngine::playForcedHand(Player& player, Deck& deck, Hand& dealer, Hand&
                 break;
             case Action::Skip:
                 break;
-        }   
+        }
         ++i; // allow only the first decision to be forced; subsequent ones follow the player strategy
     }
     return;
@@ -106,9 +106,9 @@ bool FixedEngine::surrenderHandler(Hand& user,std::vector<Hand>& hands){
 bool FixedEngine::InsuranceHandler(Player& /*player*/, Deck& /*deck*/, Hand& user, Hand& dealer, std::vector<Hand>& hands, float /*trueCount*/){
     bool dealerHasBlackjack = dealer.dealerHiddenTen();
 
-    if (dealerHasBlackjack) {  
+    if (dealerHasBlackjack) {
         hands.emplace_back(user);
-        return true; 
+        return true;
     } else {
         return false; // Round continues
     }
@@ -145,7 +145,7 @@ bool FixedEngine::splitHandler(Player& player, Deck& deck, Hand& user,Hand& deal
         hands.emplace_back(user);
         return true;
     }
-    
+
     Hand user2 = Hand(user.getLastCard(),user.getBetSize());
     user.popLastCard();
 
@@ -175,7 +175,7 @@ bool FixedEngine::splitHandler(Player& player, Deck& deck, Hand& user,Hand& deal
     playForcedHand(player, deck, dealer, user, hands, Action::Skip, has_split_aces || splitting_aces, true, trueCount);
     playForcedHand(player, deck, dealer, user2, hands, Action::Skip, has_split_aces || splitting_aces, true, trueCount);
     return true;
-    
+
 }
 
 void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount, Action forcedAction, std::pair<int,int> cardValues, int baseBet) {
@@ -192,7 +192,7 @@ void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hand
             if (userScore != 0){
                 dealer_draw(deck, dealer);
             }
-            
+
             int dealerScore = dealer.getFinalScore();
             float result = 1.0f;
 
@@ -240,7 +240,7 @@ void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hand
         if (userScore != 0){
             dealer_draw(deck,dealer);
         }
-        
+
         int dealerScore = dealer.getFinalScore();
         float result = 1.0f;
 
@@ -286,7 +286,7 @@ void FixedEngine::evaluateHand(Deck& deck, Hand& dealer, std::vector<Hand>& hand
 
 }
 
-void FixedEngine::evaluateHandForScenario(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount, 
+void FixedEngine::evaluateHandForScenario(Deck& deck, Hand& dealer, std::vector<Hand>& hands, float trueCount,
                                            Action forcedAction, std::pair<int,int> cardValues, int baseBet,
                                            const std::string& scenarioName) {
     float bucketedTrueCount = std::round(trueCount * 2.0f) / 2.0f;
@@ -302,7 +302,7 @@ void FixedEngine::evaluateHandForScenario(Deck& deck, Hand& dealer, std::vector<
             if (userScore != 0){
                 dealer_draw(deck, dealer);
             }
-            
+
             int dealerScore = dealer.getFinalScore();
             float result = 1.0f;
 
@@ -329,7 +329,7 @@ void FixedEngine::evaluateHandForScenario(Deck& deck, Hand& dealer, std::vector<
         decisionPoint.splitStats.addResult(splitPayout);
         return;
     }
-    
+
     for (Hand& hand : hands) {
         int userScore = hand.getFinalScore();
 
@@ -349,7 +349,7 @@ void FixedEngine::evaluateHandForScenario(Deck& deck, Hand& dealer, std::vector<
         if (userScore != 0){
             dealer_draw(deck, dealer);
         }
-        
+
         int dealerScore = dealer.getFinalScore();
         float result = 1.0f;
 
@@ -398,7 +398,7 @@ void FixedEngine::dealer_draw(Deck& deck,Hand& dealer){
     // Fix: Check for Hard 17 or > 17. If Soft 17, check rule.
     bool isSoft17 = dealer.isSoft17();
     int score = dealer.getScore();
-    
+
     if (score > 17 || (score == 17 && !isSoft17) || (isSoft17 && !config.dealerHitsSoft17)) {
         return;
     }
@@ -406,7 +406,7 @@ void FixedEngine::dealer_draw(Deck& deck,Hand& dealer){
         if (deck.getSize() < 1) {
             throw std::runtime_error("Not enough cards to draw initial hand 271");
         }
-        
+
         Card c = deck.hit();
         dealer.addCard(c);
     }
@@ -515,7 +515,7 @@ void FixedEngine::merge(const FixedEngine& other){
             accumulate(currentPoint.insuranceDeclineStats, decisionPoint.insuranceDeclineStats);
         }
     }
-    
+
     // Merge multi-scenario results
     for (const auto& [scenarioName, resultsMapOther] : other.scenarioResults) {
         auto& currentScenarioMap = scenarioResults[scenarioName];
@@ -536,9 +536,9 @@ void FixedEngine::merge(const FixedEngine& other){
     }
 }
 
-const std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& FixedEngine::getResults() const 
-{ 
-    return EVresults; 
+const std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& FixedEngine::getResults() const
+{
+    return EVresults;
 }
 
 const std::map<std::pair<int, int>, std::map<float, DecisionPoint>>& FixedEngine::getScenarioResults(const std::string& scenarioName) const {
@@ -565,7 +565,7 @@ void FixedEngine::saveScenarioResults(const std::string& scenarioName, const std
         std::cerr << "No results found for scenario: " << scenarioName << std::endl;
         return;
     }
-    
+
     std::filesystem::path outPath(baseFilename);
     if (outPath.has_parent_path()) {
         std::error_code ec;
